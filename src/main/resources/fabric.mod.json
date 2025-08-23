@@ -1,0 +1,43 @@
+{
+    "schemaVersion": 1,
+    "id": "fraise",
+    "version": "0.1.0",
+    "name": "Fraise",
+    "description": "This is an example description! Tell everyone what your mod is about!",
+    "authors": ["skjsjhb"],
+    "contact": {
+        "homepage": "",
+        "sources": ""
+    },
+    "license": "GPL-3.0-or-later",
+    "icon": "assets/fraise/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            {
+                "value": "moe.skjsjhb.fraise.Fraise",
+                "adapter": "kotlin"
+            }
+        ],
+        "client": [
+            {
+                "value": "moe.skjsjhb.fraise.FraiseClient",
+                "adapter": "kotlin"
+            }
+        ]
+    },
+    "mixins": [
+        "fraise.mixins.json",
+        {
+            "config": "fraise.client.mixins.json",
+            "environment": "client"
+        }
+    ],
+    "depends": {
+        "fabricloader": ">=0.17.2",
+        "minecraft": "~1.21.8",
+        "java": ">=21",
+        "fabric-api": "*",
+        "fabric-language-kotlin": "*"
+    }
+}
