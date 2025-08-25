@@ -1,9 +1,7 @@
-#
-# https://help.github.com/articles/dealing-with-line-endings/
-#
-# Linux start script should use lf
-/gradlew        text eol=lf
+/gradlew    text eol=lf
+*.bat       text eol=crlf
 
-# These are Windows script files and should use crlf
-*.bat           text eol=crlf
-
+paper-api/src/main/java/**  linguist-vendored
+src/main/paperJava/**       linguist-vendored
+src/main/paperResources/**  linguist-vendored
+src/porting/**              linguist-vendored
