@@ -1,5 +1,6 @@
 @file:Suppress("HasPlatformType", "unused", "UnstableApiUsage")
 
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import moe.skjsjhb.fraise.BuildInfoTask
 import moe.skjsjhb.fraise.ImplReportTask
 
@@ -80,6 +81,8 @@ dependencies {
     modImplementation("net.fabricmc:fabric-language-kotlin:1.13.5+kotlin.2.2.10")
     modImplementation(include("net.kyori:adventure-platform-fabric:6.6.0")!!)
 
+    bundleImplementation("org.javassist:javassist:3.30.2-GA")
+
     // https://github.com/PaperMC/Paper/blob/main/paper-server/build.gradle.kts
     bundleImplementation(project(":paper-api"))
 
@@ -138,7 +141,7 @@ val genImplReport by tasks.registering(ImplReportTask::class) {
     group = "documentation"
     description = "Generates a report with detailed implementation progress information."
 
-    annotationName = "Lmoe/skjsjhb/fraise/anno/Incubating;"
+    annotationName = "moe.skjsjhb.fraise.anno.Incubating"
     apiJar = project(":paper-api").tasks.jar.get().archiveFile
     implJar = tasks.jar.get().archiveFile
     outDir = layout.buildDirectory.file("impl-report")
@@ -156,10 +159,26 @@ tasks.processResources {
     from(emitBuildInfo.get().outFile)
 }
 
-tasks.shadowJar {
-    mergeServiceFiles()
+// A shadow jar that has deprecated legacy dependencies removed (reduces size by 60%!)
+val slimShadowJar by tasks.registering(ShadowJar::class) {
+    archiveClassifier = "slim"
 
-    configurations = listOf(bundleImplementation, bundleRuntimeOnly)
+    // Current this project doesn't have runtime-only dependencies in use, only the legacy ones, so omitting the runtime
+    // configuration gives us a slim (yet still self-contained) output.
+    configurations = listOf(bundleImplementation)
+
+    // Non-mod dependencies don't use deobfuscated symbols, omit them from remapping to make the build faster
+    from(zipTree(tasks.remapJar.get().archiveFile))
+}
+
+// A complete jar for maximum compatibility
+tasks.shadowJar {
+    configurations = listOf(bundleRuntimeOnly)
+    from(zipTree(slimShadowJar.get().archiveFile))
+}
+
+tasks.withType<ShadowJar>().configureEach {
+    mergeServiceFiles()
 
     // A set of common dependencies provided by the game, exported from version profile and server jar
     val mojangProvided = listOf(
@@ -249,8 +268,3 @@ tasks.shadowJar {
     exclude("LICENSE")
     exclude("README")
 }
-
-tasks.remapJar {
-    inputFile = tasks.shadowJar.get().archiveFile
-}
-

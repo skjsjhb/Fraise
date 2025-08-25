@@ -37,6 +37,8 @@ abstract class ImplReportTask : DefaultTask() {
     @get:Input
     abstract val annotationName: Property<String>
 
+    private val annotationSignature by lazy { "L" + annotationName.get().replace(".", "/") + ";" }
+
     @get:Input
     @get:Optional
     abstract val ignore: Property<Iterable<String>>
@@ -133,7 +135,7 @@ abstract class ImplReportTask : DefaultTask() {
     private fun getIncubatingFlags(clazz: JavaClass): IncubatingFlags {
         val annotation = clazz.annotationEntries.find {
             // Find the marker name
-            clazz.constantPool.getConstant<ConstantUtf8>(it.typeIndex).bytes.toString() == annotationName.get()
+            clazz.constantPool.getConstant<ConstantUtf8>(it.typeIndex).bytes.toString() == annotationSignature
         } ?: return emptySet()
 
         return annotation.elementValuePairs.first().value.stringifyValue().split(",").toSet()
