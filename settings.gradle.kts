@@ -6,4 +6,4 @@ pluginManagement {
     }
 }
 
-include("paper-api")
+include("paper-api", "test-plugin")

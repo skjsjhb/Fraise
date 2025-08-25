@@ -3,6 +3,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import moe.skjsjhb.fraise.BuildInfoTask
 import moe.skjsjhb.fraise.ImplReportTask
+import net.fabricmc.loom.task.RunGameTask
 
 plugins {
     kotlin("jvm") version "2.2.10"
@@ -135,6 +136,17 @@ java {
 
 listOf("compilePortingJava", "compilePortingKotlin", "processPortingResources", "portingClasses").forEach {
     tasks.getByName(it).enabled = false
+}
+
+val deployTestPlugin by tasks.registering(Copy::class) {
+    description = "Deploy the test plugin."
+
+    from(project(":test-plugin").tasks.jar.get().archiveFile)
+    into(file("run/plugins"))
+}
+
+tasks.withType<RunGameTask>().configureEach {
+    dependsOn(deployTestPlugin)
 }
 
 val genImplReport by tasks.registering(ImplReportTask::class) {
