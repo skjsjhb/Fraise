@@ -3,13 +3,16 @@
     "id": "fraise",
     "version": "0.1.0",
     "name": "Fraise",
-    "description": "This is an example description! Tell everyone what your mod is about!",
+    "description": "An experiment with plugins and Fabric.",
     "authors": ["skjsjhb"],
     "contact": {
         "homepage": "",
         "sources": ""
     },
-    "license": "GPL-3.0-or-later",
+    "license": [
+        "AGPL-3.0-or-later",
+        "GPL-3.0-only"
+    ],
     "icon": "assets/fraise/icon.png",
     "environment": "*",
     "entrypoints": {
