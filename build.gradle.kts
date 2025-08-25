@@ -25,6 +25,10 @@ base {
     archivesName = "fraise"
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/fraise.aw")
+}
+
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
 }
