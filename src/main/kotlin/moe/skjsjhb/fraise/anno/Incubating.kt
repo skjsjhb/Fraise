@@ -13,4 +13,6 @@ package moe.skjsjhb.fraise.anno
  * Our scanner automatically tests whether the implementation is incomplete (contains [NotImplementedError]).
  * Implementations should annotate the rest flags correctly for it to know additional properties about the status.
  */
+@Retention(AnnotationRetention.BINARY)
+@Target(AnnotationTarget.CLASS)
 annotation class Incubating(val value: String = "Err")

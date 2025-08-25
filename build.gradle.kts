@@ -267,4 +267,7 @@ tasks.withType<ShadowJar>().configureEach {
     exclude("INFO_SRC")
     exclude("LICENSE")
     exclude("README")
+
+    // Seems bundled from log4j, yet we don't use modules
+    exclude("module-info.class")
 }
