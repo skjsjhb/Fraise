@@ -14,3 +14,5 @@ paper-brand: false
 #   raise additional compatibility issues with certain plugins.
 patch: class
 
+# Path to look for plugins. Relative paths are resolved against the game directory.
+plugins-folder: plugins

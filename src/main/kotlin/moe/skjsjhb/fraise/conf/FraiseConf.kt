@@ -27,6 +27,11 @@ object FraiseConf {
         withDefault { getString("patch", "class")!!.uppercase().let { PatchMethod.valueOf(it) } }
 
     /**
+     * Path to search for plugins.
+     */
+    val pluginsFolder: String = withDefault { getString("plugins-folder", "plugins")!! }
+
+    /**
      * API patching method.
      */
     enum class PatchMethod {
