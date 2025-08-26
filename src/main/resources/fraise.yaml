@@ -1,0 +1,16 @@
+# Schema version. Don't change unless manually updating.
+version: 1
+
+# Whether to use the Paper brand info as-is, or the Fraise variant.
+# Setting this to `true` may fix plugins that inaccurately detect the brand compatibility, but
+paper-brand: false
+
+# Defines how Fraise patches the plugin API for mod values (e.g. items).
+# - `class`: Patches are applied via bytecode manipulating. This method balances between compatibility, stability and
+#   performance.
+# - `runtime`: Patches are applied using internal JVM APIs. This method may handle edge cases better as it works for
+#   loaded classes, but the use of unsupported APIs may crash the game in various unpredictable situations.
+# - `ext`: Replaces API classes with extendable ones. This method is legitimate and provides better stability, yet may
+#   raise additional compatibility issues with certain plugins.
+patch: class
+
