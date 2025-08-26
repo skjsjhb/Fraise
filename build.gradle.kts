@@ -87,6 +87,7 @@ dependencies {
     modImplementation(include("net.kyori:adventure-platform-fabric:6.6.0")!!)
 
     bundleImplementation("org.javassist:javassist:3.30.2-GA")
+    bundleImplementation("org.slf4j:jul-to-slf4j:2.0.17")
 
     // https://github.com/PaperMC/Paper/blob/main/paper-server/build.gradle.kts
     bundleImplementation(project(":paper-api"))
