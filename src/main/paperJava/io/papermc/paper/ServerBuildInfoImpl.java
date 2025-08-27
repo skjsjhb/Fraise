@@ -1,18 +1,19 @@
 package io.papermc.paper;
 
-import com.google.common.base.Strings;
-import io.papermc.paper.util.JarManifests;
+import moe.skjsjhb.fraise.anno.Ported;
+import moe.skjsjhb.fraise.conf.FraiseConf;
+import moe.skjsjhb.fraise.misc.BuildInfo;
+import net.kyori.adventure.key.Key;
+import net.minecraft.SharedConstants;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.OptionalInt;
-import java.util.jar.Manifest;
-import net.kyori.adventure.key.Key;
-import net.minecraft.SharedConstants;
-import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.Main;
-import org.jetbrains.annotations.NotNull;
 
+@Ported
 public record ServerBuildInfoImpl(
     Key brandId,
     String brandName,
@@ -23,40 +24,31 @@ public record ServerBuildInfoImpl(
     Optional<String> gitBranch,
     Optional<String> gitCommit
 ) implements ServerBuildInfo {
-    private static final String ATTRIBUTE_BRAND_ID = "Brand-Id";
-    private static final String ATTRIBUTE_BRAND_NAME = "Brand-Name";
-    private static final String ATTRIBUTE_BUILD_TIME = "Build-Time";
-    private static final String ATTRIBUTE_BUILD_NUMBER = "Build-Number";
-    private static final String ATTRIBUTE_GIT_BRANCH = "Git-Branch";
-    private static final String ATTRIBUTE_GIT_COMMIT = "Git-Commit";
-
+    // TODO: Use a formal namespace
+    private static final Key BRAND_FRAISE_ID = Key.key("fraise", "fraise");
     private static final String BRAND_PAPER_NAME = "Paper";
+    private static final String BRAND_FRAISE_NAME = "Fraise";
 
     private static final String BUILD_DEV = "DEV";
 
-    public ServerBuildInfoImpl() {
-        this(JarManifests.manifest(CraftServer.class));
-    }
+    private static final BuildInfo buildInfo = BuildInfo.INSTANCE;
+    private static final boolean shouldUsePaperBrand = FraiseConf.INSTANCE.getUsePaperBrand();
 
-    private ServerBuildInfoImpl(final Manifest manifest) {
+    public ServerBuildInfoImpl() {
         this(
-            getManifestAttribute(manifest, ATTRIBUTE_BRAND_ID)
-                .map(Key::key)
-                .orElse(BRAND_PAPER_ID),
-            getManifestAttribute(manifest, ATTRIBUTE_BRAND_NAME)
-                .orElse(BRAND_PAPER_NAME),
+            shouldUsePaperBrand ? BRAND_PAPER_ID : BRAND_FRAISE_ID,
+            shouldUsePaperBrand ? BRAND_PAPER_NAME : BRAND_FRAISE_NAME,
             SharedConstants.getCurrentVersion().id(),
             SharedConstants.getCurrentVersion().name(),
-            getManifestAttribute(manifest, ATTRIBUTE_BUILD_NUMBER)
-                .map(Integer::parseInt)
-                .map(OptionalInt::of)
-                .orElse(OptionalInt.empty()),
-            getManifestAttribute(manifest, ATTRIBUTE_BUILD_TIME)
-                .map(Instant::parse)
-                .orElse(Main.BOOT_TIME),
-            getManifestAttribute(manifest, ATTRIBUTE_GIT_BRANCH),
-            getManifestAttribute(manifest, ATTRIBUTE_GIT_COMMIT)
+            toOptionalInt(buildInfo.getBuildNumber()),
+            buildInfo.getTime(),
+            Optional.ofNullable(buildInfo.getBranch()),
+            Optional.ofNullable(buildInfo.getCommit())
         );
+    }
+
+    private static OptionalInt toOptionalInt(@Nullable Integer it) {
+        return it == null ? OptionalInt.empty() : OptionalInt.of(it);
     }
 
     @Override
@@ -95,10 +87,5 @@ public record ServerBuildInfoImpl(
             sb.append(')');
         }
         return sb.toString();
-    }
-
-    private static Optional<String> getManifestAttribute(final Manifest manifest, final String name) {
-        final String value = manifest != null ? manifest.getMainAttributes().getValue(name) : null;
-        return Optional.ofNullable(Strings.emptyToNull(value));
     }
 }
