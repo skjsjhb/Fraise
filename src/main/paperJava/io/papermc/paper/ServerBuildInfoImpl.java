@@ -53,7 +53,7 @@ public record ServerBuildInfoImpl(
 
     @Override
     public boolean isBrandCompatible(final @NotNull Key brandId) {
-        return brandId.equals(this.brandId);
+        return brandId.equals(this.brandId) || brandId.equals(BRAND_PAPER_ID); // Fraise: Always compatible with Paper
     }
 
     @Override
