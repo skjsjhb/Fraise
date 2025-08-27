@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory.view;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.inventory.MerchantMenu;
 import org.bukkit.craftbukkit.inventory.CraftInventoryView;
 import org.bukkit.entity.HumanEntity;
@@ -20,6 +21,7 @@ public class CraftMerchantView extends CraftInventoryView<MerchantMenu, Merchant
     @NotNull
     @Override
     public Merchant getMerchant() {
-        return this.trader.getCraftMerchant();
+        // return this.trader.getCraftMerchant();
+        throw new NotImplementedError();
     }
 }

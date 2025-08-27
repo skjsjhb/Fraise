@@ -1,10 +1,12 @@
 package com.destroystokyo.paper.loottable;
 
-import java.util.UUID;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.Level;
 import org.bukkit.World;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
+
+import java.util.UUID;
 
 @DefaultQualifier(NonNull.class)
 public interface PaperLootableInventory extends PaperLootable, LootableInventory {
@@ -15,13 +17,15 @@ public interface PaperLootableInventory extends PaperLootable, LootableInventory
     Level getNMSWorld();
 
     default World getBukkitWorld() {
-        return this.getNMSWorld().getWorld();
+        throw new NotImplementedError();
+        // return this.getNMSWorld().getWorld();
     }
 
     /* LootableInventory */
     @Override
     default boolean isRefillEnabled() {
-        return this.getNMSWorld().paperConfig().lootables.autoReplenish;
+        throw new NotImplementedError();
+        // return this.getNMSWorld().paperConfig().lootables.autoReplenish;
     }
 
     @Override
@@ -36,7 +40,8 @@ public interface PaperLootableInventory extends PaperLootable, LootableInventory
 
     @Override
     default boolean canPlayerLoot(final UUID player) {
-        return this.lootableDataForAPI().canPlayerLoot(player, this.getNMSWorld().paperConfig());
+        throw new NotImplementedError();
+        // return this.lootableDataForAPI().canPlayerLoot(player, this.getNMSWorld().paperConfig());
     }
 
     @Override

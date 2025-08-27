@@ -2,6 +2,12 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
+import kotlin.NotImplementedError;
+import org.bukkit.block.Banner;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
+import org.bukkit.inventory.meta.ItemMeta;
+
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -9,10 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
-import org.bukkit.block.Banner;
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.configuration.serialization.SerializableAs;
-import org.bukkit.inventory.meta.ItemMeta;
 
 @SerializableAs("ItemMeta")
 public final class SerializableMeta implements ConfigurationSerializable {
@@ -23,34 +25,34 @@ public final class SerializableMeta implements ConfigurationSerializable {
 
     static {
         classMap = ImmutableMap.<Class<? extends CraftMetaItem>, String>builder()
-                .put(CraftMetaArmor.class, "ARMOR")
-                .put(CraftMetaArmorStand.class, "ARMOR_STAND")
-                .put(CraftMetaBanner.class, "BANNER")
-                .put(CraftMetaBlockState.class, "TILE_ENTITY")
-                .put(CraftMetaBook.class, "BOOK")
-                .put(CraftMetaBookSigned.class, "BOOK_SIGNED")
-                .put(CraftMetaSkull.class, "SKULL")
-                .put(CraftMetaLeatherArmor.class, "LEATHER_ARMOR")
-                .put(CraftMetaColorableArmor.class, "COLORABLE_ARMOR")
-                .put(CraftMetaMap.class, "MAP")
-                .put(CraftMetaPotion.class, "POTION")
-                .put(CraftMetaShield.class, "SHIELD")
-                .put(CraftMetaSpawnEgg.class, "SPAWN_EGG")
-                .put(CraftMetaEnchantedBook.class, "ENCHANTED")
-                .put(CraftMetaFirework.class, "FIREWORK")
-                .put(CraftMetaCharge.class, "FIREWORK_EFFECT")
-                .put(CraftMetaKnowledgeBook.class, "KNOWLEDGE_BOOK")
-                .put(CraftMetaTropicalFishBucket.class, "TROPICAL_FISH_BUCKET")
-                .put(CraftMetaAxolotlBucket.class, "AXOLOTL_BUCKET")
-                .put(CraftMetaCrossbow.class, "CROSSBOW")
-                .put(CraftMetaSuspiciousStew.class, "SUSPICIOUS_STEW")
-                .put(CraftMetaEntityTag.class, "ENTITY_TAG")
-                .put(CraftMetaCompass.class, "COMPASS")
-                .put(CraftMetaBundle.class, "BUNDLE")
-                .put(CraftMetaMusicInstrument.class, "MUSIC_INSTRUMENT")
-                .put(CraftMetaOminousBottle.class, "OMINOUS_BOTTLE")
-                .put(CraftMetaItem.class, "UNSPECIFIC")
-                .build();
+            .put(CraftMetaArmor.class, "ARMOR")
+            .put(CraftMetaArmorStand.class, "ARMOR_STAND")
+            .put(CraftMetaBanner.class, "BANNER")
+            .put(CraftMetaBlockState.class, "TILE_ENTITY")
+            .put(CraftMetaBook.class, "BOOK")
+            .put(CraftMetaBookSigned.class, "BOOK_SIGNED")
+            .put(CraftMetaSkull.class, "SKULL")
+            .put(CraftMetaLeatherArmor.class, "LEATHER_ARMOR")
+            .put(CraftMetaColorableArmor.class, "COLORABLE_ARMOR")
+            .put(CraftMetaMap.class, "MAP")
+            .put(CraftMetaPotion.class, "POTION")
+            .put(CraftMetaShield.class, "SHIELD")
+            .put(CraftMetaSpawnEgg.class, "SPAWN_EGG")
+            .put(CraftMetaEnchantedBook.class, "ENCHANTED")
+            .put(CraftMetaFirework.class, "FIREWORK")
+            .put(CraftMetaCharge.class, "FIREWORK_EFFECT")
+            .put(CraftMetaKnowledgeBook.class, "KNOWLEDGE_BOOK")
+            .put(CraftMetaTropicalFishBucket.class, "TROPICAL_FISH_BUCKET")
+            .put(CraftMetaAxolotlBucket.class, "AXOLOTL_BUCKET")
+            .put(CraftMetaCrossbow.class, "CROSSBOW")
+            .put(CraftMetaSuspiciousStew.class, "SUSPICIOUS_STEW")
+            .put(CraftMetaEntityTag.class, "ENTITY_TAG")
+            .put(CraftMetaCompass.class, "COMPASS")
+            .put(CraftMetaBundle.class, "BUNDLE")
+            .put(CraftMetaMusicInstrument.class, "MUSIC_INSTRUMENT")
+            .put(CraftMetaOminousBottle.class, "OMINOUS_BOTTLE")
+            .put(CraftMetaItem.class, "UNSPECIFIC")
+            .build();
 
         final ImmutableMap.Builder<String, Constructor<? extends CraftMetaItem>> classConstructorBuilder = ImmutableMap.builder();
         for (Map.Entry<Class<? extends CraftMetaItem>, String> mapping : classMap.entrySet()) {
@@ -82,7 +84,8 @@ public final class SerializableMeta implements ConfigurationSerializable {
             // Convert Shield CraftMetaBlockState to CraftMetaShield
             if (meta instanceof CraftMetaBlockState state && state.hasBlockState() && state.getBlockState() instanceof Banner) {
                 meta = new CraftMetaShield(meta);
-                meta.unhandledTags.clear(CraftMetaShield.BASE_COLOR.TYPE);
+                // meta.unhandledTags.clear(CraftMetaShield.BASE_COLOR.TYPE);
+                throw new NotImplementedError();
             }
 
             return meta;
@@ -121,8 +124,8 @@ public final class SerializableMeta implements ConfigurationSerializable {
 
         // SPIGOT-7675 - More lenient conversion of floating point numbers from other number types:
         if (clazz == Float.class || clazz == Double.class) {
-            if (Number.class.isInstance(object)) {
-                Number number = Number.class.cast(object);
+            if (object instanceof Number) {
+                Number number = (Number) object;
                 if (clazz == Float.class) {
                     return clazz.cast(number.floatValue());
                 } else {
@@ -161,8 +164,8 @@ public final class SerializableMeta implements ConfigurationSerializable {
 
             // SPIGOT-7675 - More lenient conversion of floating point numbers from other number types:
             if (clazz == Float.class || clazz == Double.class) {
-                if (Number.class.isInstance(object)) {
-                    Number number = Number.class.cast(object);
+                if (object instanceof Number) {
+                    Number number = (Number) object;
                     if (clazz == Float.class) {
                         cast = clazz.cast(number.floatValue());
                     } else {

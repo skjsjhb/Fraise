@@ -2,9 +2,8 @@ package io.papermc.paper.plugin.entrypoint.strategy.modern;
 
 import com.google.common.collect.Maps;
 import com.google.common.graph.GraphBuilder;
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.plugin.configuration.PluginMeta;
-import io.papermc.paper.plugin.entrypoint.dependency.GraphDependencyContext;
 import io.papermc.paper.plugin.entrypoint.dependency.MetaDependencyTree;
 import io.papermc.paper.plugin.entrypoint.strategy.ProviderConfiguration;
 import io.papermc.paper.plugin.entrypoint.strategy.ProviderLoadingStrategy;
@@ -14,14 +13,13 @@ import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("UnstableApiUsage")
 public class ModernPluginLoadingStrategy<T> implements ProviderLoadingStrategy<T> {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
     private final ProviderConfiguration<T> configuration;
 
     public ModernPluginLoadingStrategy(ProviderConfiguration<T> onLoad) {

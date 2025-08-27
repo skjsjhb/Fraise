@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
-import java.util.UUID;
+import kotlin.NotImplementedError;
 import net.minecraft.Optionull;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.TamableAnimal;
@@ -8,6 +8,8 @@ import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Tameable;
+
+import java.util.UUID;
 
 public class CraftTameableAnimal extends CraftAnimals implements Tameable, Creature {
 
@@ -56,8 +58,9 @@ public class CraftTameableAnimal extends CraftAnimals implements Tameable, Creat
     public void setOwner(AnimalTamer tamer) {
         if (tamer != null) {
             this.setTamed(true);
-            this.getHandle().setTarget(null, null);
-            this.setOwnerUUID(tamer.getUniqueId());
+            // this.getHandle().setTarget(null, null);
+            throw new NotImplementedError();
+            // this.setOwnerUUID(tamer.getUniqueId());
         } else {
             this.setTamed(false);
             this.setOwnerUUID(null);

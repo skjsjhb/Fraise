@@ -1,8 +1,6 @@
 package org.bukkit.craftbukkit.generator;
 
-import io.papermc.paper.FeatureHooks;
-import java.util.HashSet;
-import java.util.Set;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.world.level.block.Blocks;
@@ -17,6 +15,9 @@ import org.bukkit.craftbukkit.block.data.CraftBlockData;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.material.MaterialData;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Data to be used for the block types and data in a newly generated chunk.
@@ -184,7 +185,8 @@ public final class OldCraftChunkData implements ChunkGenerator.ChunkData {
         int offset = (y - this.minHeight) >> 4;
         LevelChunkSection section = this.sections[offset];
         if (create && section == null) {
-            this.sections[offset] = section = FeatureHooks.createSection(this.biomes, this.world instanceof org.bukkit.craftbukkit.CraftWorld ? ((org.bukkit.craftbukkit.CraftWorld) this.world).getHandle() : null, null, offset + (this.minHeight >> 4)); // Paper - Anti-Xray - Add parameters
+            // this.sections[offset] = section = FeatureHooks.createSection(this.biomes, this.world instanceof org.bukkit.craftbukkit.CraftWorld ? ((org.bukkit.craftbukkit.CraftWorld) this.world).getHandle() : null, null, offset + (this.minHeight >> 4)); // Paper - Anti-Xray - Add parameters
+            throw new NotImplementedError();
         }
         return section;
     }

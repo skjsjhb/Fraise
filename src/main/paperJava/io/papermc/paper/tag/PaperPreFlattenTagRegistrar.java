@@ -9,6 +9,14 @@ import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.lifecycle.event.registrar.PaperRegistrar;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.tag.TagKey;
+import kotlin.NotImplementedError;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagLoader;
+import org.bukkit.craftbukkit.util.CraftNamespacedKey;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.checker.nullness.qual.Nullable;
+import org.checkerframework.framework.qual.DefaultQualifier;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -16,12 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagLoader;
-import org.bukkit.craftbukkit.util.CraftNamespacedKey;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
 
 @SuppressWarnings("BoundedWildcard")
 @DefaultQualifier(NonNull.class)
@@ -65,7 +67,8 @@ public class PaperPreFlattenTagRegistrar<T> implements PaperRegistrar<BootstrapC
     }
 
     private static <T> io.papermc.paper.tag.TagEntry<T> convert(final TagLoader.EntryWithSource nmsEntry) {
-        return new TagEntryImpl<>(CraftNamespacedKey.fromMinecraft(nmsEntry.entry().id), nmsEntry.entry().tag, nmsEntry.entry().required);
+        throw new NotImplementedError();
+        // return new TagEntryImpl<>(CraftNamespacedKey.fromMinecraft(nmsEntry.entry().id), nmsEntry.entry().tag, nmsEntry.entry().required);
     }
 
     private TagLoader.EntryWithSource convert(final TagEntry<T> entry) {

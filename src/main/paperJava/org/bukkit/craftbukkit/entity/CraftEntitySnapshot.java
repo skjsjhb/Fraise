@@ -1,12 +1,11 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.function.Function;
 import com.mojang.logging.LogUtils;
+import kotlin.NotImplementedError;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.level.storage.TagValueInput;
 import net.minecraft.world.level.storage.TagValueOutput;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -16,6 +15,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntitySnapshot;
 import org.bukkit.entity.EntityType;
 import org.slf4j.Logger;
+
+import java.util.function.Function;
 
 public class CraftEntitySnapshot implements EntitySnapshot {
 
@@ -38,7 +39,8 @@ public class CraftEntitySnapshot implements EntitySnapshot {
     public Entity createEntity(World world) {
         net.minecraft.world.entity.Entity internal = this.createInternal(world);
 
-        return internal.getBukkitEntity();
+        throw new NotImplementedError();
+        // return internal.getBukkitEntity();
     }
 
     @Override
@@ -48,7 +50,8 @@ public class CraftEntitySnapshot implements EntitySnapshot {
         net.minecraft.world.entity.Entity internal = this.createInternal(location.getWorld());
 
         internal.setPos(location.getX(), location.getY(), location.getZ());
-        return location.getWorld().addEntity(internal.getBukkitEntity());
+        throw new NotImplementedError();
+        // return location.getWorld().addEntity(internal.getBukkitEntity());
     }
 
     @Override
@@ -63,14 +66,15 @@ public class CraftEntitySnapshot implements EntitySnapshot {
             internal = CraftEntityType.bukkitToMinecraft(this.type).create(level, EntitySpawnReason.LOAD);
         }
 
-        Preconditions.checkArgument(internal != null, "Error creating new entity."); // This should only fail if the stored CompoundTag is malformed.
-        try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-            () -> "EntitySnapshot#createEntity", LOGGER
-        )) {
-            internal.load(TagValueInput.createGlobal(problemReporter, this.data));
-        }
-
-        return internal;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(internal != null, "Error creating new entity."); // This should only fail if the stored CompoundTag is malformed.
+        // try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //     () -> "EntitySnapshot#createEntity", LOGGER
+        // )) {
+        //     internal.load(TagValueInput.createGlobal(problemReporter, this.data));
+        // }
+        //
+        // return internal;
     }
 
     public CompoundTag getData() {
@@ -85,9 +89,10 @@ public class CraftEntitySnapshot implements EntitySnapshot {
                 problemReporter,
                 CraftRegistry.getMinecraftRegistry()
             );
-            if (!entity.getHandle().saveAsPassenger(output, false, false, false)) {
-                return null;
-            }
+            // throw new NotImplementedError();
+            // if (!entity.getHandle().saveAsPassenger(output, false, false, false)) {
+            //     return null;
+            // }
 
             return new CraftEntitySnapshot(output.buildResult(), entity.getType());
         }
@@ -102,13 +107,14 @@ public class CraftEntitySnapshot implements EntitySnapshot {
     }
 
     public static CraftEntitySnapshot create(CompoundTag tag) {
-        try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-            () -> "create", LOGGER
-        )) {
-            EntityType type = net.minecraft.world.entity.EntityType.by(
-                TagValueInput.createGlobal(problemReporter, tag)
-            ).map(CraftEntityType::minecraftToBukkit).orElse(null);
-            return CraftEntitySnapshot.create(tag, type);
-        }
+        throw new NotImplementedError();
+        // try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //     () -> "create", LOGGER
+        // )) {
+        //     EntityType type = net.minecraft.world.entity.EntityType.by(
+        //         TagValueInput.createGlobal(problemReporter, tag)
+        //     ).map(CraftEntityType::minecraftToBukkit).orElse(null);
+        //     return CraftEntitySnapshot.create(tag, type);
+        // }
     }
 }

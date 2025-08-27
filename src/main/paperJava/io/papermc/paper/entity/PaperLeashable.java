@@ -1,6 +1,7 @@
 package io.papermc.paper.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.Leashable;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.entity.Entity;
@@ -17,7 +18,8 @@ public interface PaperLeashable extends io.papermc.paper.entity.Leashable {
     @Override
     default Entity getLeashHolder() throws IllegalStateException {
         Preconditions.checkState(this.isLeashed(), "Entity not leashed");
-        return this.getHandle().getLeashHolder().getBukkitEntity();
+        throw new NotImplementedError();
+        // return this.getHandle().getLeashHolder().getBukkitEntity();
     }
 
     private boolean unleash() {
@@ -31,9 +33,10 @@ public interface PaperLeashable extends io.papermc.paper.entity.Leashable {
 
     @Override
     default boolean setLeashHolder(Entity holder) {
-        if (this.getHandle() instanceof net.minecraft.world.entity.Entity entity && entity.generation) {
-            return false;
-        }
+        if (true) throw new NotImplementedError();
+        // if (this.getHandle() instanceof net.minecraft.world.entity.Entity entity && entity.generation) {
+        //     return false;
+        // }
 
         if (holder == null) {
             return this.unleash();

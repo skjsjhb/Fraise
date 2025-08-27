@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.HopperBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -45,12 +46,14 @@ public class CraftHopper extends CraftLootable<HopperBlockEntity> implements Hop
     @Override
     public void setTransferCooldown(final int cooldown) {
         com.google.common.base.Preconditions.checkArgument(cooldown >= 0, "Hooper transfer cooldown cannot be negative (" + cooldown + ")");
-        getSnapshot().setCooldown(cooldown);
+        // getSnapshot().setCooldown(cooldown);
+        throw new NotImplementedError();
     }
 
     @Override
     public int getTransferCooldown() {
-        return getSnapshot().cooldownTime;
+        // return getSnapshot().cooldownTime;
+        throw new NotImplementedError();
     }
     // Paper end - Expanded Hopper API
 }

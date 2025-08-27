@@ -139,6 +139,11 @@ java {
     }
 }
 
+tasks.withType<JavaCompile>().configureEach {
+    // There are too many removals in Paper...
+    options.isWarnings = false
+}
+
 listOf("compilePortingJava", "compilePortingKotlin", "processPortingResources", "portingClasses").forEach {
     tasks.getByName(it).enabled = false
 }

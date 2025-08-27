@@ -3,10 +3,7 @@ package io.papermc.paper.connection;
 import com.destroystokyo.paper.ClientOption;
 import com.destroystokyo.paper.PaperSkinParts;
 import com.google.common.base.Preconditions;
-import io.papermc.paper.adventure.PaperAdventure;
-import java.net.InetSocketAddress;
-import java.net.SocketAddress;
-import java.util.Map;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.common.ClientboundCustomReportDetailsPacket;
 import net.minecraft.network.protocol.common.ClientboundServerLinksPacket;
@@ -20,12 +17,18 @@ import org.bukkit.craftbukkit.CraftServerLinks;
 import org.bukkit.craftbukkit.util.CraftNamespacedKey;
 import org.jspecify.annotations.Nullable;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.Map;
+
 public abstract class PaperCommonConnection<T extends ServerCommonPacketListenerImpl> extends ReadablePlayerCookieConnectionImpl implements PlayerCommonConnection {
 
     protected final T handle;
 
     public PaperCommonConnection(final T serverConfigurationPacketListenerImpl) {
-        super(serverConfigurationPacketListenerImpl.connection);
+        super(null);
+        if (true) throw new NotImplementedError();
+        // super(serverConfigurationPacketListenerImpl.connection);
         this.handle = serverConfigurationPacketListenerImpl;
     }
 
@@ -72,32 +75,38 @@ public abstract class PaperCommonConnection<T extends ServerCommonPacketListener
 
     @Override
     public void disconnect(final Component component) {
-        this.handle.disconnect(PaperAdventure.asVanilla(component), DisconnectionReason.UNKNOWN);
+        throw new NotImplementedError();
+        // this.handle.disconnect(PaperAdventure.asVanilla(component), DisconnectionReason.UNKNOWN);
     }
 
     @Override
     public boolean isTransferred() {
-        return this.handle.isTransferred();
+        throw new NotImplementedError();
+        // return this.handle.isTransferred();
     }
 
     @Override
     public SocketAddress getAddress() {
-        return this.handle.connection.getRemoteAddress();
+        throw new NotImplementedError();
+        // return this.handle.connection.getRemoteAddress();
     }
 
     @Override
     public InetSocketAddress getClientAddress() {
-        return (InetSocketAddress) this.handle.connection.channel.remoteAddress();
+        throw new NotImplementedError();
+        // return (InetSocketAddress) this.handle.connection.channel.remoteAddress();
     }
 
     @Override
     public @Nullable InetSocketAddress getVirtualHost() {
-        return this.handle.connection.virtualHost;
+        throw new NotImplementedError();
+        // return this.handle.connection.virtualHost;
     }
 
     @Override
     public @Nullable InetSocketAddress getHAProxyAddress() {
-        return this.handle.connection.haProxyAddress instanceof final InetSocketAddress inetSocketAddress ? inetSocketAddress : null;
+        throw new NotImplementedError();
+        // return this.handle.connection.haProxyAddress instanceof final InetSocketAddress inetSocketAddress ? inetSocketAddress : null;
     }
 
     @Override

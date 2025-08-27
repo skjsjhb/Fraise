@@ -1,9 +1,10 @@
 package com.destroystokyo.paper.network;
 
-import java.net.InetSocketAddress;
+import kotlin.NotImplementedError;
+import net.minecraft.network.Connection;
 
 import javax.annotation.Nullable;
-import net.minecraft.network.Connection;
+import java.net.InetSocketAddress;
 
 public class PaperNetworkClient implements NetworkClient {
 
@@ -20,13 +21,15 @@ public class PaperNetworkClient implements NetworkClient {
 
     @Override
     public int getProtocolVersion() {
-        return this.networkManager.protocolVersion;
+        throw new NotImplementedError();
+        // return this.networkManager.protocolVersion;
     }
 
     @Nullable
     @Override
     public InetSocketAddress getVirtualHost() {
-        return this.networkManager.virtualHost;
+        throw new NotImplementedError();
+        // return this.networkManager.virtualHost;
     }
 
     public static InetSocketAddress prepareVirtualHost(String host, int port) {
@@ -39,7 +42,7 @@ public class PaperNetworkClient implements NetworkClient {
         }
 
         // When clients connect with a SRV record, their host contains a trailing '.'
-        if (len > 0 && host.charAt(len -  1) == '.') {
+        if (len > 0 && host.charAt(len - 1) == '.') {
             len--;
         }
 

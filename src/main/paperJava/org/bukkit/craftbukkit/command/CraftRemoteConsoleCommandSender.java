@@ -1,9 +1,11 @@
 package org.bukkit.craftbukkit.command;
 
-import java.net.SocketAddress;
+import kotlin.NotImplementedError;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.rcon.RconConsoleSource;
 import org.bukkit.command.RemoteConsoleCommandSender;
+
+import java.net.SocketAddress;
 
 public class CraftRemoteConsoleCommandSender extends ServerCommandSender implements RemoteConsoleCommandSender {
 
@@ -19,7 +21,8 @@ public class CraftRemoteConsoleCommandSender extends ServerCommandSender impleme
 
     @Override
     public SocketAddress getAddress() {
-       return this.listener.socketAddress;
+        throw new NotImplementedError();
+        // return this.listener.socketAddress;
     }
 
     @Override

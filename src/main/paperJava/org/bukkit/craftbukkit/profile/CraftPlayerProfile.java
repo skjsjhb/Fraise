@@ -6,17 +6,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
 import com.mojang.authlib.yggdrasil.ProfileResult;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
+import kotlin.NotImplementedError;
 import net.minecraft.Util;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.world.item.component.ResolvableProfile;
@@ -31,6 +21,18 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
+
 @NullMarked
 @SerializableAs("PlayerProfile")
 public final class CraftPlayerProfile implements PlayerProfile, com.destroystokyo.paper.profile.SharedPlayerProfile, com.destroystokyo.paper.profile.PlayerProfile { // Paper
@@ -39,7 +41,7 @@ public final class CraftPlayerProfile implements PlayerProfile, com.destroystoky
         // The GameProfile needs to contain either both a uuid and textures, or a name.
         // The GameProfile always has a name or a uuid, so checking if it has a name is sufficient.
         boolean isValidSkullProfile = (gameProfile.getName() != null)
-                || gameProfile.getProperties().containsKey(CraftPlayerTextures.PROPERTY_NAME);
+            || gameProfile.getProperties().containsKey(CraftPlayerTextures.PROPERTY_NAME);
         Preconditions.checkArgument(isValidSkullProfile, "The skull profile is missing a name or textures!");
         Preconditions.checkArgument(gameProfile.getName().length() <= 16, "The name of the profile is longer than 16 characters");
         Preconditions.checkArgument(net.minecraft.util.StringUtil.isValidPlayerName(gameProfile.getName()), "The name of the profile contains invalid characters: %s", gameProfile.getName());
@@ -56,7 +58,7 @@ public final class CraftPlayerProfile implements PlayerProfile, com.destroystoky
     public static ResolvableProfile validateSkullProfile(ResolvableProfile resolvableProfile) {
         // The ResolvableProfile needs to contain either both a uuid and textures, or a name.
         boolean isValidSkullProfile = (resolvableProfile.name().isPresent())
-                || (resolvableProfile.id().isPresent() || resolvableProfile.properties().containsKey(CraftPlayerTextures.PROPERTY_NAME));
+            || (resolvableProfile.id().isPresent() || resolvableProfile.properties().containsKey(CraftPlayerTextures.PROPERTY_NAME));
         Preconditions.checkArgument(isValidSkullProfile, "The skull profile is missing a name or textures!");
         return resolvableProfile;
     }
@@ -158,7 +160,8 @@ public final class CraftPlayerProfile implements PlayerProfile, com.destroystoky
 
     @Override
     public CompletableFuture update() { // Paper - have to remove generic to avoid clashing between bukkit.PlayerProfile and paper.PlayerProfile
-        return CompletableFuture.supplyAsync(this::getUpdatedProfile, Util.PROFILE_EXECUTOR); // Paper - don't submit BLOCKING PROFILE LOOKUPS to the world gen thread
+        // return CompletableFuture.supplyAsync(this::getUpdatedProfile, Util.PROFILE_EXECUTOR); // Paper - don't submit BLOCKING PROFILE LOOKUPS to the world gen thread
+        throw new NotImplementedError();
     }
 
     private CraftPlayerProfile getUpdatedProfile() {
@@ -202,15 +205,14 @@ public final class CraftPlayerProfile implements PlayerProfile, com.destroystoky
     @Override
     public String toString() {
         this.rebuildDirtyProperties();
-        StringBuilder builder = new StringBuilder();
-        builder.append("CraftPlayerProfile [uniqueId=");
-        builder.append(this.uniqueId);
-        builder.append(", name=");
-        builder.append(this.name);
-        builder.append(", properties=");
-        builder.append(CraftPlayerProfile.toString(this.properties));
-        builder.append("]");
-        return builder.toString();
+        final String builder = "CraftPlayerProfile [uniqueId=" +
+            this.uniqueId +
+            ", name=" +
+            this.name +
+            ", properties=" +
+            CraftPlayerProfile.toString(this.properties) +
+            "]";
+        return builder;
     }
 
     public static String toString(PropertyMap propertyMap) {
@@ -234,8 +236,7 @@ public final class CraftPlayerProfile implements PlayerProfile, com.destroystoky
 
         this.rebuildDirtyProperties();
         other.rebuildDirtyProperties();
-        if (!CraftPlayerProfile.equals(this.properties, other.properties)) return false;
-        return true;
+        return CraftPlayerProfile.equals(this.properties, other.properties);
     }
 
     private static boolean equals(PropertyMap propertyMap, PropertyMap other) {

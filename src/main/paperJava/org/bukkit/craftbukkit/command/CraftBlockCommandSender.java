@@ -1,18 +1,18 @@
 package org.bukkit.craftbukkit.command;
 
+import kotlin.NotImplementedError;
 import net.minecraft.commands.CommandSourceStack;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.bukkit.block.Block;
 import org.bukkit.command.BlockCommandSender;
 import org.bukkit.craftbukkit.block.CraftBlock;
-import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.permissions.PermissibleBase;
 import org.bukkit.permissions.ServerOperator;
 
 /**
  * Represents input from a command block
  */
+@SuppressWarnings("UnstableApiUsage")
 public class CraftBlockCommandSender extends ServerCommandSender implements BlockCommandSender {
 
     // For performance reasons, use one PermissibleBase for all command blocks.
@@ -44,9 +44,10 @@ public class CraftBlockCommandSender extends ServerCommandSender implements Bloc
 
     @Override
     public void sendMessage(String message) {
-        for (Component component : CraftChatMessage.fromString(message)) {
-            this.block.source.sendSystemMessage(component);
-        }
+        throw new NotImplementedError();
+        // for (Component component : CraftChatMessage.fromString(message)) {
+        //     this.block.source.sendSystemMessage(component);
+        // }
     }
 
     @Override
@@ -63,7 +64,8 @@ public class CraftBlockCommandSender extends ServerCommandSender implements Bloc
 
     @Override
     public void sendMessage(net.kyori.adventure.identity.Identity identity, net.kyori.adventure.text.Component message, net.kyori.adventure.audience.MessageType type) {
-        this.block.source.sendSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message));
+        throw new NotImplementedError();
+        // this.block.source.sendSystemMessage(io.papermc.paper.adventure.PaperAdventure.asVanilla(message));
     }
 
     @Override

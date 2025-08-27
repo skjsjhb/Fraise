@@ -1,7 +1,9 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.ExperienceOrb;
+
 import java.util.UUID;
 
 public class CraftExperienceOrb extends CraftEntity implements ExperienceOrb {
@@ -22,31 +24,37 @@ public class CraftExperienceOrb extends CraftEntity implements ExperienceOrb {
 
     @Override
     public void setExperience(int value) {
-        this.getHandle().setValue(value);
+        throw new NotImplementedError();
+        // this.getHandle().setValue(value);
     }
 
     @Override
     public int getCount() {
-        return this.getHandle().count;
+        throw new NotImplementedError();
+        // return this.getHandle().count;
     }
 
     @Override
     public void setCount(final int count) {
-        this.getHandle().count = count;
+        throw new NotImplementedError();
+        // this.getHandle().count = count;
     }
 
     @Override
     public UUID getTriggerEntityId() {
-        return this.getHandle().triggerEntityId;
+        throw new NotImplementedError();
+        // return this.getHandle().triggerEntityId;
     }
 
     @Override
     public UUID getSourceEntityId() {
-        return this.getHandle().sourceEntityId;
+        throw new NotImplementedError();
+        // return this.getHandle().sourceEntityId;
     }
 
     @Override
     public SpawnReason getSpawnReason() {
-        return this.getHandle().spawnReason;
+        throw new NotImplementedError();
+        // return this.getHandle().spawnReason;
     }
 }

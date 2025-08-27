@@ -1,11 +1,10 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.RandomizableContainerBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.Nameable;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.CraftLootTable;
-import org.bukkit.loot.LootTable;
 import org.bukkit.loot.Lootable;
 
 public abstract class CraftLootable<T extends RandomizableContainerBlockEntity> extends CraftContainer<T> implements Nameable, Lootable, com.destroystokyo.paper.loottable.PaperLootableBlockInventory { // Paper
@@ -22,9 +21,10 @@ public abstract class CraftLootable<T extends RandomizableContainerBlockEntity> 
     public void applyTo(T blockEntity) {
         super.applyTo(blockEntity);
 
-        if (this.getSnapshot().lootTable == null) {
-            blockEntity.setLootTable(null, 0L);
-        }
+        throw new NotImplementedError();
+        // if (this.getSnapshot().lootTable == null) {
+        //     blockEntity.setLootTable(null, 0L);
+        // }
     }
 
     // Paper start - move to PaperLootableBlockInventory

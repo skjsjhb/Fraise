@@ -10,28 +10,28 @@ import io.papermc.paper.plugin.lifecycle.event.types.LifecycleEventType;
 import io.papermc.paper.registry.data.util.Conversions;
 import io.papermc.paper.registry.entry.RegistryEntry;
 import io.papermc.paper.registry.entry.RegistryEntryMeta;
+import io.papermc.paper.registry.event.RegistryComposeEvent;
+import io.papermc.paper.registry.event.RegistryComposeEventImpl;
 import io.papermc.paper.registry.event.RegistryEntryAddEvent;
 import io.papermc.paper.registry.event.RegistryEntryAddEventImpl;
 import io.papermc.paper.registry.event.RegistryEventMap;
 import io.papermc.paper.registry.event.RegistryEventProvider;
-import io.papermc.paper.registry.event.RegistryComposeEventImpl;
-import io.papermc.paper.registry.event.RegistryComposeEvent;
 import io.papermc.paper.registry.event.type.RegistryEntryAddEventType;
 import io.papermc.paper.registry.event.type.RegistryEntryAddEventTypeImpl;
 import io.papermc.paper.registry.event.type.RegistryLifecycleEventType;
-import java.util.Optional;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.key.Key;
 import net.minecraft.core.Holder;
-import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
 import net.minecraft.core.Registry;
 import net.minecraft.core.WritableRegistry;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import org.bukkit.Keyed;
 import org.intellij.lang.annotations.Subst;
 import org.jspecify.annotations.Nullable;
+
+import java.util.Optional;
 
 public class PaperRegistryListenerManager {
 
@@ -61,7 +61,8 @@ public class PaperRegistryListenerManager {
      * For {@link Registry#register(Registry, ResourceKey, Object)}
      */
     public <M> M registerWithListeners(final Registry<M> registry, final ResourceKey<M> key, final M nms) {
-        return this.registerWithListeners(registry, key, nms, RegistrationInfo.BUILT_IN, PaperRegistryListenerManager::registerWithInstance, BuiltInRegistries.STATIC_ACCESS_CONVERSIONS);
+        // return this.registerWithListeners(registry, key, nms, RegistrationInfo.BUILT_IN, PaperRegistryListenerManager::registerWithInstance, BuiltInRegistries.STATIC_ACCESS_CONVERSIONS);
+        throw new NotImplementedError();
     }
 
     /**
@@ -75,7 +76,8 @@ public class PaperRegistryListenerManager {
      * For {@link Registry#registerForHolder(Registry, ResourceKey, Object)}
      */
     public <M> Holder.Reference<M> registerForHolderWithListeners(final Registry<M> registry, final ResourceKey<M> key, final M nms) {
-        return this.registerWithListeners(registry, key, nms, RegistrationInfo.BUILT_IN, WritableRegistry::register, BuiltInRegistries.STATIC_ACCESS_CONVERSIONS);
+        // return this.registerWithListeners(registry, key, nms, RegistrationInfo.BUILT_IN, WritableRegistry::register, BuiltInRegistries.STATIC_ACCESS_CONVERSIONS);
+        throw new NotImplementedError();
     }
 
     public <M> void registerWithListeners(
@@ -89,12 +91,12 @@ public class PaperRegistryListenerManager {
     }
 
     public <M, T extends Keyed, B extends PaperRegistryBuilder<M, T>, R> R registerWithListeners( // TODO remove Keyed
-        final Registry<M> registry,
-        final ResourceKey<M> key,
-        final M nms,
-        final RegistrationInfo registrationInfo,
-        final RegisterMethod<M, R> registerMethod,
-        final Conversions conversions
+                                                                                                  final Registry<M> registry,
+                                                                                                  final ResourceKey<M> key,
+                                                                                                  final M nms,
+                                                                                                  final RegistrationInfo registrationInfo,
+                                                                                                  final RegisterMethod<M, R> registerMethod,
+                                                                                                  final Conversions conversions
     ) {
         Preconditions.checkState(LaunchEntryPointHandler.INSTANCE.hasEntered(Entrypoint.BOOTSTRAPPER), registry.key() + " tried to run modification listeners before bootstrappers have been called"); // verify that bootstrappers have been called
         final RegistryEntry<M, T> entry = PaperRegistries.getEntry(registry.key());
@@ -107,12 +109,12 @@ public class PaperRegistryListenerManager {
     }
 
     <M, T extends Keyed, B extends PaperRegistryBuilder<M, T>> void registerWithListeners( // TODO remove Keyed
-        final WritableRegistry<M> registry,
-        final RegistryEntryMeta.Buildable<M, T, B> entry,
-        final ResourceKey<M> key,
-        final B builder,
-        final RegistrationInfo registrationInfo,
-        final Conversions conversions
+                                                                                           final WritableRegistry<M> registry,
+                                                                                           final RegistryEntryMeta.Buildable<M, T, B> entry,
+                                                                                           final ResourceKey<M> key,
+                                                                                           final B builder,
+                                                                                           final RegistrationInfo registrationInfo,
+                                                                                           final Conversions conversions
     ) {
         if (!entry.modificationApiSupport().canModify() || !this.valueAddEventTypes.hasHandlers(entry.apiKey())) {
             registry.register(key, builder.build(), registrationInfo);
@@ -122,21 +124,22 @@ public class PaperRegistryListenerManager {
     }
 
     public <M, T extends Keyed, B extends PaperRegistryBuilder<M, T>, R> R registerWithListeners( // TODO remove Keyed
-        final Registry<M> registry,
-        final RegistryEntryMeta.Buildable<M, T, B> entry,
-        final ResourceKey<M> key,
-        final @Nullable M oldNms,
-        final B builder,
-        RegistrationInfo registrationInfo,
-        final RegisterMethod<M, R> registerMethod,
-        final Conversions conversions
+                                                                                                  final Registry<M> registry,
+                                                                                                  final RegistryEntryMeta.Buildable<M, T, B> entry,
+                                                                                                  final ResourceKey<M> key,
+                                                                                                  final @Nullable M oldNms,
+                                                                                                  final B builder,
+                                                                                                  RegistrationInfo registrationInfo,
+                                                                                                  final RegisterMethod<M, R> registerMethod,
+                                                                                                  final Conversions conversions
     ) {
         @Subst("namespace:key") final ResourceLocation beingAdded = key.location();
         @SuppressWarnings("PatternValidation") final TypedKey<T> typedKey = TypedKey.create(entry.apiKey(), Key.key(beingAdded.getNamespace(), beingAdded.getPath()));
         final RegistryEntryAddEventImpl<T, B> event = entry.createEntryAddEvent(typedKey, builder, conversions);
         LifecycleEventRunner.INSTANCE.callEvent(this.valueAddEventTypes.getEventType(entry.apiKey()), event);
         if (oldNms != null) {
-            ((MappedRegistry<M>) registry).clearIntrusiveHolder(oldNms);
+            throw new NotImplementedError();
+            // ((MappedRegistry<M>) registry).clearIntrusiveHolder(oldNms);
         }
         final M newNms = event.builder().build();
         if (oldNms != null && !newNms.equals(oldNms)) {

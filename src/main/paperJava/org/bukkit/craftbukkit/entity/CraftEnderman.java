@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.monster.EnderMan;
 import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.Material;
@@ -25,7 +26,8 @@ public class CraftEnderman extends CraftMonster implements Enderman {
 
     @Override
     public boolean teleportRandomly() {
-        return getHandle().teleport();
+        throw new NotImplementedError();
+        // return getHandle().teleport();
     }
 
     @Override
@@ -57,7 +59,8 @@ public class CraftEnderman extends CraftMonster implements Enderman {
 
     @Override
     public void setScreaming(boolean screaming) {
-        this.getHandle().setCreepy(screaming);
+        throw new NotImplementedError();
+        // this.getHandle().setCreepy(screaming);
     }
 
     @Override
@@ -67,18 +70,21 @@ public class CraftEnderman extends CraftMonster implements Enderman {
 
     @Override
     public void setHasBeenStaredAt(boolean hasBeenStaredAt) {
-        this.getHandle().setHasBeenStaredAt(hasBeenStaredAt);
+        throw new NotImplementedError();
+        // this.getHandle().setHasBeenStaredAt(hasBeenStaredAt);
     }
 
     @Override
     public boolean teleport() {
-        return this.getHandle().teleport();
+        throw new NotImplementedError();
+        // return this.getHandle().teleport();
     }
 
     @Override
     public boolean teleportTowards(Entity entity) {
         Preconditions.checkArgument(entity != null, "entity cannot be null");
 
-        return this.getHandle().teleportTowards(((CraftEntity) entity).getHandle());
+        throw new NotImplementedError();
+        // return this.getHandle().teleportTowards(((CraftEntity) entity).getHandle());
     }
 }

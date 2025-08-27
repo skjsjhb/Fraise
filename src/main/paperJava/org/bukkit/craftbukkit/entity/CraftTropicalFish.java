@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.DyeColor;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.TropicalFish;
@@ -17,32 +18,38 @@ public class CraftTropicalFish extends io.papermc.paper.entity.PaperSchoolableFi
 
     @Override
     public DyeColor getPatternColor() {
-        return CraftTropicalFish.getPatternColor(this.getHandle().getPackedVariant());
+        // return CraftTropicalFish.getPatternColor(this.getHandle().getPackedVariant());
+        throw new NotImplementedError();
     }
 
     @Override
     public void setPatternColor(DyeColor color) {
-        this.getHandle().setPackedVariant(CraftTropicalFish.getData(color, this.getBodyColor(), this.getPattern()));
+        // this.getHandle().setPackedVariant(CraftTropicalFish.getData(color, this.getBodyColor(), this.getPattern()));
+        throw new NotImplementedError();
     }
 
     @Override
     public DyeColor getBodyColor() {
-        return CraftTropicalFish.getBodyColor(this.getHandle().getPackedVariant());
+        // return CraftTropicalFish.getBodyColor(this.getHandle().getPackedVariant());
+        throw new NotImplementedError();
     }
 
     @Override
     public void setBodyColor(DyeColor color) {
-        this.getHandle().setPackedVariant(CraftTropicalFish.getData(this.getPatternColor(), color, this.getPattern()));
+        // this.getHandle().setPackedVariant(CraftTropicalFish.getData(this.getPatternColor(), color, this.getPattern()));
+        throw new NotImplementedError();
     }
 
     @Override
     public Pattern getPattern() {
-        return CraftTropicalFish.getPattern(this.getHandle().getPackedVariant());
+        // return CraftTropicalFish.getPattern(this.getHandle().getPackedVariant());
+        throw new NotImplementedError();
     }
 
     @Override
     public void setPattern(Pattern pattern) {
-        this.getHandle().setPackedVariant(CraftTropicalFish.getData(this.getPatternColor(), this.getBodyColor(), pattern));
+        // this.getHandle().setPackedVariant(CraftTropicalFish.getData(this.getPatternColor(), this.getBodyColor(), pattern));
+        throw new NotImplementedError();
     }
 
     public static int getData(DyeColor patternColor, DyeColor bodyColor, Pattern type) {

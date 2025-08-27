@@ -2,6 +2,7 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import io.papermc.paper.util.OldEnumHolderable;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.animal.CatVariant;
@@ -30,7 +31,8 @@ public class CraftCat extends CraftTameableAnimal implements Cat {
     public void setCatType(Type type) {
         Preconditions.checkArgument(type != null, "type cannot be null");
 
-        this.getHandle().setVariant(CraftType.bukkitToMinecraftHolder(type));
+        throw new NotImplementedError();
+        // this.getHandle().setVariant(CraftType.bukkitToMinecraftHolder(type));
     }
 
     @Override
@@ -40,7 +42,8 @@ public class CraftCat extends CraftTameableAnimal implements Cat {
 
     @Override
     public void setCollarColor(DyeColor color) {
-        this.getHandle().setCollarColor(net.minecraft.world.item.DyeColor.byId(color.getWoolData()));
+        throw new NotImplementedError();
+        // this.getHandle().setCollarColor(net.minecraft.world.item.DyeColor.byId(color.getWoolData()));
     }
 
     public static class CraftType extends OldEnumHolderable<Type, CatVariant> implements Type {
@@ -79,11 +82,14 @@ public class CraftCat extends CraftTameableAnimal implements Cat {
 
     @Override
     public void setHeadUp(boolean headUp) {
-        this.getHandle().setRelaxStateOne(headUp);
+        throw new NotImplementedError();
+        // this.getHandle().setRelaxStateOne(headUp);
     }
 
     @Override
     public boolean isHeadUp() {
-        return this.getHandle().isRelaxStateOne();
+        throw new NotImplementedError();
+        // return this.getHandle().isRelaxStateOne();
     }
+
 }

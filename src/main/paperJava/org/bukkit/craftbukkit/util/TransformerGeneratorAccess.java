@@ -7,14 +7,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.TagValueInput;
 import org.bukkit.craftbukkit.block.CraftBlockEntityState;
 import org.bukkit.craftbukkit.block.CraftBlockState;
 import org.bukkit.craftbukkit.block.CraftBlockStates;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
 public class TransformerGeneratorAccess extends DelegatedGeneratorAccess {
@@ -43,13 +40,14 @@ public class TransformerGeneratorAccess extends DelegatedGeneratorAccess {
         return super.addFreshEntity(entity);
     }
 
-    @Override
-    public boolean addFreshEntity(Entity entity, @Nullable SpawnReason reason) {
-        if (this.structureTransformer != null && !this.structureTransformer.transformEntity(entity)) {
-            return false;
-        }
-        return super.addFreshEntity(entity, reason);
-    }
+    // @Override
+    // public boolean addFreshEntity(Entity entity, @Nullable SpawnReason reason) {
+    //     if (this.structureTransformer != null && !this.structureTransformer.transformEntity(entity)) {
+    //         return false;
+    //     }
+    //     return super.addFreshEntity(entity, reason);
+    // }
+    // throw new NotImplementedError();
 
     public boolean setCraftBlock(BlockPos position, CraftBlockState craftBlockState, int flags, int recursionLeft) {
         craftBlockState = this.structureTransformer.transformCraftState(craftBlockState);
@@ -61,9 +59,10 @@ public class TransformerGeneratorAccess extends DelegatedGeneratorAccess {
         if (!fluidState.isEmpty()) {
             this.scheduleTick(position, fluidState.getType(), 0);
         }
-        if (StructurePiece.SHAPE_CHECK_BLOCKS.contains(snapshot.getBlock())) {
-            this.getChunk(position).markPosForPostprocessing(position);
-        }
+        // throw new NotImplementedError();
+        // if (StructurePiece.SHAPE_CHECK_BLOCKS.contains(snapshot.getBlock())) {
+        //     this.getChunk(position).markPosForPostprocessing(position);
+        // }
         BlockEntity blockEntity = this.getBlockEntity(position);
         if (blockEntity != null && craftBlockState instanceof CraftBlockEntityState<?> craftEntityState) {
             try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(

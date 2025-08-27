@@ -8,15 +8,6 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.papermc.paper.dialog.Dialog;
 import io.papermc.paper.registry.data.dialog.PaperDialogCodecs;
-import java.net.URI;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.nbt.api.BinaryTagHolder;
 import net.kyori.adventure.text.BlockNBTComponent;
@@ -49,7 +40,6 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.chat.contents.KeybindContents;
 import net.minecraft.network.chat.contents.ScoreContents;
-import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.ExtraCodecs;
@@ -60,6 +50,16 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
 import org.intellij.lang.annotations.Subst;
+
+import java.net.URI;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import static com.mojang.serialization.Codec.recursive;
 import static com.mojang.serialization.codecs.RecordCodecBuilder.mapCodec;
@@ -272,7 +272,10 @@ public final class AdventureCodecs {
     static final MapCodec<TextComponent> TEXT_COMPONENT_MAP_CODEC = mapCodec((instance) -> {
         return instance.group(Codec.STRING.fieldOf("text").forGetter(TextComponent::content)).apply(instance, Component::text);
     });
-    static final Codec<Object> PRIMITIVE_ARG_CODEC = ExtraCodecs.JAVA.validate(TranslatableContents::filterAllowedArguments);
+
+    // throw new NotImplementedError();
+    static final Codec<Object> PRIMITIVE_ARG_CODEC = null; // ExtraCodecs.JAVA.validate(TranslatableContents::filterAllowedArguments);
+
     static final Codec<TranslationArgument> ARG_CODEC = Codec.either(PRIMITIVE_ARG_CODEC, COMPONENT_CODEC).flatXmap((primitiveOrComponent) -> {
         return primitiveOrComponent.map(o -> {
             final TranslationArgument arg;
@@ -369,7 +372,8 @@ public final class AdventureCodecs {
 
     static final MapCodec<NbtComponentDataSource> NBT_COMPONENT_DATA_SOURCE_CODEC = ComponentSerialization.createLegacyComponentMatcher(new DataSourceType<?>[]{ENTITY_DATA_SOURCE_TYPE, BLOCK_DATA_SOURCE_TYPE, STORAGE_DATA_SOURCE_TYPE}, DataSourceType::codec, NbtComponentDataSource::type, "source");
 
-    record DataSourceType<D extends NbtComponentDataSource>(MapCodec<D> codec, String id) implements StringRepresentable {
+    record DataSourceType<D extends NbtComponentDataSource>(MapCodec<D> codec,
+                                                            String id) implements StringRepresentable {
         @Override
         public String getSerializedName() {
             return this.id();
@@ -398,7 +402,8 @@ public final class AdventureCodecs {
     });
 
     @SuppressWarnings("NonExtendableApiUsage")
-    record ComponentType<C extends Component>(MapCodec<C> codec, Predicate<Component> test, String id) implements StringRepresentable {
+    record ComponentType<C extends Component>(MapCodec<C> codec, Predicate<Component> test,
+                                              String id) implements StringRepresentable {
         @Override
         public String getSerializedName() {
             return this.id;

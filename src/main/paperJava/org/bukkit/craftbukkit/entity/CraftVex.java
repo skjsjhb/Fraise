@@ -1,8 +1,8 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.EntityReference;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftLocation;
@@ -22,32 +22,38 @@ public class CraftVex extends CraftMonster implements Vex {
     @Override
     public org.bukkit.entity.Mob getSummoner() {
         net.minecraft.world.entity.Mob owner = this.getHandle().getOwner();
-        return owner != null ? (org.bukkit.entity.Mob) owner.getBukkitEntity() : null;
+        // return owner != null ? (org.bukkit.entity.Mob) owner.getBukkitEntity() : null;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setSummoner(org.bukkit.entity.Mob summoner) {
-        this.getHandle().owner = summoner == null ? null : new EntityReference<>(((CraftMob) summoner).getHandle());
+        // this.getHandle().owner = summoner == null ? null : new EntityReference<>(((CraftMob) summoner).getHandle());
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean hasLimitedLifetime() {
-        return this.getHandle().hasLimitedLife;
+        // return this.getHandle().hasLimitedLife;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setLimitedLifetime(boolean hasLimitedLifetime) {
-        this.getHandle().hasLimitedLife = hasLimitedLifetime;
+        // this.getHandle().hasLimitedLife = hasLimitedLifetime;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getLimitedLifetimeTicks() {
-        return this.getHandle().limitedLifeTicks;
+        // return this.getHandle().limitedLifeTicks;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setLimitedLifetimeTicks(int ticks) {
-        this.getHandle().limitedLifeTicks = ticks;
+        // this.getHandle().limitedLifeTicks = ticks;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -78,19 +84,22 @@ public class CraftVex extends CraftMonster implements Vex {
 
     @Override
     public int getLifeTicks() {
-        return this.getHandle().limitedLifeTicks;
+        // return this.getHandle().limitedLifeTicks;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setLifeTicks(int lifeTicks) {
-        this.getHandle().setLimitedLife(lifeTicks);
-        if (lifeTicks < 0) {
-            this.getHandle().hasLimitedLife = false;
-        }
+        // this.getHandle().setLimitedLife(lifeTicks);
+        // if (lifeTicks < 0) {
+        //     this.getHandle().hasLimitedLife = false;
+        // }
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean hasLimitedLife() {
-        return this.getHandle().hasLimitedLife;
+        // return this.getHandle().hasLimitedLife;
+        throw new NotImplementedError();
     }
 }

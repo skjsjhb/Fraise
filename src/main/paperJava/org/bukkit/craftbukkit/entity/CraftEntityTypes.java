@@ -1,24 +1,16 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Function;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.decoration.LeashFenceKnotEntity;
-import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.item.PrimedTnt;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import net.minecraft.world.entity.projectile.EyeOfEnder;
-import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.entity.projectile.ThrownEgg;
 import net.minecraft.world.entity.projectile.ThrownLingeringPotion;
 import net.minecraft.world.entity.projectile.ThrownSplashPotion;
@@ -27,15 +19,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.DiodeBlock;
-import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.entity.boat.CraftAcaciaBoat;
 import org.bukkit.craftbukkit.entity.boat.CraftAcaciaChestBoat;
 import org.bukkit.craftbukkit.entity.boat.CraftBambooChestRaft;
@@ -93,9 +79,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.EvokerFangs;
-import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.FishHook;
 import org.bukkit.entity.Fox;
 import org.bukkit.entity.Frog;
@@ -212,6 +196,12 @@ import org.bukkit.entity.minecart.SpawnerMinecart;
 import org.bukkit.entity.minecart.StorageMinecart;
 import org.bukkit.util.Vector;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+
 public final class CraftEntityTypes {
 
     public record EntityTypeData<E extends Entity, M extends net.minecraft.world.entity.Entity>(EntityType entityType,
@@ -242,7 +232,8 @@ public final class CraftEntityTypes {
         }
 
         Level minecraftWorld() {
-            return this.world().getMinecraftWorld();
+            throw new NotImplementedError();
+            // return this.world().getMinecraftWorld();
         }
     }
 
@@ -255,9 +246,12 @@ public final class CraftEntityTypes {
     private static final BiConsumer<SpawnData, net.minecraft.world.entity.Entity> MOVE_EMPTY_ROT = (spawnData, entity) -> entity.snapTo(spawnData.x(), spawnData.y(), spawnData.z(), 0, 0);
     private static final BiConsumer<SpawnData, AbstractHurtingProjectile> DIRECTION = (spawnData, entity) -> {
         Vector direction = spawnData.location().getDirection();
-        entity.assignDirectionalMovement(new Vec3(direction.getX(), direction.getY(), direction.getZ()), 1.0);
+        throw new NotImplementedError();
+        // entity.assignDirectionalMovement(new Vec3(direction.getX(), direction.getY(), direction.getZ()), 1.0);
     };
-    private static final BiConsumer<SpawnData, net.minecraft.world.entity.Entity> ROT = (spawnData, entity) -> entity.setRot(spawnData.yaw(), spawnData.pitch()); // Paper
+    private static final BiConsumer<SpawnData, net.minecraft.world.entity.Entity> ROT = (spawnData, entity) -> {
+        throw new NotImplementedError();
+    }; // entity.setRot(spawnData.yaw(), spawnData.pitch()); // Paper
     // Paper start - respect randomizeData
     private static final BiConsumer<SpawnData, net.minecraft.world.entity.Entity> CLEAR_MOVE_IF_NOT_RANDOMIZED = (spawnData, entity) -> {
         if (!spawnData.randomizeData()) {
@@ -371,20 +365,22 @@ public final class CraftEntityTypes {
 
         // Hanging
         register(new EntityTypeData<>(EntityType.PAINTING, Painting.class, CraftPainting::new, createHanging(Painting.class, (spawnData, hangingData) -> {
-                    if (spawnData.normalWorld && hangingData.randomize()) {
-                        // Paper start - if randomizeData fails, force it
-                        final net.minecraft.world.entity.decoration.Painting entity = net.minecraft.world.entity.decoration.Painting.create(spawnData.minecraftWorld(), hangingData.position(), hangingData.direction()).orElse(null);
-                        if (entity != null) {
-                            return entity;
-                        }
-                    } /*else*/ {
-                        // Paper end - if randomizeData fails, force it
-                        net.minecraft.world.entity.decoration.Painting entity = new net.minecraft.world.entity.decoration.Painting(net.minecraft.world.entity.EntityType.PAINTING, spawnData.minecraftWorld());
-                        entity.absSnapTo(spawnData.x(), spawnData.y(), spawnData.z(), spawnData.yaw(), spawnData.pitch());
-                        entity.setDirection(hangingData.direction());
+                if (spawnData.normalWorld && hangingData.randomize()) {
+                    // Paper start - if randomizeData fails, force it
+                    final net.minecraft.world.entity.decoration.Painting entity = net.minecraft.world.entity.decoration.Painting.create(spawnData.minecraftWorld(), hangingData.position(), hangingData.direction()).orElse(null);
+                    if (entity != null) {
                         return entity;
                     }
+                } /*else*/
+                {
+                    // Paper end - if randomizeData fails, force it
+                    net.minecraft.world.entity.decoration.Painting entity = new net.minecraft.world.entity.decoration.Painting(net.minecraft.world.entity.EntityType.PAINTING, spawnData.minecraftWorld());
+                    entity.absSnapTo(spawnData.x(), spawnData.y(), spawnData.z(), spawnData.yaw(), spawnData.pitch());
+                    throw new NotImplementedError();
+                    // entity.setDirection(hangingData.direction());
+                    // return entity;
                 }
+            }
         )));
         register(new EntityTypeData<>(EntityType.ITEM_FRAME, ItemFrame.class, CraftItemFrame::new, createHanging(ItemFrame.class, (spawnData, hangingData) -> new net.minecraft.world.entity.decoration.ItemFrame(spawnData.minecraftWorld(), hangingData.position(), hangingData.direction()))));
         register(new EntityTypeData<>(EntityType.GLOW_ITEM_FRAME, GlowItemFrame.class, CraftGlowItemFrame::new, createHanging(GlowItemFrame.class, (spawnData, hangingData) -> new net.minecraft.world.entity.decoration.GlowItemFrame(spawnData.minecraftWorld(), hangingData.position(), hangingData.direction()))));
@@ -442,9 +438,10 @@ public final class CraftEntityTypes {
 
             return item;
         }));
-        register(new EntityTypeData<>(EntityType.EXPERIENCE_ORB, ExperienceOrb.class, CraftExperienceOrb::new,
-                combine(combine(spawnData -> new net.minecraft.world.entity.ExperienceOrb(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), 0, org.bukkit.entity.ExperienceOrb.SpawnReason.CUSTOM, null, null), CLEAR_MOVE_IF_NOT_RANDOMIZED), (spawnData, experienceOrb) -> { if (!spawnData.randomizeData()) { experienceOrb.setYRot(0); } }) // Paper - respect randomizeData
-        ));
+        // throw new NotImplementedError();
+        // register(new EntityTypeData<>(EntityType.EXPERIENCE_ORB, ExperienceOrb.class, CraftExperienceOrb::new,
+        //         combine(combine(spawnData -> new net.minecraft.world.entity.ExperienceOrb(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), 0, org.bukkit.entity.ExperienceOrb.SpawnReason.CUSTOM, null, null), CLEAR_MOVE_IF_NOT_RANDOMIZED), (spawnData, experienceOrb) -> { if (!spawnData.randomizeData()) { experienceOrb.setYRot(0); } }) // Paper - respect randomizeData
+        // ));
         register(new EntityTypeData<>(EntityType.AREA_EFFECT_CLOUD, AreaEffectCloud.class, CraftAreaEffectCloud::new, createAndMove(net.minecraft.world.entity.EntityType.AREA_EFFECT_CLOUD))); // Paper - set area effect cloud rotation
         register(new EntityTypeData<>(EntityType.EGG, Egg.class, CraftEgg::new, spawnData -> new ThrownEgg(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), new ItemStack(Items.EGG))));
         register(new EntityTypeData<>(EntityType.LEASH_KNOT, LeashHitch.class, CraftLeash::new, spawnData -> new LeashFenceKnotEntity(spawnData.minecraftWorld(), BlockPos.containing(spawnData.x(), spawnData.y(), spawnData.z())))); // SPIGOT-5732: LeashHitch has no direction and is always centered at a block
@@ -455,19 +452,21 @@ public final class CraftEntityTypes {
         register(new EntityTypeData<>(EntityType.TNT, TNTPrimed.class, CraftTNTPrimed::new, combine(spawnData -> new PrimedTnt(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), null), CLEAR_MOVE_IF_NOT_RANDOMIZED))); // Paper - respect randomizeData
         register(new EntityTypeData<>(EntityType.FALLING_BLOCK, FallingBlock.class, CraftFallingBlock::new, spawnData -> {
             BlockPos pos = BlockPos.containing(spawnData.x(), spawnData.y(), spawnData.z());
-            return new FallingBlockEntity(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), spawnData.world().getBlockState(pos)); // Paper - create falling block entities correctly
+            throw new NotImplementedError();
+            // return new FallingBlockEntity(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), spawnData.world().getBlockState(pos)); // Paper - create falling block entities correctly
         }));
         // Paper start - respect randomizeData
-        register(new EntityTypeData<>(EntityType.FIREWORK_ROCKET, Firework.class, CraftFirework::new, spawnData -> {
-            FireworkRocketEntity entity = new FireworkRocketEntity(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), FireworkRocketEntity.getDefaultItem()); // Paper - pass correct default to rocket for data storage
-            if (!spawnData.randomizeData()) {
-                // logic below was taken from FireworkRocketEntity constructor
-                entity.setDeltaMovement(0, 0.05, 0);
-                //noinspection PointlessArithmeticExpression
-                entity.lifetime = 10 * 1 + 6;
-            }
-            return entity;
-        }));
+        // throw new NotImplementedError();
+        // register(new EntityTypeData<>(EntityType.FIREWORK_ROCKET, Firework.class, CraftFirework::new, spawnData -> {
+        //     FireworkRocketEntity entity = new FireworkRocketEntity(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), FireworkRocketEntity.getDefaultItem()); // Paper - pass correct default to rocket for data storage
+        //     if (!spawnData.randomizeData()) {
+        //         // logic below was taken from FireworkRocketEntity constructor
+        //         entity.setDeltaMovement(0, 0.05, 0);
+        //         //noinspection PointlessArithmeticExpression
+        //         entity.lifetime = 10 * 1 + 6;
+        //     }
+        //     return entity;
+        // }));
         // Paper end - respect randomizeData
         register(new EntityTypeData<>(EntityType.EVOKER_FANGS, EvokerFangs.class, CraftEvokerFangs::new, spawnData -> new net.minecraft.world.entity.projectile.EvokerFangs(spawnData.minecraftWorld(), spawnData.x(), spawnData.y(), spawnData.z(), (float) Math.toRadians(spawnData.yaw()), 0, null)));
         register(new EntityTypeData<>(EntityType.COMMAND_BLOCK_MINECART, CommandMinecart.class, CraftMinecartCommand::new, createMinecart(net.minecraft.world.entity.EntityType.COMMAND_BLOCK_MINECART)));
@@ -533,54 +532,55 @@ public final class CraftEntityTypes {
     }
 
     private static <E extends Hanging, R extends HangingEntity> Function<SpawnData, R> createHanging(Class<E> clazz, BiFunction<SpawnData, HangingData, R> spawnFunction) {
-        return spawnData -> {
-            boolean randomizeData = spawnData.randomizeData();
-            BlockFace face = BlockFace.SELF;
-            BlockFace[] faces = new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH};
-
-            int width = 16; // 1 full block, also painting smallest size.
-            int height = 16; // 1 full block, also painting smallest size.
-
-            if (ItemFrame.class.isAssignableFrom(clazz)) {
-                width = 12;
-                height = 12;
-                faces = new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.UP, BlockFace.DOWN};
-            }
-
-            final BlockPos pos = BlockPos.containing(spawnData.x(), spawnData.y(), spawnData.z());
-            for (BlockFace dir : faces) {
-                BlockState nmsBlock = spawnData.world().getBlockState(pos.relative(CraftBlock.blockFaceToNotch(dir)));
-                if (nmsBlock.isSolid() || DiodeBlock.isDiode(nmsBlock)) {
-                    boolean taken = false;
-                    AABB bb = (ItemFrame.class.isAssignableFrom(clazz))
-                            ? net.minecraft.world.entity.decoration.ItemFrame.calculateBoundingBoxStatic(pos, CraftBlock.blockFaceToNotch(dir).getOpposite())
-                            : net.minecraft.world.entity.decoration.Painting.calculateBoundingBoxStatic(pos, CraftBlock.blockFaceToNotch(dir).getOpposite(), width, height);
-                    if (!spawnData.world.noCollision(bb)) continue; // Paper - add collision check
-                    List<net.minecraft.world.entity.Entity> list = spawnData.world().getEntities(null, bb);
-                    for (Iterator<net.minecraft.world.entity.Entity> it = list.iterator(); !taken && it.hasNext(); ) {
-                        net.minecraft.world.entity.Entity e = it.next();
-                        if (e instanceof HangingEntity) {
-                            taken = true; // Hanging entities do not like hanging entities which intersect them.
-                        }
-                    }
-
-                    if (!taken) {
-                        face = dir;
-                        break;
-                    }
-                }
-            }
-
-            // No valid face found
-            if (face == BlockFace.SELF) {
-                // SPIGOT-6387: Allow hanging entities to be placed in midair
-                face = BlockFace.SOUTH;
-                randomizeData = false; // Don't randomize if no valid face is found, prevents null painting
-            }
-
-            Direction dir = CraftBlock.blockFaceToNotch(face).getOpposite();
-            return spawnFunction.apply(spawnData, new HangingData(randomizeData, pos, dir));
-        };
+        throw new NotImplementedError();
+        // return spawnData -> {
+        //     boolean randomizeData = spawnData.randomizeData();
+        //     BlockFace face = BlockFace.SELF;
+        //     BlockFace[] faces = new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH};
+        //
+        //     int width = 16; // 1 full block, also painting smallest size.
+        //     int height = 16; // 1 full block, also painting smallest size.
+        //
+        //     if (ItemFrame.class.isAssignableFrom(clazz)) {
+        //         width = 12;
+        //         height = 12;
+        //         faces = new BlockFace[]{BlockFace.EAST, BlockFace.NORTH, BlockFace.WEST, BlockFace.SOUTH, BlockFace.UP, BlockFace.DOWN};
+        //     }
+        //
+        //     final BlockPos pos = BlockPos.containing(spawnData.x(), spawnData.y(), spawnData.z());
+        //     for (BlockFace dir : faces) {
+        //         BlockState nmsBlock = spawnData.world().getBlockState(pos.relative(CraftBlock.blockFaceToNotch(dir)));
+        //         if (nmsBlock.isSolid() || DiodeBlock.isDiode(nmsBlock)) {
+        //             boolean taken = false;
+        //             AABB bb = (ItemFrame.class.isAssignableFrom(clazz))
+        //                 ? net.minecraft.world.entity.decoration.ItemFrame.calculateBoundingBoxStatic(pos, CraftBlock.blockFaceToNotch(dir).getOpposite())
+        //                 : net.minecraft.world.entity.decoration.Painting.calculateBoundingBoxStatic(pos, CraftBlock.blockFaceToNotch(dir).getOpposite(), width, height);
+        //             if (!spawnData.world.noCollision(bb)) continue; // Paper - add collision check
+        //             List<net.minecraft.world.entity.Entity> list = spawnData.world().getEntities(null, bb);
+        //             for (Iterator<net.minecraft.world.entity.Entity> it = list.iterator(); !taken && it.hasNext(); ) {
+        //                 net.minecraft.world.entity.Entity e = it.next();
+        //                 if (e instanceof HangingEntity) {
+        //                     taken = true; // Hanging entities do not like hanging entities which intersect them.
+        //                 }
+        //             }
+        //
+        //             if (!taken) {
+        //                 face = dir;
+        //                 break;
+        //             }
+        //         }
+        //     }
+        //
+        //     // No valid face found
+        //     if (face == BlockFace.SELF) {
+        //         // SPIGOT-6387: Allow hanging entities to be placed in midair
+        //         face = BlockFace.SOUTH;
+        //         randomizeData = false; // Don't randomize if no valid face is found, prevents null painting
+        //     }
+        //
+        //     Direction dir = CraftBlock.blockFaceToNotch(face).getOpposite();
+        //     return spawnFunction.apply(spawnData, new HangingData(randomizeData, pos, dir));
+        // };
     }
 
     private static <T, R> Function<T, R> combine(Function<T, R> before, BiConsumer<T, ? super R> after) {

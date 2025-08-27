@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.inventory.view;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.inventory.BrewingStandMenu;
 import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
 import org.bukkit.craftbukkit.inventory.CraftInventoryView;
@@ -39,11 +40,13 @@ public class CraftBrewingStandView extends CraftInventoryView<BrewingStandMenu, 
     @Override
     public void setRecipeBrewTime(int recipeBrewTime) {
         com.google.common.base.Preconditions.checkArgument(recipeBrewTime > 0, "recipeBrewTime must be positive");
-        this.container.brewingStandData.set(2, recipeBrewTime);
+        // this.container.brewingStandData.set(2, recipeBrewTime);
+        throw new NotImplementedError();
     }
 
     @Override
     public int getRecipeBrewTime() {
-        return this.container.brewingStandData.get(2);
+        // return this.container.brewingStandData.get(2);
+        throw new NotImplementedError();
     }
 }

@@ -1,5 +1,6 @@
 package com.destroystokyo.paper.loottable;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.Level;
 import org.bukkit.entity.Entity;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -16,11 +17,13 @@ public interface PaperLootableEntityInventory extends LootableEntityInventory, P
 
     @Override
     default PaperLootableInventoryData lootableDataForAPI() {
-        return this.getHandle().lootableData();
+        throw new NotImplementedError();
+        // return this.getHandle().lootableData();
     }
 
     /* LootableEntityInventory */
     default Entity getEntity() {
-        return ((net.minecraft.world.entity.Entity) this.getHandle()).getBukkitEntity();
+        throw new NotImplementedError();
+        // return ((net.minecraft.world.entity.Entity) this.getHandle()).getBukkitEntity();
     }
 }

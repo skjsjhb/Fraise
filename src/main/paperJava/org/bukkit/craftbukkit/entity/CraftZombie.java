@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.monster.ZombieVillager;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Villager;
@@ -56,17 +57,19 @@ public class CraftZombie extends CraftMonster implements Zombie {
     public int getConversionTime() {
         Preconditions.checkState(this.isConverting(), "Entity not converting");
 
-        return this.getHandle().conversionTime;
+        // return this.getHandle().conversionTime;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setConversionTime(int time) {
-        if (time < 0) {
-            this.getHandle().conversionTime = -1;
-            this.getHandle().getEntityData().set(net.minecraft.world.entity.monster.Zombie.DATA_DROWNED_CONVERSION_ID, false);
-        } else {
-            this.getHandle().startUnderWaterConversion(time);
-        }
+        throw new NotImplementedError();
+        // if (time < 0) {
+        //     this.getHandle().conversionTime = -1;
+        //     this.getHandle().getEntityData().set(net.minecraft.world.entity.monster.Zombie.DATA_DROWNED_CONVERSION_ID, false);
+        // } else {
+        //     this.getHandle().startUnderWaterConversion(time);
+        // }
     }
 
     @Override
@@ -90,17 +93,20 @@ public class CraftZombie extends CraftMonster implements Zombie {
 
     @Override
     public void startDrowning(int drownedConversionTime) {
-        getHandle().startUnderWaterConversion(drownedConversionTime);
+        // getHandle().startUnderWaterConversion(drownedConversionTime);
+        throw new NotImplementedError();
     }
 
     @Override
     public void stopDrowning() {
-        getHandle().stopDrowning();
+        // getHandle().stopDrowning();
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean shouldBurnInDay() {
-        return getHandle().isSunSensitive();
+        // return getHandle().isSunSensitive();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -115,7 +121,8 @@ public class CraftZombie extends CraftMonster implements Zombie {
 
     @Override
     public void setShouldBurnInDay(boolean shouldBurnInDay) {
-        getHandle().setShouldBurnInDay(shouldBurnInDay);
+        // getHandle().setShouldBurnInDay(shouldBurnInDay);
+        throw new NotImplementedError();
     }
 
     @Override

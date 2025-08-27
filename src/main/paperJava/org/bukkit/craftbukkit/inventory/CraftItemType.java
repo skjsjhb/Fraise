@@ -5,17 +5,14 @@ import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import io.papermc.paper.registry.HolderableBase;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.block.ComposterBlock;
-import net.minecraft.world.level.block.entity.FuelValues;
 import org.bukkit.Material;
 import org.bukkit.Registry;
 import org.bukkit.World;
@@ -36,6 +33,9 @@ import org.bukkit.inventory.ItemType;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @NullMarked
 public class CraftItemType<M extends ItemMeta> extends HolderableBase<Item> implements ItemType.Typed<M>, io.papermc.paper.world.flag.PaperFeatureDependent<Item> {
@@ -153,19 +153,21 @@ public class CraftItemType<M extends ItemMeta> extends HolderableBase<Item> impl
 
     @Override
     public boolean isFuel() {
-        return MinecraftServer.getServer().fuelValues().isFuel(new net.minecraft.world.item.ItemStack(this.getHandle()));
+        // return MinecraftServer.getServer().fuelValues().isFuel(new net.minecraft.world.item.ItemStack(this.getHandle()));
+        throw new NotImplementedError();
     }
 
     @Override
     public int getBurnDuration() {
-        FuelValues fuelValues = MinecraftServer.getServer().fuelValues();
-        net.minecraft.world.item.ItemStack stack = new net.minecraft.world.item.ItemStack(this.getHandle());
-        
-        if (!fuelValues.isFuel(stack)) {
-            return 0;
-        }
-        
-        return fuelValues.burnDuration(stack);
+        throw new NotImplementedError();
+        // FuelValues fuelValues = MinecraftServer.getServer().fuelValues();
+        // net.minecraft.world.item.ItemStack stack = new net.minecraft.world.item.ItemStack(this.getHandle());
+        //
+        // if (!fuelValues.isFuel(stack)) {
+        //     return 0;
+        // }
+        //
+        // return fuelValues.burnDuration(stack);
     }
 
     @Override
@@ -244,6 +246,7 @@ public class CraftItemType<M extends ItemMeta> extends HolderableBase<Item> impl
         final net.minecraft.world.item.Rarity rarity = this.getHandle().components().get(DataComponents.RARITY);
         return rarity == null ? null : org.bukkit.inventory.ItemRarity.valueOf(rarity.name());
     }
+
     // Paper end - expand ItemRarity API
     // Paper start - data component API
     @Override

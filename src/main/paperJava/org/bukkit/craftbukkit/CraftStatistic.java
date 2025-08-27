@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.ImmutableBiMap;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -125,7 +126,7 @@ public enum CraftStatistic {
         statistics = statisticBuilder.build();
     }
 
-    private CraftStatistic(ResourceLocation minecraftKey) {
+    CraftStatistic(ResourceLocation minecraftKey) {
         this.minecraftKey = minecraftKey;
 
         this.bukkit = org.bukkit.Statistic.valueOf(this.name());
@@ -252,9 +253,10 @@ public enum CraftStatistic {
 
         // Update scoreboards
         if (player != null) {
-            player.level().getCraftServer().getScoreboardManager().forAllObjectives(nmsStatistic, player, score -> {
-                score.set(newValue);
-            });
+            throw new NotImplementedError();
+            // player.level().getCraftServer().getScoreboardManager().forAllObjectives(nmsStatistic, player, score -> {
+            //     score.set(newValue);
+            // });
         }
     }
 
@@ -316,9 +318,10 @@ public enum CraftStatistic {
 
         // Update scoreboards
         if (player != null) {
-            player.level().getCraftServer().getScoreboardManager().forAllObjectives(nmsStatistic, player, score -> {
-                score.set(newValue);
-            });
+            throw new NotImplementedError();
+            // player.level().getCraftServer().getScoreboardManager().forAllObjectives(nmsStatistic, player, score -> {
+            //     score.set(newValue);
+            // });
         }
     }
 
@@ -360,9 +363,10 @@ public enum CraftStatistic {
 
         // Update scoreboards
         if (player != null) {
-            player.level().getCraftServer().getScoreboardManager().forAllObjectives(nmsStatistic, player, score -> {
-                score.set(newValue);
-            });
+            throw new NotImplementedError();
+            // player.level().getCraftServer().getScoreboardManager().forAllObjectives(nmsStatistic, player, score -> {
+            //     score.set(newValue);
+            // });
         }
     }
 }

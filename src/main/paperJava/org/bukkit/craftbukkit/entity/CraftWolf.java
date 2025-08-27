@@ -2,6 +2,7 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import io.papermc.paper.registry.HolderableBase;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.animal.wolf.WolfSoundVariant;
@@ -43,12 +44,14 @@ public class CraftWolf extends CraftTameableAnimal implements Wolf {
 
     @Override
     public void setCollarColor(DyeColor color) {
-        this.getHandle().setCollarColor(net.minecraft.world.item.DyeColor.byId(color.getWoolData()));
+        // this.getHandle().setCollarColor(net.minecraft.world.item.DyeColor.byId(color.getWoolData()));
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean isWet() {
-        return this.getHandle().isWet;
+        // return this.getHandle().isWet;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -68,26 +71,30 @@ public class CraftWolf extends CraftTameableAnimal implements Wolf {
 
     @Override
     public Variant getVariant() {
-        return CraftVariant.minecraftHolderToBukkit(this.getHandle().getVariant());
+        // return CraftVariant.minecraftHolderToBukkit(this.getHandle().getVariant());
+        throw new NotImplementedError();
     }
 
     @Override
     public void setVariant(Variant variant) {
         Preconditions.checkArgument(variant != null, "variant cannot be null");
 
-        this.getHandle().setVariant(CraftVariant.bukkitToMinecraftHolder(variant));
+        // this.getHandle().setVariant(CraftVariant.bukkitToMinecraftHolder(variant));
+        throw new NotImplementedError();
     }
 
     @Override
     public SoundVariant getSoundVariant() {
-        return CraftSoundVariant.minecraftHolderToBukkit(this.getHandle().getSoundVariant());
+        // return CraftSoundVariant.minecraftHolderToBukkit(this.getHandle().getSoundVariant());
+        throw new NotImplementedError();
     }
 
     @Override
     public void setSoundVariant(SoundVariant soundVariant) {
         Preconditions.checkArgument(soundVariant != null, "soundVariant cannot be null");
 
-        this.getHandle().setSoundVariant(CraftSoundVariant.bukkitToMinecraftHolder(soundVariant));
+        // this.getHandle().setSoundVariant(CraftSoundVariant.bukkitToMinecraftHolder(soundVariant));
+        throw new NotImplementedError();
     }
 
     public static class CraftVariant extends HolderableBase<WolfVariant> implements Variant {

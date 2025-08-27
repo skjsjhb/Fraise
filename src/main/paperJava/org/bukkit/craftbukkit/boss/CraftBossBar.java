@@ -1,15 +1,8 @@
 package org.bukkit.craftbukkit.boss;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
-import net.minecraft.network.protocol.game.ClientboundBossEventPacket;
+import kotlin.NotImplementedError;
 import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
@@ -19,6 +12,12 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.entity.Player;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+
 public class CraftBossBar implements BossBar {
 
     private final ServerBossEvent handle;
@@ -26,9 +25,9 @@ public class CraftBossBar implements BossBar {
 
     public CraftBossBar(String title, BarColor color, BarStyle style, BarFlag... flags) {
         this.handle = new ServerBossEvent(
-                CraftChatMessage.fromString(title, true)[0],
-                this.convertColor(color),
-                this.convertStyle(style)
+            CraftChatMessage.fromString(title, true)[0],
+            this.convertColor(color),
+            this.convertStyle(style)
         );
 
         this.initialize();
@@ -83,35 +82,41 @@ public class CraftBossBar implements BossBar {
 
     @Override
     public String getTitle() {
-        return CraftChatMessage.fromComponent(this.handle.name);
+        throw new NotImplementedError();
+        // return CraftChatMessage.fromComponent(this.handle.name);
     }
 
     @Override
     public void setTitle(String title) {
-        this.handle.name = CraftChatMessage.fromString(title, true)[0];
-        this.handle.broadcast(ClientboundBossEventPacket::createUpdateNamePacket);
+        throw new NotImplementedError();
+        // this.handle.name = CraftChatMessage.fromString(title, true)[0];
+        // this.handle.broadcast(ClientboundBossEventPacket::createUpdateNamePacket);
     }
 
     @Override
     public BarColor getColor() {
-        return this.convertColor(this.handle.color);
+        // return this.convertColor(this.handle.color);
+        throw new NotImplementedError();
     }
 
     @Override
     public void setColor(BarColor color) {
-        this.handle.color = this.convertColor(color);
-        this.handle.broadcast(ClientboundBossEventPacket::createUpdateStylePacket);
+        throw new NotImplementedError();
+        // this.handle.color = this.convertColor(color);
+        // this.handle.broadcast(ClientboundBossEventPacket::createUpdateStylePacket);
     }
 
     @Override
     public BarStyle getStyle() {
-        return this.convertStyle(this.handle.overlay);
+        throw new NotImplementedError();
+        // return this.convertStyle(this.handle.overlay);
     }
 
     @Override
     public void setStyle(BarStyle style) {
-        this.handle.overlay = this.convertStyle(style);
-        this.handle.broadcast(ClientboundBossEventPacket::createUpdateStylePacket);
+        throw new NotImplementedError();
+        // this.handle.overlay = this.convertStyle(style);
+        // this.handle.broadcast(ClientboundBossEventPacket::createUpdateStylePacket);
     }
 
     @Override
@@ -167,11 +172,12 @@ public class CraftBossBar implements BossBar {
 
     @Override
     public List<Player> getPlayers() {
-        ImmutableList.Builder<Player> players = ImmutableList.builder();
-        for (ServerPlayer p : this.handle.getPlayers()) {
-            players.add(p.getBukkitEntity());
-        }
-        return players.build();
+        throw new NotImplementedError();
+        // ImmutableList.Builder<Player> players = ImmutableList.builder();
+        // for (ServerPlayer p : this.handle.getPlayers()) {
+        //     players.add(p.getBukkitEntity());
+        // }
+        // return players.build();
     }
 
     @Override
@@ -181,7 +187,8 @@ public class CraftBossBar implements BossBar {
 
     @Override
     public boolean isVisible() {
-        return this.handle.visible;
+        throw new NotImplementedError();
+        // return this.handle.visible;
     }
 
     @Override

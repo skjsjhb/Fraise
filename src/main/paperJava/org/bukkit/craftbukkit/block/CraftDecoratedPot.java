@@ -1,11 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import kotlin.NotImplementedError;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.entity.DecoratedPotBlockEntity;
@@ -18,6 +14,12 @@ import org.bukkit.block.DecoratedPot;
 import org.bukkit.craftbukkit.inventory.CraftInventoryDecoratedPot;
 import org.bukkit.craftbukkit.inventory.CraftItemType;
 import org.bukkit.inventory.DecoratedPotInventory;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class CraftDecoratedPot extends CraftBlockEntityState<DecoratedPotBlockEntity> implements DecoratedPot {
 
@@ -78,13 +80,14 @@ public class CraftDecoratedPot extends CraftBlockEntityState<DecoratedPotBlockEn
         Optional<Item> sherdItem = (sherd != null) ? Optional.of(CraftItemType.bukkitToMinecraft(sherd)) : Optional.of(Items.BRICK);
         PotDecorations decorations = this.getSnapshot().getDecorations();
 
-        switch (face) {
-            case BACK -> this.getSnapshot().decorations = new PotDecorations(sherdItem, decorations.left(), decorations.right(), decorations.front());
-            case LEFT -> this.getSnapshot().decorations = new PotDecorations(decorations.back(), sherdItem, decorations.right(), decorations.front());
-            case RIGHT -> this.getSnapshot().decorations = new PotDecorations(decorations.back(), decorations.left(), sherdItem, decorations.front());
-            case FRONT -> this.getSnapshot().decorations = new PotDecorations(decorations.back(), decorations.left(), decorations.right(), sherdItem);
-            default -> throw new IllegalArgumentException("Unexpected value: " + face);
-        }
+        throw new NotImplementedError();
+        // switch (face) {
+        //     case BACK -> this.getSnapshot().decorations = new PotDecorations(sherdItem, decorations.left(), decorations.right(), decorations.front());
+        //     case LEFT -> this.getSnapshot().decorations = new PotDecorations(decorations.back(), sherdItem, decorations.right(), decorations.front());
+        //     case RIGHT -> this.getSnapshot().decorations = new PotDecorations(decorations.back(), decorations.left(), sherdItem, decorations.front());
+        //     case FRONT -> this.getSnapshot().decorations = new PotDecorations(decorations.back(), decorations.left(), decorations.right(), sherdItem);
+        //     default -> throw new IllegalArgumentException("Unexpected value: " + face);
+        // }
     }
 
     @Override

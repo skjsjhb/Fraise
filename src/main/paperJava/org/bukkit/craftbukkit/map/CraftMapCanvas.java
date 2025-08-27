@@ -1,15 +1,16 @@
 package org.bukkit.craftbukkit.map;
 
 import com.google.common.base.Preconditions;
-import java.awt.Color;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.util.Arrays;
+import kotlin.NotImplementedError;
 import org.bukkit.map.MapCanvas;
 import org.bukkit.map.MapCursorCollection;
 import org.bukkit.map.MapFont;
 import org.bukkit.map.MapFont.CharacterSprite;
 import org.bukkit.map.MapPalette;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.Arrays;
 
 public class CraftMapCanvas implements MapCanvas {
 
@@ -64,7 +65,8 @@ public class CraftMapCanvas implements MapCanvas {
             return;
         if (this.buffer[y * 128 + x] != color) {
             this.buffer[y * 128 + x] = color;
-            this.mapView.worldMap.setColorsDirty(x, y, false); // Paper - Fix unnecessary map data saves
+            // this.mapView.worldMap.setColorsDirty(x, y, false); // Paper - Fix unnecessary map data saves
+            throw new NotImplementedError();
         }
     }
 
@@ -126,7 +128,7 @@ public class CraftMapCanvas implements MapCanvas {
         }
 
         byte[] bytes = MapPalette.imageToBytes(temp);
-        
+
         // Since we now control the size of the image, we can safely use System.arraycopy
         // If x is 0, we can just copy the entire image as width is 128 and height is <=(128-y)
         if (x == 0 && effectiveWidth == 128) { // This only works great if the width is 128, otherwise an empty area appears
@@ -141,8 +143,9 @@ public class CraftMapCanvas implements MapCanvas {
         }
 
         // Mark all colors within the image as dirty
-        this.mapView.worldMap.setColorsDirty(destX, destY, false);
-        this.mapView.worldMap.setColorsDirty(destX + effectiveWidth - 1, destY + effectiveHeight - 1, false);
+        // this.mapView.worldMap.setColorsDirty(destX, destY, false);
+        // this.mapView.worldMap.setColorsDirty(destX + effectiveWidth - 1, destY + effectiveHeight - 1, false);
+        throw new NotImplementedError();
         // Paper end
     }
 

@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Salmon;
 
@@ -24,6 +25,7 @@ public class CraftSalmon extends io.papermc.paper.entity.PaperSchoolableFish imp
     public void setVariant(Variant variant) {
         Preconditions.checkArgument(variant != null, "variant cannot be null");
 
-        this.getHandle().setVariant(net.minecraft.world.entity.animal.Salmon.Variant.values()[variant.ordinal()]);
+        // this.getHandle().setVariant(net.minecraft.world.entity.animal.Salmon.Variant.values()[variant.ordinal()]);
+        throw new NotImplementedError();
     }
 }

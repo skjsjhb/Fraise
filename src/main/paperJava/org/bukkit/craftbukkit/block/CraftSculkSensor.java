@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
-import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.SculkSensorBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -23,8 +23,9 @@ public class CraftSculkSensor<T extends SculkSensorBlockEntity> extends CraftBlo
 
     @Override
     public void setLastVibrationFrequency(int lastVibrationFrequency) {
-        Preconditions.checkArgument(0 <= lastVibrationFrequency && lastVibrationFrequency <= 15, "Vibration frequency must be between 0-15");
-        this.getSnapshot().lastVibrationFrequency = lastVibrationFrequency;
+        // Preconditions.checkArgument(0 <= lastVibrationFrequency && lastVibrationFrequency <= 15, "Vibration frequency must be between 0-15");
+        // this.getSnapshot().lastVibrationFrequency = lastVibrationFrequency;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -45,8 +46,9 @@ public class CraftSculkSensor<T extends SculkSensorBlockEntity> extends CraftBlo
 
     @Override
     public void setListenerRange(int range) {
-        Preconditions.checkArgument(range > 0, "Vibration listener range must be greater than 0");
-        this.getSnapshot().rangeOverride = range;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(range > 0, "Vibration listener range must be greater than 0");
+        // this.getSnapshot().rangeOverride = range;
     }
     // Paper end
 }

@@ -1,18 +1,19 @@
 package io.papermc.paper.configuration.type.number;
 
 import com.google.common.base.Preconditions;
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
+import org.slf4j.Logger;
+import org.spongepowered.configurate.serialize.ScalarSerializer;
+
 import java.lang.reflect.AnnotatedType;
 import java.util.OptionalInt;
 import java.util.function.Function;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
-import org.slf4j.Logger;
-import org.spongepowered.configurate.serialize.ScalarSerializer;
 
 public interface IntOr {
 
-    Logger LOGGER = LogUtils.getClassLogger();
+    Logger LOGGER = LogUtilsExt.getClassLogger();
 
     default int or(final int fallback) {
         return this.value().orElse(fallback);

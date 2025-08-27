@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import kotlin.NotImplementedError;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.ScoreHolder;
 import net.minecraft.world.scores.Scoreboard;
@@ -42,8 +43,9 @@ public final class CraftScoreboard implements org.bukkit.scoreboard.Scoreboard {
         Preconditions.checkArgument(this.getHandle().getObjective(name) == null, "An objective of name '%s' already exists", name);
         // Paper start - lazily track plugin scoreboards
         if (((CraftCriteria) criteria).criteria != net.minecraft.world.scores.criteria.ObjectiveCriteria.DUMMY && !this.registeredGlobally) {
-            net.minecraft.server.MinecraftServer.getServer().server.getScoreboardManager().registerScoreboardForVanilla(this);
-            this.registeredGlobally = true;
+            // net.minecraft.server.MinecraftServer.getServer().server.getScoreboardManager().registerScoreboardForVanilla(this);
+            // this.registeredGlobally = true;
+            throw new NotImplementedError();
         }
         // Paper end - lazily track plugin scoreboards
         net.minecraft.world.scores.Objective objective = this.getHandle().addObjective(name, ((CraftCriteria) criteria).criteria, io.papermc.paper.adventure.PaperAdventure.asVanilla(displayName), CraftScoreboardTranslations.fromBukkitRender(renderType), true, null);

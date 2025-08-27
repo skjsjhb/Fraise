@@ -1,9 +1,8 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.world.entity.EquipmentSlot;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.inventory.CraftInventoryLlama;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Llama;
 import org.bukkit.inventory.LlamaInventory;
@@ -28,28 +27,31 @@ public class CraftLlama extends CraftChestedHorse implements Llama, com.destroys
     public void setColor(Color color) {
         Preconditions.checkArgument(color != null, "color");
 
-        this.getHandle().setVariant(net.minecraft.world.entity.animal.horse.Llama.Variant.byId(color.ordinal()));
+        // this.getHandle().setVariant(net.minecraft.world.entity.animal.horse.Llama.Variant.byId(color.ordinal()));
+        throw new NotImplementedError();
     }
 
     @Override
     public LlamaInventory getInventory() {
-        return new CraftInventoryLlama(this.getHandle().inventory,
-            this.getHandle().createEquipmentSlotContainer(EquipmentSlot.BODY),
-            this.getHandle().createEquipmentSlotContainer(EquipmentSlot.SADDLE)
-        );
+        throw new NotImplementedError();
+        // return new CraftInventoryLlama(this.getHandle().inventory,
+        //     this.getHandle().createEquipmentSlotContainer(EquipmentSlot.BODY),
+        //     this.getHandle().createEquipmentSlotContainer(EquipmentSlot.SADDLE)
+        // );
     }
 
     @Override
     public int getStrength() {
-       return this.getHandle().getStrength();
+        return this.getHandle().getStrength();
     }
 
     @Override
     public void setStrength(int strength) {
-        Preconditions.checkArgument(1 <= strength && strength <= 5, "strength must be [1,5]");
-        if (strength == this.getStrength()) return;
-        this.getHandle().setStrengthPublic(strength);
-        this.getHandle().createInventory();
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(1 <= strength && strength <= 5, "strength must be [1,5]");
+        // if (strength == this.getStrength()) return;
+        // this.getHandle().setStrengthPublic(strength);
+        // this.getHandle().createInventory();
     }
 
     @Override
@@ -79,11 +81,13 @@ public class CraftLlama extends CraftChestedHorse implements Llama, com.destroys
 
     @Override
     public Llama getCaravanHead() {
-        return this.getHandle().getCaravanHead() == null ? null : (Llama) this.getHandle().getCaravanHead().getBukkitEntity();
+        // return this.getHandle().getCaravanHead() == null ? null : (Llama) this.getHandle().getCaravanHead().getBukkitEntity();
+        throw new NotImplementedError();
     }
 
     @Override
     public Llama getCaravanTail() {
-        return this.getHandle().caravanTail == null ? null : (Llama) this.getHandle().caravanTail.getBukkitEntity();
+        // return this.getHandle().caravanTail == null ? null : (Llama) this.getHandle().caravanTail.getBukkitEntity();
+        throw new NotImplementedError();
     }
 }

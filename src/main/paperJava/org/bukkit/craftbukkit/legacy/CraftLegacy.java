@@ -2,12 +2,7 @@ package org.bukkit.craftbukkit.legacy;
 
 import com.google.common.base.Preconditions;
 import com.mojang.serialization.Dynamic;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import kotlin.NotImplementedError;
 import net.minecraft.SharedConstants;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +10,6 @@ import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.Bootstrap;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.datafix.DataFixers;
 import net.minecraft.util.datafix.fixes.BlockStateData;
 import net.minecraft.util.datafix.fixes.ItemIdFix;
@@ -31,6 +25,13 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.entity.EntityType;
 import org.bukkit.material.MaterialData;
+
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * This class may seem unnecessarily slow and complicated/repetitive however it
@@ -261,9 +262,10 @@ public final class CraftLegacy {
 
     static {
         LOGGER.warn("Initializing Legacy Material Support. Unless you have legacy plugins and/or data this is a bug!"); // Paper - Improve logging and errors; doesn't need to be an error
-        if (MinecraftServer.getServer() != null && MinecraftServer.getServer().isDebugging()) {
-            new Exception().printStackTrace();
-        }
+        if (true) throw new NotImplementedError();
+        // if (MinecraftServer.getServer() != null && MinecraftServer.getServer().isDebugging()) {
+        //     new Exception().printStackTrace();
+        // }
 
         SPAWN_EGGS.put((byte) 0, Material.PIG_SPAWN_EGG);
 

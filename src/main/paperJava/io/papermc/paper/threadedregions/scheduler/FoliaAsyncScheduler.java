@@ -1,7 +1,7 @@
 package io.papermc.paper.threadedregions.scheduler;
 
 import ca.spottedleaf.concurrentutil.util.Validate;
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import org.bukkit.plugin.IllegalPluginAccessException;
 import org.bukkit.plugin.Plugin;
 import org.slf4j.Logger;
@@ -22,7 +22,7 @@ import java.util.logging.Level;
 
 public final class FoliaAsyncScheduler implements AsyncScheduler {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     private final Executor executors = new ThreadPoolExecutor(Math.max(4, Runtime.getRuntime().availableProcessors() / 2), Integer.MAX_VALUE,
         30L, TimeUnit.SECONDS, new SynchronousQueue<>(),
@@ -84,8 +84,10 @@ public final class FoliaAsyncScheduler implements AsyncScheduler {
     }
 
     @Override
-    public ScheduledTask runDelayed(final Plugin plugin, final Consumer<ScheduledTask> task, final long delay,
-                                    final TimeUnit unit) {
+    public ScheduledTask runDelayed(
+        final Plugin plugin, final Consumer<ScheduledTask> task, final long delay,
+        final TimeUnit unit
+    ) {
         Validate.notNull(plugin, "Plugin may not be null");
         Validate.notNull(task, "Task may not be null");
         Validate.notNull(unit, "Time unit may not be null");
@@ -101,8 +103,10 @@ public final class FoliaAsyncScheduler implements AsyncScheduler {
     }
 
     @Override
-    public ScheduledTask runAtFixedRate(final Plugin plugin, final Consumer<ScheduledTask> task, final long initialDelay,
-                                        final long period, final TimeUnit unit) {
+    public ScheduledTask runAtFixedRate(
+        final Plugin plugin, final Consumer<ScheduledTask> task, final long initialDelay,
+        final long period, final TimeUnit unit
+    ) {
         Validate.notNull(plugin, "Plugin may not be null");
         Validate.notNull(task, "Task may not be null");
         Validate.notNull(unit, "Time unit may not be null");
@@ -120,8 +124,10 @@ public final class FoliaAsyncScheduler implements AsyncScheduler {
         return this.scheduleTimerTask(plugin, task, initialDelay, period, unit);
     }
 
-    private AsyncScheduledTask scheduleTimerTask(final Plugin plugin, final Consumer<ScheduledTask> task, final long initialDelay,
-                                                 final long period, final TimeUnit unit) {
+    private AsyncScheduledTask scheduleTimerTask(
+        final Plugin plugin, final Consumer<ScheduledTask> task, final long initialDelay,
+        final long period, final TimeUnit unit
+    ) {
         final AsyncScheduledTask ret = new AsyncScheduledTask(
             plugin, period <= 0 ? period : unit.toNanos(period), task, null,
             System.nanoTime() + unit.toNanos(initialDelay)
@@ -155,12 +161,12 @@ public final class FoliaAsyncScheduler implements AsyncScheduler {
 
     private final class AsyncScheduledTask implements ScheduledTask, Runnable {
 
-        private static final int STATE_ON_TIMER            = 0;
-        private static final int STATE_SCHEDULED_EXECUTOR  = 1;
-        private static final int STATE_EXECUTING           = 2;
+        private static final int STATE_ON_TIMER = 0;
+        private static final int STATE_SCHEDULED_EXECUTOR = 1;
+        private static final int STATE_EXECUTING = 2;
         private static final int STATE_EXECUTING_CANCELLED = 3;
-        private static final int STATE_FINISHED            = 4;
-        private static final int STATE_CANCELLED           = 5;
+        private static final int STATE_FINISHED = 4;
+        private static final int STATE_CANCELLED = 5;
 
         private final Plugin plugin;
         private final long repeatDelay; // in ns
@@ -169,8 +175,10 @@ public final class FoliaAsyncScheduler implements AsyncScheduler {
         private int state;
         private long scheduleTarget;
 
-        public AsyncScheduledTask(final Plugin plugin, final long repeatDelay, final Consumer<ScheduledTask> run,
-                                  final ScheduledFuture<?> delay, final long firstTarget) {
+        public AsyncScheduledTask(
+            final Plugin plugin, final long repeatDelay, final Consumer<ScheduledTask> run,
+            final ScheduledFuture<?> delay, final long firstTarget
+        ) {
             this.plugin = plugin;
             this.repeatDelay = repeatDelay;
             this.run = run;

@@ -3,10 +3,7 @@ package org.bukkit.craftbukkit.inventory;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentPatch;
@@ -20,7 +17,6 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.storage.TagValueOutput;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.BlockState;
@@ -31,27 +27,32 @@ import org.bukkit.craftbukkit.block.CraftBlockStates;
 import org.bukkit.inventory.meta.BlockStateMeta;
 import org.bukkit.util.BlockVector;
 
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta {
 
     private static final Set<Material> SHULKER_BOX_MATERIALS = Sets.newHashSet(
-            Material.SHULKER_BOX,
-            Material.WHITE_SHULKER_BOX,
-            Material.ORANGE_SHULKER_BOX,
-            Material.MAGENTA_SHULKER_BOX,
-            Material.LIGHT_BLUE_SHULKER_BOX,
-            Material.YELLOW_SHULKER_BOX,
-            Material.LIME_SHULKER_BOX,
-            Material.PINK_SHULKER_BOX,
-            Material.GRAY_SHULKER_BOX,
-            Material.LIGHT_GRAY_SHULKER_BOX,
-            Material.CYAN_SHULKER_BOX,
-            Material.PURPLE_SHULKER_BOX,
-            Material.BLUE_SHULKER_BOX,
-            Material.BROWN_SHULKER_BOX,
-            Material.GREEN_SHULKER_BOX,
-            Material.RED_SHULKER_BOX,
-            Material.BLACK_SHULKER_BOX
+        Material.SHULKER_BOX,
+        Material.WHITE_SHULKER_BOX,
+        Material.ORANGE_SHULKER_BOX,
+        Material.MAGENTA_SHULKER_BOX,
+        Material.LIGHT_BLUE_SHULKER_BOX,
+        Material.YELLOW_SHULKER_BOX,
+        Material.LIME_SHULKER_BOX,
+        Material.PINK_SHULKER_BOX,
+        Material.GRAY_SHULKER_BOX,
+        Material.LIGHT_GRAY_SHULKER_BOX,
+        Material.CYAN_SHULKER_BOX,
+        Material.PURPLE_SHULKER_BOX,
+        Material.BLUE_SHULKER_BOX,
+        Material.BROWN_SHULKER_BOX,
+        Material.GREEN_SHULKER_BOX,
+        Material.RED_SHULKER_BOX,
+        Material.BLACK_SHULKER_BOX
     );
 
     @ItemMetaKey.Specific(ItemMetaKey.Specific.To.NBT)
@@ -63,6 +64,7 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
     // Paper start - store data separately
     DataComponentMap components;
     CustomData blockEntityTag;
+
     {
         // this is because the fields are possibly assigned in the super constructor (via deserializeInternal)
         // and a direct field initialization happens **after** the super constructor. So we only want to
@@ -70,9 +72,11 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
         this.components = this.components != null ? this.components : DataComponentMap.EMPTY;
         this.blockEntityTag = this.blockEntityTag != null ? this.blockEntityTag : CustomData.EMPTY;
     }
+
     private Material materialForBlockEntityType() {
         return this.material;
     }
+
     // Paper end
     private CompoundTag internalTag;
 
@@ -100,37 +104,38 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
     }
 
     private void updateBlockState(final DataComponentPatch tag) {
-        // Paper end
-        getOrEmpty(tag, CraftMetaBlockState.BLOCK_ENTITY_TAG).ifPresent((nbt) -> {
-            this.blockEntityTag = nbt;
-        });
-
-        if (!tag.isEmpty()) {
-            // Paper start - store data in a DataComponentMap to be used to construct CraftBlockEntityStates
-            final DataComponentMap.Builder map = DataComponentMap.builder();
-            final net.minecraft.world.level.block.entity.BlockEntity dummyBlockEntity = java.util.Objects.requireNonNull(
-                org.bukkit.craftbukkit.block.CraftBlockStates.createNewBlockEntity(this.materialForBlockEntityType())
-            );
-
-            // we don't care about what's in here, all
-            // we want is to know which data component types are referenced
-            Set<DataComponentType<?>> applied = dummyBlockEntity.applyComponentsSet(DataComponentMap.EMPTY, DataComponentPatch.EMPTY);
-            // Paper end - store data in a DataComponentMap to be used to construct CraftBlockEntityStates
-            // Mark applied components as handled
-            for (DataComponentType<?> seen : applied) {
-                this.unhandledTags.clear(seen);
-            }
-            // Only set blockEntityTag if something was applied
-            if (!applied.isEmpty()) {
-                for (final DataComponentType type : applied) {
-                    if (CraftMetaItem.DEFAULT_HANDLED_DCTS.contains(type)) continue;
-                    getOrEmpty(tag, type).ifPresent(value -> {
-                        map.set(type, value);
-                    });
-                }
-            }
-            this.components = map.build();
-        }
+        throw new NotImplementedError();
+        // // Paper end
+        // getOrEmpty(tag, CraftMetaBlockState.BLOCK_ENTITY_TAG).ifPresent((nbt) -> {
+        //     this.blockEntityTag = nbt;
+        // });
+        //
+        // if (!tag.isEmpty()) {
+        //     // Paper start - store data in a DataComponentMap to be used to construct CraftBlockEntityStates
+        //     final DataComponentMap.Builder map = DataComponentMap.builder();
+        //     final net.minecraft.world.level.block.entity.BlockEntity dummyBlockEntity = java.util.Objects.requireNonNull(
+        //         org.bukkit.craftbukkit.block.CraftBlockStates.createNewBlockEntity(this.materialForBlockEntityType())
+        //     );
+        //
+        //     // we don't care about what's in here, all
+        //     // we want is to know which data component types are referenced
+        //     Set<DataComponentType<?>> applied = dummyBlockEntity.applyComponentsSet(DataComponentMap.EMPTY, DataComponentPatch.EMPTY);
+        //     // Paper end - store data in a DataComponentMap to be used to construct CraftBlockEntityStates
+        //     // Mark applied components as handled
+        //     for (DataComponentType<?> seen : applied) {
+        //         this.unhandledTags.clear(seen);
+        //     }
+        //     // Only set blockEntityTag if something was applied
+        //     if (!applied.isEmpty()) {
+        //         for (final DataComponentType type : applied) {
+        //             if (CraftMetaItem.DEFAULT_HANDLED_DCTS.contains(type)) continue;
+        //             getOrEmpty(tag, type).ifPresent(value -> {
+        //                 map.set(type, value);
+        //             });
+        //         }
+        //     }
+        //     this.components = map.build();
+        // }
     }
 
     CraftMetaBlockState(Map<String, Object> map) {
@@ -149,13 +154,14 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
                 try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
                     () -> "blockEntityTag", LOGGER
                 )) {
-                    final TagValueOutput output = TagValueOutput.createWrappingWithContext(problemReporter, CraftRegistry.getMinecraftRegistry(), blockEntityTag);
-                    if (blockEntityTag.isEmpty()) {
-                        BlockEntity.addEntityType(output, java.util.Objects.requireNonNull(CraftBlockStates.getBlockEntityType(this.materialForBlockEntityType())));
-                    }
-                    output.putInt("x", legacyPosition.getBlockX());
-                    output.putInt("y", legacyPosition.getBlockY());
-                    output.putInt("z", legacyPosition.getBlockZ());
+                    throw new NotImplementedError();
+                    // final TagValueOutput output = TagValueOutput.createWrappingWithContext(problemReporter, CraftRegistry.getMinecraftRegistry(), blockEntityTag);
+                    // if (blockEntityTag.isEmpty()) {
+                    //     BlockEntity.addEntityType(output, java.util.Objects.requireNonNull(CraftBlockStates.getBlockEntityType(this.materialForBlockEntityType())));
+                    // }
+                    // output.putInt("x", legacyPosition.getBlockX());
+                    // output.putInt("y", legacyPosition.getBlockY());
+                    // output.putInt("z", legacyPosition.getBlockZ());
                 }
             });
         }
@@ -174,17 +180,19 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
                 try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
                     () -> "CraftMetaBlockState#apply", LOGGER
                 )) {
-                    BlockEntity.addEntityType(
-                        TagValueOutput.createWrappingWithContext(problemReporter, CraftRegistry.getMinecraftRegistry(), nbt),
-                        java.util.Objects.requireNonNull(CraftBlockStates.getBlockEntityType(this.materialForBlockEntityType()))
-                    );
+                    throw new NotImplementedError();
+                    // BlockEntity.addEntityType(
+                    //     TagValueOutput.createWrappingWithContext(problemReporter, CraftRegistry.getMinecraftRegistry(), nbt),
+                    //     java.util.Objects.requireNonNull(CraftBlockStates.getBlockEntityType(this.materialForBlockEntityType()))
+                    // );
                 }
             }
             tag.put(CraftMetaBlockState.BLOCK_ENTITY_TAG, CustomData.of(nbt));
         }
 
         for (final TypedDataComponent<?> component : this.components) {
-            if (CraftMetaItem.DEFAULT_HANDLED_DCTS.contains(component.type())) continue; // if the component type was already handled by CraftMetaItem, don't add it again
+            if (CraftMetaItem.DEFAULT_HANDLED_DCTS.contains(component.type()))
+                continue; // if the component type was already handled by CraftMetaItem, don't add it again
             tag.builder.set(component);
         }
         // Paper end
@@ -306,7 +314,8 @@ public class CraftMetaBlockState extends CraftMetaItem implements BlockStateMeta
         }
         final PatchedDataComponentMap patchedMap = new PatchedDataComponentMap(nmsBlockState.getBlock().asItem().components());
         patchedMap.setAll(this.components);
-        final Applicator applicator = new Applicator() {};
+        final Applicator applicator = new Applicator() {
+        };
         super.applyToItem(applicator);
         patchedMap.applyPatch(applicator.build());
         blockEntity.applyComponents(nmsBlockState.getBlock().asItem().components(), patchedMap.asPatch());

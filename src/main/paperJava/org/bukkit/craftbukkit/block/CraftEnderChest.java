@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.EnderChestBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.EnderChest;
@@ -18,28 +18,30 @@ public class CraftEnderChest extends CraftBlockEntityState<EnderChestBlockEntity
 
     @Override
     public void open() {
-        this.requirePlaced();
-        if (!this.getBlockEntity().openersCounter.opened && this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
-            BlockState block = this.getBlockEntity().getBlockState();
-            int openCount = this.getBlockEntity().openersCounter.getOpenerCount();
-
-            this.getBlockEntity().openersCounter.onAPIOpen((net.minecraft.world.level.Level) this.getWorldHandle(), this.getPosition(), block);
-            this.getBlockEntity().openersCounter.openerAPICountChanged((net.minecraft.world.level.Level) this.getWorldHandle(), this.getPosition(), block, openCount, openCount + 1);
-        }
-        this.getBlockEntity().openersCounter.opened = true;
+        throw new NotImplementedError();
+        // this.requirePlaced();
+        // if (!this.getBlockEntity().openersCounter.opened && this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
+        //     BlockState block = this.getBlockEntity().getBlockState();
+        //     int openCount = this.getBlockEntity().openersCounter.getOpenerCount();
+        //
+        //     this.getBlockEntity().openersCounter.onAPIOpen((net.minecraft.world.level.Level) this.getWorldHandle(), this.getPosition(), block);
+        //     this.getBlockEntity().openersCounter.openerAPICountChanged((net.minecraft.world.level.Level) this.getWorldHandle(), this.getPosition(), block, openCount, openCount + 1);
+        // }
+        // this.getBlockEntity().openersCounter.opened = true;
     }
 
     @Override
     public void close() {
-        this.requirePlaced();
-        if (this.getBlockEntity().openersCounter.opened && this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
-            BlockState block = this.getBlockEntity().getBlockState();
-            int openCount = this.getBlockEntity().openersCounter.getOpenerCount();
-
-            this.getBlockEntity().openersCounter.onAPIClose((net.minecraft.world.level.Level) this.getWorldHandle(), this.getPosition(), block);
-            this.getBlockEntity().openersCounter.openerAPICountChanged((net.minecraft.world.level.Level) this.getWorldHandle(), this.getPosition(), block, openCount, 0);
-        }
-        this.getBlockEntity().openersCounter.opened = false;
+        throw new NotImplementedError();
+        // this.requirePlaced();
+        // if (this.getBlockEntity().openersCounter.opened && this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
+        //     BlockState block = this.getBlockEntity().getBlockState();
+        //     int openCount = this.getBlockEntity().openersCounter.getOpenerCount();
+        //
+        //     this.getBlockEntity().openersCounter.onAPIClose((net.minecraft.world.level.Level) this.getWorldHandle(), this.getPosition(), block);
+        //     this.getBlockEntity().openersCounter.openerAPICountChanged((net.minecraft.world.level.Level) this.getWorldHandle(), this.getPosition(), block, openCount, 0);
+        // }
+        // this.getBlockEntity().openersCounter.opened = false;
     }
 
     @Override
@@ -55,7 +57,8 @@ public class CraftEnderChest extends CraftBlockEntityState<EnderChestBlockEntity
     // Paper start - More Lidded Block API
     @Override
     public boolean isOpen() {
-        return getBlockEntity().openersCounter.opened;
+        throw new NotImplementedError();
+        // return getBlockEntity().openersCounter.opened;
     }
     // Paper end - More Lidded Block API
 

@@ -1,12 +1,12 @@
 package org.bukkit.craftbukkit.generator;
 
-import java.util.UUID;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.storage.LevelStorageSource;
 import net.minecraft.world.level.storage.PrimaryLevelData;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.util.WorldUUID;
 import org.bukkit.generator.WorldInfo;
+
+import java.util.UUID;
 
 public class CraftWorldInfo implements WorldInfo {
 
@@ -26,7 +26,8 @@ public class CraftWorldInfo implements WorldInfo {
         this.vanillaChunkGenerator = chunkGenerator;
         // Paper end
         this.name = worldDataServer.getLevelName();
-        this.uuid = WorldUUID.getOrCreate(session.levelDirectory.path().toFile());
+        this.uuid = null; // WorldUUID.getOrCreate(session.levelDirectory.path().toFile());
+        // throw new NotImplementedError();
         this.environment = environment;
         this.seed = worldDataServer.worldGenOptions().seed();
         this.minHeight = dimensionManager.minY();

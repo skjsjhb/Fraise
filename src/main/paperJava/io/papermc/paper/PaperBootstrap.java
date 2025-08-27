@@ -1,11 +1,12 @@
 package io.papermc.paper;
 
-import java.util.List;
 import joptsimple.OptionSet;
+import kotlin.NotImplementedError;
 import net.minecraft.SharedConstants;
-import net.minecraft.server.Main;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public final class PaperBootstrap {
     private static final Logger LOGGER = LoggerFactory.getLogger("bootstrap");
@@ -18,7 +19,8 @@ public final class PaperBootstrap {
 
         getStartupVersionMessages().forEach(LOGGER::info);
 
-        Main.main(options);
+        throw new NotImplementedError();
+        // Main.main(options);
     }
 
     private static List<String> getStartupVersionMessages() {

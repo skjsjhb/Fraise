@@ -1,5 +1,6 @@
 package io.papermc.paper.antixray;
 
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
@@ -32,7 +33,8 @@ public class ChunkPacketBlockController {
     }
 
     public void modifyBlocks(ClientboundLevelChunkWithLightPacket chunkPacket, ChunkPacketInfo<BlockState> chunkPacketInfo) {
-        chunkPacket.setReady(true);
+        // chunkPacket.setReady(true);
+        throw new NotImplementedError();
     }
 
     public void onBlockChange(Level level, BlockPos blockPos, BlockState newBlockState, BlockState oldBlockState, int flags, int maxUpdateDepth) {

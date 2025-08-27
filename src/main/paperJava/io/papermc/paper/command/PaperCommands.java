@@ -3,15 +3,16 @@ package io.papermc.paper.command;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandRegistrationFlag;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
+import kotlin.NotImplementedError;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.command.Command;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.DefaultQualifier;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 
 @DefaultQualifier(NonNull.class)
 public final class PaperCommands {
@@ -26,7 +27,8 @@ public final class PaperCommands {
         COMMANDS.put("mspt", new MSPTCommand("mspt"));
 
         COMMANDS.forEach((s, command) -> {
-            server.server.getCommandMap().register(s, "Paper", command);
+            throw new NotImplementedError();
+            // server.server.getCommandMap().register(s, "Paper", command);
         });
     }
 

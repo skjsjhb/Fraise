@@ -1,10 +1,8 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.animal.horse.Markings;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.inventory.CraftInventoryHorse;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.HorseInventory;
 
@@ -32,7 +30,8 @@ public class CraftHorse extends CraftAbstractHorse implements Horse {
     @Override
     public void setColor(Color color) {
         Preconditions.checkArgument(color != null, "Color cannot be null");
-        this.getHandle().setVariantAndMarkings(net.minecraft.world.entity.animal.horse.Variant.byId(color.ordinal()), this.getHandle().getMarkings());
+        throw new NotImplementedError();
+        // this.getHandle().setVariantAndMarkings(net.minecraft.world.entity.animal.horse.Variant.byId(color.ordinal()), this.getHandle().getMarkings());
     }
 
     @Override
@@ -43,7 +42,8 @@ public class CraftHorse extends CraftAbstractHorse implements Horse {
     @Override
     public void setStyle(Style style) {
         Preconditions.checkArgument(style != null, "Style cannot be null");
-        this.getHandle().setVariantAndMarkings(this.getHandle().getVariant(), Markings.byId(style.ordinal()));
+        throw new NotImplementedError();
+        // this.getHandle().setVariantAndMarkings(this.getHandle().getVariant(), Markings.byId(style.ordinal()));
     }
 
     @Override
@@ -58,9 +58,10 @@ public class CraftHorse extends CraftAbstractHorse implements Horse {
 
     @Override
     public HorseInventory getInventory() {
-        return new CraftInventoryHorse(this.getHandle().inventory,
-            this.getHandle().createEquipmentSlotContainer(EquipmentSlot.BODY),
-            this.getHandle().createEquipmentSlotContainer(EquipmentSlot.SADDLE)
-        );
+        throw new NotImplementedError();
+        // return new CraftInventoryHorse(this.getHandle().inventory,
+        //     this.getHandle().createEquipmentSlotContainer(EquipmentSlot.BODY),
+        //     this.getHandle().createEquipmentSlotContainer(EquipmentSlot.SADDLE)
+        // );
     }
 }

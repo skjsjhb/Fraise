@@ -1,9 +1,8 @@
 package io.papermc.paper.plugin.manager;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.plugin.entrypoint.Entrypoint;
 import io.papermc.paper.plugin.entrypoint.LaunchEntryPointHandler;
-import io.papermc.paper.plugin.entrypoint.dependency.GraphDependencyContext;
 import io.papermc.paper.plugin.entrypoint.dependency.MetaDependencyTree;
 import io.papermc.paper.plugin.provider.PluginProvider;
 import io.papermc.paper.plugin.provider.type.paper.PaperPluginParent;
@@ -16,7 +15,7 @@ import java.util.List;
 
 public class MultiRuntimePluginProviderStorage extends ServerPluginProviderStorage {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
     private final List<JavaPlugin> provided = new ArrayList<>();
 
     private final MetaDependencyTree dependencyTree;

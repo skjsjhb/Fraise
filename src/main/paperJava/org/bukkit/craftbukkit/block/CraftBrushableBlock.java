@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.BrushableBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -26,21 +27,24 @@ public class CraftBrushableBlock extends CraftBlockEntityState<BrushableBlockEnt
 
     @Override
     public void setItem(ItemStack item) {
-        this.getSnapshot().item = CraftItemStack.asNMSCopy(item);
+        throw new NotImplementedError();
+        // this.getSnapshot().item = CraftItemStack.asNMSCopy(item);
     }
 
     @Override
     public void applyTo(BrushableBlockEntity blockEntity) {
         super.applyTo(blockEntity);
+        throw new NotImplementedError();
 
-        if (this.getSnapshot().lootTable == null) {
-            blockEntity.setLootTable(null, 0L);
-        }
+        // if (this.getSnapshot().lootTable == null) {
+        //     blockEntity.setLootTable(null, 0L);
+        // }
     }
 
     @Override
     public LootTable getLootTable() {
-        return CraftLootTable.minecraftToBukkit(this.getSnapshot().lootTable);
+        throw new NotImplementedError();
+        // return CraftLootTable.minecraftToBukkit(this.getSnapshot().lootTable);
     }
 
     @Override
@@ -50,7 +54,8 @@ public class CraftBrushableBlock extends CraftBlockEntityState<BrushableBlockEnt
 
     @Override
     public long getSeed() {
-        return this.getSnapshot().lootTableSeed;
+        throw new NotImplementedError();
+        // return this.getSnapshot().lootTableSeed;
     }
 
     @Override

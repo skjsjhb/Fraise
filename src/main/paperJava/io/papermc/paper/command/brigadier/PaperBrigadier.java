@@ -1,18 +1,15 @@
 package io.papermc.paper.command.brigadier;
 
-import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import io.papermc.paper.command.brigadier.bukkit.BukkitCommandNode;
-import java.util.Map;
+import kotlin.NotImplementedError;
 import net.minecraft.commands.CommandSource;
 import net.minecraft.commands.Commands;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.command.Command;
-import org.bukkit.craftbukkit.command.VanillaCommandWrapper;
 
 public final class PaperBrigadier {
 
@@ -31,28 +28,29 @@ public final class PaperBrigadier {
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static Command wrapNode(CommandNode node) {
-        if (!(node instanceof LiteralCommandNode)) {
-            throw new IllegalArgumentException("Unsure how to wrap a " + node);
-        }
-
-        final APICommandMeta meta;
-        if ((meta = node.apiCommandMeta) == null) {
-            return new VanillaCommandWrapper(node);
-        }
-        CommandNode<CommandSourceStack> argumentCommandNode = node;
-        if (argumentCommandNode.getRedirect() != null) {
-            argumentCommandNode = argumentCommandNode.getRedirect();
-        }
-
-        Map<CommandNode<CommandSourceStack>, String> map = PaperCommands.INSTANCE.getDispatcherInternal().getSmartUsage(argumentCommandNode, DUMMY);
-        String usage = map.isEmpty() ? node.getUsageText() :  node.getUsageText() + " " + String.join("\n" + node.getUsageText() + " ", map.values());
-
-        // Internal command
-        if (meta.pluginMeta() == null) {
-            return new VanillaCommandWrapper(node.getName(), meta.description(), usage, meta.aliases(), node, meta.helpCommandNamespace());
-        }
-
-        return new PluginVanillaCommandWrapper(node.getName(), meta.description(), usage, meta.aliases(), node, meta.plugin());
+        throw new NotImplementedError();
+        // if (!(node instanceof LiteralCommandNode)) {
+        //     throw new IllegalArgumentException("Unsure how to wrap a " + node);
+        // }
+        //
+        // final APICommandMeta meta;
+        // if ((meta = node.apiCommandMeta) == null) {
+        //     return new VanillaCommandWrapper(node);
+        // }
+        // CommandNode<CommandSourceStack> argumentCommandNode = node;
+        // if (argumentCommandNode.getRedirect() != null) {
+        //     argumentCommandNode = argumentCommandNode.getRedirect();
+        // }
+        //
+        // Map<CommandNode<CommandSourceStack>, String> map = PaperCommands.INSTANCE.getDispatcherInternal().getSmartUsage(argumentCommandNode, DUMMY);
+        // String usage = map.isEmpty() ? node.getUsageText() :  node.getUsageText() + " " + String.join("\n" + node.getUsageText() + " ", map.values());
+        //
+        // // Internal command
+        // if (meta.pluginMeta() == null) {
+        //     return new VanillaCommandWrapper(node.getName(), meta.description(), usage, meta.aliases(), node, meta.helpCommandNamespace());
+        // }
+        //
+        // return new PluginVanillaCommandWrapper(node.getName(), meta.description(), usage, meta.aliases(), node, meta.plugin());
     }
 
     /*
@@ -63,14 +61,15 @@ public final class PaperBrigadier {
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static void moveBukkitCommands(Commands before, Commands after) {
-        CommandDispatcher erasedDispatcher = before.getDispatcher();
-
-        for (Object node : erasedDispatcher.getRoot().getChildren()) {
-            if (node instanceof CommandNode<?> commandNode && commandNode.getCommand() instanceof BukkitCommandNode.BukkitBrigCommand) {
-                after.getDispatcher().getRoot().removeCommand(((CommandNode<?>) node).getName()); // Remove already existing commands
-                after.getDispatcher().getRoot().addChild((CommandNode<net.minecraft.commands.CommandSourceStack>) node);
-            }
-        }
+        throw new NotImplementedError();
+        // CommandDispatcher erasedDispatcher = before.getDispatcher();
+        //
+        // for (Object node : erasedDispatcher.getRoot().getChildren()) {
+        //     if (node instanceof CommandNode<?> commandNode && commandNode.getCommand() instanceof BukkitCommandNode.BukkitBrigCommand) {
+        //         after.getDispatcher().getRoot().removeCommand(((CommandNode<?>) node).getName()); // Remove already existing commands
+        //         after.getDispatcher().getRoot().addChild((CommandNode<net.minecraft.commands.CommandSourceStack>) node);
+        //     }
+        // }
     }
 
     public static <S> LiteralCommandNode<S> copyLiteral(final String newLiteral, final LiteralCommandNode<S> source) {

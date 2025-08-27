@@ -1,5 +1,6 @@
 package ca.spottedleaf.moonrise.common.util;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelHeightAccessor;
 
@@ -32,7 +33,6 @@ public final class WorldUtil {
     }
 
 
-
     public static int getTotalSections(final LevelHeightAccessor world) {
         return getMaxSection(world) - getMinSection(world) + 1;
     }
@@ -53,7 +53,8 @@ public final class WorldUtil {
         if (world == null) {
             return "null world";
         }
-        return world.getWorld().getName(); // Paper
+        throw new NotImplementedError();
+        // return world.getWorld().getName(); // Paper
     }
 
     private WorldUtil() {

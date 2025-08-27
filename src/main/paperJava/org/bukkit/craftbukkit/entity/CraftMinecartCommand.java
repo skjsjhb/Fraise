@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
-import java.util.Set;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.vehicle.MinecartCommandBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -12,6 +12,8 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.permissions.PermissionAttachmentInfo;
 import org.bukkit.plugin.Plugin;
+
+import java.util.Set;
 
 public class CraftMinecartCommand extends CraftMinecart implements CommandMinecart, io.papermc.paper.commands.PaperCommandBlockHolder {
 
@@ -34,7 +36,8 @@ public class CraftMinecartCommand extends CraftMinecart implements CommandMineca
     @Override
     public void setCommand(String command) {
         this.getHandle().getCommandBlock().setCommand(command != null ? command : "");
-        this.getHandle().getEntityData().set(MinecartCommandBlock.DATA_ID_COMMAND_NAME, this.getHandle().getCommandBlock().getCommand());
+        throw new NotImplementedError();
+        // this.getHandle().getEntityData().set(MinecartCommandBlock.DATA_ID_COMMAND_NAME, this.getHandle().getCommandBlock().getCommand());
     }
 
     @Override

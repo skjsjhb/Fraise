@@ -1,11 +1,5 @@
 package org.bukkit.craftbukkit.util;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import java.util.stream.Stream;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -55,8 +49,14 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.world.ticks.LevelTickAccess;
 import net.minecraft.world.ticks.TickPriority;
-import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public abstract class DelegatedGeneratorAccess implements WorldGenLevel {
 
@@ -90,10 +90,10 @@ public abstract class DelegatedGeneratorAccess implements WorldGenLevel {
         return this.delegate.getLevel();
     }
 
-    @Override
-    public ServerLevel getMinecraftWorld() {
-        return this.delegate.getMinecraftWorld();
-    }
+    // @Override
+    // public ServerLevel getMinecraftWorld() {
+    //     return this.delegate.getMinecraftWorld();
+    // }
 
     @Override
     public long dayTime() {
@@ -595,10 +595,10 @@ public abstract class DelegatedGeneratorAccess implements WorldGenLevel {
         return this.delegate.isBlockInLine(context);
     }
 
-    @Override
-    public BlockHitResult clip(ClipContext traverseContext, BlockPos traversePos) {
-        return this.delegate.clip(traverseContext, traversePos);
-    }
+    // @Override
+    // public BlockHitResult clip(ClipContext traverseContext, BlockPos traversePos) {
+    //     return this.delegate.clip(traverseContext, traversePos);
+    // }
 
     @Override
     public BlockHitResult clip(ClipContext context) {
@@ -710,10 +710,10 @@ public abstract class DelegatedGeneratorAccess implements WorldGenLevel {
         return this.delegate.addFreshEntity(entity);
     }
 
-    @Override
-    public boolean addFreshEntity(Entity entity, @Nullable CreatureSpawnEvent.SpawnReason reason) {
-        return this.delegate.addFreshEntity(entity, reason);
-    }
+    // @Override
+    // public boolean addFreshEntity(Entity entity, @Nullable CreatureSpawnEvent.SpawnReason reason) {
+    //     return this.delegate.addFreshEntity(entity, reason);
+    // }
 
     @Override
     public int getMaxY() {
@@ -775,22 +775,23 @@ public abstract class DelegatedGeneratorAccess implements WorldGenLevel {
         return this.delegate.isFluidAtPosition(pos, predicate);
     }
 
-    @Nullable
-    @Override
-    public BlockState getBlockStateIfLoaded(final BlockPos pos) {
-        return this.delegate.getBlockStateIfLoaded(pos);
-    }
-
-    @Nullable
-    @Override
-    public FluidState getFluidIfLoaded(final BlockPos pos) {
-        return this.delegate.getFluidIfLoaded(pos);
-    }
-
-    @Nullable
-    @Override
-    public ChunkAccess getChunkIfLoadedImmediately(final int x, final int z) {
-        return this.delegate.getChunkIfLoadedImmediately(x, z);
-    }
+    // @Nullable
+    // @Override
+    // public BlockState getBlockStateIfLoaded(final BlockPos pos) {
+    //     return this.delegate.getBlockStateIfLoaded(pos);
+    // }
+    //
+    // @Nullable
+    // @Override
+    // public FluidState getFluidIfLoaded(final BlockPos pos) {
+    //     return this.delegate.getFluidIfLoaded(pos);
+    // }
+    //
+    // @Nullable
+    // @Override
+    // public ChunkAccess getChunkIfLoadedImmediately(final int x, final int z) {
+    //     return this.delegate.getChunkIfLoadedImmediately(x, z);
+    // }
+    // throw new NotImplementedError();
 }
 

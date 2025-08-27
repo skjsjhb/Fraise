@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.animal.armadillo.Armadillo.ArmadilloState;
 import org.bukkit.craftbukkit.CraftServer;
@@ -34,7 +35,8 @@ public class CraftArmadillo extends CraftAnimals implements Armadillo {
             return;
         }
 
-        this.getHandle().lastHurtByMob = null; // Clear this memory to not have the sensor trigger rollUp instantly for damaged armadillo
-        this.getHandle().getBrain().setMemoryWithExpiry(MemoryModuleType.DANGER_DETECTED_RECENTLY, true, ArmadilloState.UNROLLING.animationDuration());
+        throw new NotImplementedError();
+        // this.getHandle().lastHurtByMob = null; // Clear this memory to not have the sensor trigger rollUp instantly for damaged armadillo
+        // this.getHandle().getBrain().setMemoryWithExpiry(MemoryModuleType.DANGER_DETECTED_RECENTLY, true, ArmadilloState.UNROLLING.animationDuration());
     }
 }

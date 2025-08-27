@@ -1,19 +1,19 @@
 package io.papermc.paper.adventure;
 
-import com.google.common.collect.Collections2;
-import java.util.Set;
-import java.util.function.Function;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.bossbar.BossBarImplementation;
 import net.kyori.adventure.bossbar.BossBarViewer;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.protocol.game.ClientboundBossEventPacket;
 import net.minecraft.server.level.ServerBossEvent;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.BossEvent;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Set;
+import java.util.function.Function;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class BossBarImplementationImpl implements BossBar.Listener, BossBarImplementation {
@@ -31,8 +31,9 @@ public final class BossBarImplementationImpl implements BossBar.Listener, BossBa
                 PaperAdventure.asVanilla(this.bar.color()),
                 PaperAdventure.asVanilla(this.bar.overlay())
             );
-            this.vanilla.adventure = this.bar;
-            this.bar.addListener(this);
+            // this.vanilla.adventure = this.bar;
+            // this.bar.addListener(this);
+            throw new NotImplementedError();
         }
         this.vanilla.addPlayer(player.getHandle());
     }
@@ -74,12 +75,14 @@ public final class BossBarImplementationImpl implements BossBar.Listener, BossBa
 
     @Override
     public @NotNull Iterable<? extends BossBarViewer> viewers() {
-        return this.vanilla == null ? Set.of() : Collections2.transform(this.vanilla.getPlayers(), ServerPlayer::getBukkitEntity);
+        throw new NotImplementedError();
+        // return this.vanilla == null ? Set.of() : Collections2.transform(this.vanilla.getPlayers(), ServerPlayer::getBukkitEntity);
     }
 
     private void maybeBroadcast(final Function<BossEvent, ClientboundBossEventPacket> fn) {
         if (this.vanilla != null) {
-            this.vanilla.broadcast(fn);
+            throw new NotImplementedError();
+            // this.vanilla.broadcast(fn);
         }
     }
 }

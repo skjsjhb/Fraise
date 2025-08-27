@@ -1,8 +1,6 @@
 package io.papermc.paper.configuration.transformation.global.versioned;
 
-import java.util.Properties;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.dedicated.DedicatedServer;
+import kotlin.NotImplementedError;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.configurate.ConfigurateException;
 import org.spongepowered.configurate.ConfigurationNode;
@@ -27,18 +25,19 @@ public class V29_LogIPs implements TransformAction {
 
     @Override
     public Object @Nullable [] visitPath(final NodePath path, final ConfigurationNode value) throws ConfigurateException {
-        final DedicatedServer server = ((DedicatedServer) MinecraftServer.getServer());
-
-        final boolean val = value.getBoolean(server.settings.getProperties().logIPs);
-        server.settings.update((config) -> {
-            final Properties newProps = new Properties(config.properties);
-            newProps.setProperty("log-ips", String.valueOf(val));
-            return config.reload(server.registryAccess(), newProps, server.options);
-        });
-
-        value.raw(null);
-
-        return null;
+        throw new NotImplementedError();
+        // final DedicatedServer server = ((DedicatedServer) MinecraftServer.getServer());
+        //
+        // final boolean val = value.getBoolean(server.settings.getProperties().logIPs);
+        // server.settings.update((config) -> {
+        //     final Properties newProps = new Properties(config.properties);
+        //     newProps.setProperty("log-ips", String.valueOf(val));
+        //     return config.reload(server.registryAccess(), newProps, server.options);
+        // });
+        //
+        // value.raw(null);
+        //
+        // return null;
     }
 
 }

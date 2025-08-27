@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Goat;
 
@@ -21,7 +22,8 @@ public class CraftGoat extends CraftAnimals implements Goat {
 
     @Override
     public void setLeftHorn(boolean hasHorn) {
-        this.getHandle().getEntityData().set(net.minecraft.world.entity.animal.goat.Goat.DATA_HAS_LEFT_HORN, hasHorn);
+        throw new NotImplementedError();
+        // this.getHandle().getEntityData().set(net.minecraft.world.entity.animal.goat.Goat.DATA_HAS_LEFT_HORN, hasHorn);
     }
 
     @Override
@@ -31,7 +33,8 @@ public class CraftGoat extends CraftAnimals implements Goat {
 
     @Override
     public void setRightHorn(boolean hasHorn) {
-        this.getHandle().getEntityData().set(net.minecraft.world.entity.animal.goat.Goat.DATA_HAS_RIGHT_HORN, hasHorn);
+        throw new NotImplementedError();
+        // this.getHandle().getEntityData().set(net.minecraft.world.entity.animal.goat.Goat.DATA_HAS_RIGHT_HORN, hasHorn);
     }
 
     @Override
@@ -46,6 +49,7 @@ public class CraftGoat extends CraftAnimals implements Goat {
 
     @Override
     public void ram(@org.jetbrains.annotations.NotNull org.bukkit.entity.LivingEntity entity) {
-        this.getHandle().ram(((CraftLivingEntity) entity).getHandle());
+        throw new NotImplementedError();
+        // this.getHandle().ram(((CraftLivingEntity) entity).getHandle());
     }
 }

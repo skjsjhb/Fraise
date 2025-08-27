@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.inventory.view.builder;
 
 import com.google.common.base.Preconditions;
-import io.papermc.paper.adventure.PaperAdventure;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -40,9 +40,10 @@ public abstract class CraftAbstractInventoryViewBuilder<V extends InventoryView>
         final ServerPlayer serverPlayer = (ServerPlayer) craftHuman.getHandle();
 
         final AbstractContainerMenu container = buildContainer(serverPlayer);
-        container.checkReachable = this.checkReachable;
-        container.setTitle(this.title != null ? PaperAdventure.asVanilla(this.title) : this.defaultTitle);
-        return (V) container.getBukkitView();
+        throw new NotImplementedError();
+        // container.checkReachable = this.checkReachable;
+        // container.setTitle(this.title != null ? PaperAdventure.asVanilla(this.title) : this.defaultTitle);
+        // return (V) container.getBukkitView();
     }
 
     protected abstract AbstractContainerMenu buildContainer(ServerPlayer player);

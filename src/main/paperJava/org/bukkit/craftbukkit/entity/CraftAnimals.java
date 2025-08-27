@@ -1,15 +1,15 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.UUID;
-import net.minecraft.Optionull;
-import net.minecraft.world.entity.EntityReference;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.animal.Animal;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Animals;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.UUID;
 
 public class CraftAnimals extends CraftAgeable implements Animals {
 
@@ -24,12 +24,14 @@ public class CraftAnimals extends CraftAgeable implements Animals {
 
     @Override
     public UUID getBreedCause() {
-        return Optionull.map(this.getHandle().loveCause, EntityReference::getUUID);
+        throw new NotImplementedError();
+        // return Optionull.map(this.getHandle().loveCause, EntityReference::getUUID);
     }
 
     @Override
     public void setBreedCause(UUID uuid) {
-        this.getHandle().loveCause = uuid == null ? null : new EntityReference<>(uuid);
+        throw new NotImplementedError();
+        // this.getHandle().loveCause = uuid == null ? null : new EntityReference<>(uuid);
     }
 
     @Override
@@ -45,7 +47,8 @@ public class CraftAnimals extends CraftAgeable implements Animals {
 
     @Override
     public int getLoveModeTicks() {
-        return this.getHandle().inLove;
+        throw new NotImplementedError();
+        // return this.getHandle().inLove;
     }
 
     @Override

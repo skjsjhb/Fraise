@@ -11,10 +11,9 @@ import io.papermc.paper.registry.PaperRegistryBuilderFactory;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.data.client.ClientTextureAsset;
 import io.papermc.paper.registry.entry.RegistryEntryMeta;
-import java.util.function.Consumer;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.minecraft.core.Holder;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.RegistryOps;
@@ -24,14 +23,18 @@ import org.bukkit.craftbukkit.CraftRegistry;
 import org.jetbrains.annotations.Contract;
 import org.jspecify.annotations.Nullable;
 
+import java.util.function.Consumer;
+
 public class Conversions {
 
     private static @Nullable Conversions globalInstance;
+
     public static Conversions global() {
         if (globalInstance == null) {
             final RegistryAccess globalAccess = CraftRegistry.getMinecraftRegistry();
             Preconditions.checkState(globalAccess != null, "Global registry access is not available");
-            globalInstance = new Conversions(new RegistryOps.HolderLookupAdapter(globalAccess));
+            throw new NotImplementedError();
+            // globalInstance = new Conversions(new RegistryOps.HolderLookupAdapter(globalAccess));
         }
         return globalInstance;
     }
@@ -111,8 +114,9 @@ public class Conversions {
         final RegistryEntryMeta.Buildable<M, A, B> buildableMeta
     ) {
         final ResourceKey<? extends Registry<M>> resourceRegistryKey = PaperRegistries.registryToNms(registryKey);
-        final HolderLookup.RegistryLookup<M> lookupForBuilders = this.lookup.lookupForValueCopyViaBuilders().lookupOrThrow(resourceRegistryKey);
-        return new PaperRegistryBuilderFactory<>(resourceRegistryKey, this, buildableMeta.builderFiller(), lookupForBuilders::getValueForCopying);
+        // final HolderLookup.RegistryLookup<M> lookupForBuilders = this.lookup.lookupForValueCopyViaBuilders().lookupOrThrow(resourceRegistryKey);
+        // return new PaperRegistryBuilderFactory<>(resourceRegistryKey, this, buildableMeta.builderFiller(), lookupForBuilders::getValueForCopying);
+        throw new NotImplementedError();
     }
 
 }

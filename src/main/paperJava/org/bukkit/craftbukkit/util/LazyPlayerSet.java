@@ -1,12 +1,11 @@
 package org.bukkit.craftbukkit.util;
 
 import com.google.common.base.Preconditions;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import kotlin.NotImplementedError;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.entity.Player;
+
+import java.util.Set;
 
 public class LazyPlayerSet extends LazyHashSet<Player> {
 
@@ -23,11 +22,12 @@ public class LazyPlayerSet extends LazyHashSet<Player> {
     }
 
     public static Set<Player> makePlayerSet(final MinecraftServer server) {
-        List<ServerPlayer> players = server.getPlayerList().players;
-        Set<Player> reference = new HashSet<>(players.size());
-        for (ServerPlayer player : players) {
-            reference.add(player.getBukkitEntity());
-        }
-        return reference;
+        throw new NotImplementedError();
+        // List<ServerPlayer> players = server.getPlayerList().players;
+        // Set<Player> reference = new HashSet<>(players.size());
+        // for (ServerPlayer player : players) {
+        //     reference.add(player.getBukkitEntity());
+        // }
+        // return reference;
     }
 }

@@ -1,14 +1,16 @@
 package org.bukkit.craftbukkit.generator.structure;
 
 import com.google.common.collect.ImmutableList;
-import java.util.Collection;
-import java.util.List;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.levelgen.structure.StructureStart;
 import org.bukkit.generator.structure.GeneratedStructure;
 import org.bukkit.generator.structure.Structure;
 import org.bukkit.generator.structure.StructurePiece;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.util.BoundingBox;
+
+import java.util.Collection;
+import java.util.List;
 
 public class CraftGeneratedStructure implements GeneratedStructure {
 
@@ -46,6 +48,7 @@ public class CraftGeneratedStructure implements GeneratedStructure {
 
     @Override
     public PersistentDataContainer getPersistentDataContainer() {
-        return this.handle.persistentDataContainer;
+        // return this.handle.persistentDataContainer;
+        throw new NotImplementedError();
     }
 }

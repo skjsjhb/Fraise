@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.core.BlockPos;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.SculkCatalystBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -25,8 +25,9 @@ public class CraftSculkCatalyst extends CraftBlockEntityState<SculkCatalystBlock
         this.requirePlaced();
 
         // bloom() is for visual blooming effect, cursors are what changes the blocks.
-        this.getBlockEntity().getListener().bloom(this.world.getHandle(), this.getPosition(), this.getHandle(), this.world.getHandle().getRandom());
-        this.getBlockEntity().getListener().getSculkSpreader().addCursors(new BlockPos(block.getX(), block.getY(), block.getZ()), charge);
+        // this.getBlockEntity().getListener().bloom(this.world.getHandle(), this.getPosition(), this.getHandle(), this.world.getHandle().getRandom());
+        // this.getBlockEntity().getListener().getSculkSpreader().addCursors(new BlockPos(block.getX(), block.getY(), block.getZ()), charge);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -45,13 +46,14 @@ public class CraftSculkCatalyst extends CraftBlockEntityState<SculkCatalystBlock
         com.google.common.base.Preconditions.checkNotNull(position);
         requirePlaced();
 
-        getBlockEntity().getListener().bloom(
-            world.getHandle(),
-            getBlockEntity().getBlockPos(),
-            getBlockEntity().getBlockState(),
-            world.getHandle().getRandom()
-        );
-        getBlockEntity().getListener().getSculkSpreader().addCursors(io.papermc.paper.util.MCUtil.toBlockPos(position), charge);
+        throw new NotImplementedError();
+        // getBlockEntity().getListener().bloom(
+        //     world.getHandle(),
+        //     getBlockEntity().getBlockPos(),
+        //     getBlockEntity().getBlockState(),
+        //     world.getHandle().getRandom()
+        // );
+        // getBlockEntity().getListener().getSculkSpreader().addCursors(io.papermc.paper.util.MCUtil.toBlockPos(position), charge);
     }
     // Paper end
 }

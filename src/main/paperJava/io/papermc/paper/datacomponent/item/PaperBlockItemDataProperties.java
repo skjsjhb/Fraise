@@ -1,7 +1,7 @@
 package io.papermc.paper.datacomponent.item;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import java.util.Map;
+import kotlin.NotImplementedError;
 import net.minecraft.world.item.component.BlockItemStateProperties;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -11,6 +11,8 @@ import org.bukkit.craftbukkit.block.CraftBlockType;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 import org.bukkit.craftbukkit.util.Handleable;
 
+import java.util.Map;
+
 public record PaperBlockItemDataProperties(
     BlockItemStateProperties impl
 ) implements BlockItemDataProperties, Handleable<BlockItemStateProperties> {
@@ -19,13 +21,15 @@ public record PaperBlockItemDataProperties(
     public BlockData createBlockData(final BlockType blockType) {
         final Block block = CraftBlockType.bukkitToMinecraftNew(blockType);
         final BlockState defaultState = block.defaultBlockState();
-        return this.impl.apply(defaultState).createCraftBlockData();
+        // return this.impl.apply(defaultState).createCraftBlockData();
+        throw new NotImplementedError();
     }
 
     @Override
     public BlockData applyTo(final BlockData blockData) {
         final BlockState state = ((CraftBlockData) blockData).getState();
-        return this.impl.apply(state).createCraftBlockData();
+        // return this.impl.apply(state).createCraftBlockData();
+        throw new NotImplementedError();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.entity.DispenserBlockEntity;
@@ -57,8 +58,9 @@ public class CraftDispenser extends CraftLootable<DispenserBlockEntity> implemen
             CraftWorld world = (CraftWorld) this.getWorld();
             DispenserBlock dispense = (DispenserBlock) Blocks.DISPENSER;
 
-            dispense.dispenseFrom(world.getHandle(), this.getHandle(), this.getPosition());
-            return true;
+            throw new NotImplementedError();
+            // dispense.dispenseFrom(world.getHandle(), this.getHandle(), this.getPosition());
+            // return true;
         } else {
             return false;
         }

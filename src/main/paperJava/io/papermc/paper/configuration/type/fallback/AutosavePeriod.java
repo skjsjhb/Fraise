@@ -1,12 +1,11 @@
 package io.papermc.paper.configuration.type.fallback;
 
-import net.minecraft.server.MinecraftServer;
+import kotlin.NotImplementedError;
 import org.spongepowered.configurate.serialize.SerializationException;
 
 import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Set;
-import java.util.function.Supplier;
 
 public class AutosavePeriod extends FallbackValue.Int {
 
@@ -30,10 +29,12 @@ public class AutosavePeriod extends FallbackValue.Int {
 
     @Override
     protected int fallback() {
-        return this.get(FallbackValue.MINECRAFT_SERVER).get().autosavePeriod;
+        // return this.get(FallbackValue.MINECRAFT_SERVER).get().autosavePeriod;
+        throw new NotImplementedError();
     }
 
     public static AutosavePeriod def() {
-        return new AutosavePeriod(FallbackValue.MINECRAFT_SERVER.singleton(MinecraftServer::getServer));
+        // return new AutosavePeriod(FallbackValue.MINECRAFT_SERVER.singleton(MinecraftServer::getServer));
+        throw new NotImplementedError();
     }
 }

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.Container;
 import org.bukkit.block.DecoratedPot;
 import org.bukkit.inventory.DecoratedPotInventory;
@@ -23,6 +24,7 @@ public class CraftInventoryDecoratedPot extends CraftInventory implements Decora
 
     @Override
     public DecoratedPot getHolder() {
-        return (DecoratedPot) this.inventory.getOwner();
+        // return (DecoratedPot) this.inventory.getOwner();
+        throw new NotImplementedError();
     }
 }

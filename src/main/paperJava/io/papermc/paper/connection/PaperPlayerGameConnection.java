@@ -1,9 +1,11 @@
 package io.papermc.paper.connection;
 
+import kotlin.NotImplementedError;
 import net.minecraft.server.level.ClientInformation;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+
 import java.util.Set;
 
 public class PaperPlayerGameConnection extends PaperCommonConnection<ServerGamePacketListenerImpl> implements PlayerGameConnection {
@@ -19,16 +21,18 @@ public class PaperPlayerGameConnection extends PaperCommonConnection<ServerGameP
 
     @Override
     public void reenterConfiguration() {
-        if (this.handle.connection.savedPlayerForLoginEventLegacy != null) {
-            HorriblePlayerLoginEventHack.warnReenterConfiguration();
-            return;
-        }
-        this.handle.switchToConfig();
+        throw new NotImplementedError();
+        // if (this.handle.connection.savedPlayerForLoginEventLegacy != null) {
+        //     HorriblePlayerLoginEventHack.warnReenterConfiguration();
+        //     return;
+        // }
+        // this.handle.switchToConfig();
     }
 
     @Override
     public Player getPlayer() {
-        return this.handle.getCraftPlayer();
+        throw new NotImplementedError();
+        // return this.handle.getCraftPlayer();
     }
 
     @Override

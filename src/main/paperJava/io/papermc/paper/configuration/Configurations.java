@@ -1,20 +1,11 @@
 package io.papermc.paper.configuration;
 
 import com.google.common.base.Preconditions;
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.leangen.geantyref.TypeToken;
 import io.papermc.paper.configuration.constraint.Constraint;
 import io.papermc.paper.configuration.constraint.Constraints;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.nio.file.AccessDeniedException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.function.UnaryOperator;
+import kotlin.NotImplementedError;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -31,9 +22,20 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.util.CheckedFunction;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.nio.file.AccessDeniedException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Objects;
+import java.util.function.UnaryOperator;
+
 public abstract class Configurations<G, W> {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
     public static final String WORLD_DEFAULTS = "__world_defaults__";
     public static final ResourceLocation WORLD_DEFAULTS_KEY = ResourceLocation.fromNamespaceAndPath("configurations", WORLD_DEFAULTS);
     protected final Path globalFolder;
@@ -276,7 +278,8 @@ public abstract class Configurations<G, W> {
     }
 
     public Path getWorldConfigFile(ServerLevel level) {
-        return level.levelStorageAccess.levelDirectory.path().resolve(this.worldConfigFileName);
+        // return level.levelStorageAccess.levelDirectory.path().resolve(this.worldConfigFileName);
+        throw new NotImplementedError();
     }
 
     public static class ContextMap {

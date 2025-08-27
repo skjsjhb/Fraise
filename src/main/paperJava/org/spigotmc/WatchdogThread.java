@@ -1,15 +1,12 @@
 package org.spigotmc;
 
-import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.configuration.GlobalConfiguration;
-import java.lang.management.ManagementFactory;
+import kotlin.NotImplementedError;
+
 import java.lang.management.MonitorInfo;
 import java.lang.management.ThreadInfo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import net.minecraft.server.MinecraftServer;
-import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.CraftServer;
 
 public class WatchdogThread extends ca.spottedleaf.moonrise.common.util.TickThread { // Paper - rewrite chunk system
 
@@ -59,101 +56,102 @@ public class WatchdogThread extends ca.spottedleaf.moonrise.common.util.TickThre
 
     @Override
     public void run() {
-        while (!this.stopping) {
-            Logger logger = Bukkit.getServer().getLogger();
-            long currentTime = WatchdogThread.monotonicMillis();
-            MinecraftServer server = MinecraftServer.getServer();
-            if (this.lastTick != 0 && this.timeoutTime > 0 && WatchdogThread.hasStarted && (!server.isRunning() || (currentTime > this.lastTick + this.earlyWarningEvery && !DISABLE_WATCHDOG))) { // Paper - add property to disable
-                boolean isLongTimeout = currentTime > this.lastTick + this.timeoutTime || (!server.isRunning() && !server.hasStopped() && currentTime > this.lastTick + 1000);
-                // Don't spam early warning dumps
-                if (!isLongTimeout && (this.earlyWarningEvery <= 0 ||
-                    !hasStarted || currentTime < this.lastEarlyWarning + this.earlyWarningEvery ||
-                    currentTime < this.lastTick + this.earlyWarningDelay))
-                    continue;
-                if (!isLongTimeout && server.hasStopped())
-                    continue; // Don't spam early watchdog warnings during shutdown, we'll come back to this...
-                this.lastEarlyWarning = currentTime;
-                if (isLongTimeout) {
-                    logger.log(Level.SEVERE, "------------------------------");
-                    logger.log(Level.SEVERE, "The server has stopped responding! This is (probably) not a Paper bug."); // Paper
-                    logger.log(Level.SEVERE, "If you see a plugin in the Server thread dump below, then please report it to that author");
-                    logger.log(Level.SEVERE, "\t *Especially* if it looks like HTTP or MySQL operations are occurring");
-                    logger.log(Level.SEVERE, "If you see a world save or edit, then it means you did far more than your server can handle at once");
-                    logger.log(Level.SEVERE, "\t If this is the case, consider increasing timeout-time in spigot.yml but note that this will replace the crash with LARGE lag spikes");
-                    logger.log(Level.SEVERE, "If you are unsure or still think this is a Paper bug, please report this to https://github.com/PaperMC/Paper/issues");
-                    logger.log(Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports");
-                    logger.log(Level.SEVERE, "Paper version: " + Bukkit.getServer().getVersion());
-
-                    if (net.minecraft.world.level.Level.lastPhysicsProblem != null) {
-                        logger.log(Level.SEVERE, "------------------------------");
-                        logger.log(Level.SEVERE, "During the run of the server, a physics stackoverflow was supressed");
-                        logger.log(Level.SEVERE, "near " + net.minecraft.world.level.Level.lastPhysicsProblem);
-                    }
-
-                    // Paper start - Warn in watchdog if an excessive velocity was ever set
-                    if (CraftServer.excessiveVelEx != null) {
-                        logger.log(Level.SEVERE, "------------------------------");
-                        logger.log(Level.SEVERE, "During the run of the server, a plugin set an excessive velocity on an entity");
-                        logger.log(Level.SEVERE, "This may be the cause of the issue, or it may be entirely unrelated");
-                        logger.log(Level.SEVERE, CraftServer.excessiveVelEx.getMessage());
-                        for (StackTraceElement stack : CraftServer.excessiveVelEx.getStackTrace()) {
-                            logger.log(Level.SEVERE, "\t\t" + stack);
-                        }
-                    }
-                    // Paper end
-                } else {
-                    logger.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH  - " + Bukkit.getServer().getVersion() + " ---");
-                    logger.log(Level.SEVERE, "The server has not responded for " + (currentTime - lastTick) / 1000 + " seconds! Creating thread dump");
-                }
-                // Paper end - Different message for short timeout
-                logger.log(Level.SEVERE, "------------------------------");
-                logger.log(Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Paper!):"); // Paper
-                FeatureHooks.dumpAllChunkLoadInfo(MinecraftServer.getServer(), isLongTimeout); // Paper - log detailed tick information
-                WatchdogThread.dumpThread(ManagementFactory.getThreadMXBean().getThreadInfo(MinecraftServer.getServer().serverThread.threadId(), Integer.MAX_VALUE), logger);
-                logger.log(Level.SEVERE, "------------------------------");
-
-                // Paper start - Only print full dump on long timeouts
-                if (isLongTimeout) {
-                    logger.log(Level.SEVERE, "Entire Thread Dump:");
-                    ThreadInfo[] threads = ManagementFactory.getThreadMXBean().dumpAllThreads(true, true);
-                    for (ThreadInfo thread : threads) {
-                        WatchdogThread.dumpThread(thread, logger);
-                    }
-                } else {
-                    logger.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH ---");
-                }
-
-                logger.log(Level.SEVERE, "------------------------------");
-
-                if (isLongTimeout) {
-                    if (!server.hasStopped()) {
-                        server.forceTicks = true;
-                        if (this.restart) {
-                            RestartCommand.addShutdownHook(SpigotConfig.restartScript);
-                        }
-                        // try one last chance to safe shutdown on main in case it 'comes back'
-                        server.abnormalExit = true;
-                        server.safeShutdown(false, this.restart);
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if (!server.hasStopped()) {
-                            server.close();
-                        }
-                    }
-                    break;
-                }
-                // Paper end
-            }
-
-            try {
-                sleep(1000); // Paper - Reduce check time to every second instead of every ten seconds, more consistent and allows for short timeout
-            } catch (InterruptedException ex) {
-                this.interrupt();
-            }
-        }
+        throw new NotImplementedError();
+        // while (!this.stopping) {
+        //     Logger logger = Bukkit.getServer().getLogger();
+        //     long currentTime = WatchdogThread.monotonicMillis();
+        //     MinecraftServer server = MinecraftServer.getServer();
+        //     if (this.lastTick != 0 && this.timeoutTime > 0 && WatchdogThread.hasStarted && (!server.isRunning() || (currentTime > this.lastTick + this.earlyWarningEvery && !DISABLE_WATCHDOG))) { // Paper - add property to disable
+        //         boolean isLongTimeout = currentTime > this.lastTick + this.timeoutTime || (!server.isRunning() && !server.hasStopped() && currentTime > this.lastTick + 1000);
+        //         // Don't spam early warning dumps
+        //         if (!isLongTimeout && (this.earlyWarningEvery <= 0 ||
+        //             !hasStarted || currentTime < this.lastEarlyWarning + this.earlyWarningEvery ||
+        //             currentTime < this.lastTick + this.earlyWarningDelay))
+        //             continue;
+        //         if (!isLongTimeout && server.hasStopped())
+        //             continue; // Don't spam early watchdog warnings during shutdown, we'll come back to this...
+        //         this.lastEarlyWarning = currentTime;
+        //         if (isLongTimeout) {
+        //             logger.log(Level.SEVERE, "------------------------------");
+        //             logger.log(Level.SEVERE, "The server has stopped responding! This is (probably) not a Paper bug."); // Paper
+        //             logger.log(Level.SEVERE, "If you see a plugin in the Server thread dump below, then please report it to that author");
+        //             logger.log(Level.SEVERE, "\t *Especially* if it looks like HTTP or MySQL operations are occurring");
+        //             logger.log(Level.SEVERE, "If you see a world save or edit, then it means you did far more than your server can handle at once");
+        //             logger.log(Level.SEVERE, "\t If this is the case, consider increasing timeout-time in spigot.yml but note that this will replace the crash with LARGE lag spikes");
+        //             logger.log(Level.SEVERE, "If you are unsure or still think this is a Paper bug, please report this to https://github.com/PaperMC/Paper/issues");
+        //             logger.log(Level.SEVERE, "Be sure to include ALL relevant console errors and Minecraft crash reports");
+        //             logger.log(Level.SEVERE, "Paper version: " + Bukkit.getServer().getVersion());
+        //
+        //             if (net.minecraft.world.level.Level.lastPhysicsProblem != null) {
+        //                 logger.log(Level.SEVERE, "------------------------------");
+        //                 logger.log(Level.SEVERE, "During the run of the server, a physics stackoverflow was supressed");
+        //                 logger.log(Level.SEVERE, "near " + net.minecraft.world.level.Level.lastPhysicsProblem);
+        //             }
+        //
+        //             // Paper start - Warn in watchdog if an excessive velocity was ever set
+        //             if (CraftServer.excessiveVelEx != null) {
+        //                 logger.log(Level.SEVERE, "------------------------------");
+        //                 logger.log(Level.SEVERE, "During the run of the server, a plugin set an excessive velocity on an entity");
+        //                 logger.log(Level.SEVERE, "This may be the cause of the issue, or it may be entirely unrelated");
+        //                 logger.log(Level.SEVERE, CraftServer.excessiveVelEx.getMessage());
+        //                 for (StackTraceElement stack : CraftServer.excessiveVelEx.getStackTrace()) {
+        //                     logger.log(Level.SEVERE, "\t\t" + stack);
+        //                 }
+        //             }
+        //             // Paper end
+        //         } else {
+        //             logger.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH  - " + Bukkit.getServer().getVersion() + " ---");
+        //             logger.log(Level.SEVERE, "The server has not responded for " + (currentTime - lastTick) / 1000 + " seconds! Creating thread dump");
+        //         }
+        //         // Paper end - Different message for short timeout
+        //         logger.log(Level.SEVERE, "------------------------------");
+        //         logger.log(Level.SEVERE, "Server thread dump (Look for plugins here before reporting to Paper!):"); // Paper
+        //         FeatureHooks.dumpAllChunkLoadInfo(MinecraftServer.getServer(), isLongTimeout); // Paper - log detailed tick information
+        //         WatchdogThread.dumpThread(ManagementFactory.getThreadMXBean().getThreadInfo(MinecraftServer.getServer().serverThread.threadId(), Integer.MAX_VALUE), logger);
+        //         logger.log(Level.SEVERE, "------------------------------");
+        //
+        //         // Paper start - Only print full dump on long timeouts
+        //         if (isLongTimeout) {
+        //             logger.log(Level.SEVERE, "Entire Thread Dump:");
+        //             ThreadInfo[] threads = ManagementFactory.getThreadMXBean().dumpAllThreads(true, true);
+        //             for (ThreadInfo thread : threads) {
+        //                 WatchdogThread.dumpThread(thread, logger);
+        //             }
+        //         } else {
+        //             logger.log(Level.SEVERE, "--- DO NOT REPORT THIS TO PAPER - THIS IS NOT A BUG OR A CRASH ---");
+        //         }
+        //
+        //         logger.log(Level.SEVERE, "------------------------------");
+        //
+        //         if (isLongTimeout) {
+        //             if (!server.hasStopped()) {
+        //                 server.forceTicks = true;
+        //                 if (this.restart) {
+        //                     RestartCommand.addShutdownHook(SpigotConfig.restartScript);
+        //                 }
+        //                 // try one last chance to safe shutdown on main in case it 'comes back'
+        //                 server.abnormalExit = true;
+        //                 server.safeShutdown(false, this.restart);
+        //                 try {
+        //                     Thread.sleep(1000);
+        //                 } catch (InterruptedException e) {
+        //                     e.printStackTrace();
+        //                 }
+        //                 if (!server.hasStopped()) {
+        //                     server.close();
+        //                 }
+        //             }
+        //             break;
+        //         }
+        //         // Paper end
+        //     }
+        //
+        //     try {
+        //         sleep(1000); // Paper - Reduce check time to every second instead of every ten seconds, more consistent and allows for short timeout
+        //     } catch (InterruptedException ex) {
+        //         this.interrupt();
+        //     }
+        // }
     }
 
     private static void dumpThread(ThreadInfo thread, Logger logger) {

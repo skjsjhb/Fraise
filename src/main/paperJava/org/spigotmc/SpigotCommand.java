@@ -1,9 +1,7 @@
 package org.spigotmc;
 
-import java.io.File;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -35,14 +33,15 @@ public class SpigotCommand extends Command {
                 .build()
             );
 
-            MinecraftServer console = MinecraftServer.getServer();
-            org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings"));
-            for (ServerLevel world : console.getAllLevels()) {
-                world.spigotConfig.init();
-            }
-            console.server.reloadCount++;
-
-            Command.broadcastCommandMessage(sender, text("Reload complete.", NamedTextColor.GREEN));
+            throw new NotImplementedError();
+            // MinecraftServer console = MinecraftServer.getServer();
+            // org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings"));
+            // for (ServerLevel world : console.getAllLevels()) {
+            //     world.spigotConfig.init();
+            // }
+            // console.server.reloadCount++;
+            //
+            // Command.broadcastCommandMessage(sender, text("Reload complete.", NamedTextColor.GREEN));
         }
 
         return true;

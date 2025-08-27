@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.LargeFireball;
 
@@ -17,6 +18,7 @@ public class CraftLargeFireball extends CraftSizedFireball implements LargeFireb
     @Override
     public void setYield(float yield) {
         super.setYield(yield);
-        this.getHandle().explosionPower = (int) yield;
+        // this.getHandle().explosionPower = (int) yield;
+        throw new NotImplementedError();
     }
 }

@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.inventory.CraftInventory;
 import org.bukkit.entity.Pillager;
 import org.bukkit.inventory.Inventory;
 
@@ -18,6 +18,7 @@ public class CraftPillager extends CraftIllager implements Pillager, com.destroy
 
     @Override
     public Inventory getInventory() {
-        return new CraftInventory(this.getHandle().inventory);
+        throw new NotImplementedError();
+        // return new CraftInventory(this.getHandle().inventory);
     }
 }

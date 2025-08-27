@@ -4,11 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableList;
 import io.papermc.paper.registry.HolderableBase;
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
@@ -18,9 +14,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Fallable;
-import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -38,6 +32,12 @@ import org.bukkit.inventory.ItemType;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @NullMarked
 public class CraftBlockType<B extends @NonNull BlockData> extends HolderableBase<Block> implements BlockType.Typed<B>, io.papermc.paper.world.flag.PaperFeatureDependent<Block> { // Paper - feature flag API
@@ -150,7 +150,8 @@ public class CraftBlockType<B extends @NonNull BlockData> extends HolderableBase
         final ImmutableList<BlockState> possibleStates = this.getHandle().getStateDefinition().getPossibleStates();
         final ImmutableList.Builder<B> builder = ImmutableList.builderWithExpectedSize(possibleStates.size());
         for (final BlockState possibleState : possibleStates) {
-            builder.add(this.blockDataClass.get().cast(possibleState.createCraftBlockData()));
+            throw new NotImplementedError();
+            // builder.add(this.blockDataClass.get().cast(possibleState.createCraftBlockData()));
         }
         return builder.build();
     }
@@ -195,7 +196,8 @@ public class CraftBlockType<B extends @NonNull BlockData> extends HolderableBase
 
     @Override
     public boolean isBurnable() {
-        return ((FireBlock) Blocks.FIRE).igniteOdds.getOrDefault(this.getHandle(), 0) > 0;
+        throw new NotImplementedError();
+        // return ((FireBlock) Blocks.FIRE).igniteOdds.getOrDefault(this.getHandle(), 0) > 0;
     }
 
     @Override
@@ -215,7 +217,8 @@ public class CraftBlockType<B extends @NonNull BlockData> extends HolderableBase
 
     @Override
     public float getHardness() {
-        return this.getHandle().defaultBlockState().destroySpeed;
+        throw new NotImplementedError();
+        // return this.getHandle().defaultBlockState().destroySpeed;
     }
 
     @Override
@@ -248,7 +251,8 @@ public class CraftBlockType<B extends @NonNull BlockData> extends HolderableBase
     // Paper start - hasCollision API
     @Override
     public boolean hasCollision() {
-        return this.getHandle().hasCollision;
+        throw new NotImplementedError();
+        // return this.getHandle().hasCollision;
     }
     // Paper end - hasCollision API
 }

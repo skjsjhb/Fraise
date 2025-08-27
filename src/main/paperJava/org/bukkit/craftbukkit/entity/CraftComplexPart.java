@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.boss.EnderDragonPart;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.ComplexEntityPart;
@@ -19,7 +20,8 @@ public class CraftComplexPart extends CraftEntity implements ComplexEntityPart {
 
     @Override
     public ComplexLivingEntity getParent() {
-        return (ComplexLivingEntity) this.getHandle().parentMob.getBukkitEntity();
+        throw new NotImplementedError();
+        // return (ComplexLivingEntity) this.getHandle().parentMob.getBukkitEntity();
     }
 
     @Override

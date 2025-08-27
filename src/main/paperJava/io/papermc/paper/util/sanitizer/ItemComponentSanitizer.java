@@ -2,21 +2,20 @@ package io.papermc.paper.util.sanitizer;
 
 import com.google.common.collect.ImmutableMap;
 import io.papermc.paper.configuration.GlobalConfiguration;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.UnaryOperator;
+import kotlin.NotImplementedError;
 import net.minecraft.Util;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.item.component.LodestoneTracker;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
 import org.jspecify.annotations.NullMarked;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 @NullMarked
 public final class ItemComponentSanitizer {
@@ -29,10 +28,11 @@ public final class ItemComponentSanitizer {
             put(map, DataComponents.LODESTONE_TRACKER, empty(new LodestoneTracker(Optional.empty(), false))); // We need it to be present to keep the glint
             put(map, DataComponents.POTION_CONTENTS, ItemComponentSanitizer::sanitizePotionContents); // Custom situational serialization
 
-            if (MinecraftServer.getServer().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).size() > 0) {
-                put(map, DataComponents.ENCHANTMENTS, empty(dummyEnchantments())); // We need to keep it present to keep the glint
-                put(map, DataComponents.STORED_ENCHANTMENTS, empty(dummyEnchantments())); // We need to keep it present to keep the glint
-            }
+            throw new NotImplementedError();
+            // if (MinecraftServer.getServer().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).size() > 0) {
+            //     put(map, DataComponents.ENCHANTMENTS, empty(dummyEnchantments())); // We need to keep it present to keep the glint
+            //     put(map, DataComponents.STORED_ENCHANTMENTS, empty(dummyEnchantments())); // We need to keep it present to keep the glint
+            // }
         }
     ).build();
 
@@ -58,13 +58,15 @@ public final class ItemComponentSanitizer {
 
     // We cant use the empty map from enchantments because we want to keep the glow
     private static ItemEnchantments dummyEnchantments() {
-        final ItemEnchantments.Mutable obj = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
-        obj.set(MinecraftServer.getServer().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getRandom(RandomSource.create()).orElseThrow(), 1);
-        return obj.toImmutable();
+        throw new NotImplementedError();
+        // final ItemEnchantments.Mutable obj = new ItemEnchantments.Mutable(ItemEnchantments.EMPTY);
+        // obj.set(MinecraftServer.getServer().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getRandom(RandomSource.create()).orElseThrow(), 1);
+        // return obj.toImmutable();
     }
 
     public static int sanitizeCount(final ItemObfuscationSession obfuscationSession, final ItemStack itemStack, final int count) {
-        if (obfuscationSession.obfuscationLevel() != ItemObfuscationSession.ObfuscationLevel.ALL) return count; // Ignore if we are not obfuscating
+        if (obfuscationSession.obfuscationLevel() != ItemObfuscationSession.ObfuscationLevel.ALL)
+            return count; // Ignore if we are not obfuscating
 
         if (GlobalConfiguration.get().anticheat.obfuscation.items.binding.getAssetObfuscation(itemStack).sanitizeCount()) {
             return 1;
@@ -74,7 +76,8 @@ public final class ItemComponentSanitizer {
     }
 
     public static boolean shouldDrop(final ItemObfuscationSession obfuscationSession, final DataComponentType<?> key) {
-        if (obfuscationSession.obfuscationLevel() != ItemObfuscationSession.ObfuscationLevel.ALL) return false; // Ignore if we are not obfuscating
+        if (obfuscationSession.obfuscationLevel() != ItemObfuscationSession.ObfuscationLevel.ALL)
+            return false; // Ignore if we are not obfuscating
 
         final ItemStack targetItemstack = obfuscationSession.context().itemStack();
 
@@ -83,7 +86,8 @@ public final class ItemComponentSanitizer {
     }
 
     public static Optional<?> override(final ItemObfuscationSession obfuscationSession, final DataComponentType<?> key, final Optional<?> value) {
-        if (obfuscationSession.obfuscationLevel() != ItemObfuscationSession.ObfuscationLevel.ALL) return value; // Ignore if we are not obfuscating
+        if (obfuscationSession.obfuscationLevel() != ItemObfuscationSession.ObfuscationLevel.ALL)
+            return value; // Ignore if we are not obfuscating
 
         // Ignore removed values
         if (value.isEmpty()) {
@@ -93,8 +97,10 @@ public final class ItemComponentSanitizer {
         final ItemStack targetItemstack = obfuscationSession.context().itemStack();
 
         return switch (GlobalConfiguration.get().anticheat.obfuscation.items.binding.getAssetObfuscation(targetItemstack).patchStrategy().get(key)) {
-            case final ItemObfuscationBinding.BoundObfuscationConfiguration.MutationType.Drop ignored -> Optional.empty();
-            case final ItemObfuscationBinding.BoundObfuscationConfiguration.MutationType.Sanitize sanitize -> Optional.of(sanitize.sanitizer().apply(value.get()));
+            case final ItemObfuscationBinding.BoundObfuscationConfiguration.MutationType.Drop ignored ->
+                Optional.empty();
+            case final ItemObfuscationBinding.BoundObfuscationConfiguration.MutationType.Sanitize sanitize ->
+                Optional.of(sanitize.sanitizer().apply(value.get()));
             case null -> value;
         };
     }

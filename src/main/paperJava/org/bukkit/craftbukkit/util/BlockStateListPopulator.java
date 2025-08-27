@@ -1,11 +1,6 @@
 package org.bukkit.craftbukkit.util;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.server.level.ServerLevel;
@@ -19,7 +14,13 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.storage.LevelData;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.block.CraftBlockState;
-import org.bukkit.craftbukkit.block.CraftBlockStates;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class BlockStateListPopulator extends DummyGeneratorAccess {
 
@@ -85,21 +86,23 @@ public class BlockStateListPopulator extends DummyGeneratorAccess {
         return true;
     }
 
-    @Override
-    public ServerLevel getMinecraftWorld() {
-        return this.level.getMinecraftWorld();
-    }
+    // @Override
+    // public ServerLevel getMinecraftWorld() {
+    //     return this.level.getMinecraftWorld();
+    // }
+    // throw new NotImplementedError();
 
     private void iterateSnapshots(Consumer<CraftBlockState> callback) {
-        for (Map.Entry<BlockPos, CapturedBlock> entry : this.blocks.entrySet()) {
-            CapturedBlock block = entry.getValue();
-            CraftBlockState snapshot = CraftBlockStates.getBlockState(
-                this.getMinecraftWorld().getWorld(), entry.getKey(), block.state(), block.blockEntity()
-            );
-            snapshot.setFlags(block.flags());
-            snapshot.setWorldHandle(this.level);
-            callback.accept(snapshot);
-        }
+        throw new NotImplementedError();
+        // for (Map.Entry<BlockPos, CapturedBlock> entry : this.blocks.entrySet()) {
+        //     CapturedBlock block = entry.getValue();
+        //     CraftBlockState snapshot = CraftBlockStates.getBlockState(
+        //         this.getMinecraftWorld().getWorld(), entry.getKey(), block.state(), block.blockEntity()
+        //     );
+        //     snapshot.setFlags(block.flags());
+        //     snapshot.setWorldHandle(this.level);
+        //     callback.accept(snapshot);
+        // }
     }
 
     public void placeBlocks() {
@@ -107,7 +110,8 @@ public class BlockStateListPopulator extends DummyGeneratorAccess {
     }
 
     public void placeSomeBlocks(Predicate<? super BlockState> filter) {
-        this.placeSomeBlocks($ -> {}, filter);
+        this.placeSomeBlocks($ -> {
+        }, filter);
     }
 
     public void placeBlocks(Consumer<? super CraftBlockState> beforeRun) {
@@ -136,7 +140,8 @@ public class BlockStateListPopulator extends DummyGeneratorAccess {
 
     @Override
     public ServerLevel getLevel() {
-        return this.getMinecraftWorld();
+        // return this.getMinecraftWorld();
+        throw new NotImplementedError();
     }
 
     @Override

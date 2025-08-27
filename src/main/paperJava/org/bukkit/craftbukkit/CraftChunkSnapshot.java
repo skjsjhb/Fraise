@@ -2,8 +2,7 @@ package org.bukkit.craftbukkit;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
-import java.util.function.Predicate;
-import net.minecraft.core.BlockPos;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.PalettedContainer;
@@ -16,6 +15,8 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.craftbukkit.block.CraftBiome;
 import org.bukkit.craftbukkit.block.data.CraftBlockData;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
+
+import java.util.function.Predicate;
 
 /**
  * Represents a static, thread-safe snapshot of chunk of blocks
@@ -96,7 +97,8 @@ public class CraftChunkSnapshot implements ChunkSnapshot {
     public Material getBlockType(int x, int y, int z) {
         this.validateChunkCoordinates(x, y, z);
 
-        return this.blockIds[this.getSectionIndex(y)].get(x, y & 0xF, z).getBukkitMaterial(); // Paper - optimise get calls
+        throw new NotImplementedError();
+        // return this.blockIds[this.getSectionIndex(y)].get(x, y & 0xF, z).getBukkitMaterial(); // Paper - optimise get calls
     }
 
     @Override
@@ -164,7 +166,8 @@ public class CraftChunkSnapshot implements ChunkSnapshot {
         this.validateChunkCoordinates(x, y, z);
 
         PalettedContainerRO<Holder<net.minecraft.world.level.biome.Biome>> biome = this.biome[this.getSectionIndex(y)]; // SPIGOT-7188: Don't need to convert y to biome coordinate scale since it is bound to the block chunk section
-        return biome.get(x >> 2, (y & 0xF) >> 2, z >> 2).value().getTemperature(new BlockPos((this.x << 4) | x, y, (this.z << 4) | z), this.seaLevel);
+        throw new NotImplementedError();
+        // return biome.get(x >> 2, (y & 0xF) >> 2, z >> 2).value().getTemperature(new BlockPos((this.x << 4) | x, y, (this.z << 4) | z), this.seaLevel);
     }
 
     @Override

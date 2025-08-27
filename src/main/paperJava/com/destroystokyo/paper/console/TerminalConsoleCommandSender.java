@@ -8,6 +8,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.apache.logging.log4j.LogManager;
 import org.bukkit.craftbukkit.command.CraftConsoleCommandSender;
 
+@SuppressWarnings("UnstableApiUsage")
 public class TerminalConsoleCommandSender extends CraftConsoleCommandSender {
 
     private static final ComponentLogger LOGGER = ComponentLogger.logger(LogManager.getRootLogger().getName());

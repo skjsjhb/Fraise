@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Ocelot;
 
@@ -16,12 +17,14 @@ public class CraftOcelot extends CraftAnimals implements Ocelot {
 
     @Override
     public boolean isTrusting() {
-        return this.getHandle().isTrusting();
+        throw new NotImplementedError();
+        // return this.getHandle().isTrusting();
     }
 
     @Override
     public void setTrusting(boolean trust) {
-        this.getHandle().setTrusting(trust);
+        throw new NotImplementedError();
+        // this.getHandle().setTrusting(trust);
     }
 
     @Override

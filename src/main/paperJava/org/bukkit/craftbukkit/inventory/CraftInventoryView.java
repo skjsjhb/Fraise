@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -27,8 +28,9 @@ public class CraftInventoryView<T extends AbstractContainerMenu, I extends Inven
         this.player = (CraftHumanEntity) player;
         this.viewing = viewing;
         this.container = container;
-        this.originalTitle = CraftChatMessage.fromComponent(container.getTitle());
+        this.originalTitle = null; // CraftChatMessage.fromComponent(container.getTitle());
         this.title = this.originalTitle;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -75,7 +77,8 @@ public class CraftInventoryView<T extends AbstractContainerMenu, I extends Inven
 
     @Override
     public net.kyori.adventure.text.Component title() {
-        return io.papermc.paper.adventure.PaperAdventure.asAdventure(this.container.getTitle());
+        // return io.papermc.paper.adventure.PaperAdventure.asAdventure(this.container.getTitle());
+        throw new NotImplementedError();
     }
 
     @Override
@@ -96,8 +99,9 @@ public class CraftInventoryView<T extends AbstractContainerMenu, I extends Inven
 
     @Override
     public org.bukkit.inventory.MenuType getMenuType() {
-        MenuType<?> menuType = container.menuType;
-        return menuType != null ? CraftMenuType.minecraftToBukkit(menuType) : null;
+        // MenuType<?> menuType = container.menuType;
+        // return menuType != null ? CraftMenuType.minecraftToBukkit(menuType) : null;
+        throw new NotImplementedError();
     }
 
     public boolean isInTop(int rawSlot) {

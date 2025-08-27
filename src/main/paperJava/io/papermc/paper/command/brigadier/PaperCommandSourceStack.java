@@ -1,13 +1,9 @@
 package io.papermc.paper.command.brigadier;
 
 import com.destroystokyo.paper.brigadier.BukkitBrigadierCommandSource;
-import com.google.common.base.Preconditions;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec2;
-import net.minecraft.world.phys.Vec3;
+import kotlin.NotImplementedError;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -18,34 +14,38 @@ public interface PaperCommandSourceStack extends CommandSourceStack, BukkitBriga
 
     @Override
     default @NonNull Location getLocation() {
-        Vec2 rot = this.getHandle().getRotation();
-        Vec3 pos = this.getHandle().getPosition();
-        Level level = this.getHandle().getLevel();
-
-        return new Location(level.getWorld(), pos.x, pos.y, pos.z, rot.y, rot.x);
+        // Vec2 rot = this.getHandle().getRotation();
+        // Vec3 pos = this.getHandle().getPosition();
+        // Level level = this.getHandle().getLevel();
+        //
+        // return new Location(level.getWorld(), pos.x, pos.y, pos.z, rot.y, rot.x);
+        throw new NotImplementedError();
     }
 
     @Override
     @NonNull
     default CommandSender getSender() {
-        return this.getHandle().getBukkitSender();
+        // return this.getHandle().getBukkitSender();
+        throw new NotImplementedError();
     }
 
     @Override
     @Nullable
     default Entity getExecutor() {
-        net.minecraft.world.entity.Entity nmsEntity = this.getHandle().getEntity();
-        if (nmsEntity == null) {
-            return null;
-        }
-
-        return nmsEntity.getBukkitEntity();
+        // net.minecraft.world.entity.Entity nmsEntity = this.getHandle().getEntity();
+        // if (nmsEntity == null) {
+        //     return null;
+        // }
+        //
+        // return nmsEntity.getBukkitEntity();
+        throw new NotImplementedError();
     }
 
     @Override
     default CommandSourceStack withExecutor(@NonNull Entity executor) {
-        Preconditions.checkNotNull(executor, "Executor cannot be null.");
-        return this.getHandle().withEntity(((CraftEntity) executor).getHandle());
+        // Preconditions.checkNotNull(executor, "Executor cannot be null.");
+        // return this.getHandle().withEntity(((CraftEntity) executor).getHandle());
+        throw new NotImplementedError();
     }
 
     // OLD METHODS

@@ -1,7 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
-import net.minecraft.core.Holder;
-import net.minecraft.world.entity.decoration.PaintingVariant;
+import kotlin.NotImplementedError;
 import org.bukkit.Art;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.CraftArt;
@@ -31,18 +30,19 @@ public class CraftPainting extends CraftHanging implements Painting {
 
     @Override
     public boolean setArt(Art art, boolean force) {
-        net.minecraft.world.entity.decoration.Painting painting = this.getHandle();
-        Holder<PaintingVariant> oldArt = painting.getVariant();
-        painting.setVariant(CraftArt.bukkitToMinecraftHolder(art));
-        painting.setDirection(painting.getDirection());
-        if (!force && !this.getHandle().generation && !painting.survives()) {
-            // Revert painting since it doesn't fit
-            painting.setVariant(oldArt);
-            painting.setDirection(painting.getDirection());
-            return false;
-        }
-        //this.update(); Paper - Don't resent entity on art update
-        return true;
+        throw new NotImplementedError();
+        // net.minecraft.world.entity.decoration.Painting painting = this.getHandle();
+        // Holder<PaintingVariant> oldArt = painting.getVariant();
+        // painting.setVariant(CraftArt.bukkitToMinecraftHolder(art));
+        // painting.setDirection(painting.getDirection());
+        // if (!force && !this.getHandle().generation && !painting.survives()) {
+        //     // Revert painting since it doesn't fit
+        //     painting.setVariant(oldArt);
+        //     painting.setDirection(painting.getDirection());
+        //     return false;
+        // }
+        // //this.update(); Paper - Don't resent entity on art update
+        // return true;
     }
 
     @Override

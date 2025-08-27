@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.WanderingTrader;
@@ -27,32 +28,37 @@ public class CraftWanderingTrader extends CraftAbstractVillager implements Wande
 
     @Override
     public void setCanDrinkPotion(boolean bool) {
-        getHandle().canDrinkPotion = bool;
+        // getHandle().canDrinkPotion = bool;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean canDrinkPotion() {
-        return getHandle().canDrinkPotion;
+        // return getHandle().canDrinkPotion;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setCanDrinkMilk(boolean bool) {
-        getHandle().canDrinkMilk = bool;
+        // getHandle().canDrinkMilk = bool;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean canDrinkMilk() {
-        return getHandle().canDrinkMilk;
+        // return getHandle().canDrinkMilk;
+        throw new NotImplementedError();
     }
 
     @Override
     public org.bukkit.Location getWanderingTowards() {
-        net.minecraft.core.BlockPos pos = this.getHandle().getWanderTarget();
-        if (pos == null) {
-            return null;
-        }
-
-        return CraftLocation.toBukkit(pos, this.getHandle().level());
+        throw new NotImplementedError();
+        // net.minecraft.core.BlockPos pos = this.getHandle().getWanderTarget();
+        // if (pos == null) {
+        //     return null;
+        // }
+        //
+        // return CraftLocation.toBukkit(pos, this.getHandle().level());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.block.entity.SculkShriekerBlockEntity;
 import org.bukkit.Location;
@@ -20,12 +21,14 @@ public class CraftSculkShrieker extends CraftBlockEntityState<SculkShriekerBlock
 
     @Override
     public int getWarningLevel() {
-        return this.getSnapshot().warningLevel;
+        throw new NotImplementedError();
+        // return this.getSnapshot().warningLevel;
     }
 
     @Override
     public void setWarningLevel(int level) {
-        this.getSnapshot().warningLevel = level;
+        throw new NotImplementedError();
+        // this.getSnapshot().warningLevel = level;
     }
 
     @Override

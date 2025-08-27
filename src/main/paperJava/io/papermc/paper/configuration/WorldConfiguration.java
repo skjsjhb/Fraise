@@ -2,8 +2,7 @@ package io.papermc.paper.configuration;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
-import com.mojang.logging.LogUtils;
-import io.papermc.paper.FeatureHooks;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.configuration.legacy.MaxEntityCollisionsInitializer;
 import io.papermc.paper.configuration.legacy.RequiresSpigotInitialization;
 import io.papermc.paper.configuration.mapping.MergeMap;
@@ -26,19 +25,12 @@ import it.unimi.dsi.fastutil.objects.Reference2LongMap;
 import it.unimi.dsi.fastutil.objects.Reference2LongOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
-import java.util.Arrays;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.OptionalDouble;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import kotlin.NotImplementedError;
 import net.minecraft.Util;
 import net.minecraft.commands.arguments.NbtPathArgument;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -47,12 +39,9 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.decoration.HangingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.monster.Vindicator;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.NaturalSpawner;
 import net.minecraft.world.level.block.BambooStalkBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -66,9 +55,16 @@ import org.spongepowered.configurate.objectmapping.meta.Required;
 import org.spongepowered.configurate.objectmapping.meta.Setting;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.OptionalDouble;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
 @SuppressWarnings({"FieldCanBeLocal", "FieldMayBeFinal", "NotNullFieldNotInitialized", "InnerClassMayBeStatic"})
 public class WorldConfiguration extends ConfigurationPart {
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
     static final int CURRENT_VERSION = 31; // (when you change the version, change the comment, so it conflicts on rebases): migrate spawn loaded configs to gamerule
 
     private final transient SpigotWorldConfig spigotConfig;
@@ -175,13 +171,18 @@ public class WorldConfiguration extends ConfigurationPart {
             public boolean disableMobSpawnerSpawnEggTransformation = false;
             public boolean perPlayerMobSpawns = true;
             public boolean scanForLegacyEnderDragon = true;
-            @MergeMap
-            public Reference2IntMap<MobCategory> spawnLimits = Util.make(new Reference2IntOpenHashMap<>(NaturalSpawner.SPAWNING_CATEGORIES.length), map -> Arrays.stream(NaturalSpawner.SPAWNING_CATEGORIES).forEach(mobCategory -> map.put(mobCategory, -1)));
+
+            // @MergeMap
+            // public Reference2IntMap<MobCategory> spawnLimits = Util.make(new Reference2IntOpenHashMap<>(NaturalSpawner.SPAWNING_CATEGORIES.length), map -> Arrays.stream(NaturalSpawner.SPAWNING_CATEGORIES).forEach(mobCategory -> map.put(mobCategory, -1)));
+            // throw new NotImplementedError();
+
             @MergeMap
             public Map<MobCategory, DespawnRangePair> despawnRanges = Arrays.stream(MobCategory.values()).collect(Collectors.toMap(Function.identity(), category -> DespawnRangePair.createDefault()));
             public DespawnRange.Shape despawnRangeShape = DespawnRange.Shape.ELLIPSOID;
-            @MergeMap
-            public Reference2IntMap<MobCategory> ticksPerSpawn = Util.make(new Reference2IntOpenHashMap<>(NaturalSpawner.SPAWNING_CATEGORIES.length), map -> Arrays.stream(NaturalSpawner.SPAWNING_CATEGORIES).forEach(mobCategory -> map.put(mobCategory, -1)));
+
+            // @MergeMap
+            // public Reference2IntMap<MobCategory> ticksPerSpawn = Util.make(new Reference2IntOpenHashMap<>(NaturalSpawner.SPAWNING_CATEGORIES.length), map -> Arrays.stream(NaturalSpawner.SPAWNING_CATEGORIES).forEach(mobCategory -> map.put(mobCategory, -1)));
+            // throw new NotImplementedError();
 
             @ConfigSerializable
             public record DespawnRangePair(@Required DespawnRange hard, @Required DespawnRange soft) {
@@ -257,9 +258,10 @@ public class WorldConfiguration extends ConfigurationPart {
                 public int safeRegenDeleteRange = 32;
 
                 public enum DuplicateUUIDMode {
-                    SAFE_REGEN, DELETE, NOTHING, WARN;
+                    SAFE_REGEN, DELETE, NOTHING, WARN
                 }
             }
+
             public AltItemDespawnRate altItemDespawnRate;
 
             public class AltItemDespawnRate extends ConfigurationPart {
@@ -281,13 +283,15 @@ public class WorldConfiguration extends ConfigurationPart {
             public boolean allowSpiderWorldBorderClimbing = true;
 
             private static final List<EntityType<?>> ZOMBIE_LIKE = List.of(EntityType.ZOMBIE, EntityType.HUSK, EntityType.ZOMBIE_VILLAGER, EntityType.ZOMBIFIED_PIGLIN);
-            @MergeMap
-            public Map<EntityType<?>, List<Difficulty>> doorBreakingDifficulty = Util.make(new IdentityHashMap<>(), map -> {
-                for (final EntityType<?> type : ZOMBIE_LIKE) {
-                    map.put(type, Arrays.stream(Difficulty.values()).filter(Zombie.DOOR_BREAKING_PREDICATE).toList());
-                }
-                map.put(EntityType.VINDICATOR, Arrays.stream(Difficulty.values()).filter(Vindicator.DOOR_BREAKING_PREDICATE).toList());
-            });
+
+            // @MergeMap
+            // public Map<EntityType<?>, List<Difficulty>> doorBreakingDifficulty = Util.make(new IdentityHashMap<>(), map -> {
+            //     for (final EntityType<?> type : ZOMBIE_LIKE) {
+            //         map.put(type, Arrays.stream(Difficulty.values()).filter(Zombie.DOOR_BREAKING_PREDICATE).toList());
+            //     }
+            //     map.put(EntityType.VINDICATOR, Arrays.stream(Difficulty.values()).filter(Vindicator.DOOR_BREAKING_PREDICATE).toList());
+            // });
+            // throw new NotImplementedError();
 
             public boolean disableCreeperLingeringEffect = false;
             public boolean enderDragonsDeathAlwaysPlacesDragonEgg = false;
@@ -354,17 +358,18 @@ public class WorldConfiguration extends ConfigurationPart {
                 } else if (entity instanceof HangingEntity || entity instanceof ItemEntity || entity instanceof ExperienceOrb) {
                     return misc.or(def);
                 }
-                switch (entity.activationType) {
-                    case ANIMAL, WATER, VILLAGER -> {
-                        return animal.or(def);
-                    }
-                    case MONSTER, FLYING_MONSTER, RAIDER -> {
-                        return monster.or(def);
-                    }
-                    default -> {
-                        return other.or(def);
-                    }
-                }
+                // switch (entity.activationType) {
+                //     case ANIMAL, WATER, VILLAGER -> {
+                //         return animal.or(def);
+                //     }
+                //     case MONSTER, FLYING_MONSTER, RAIDER -> {
+                //         return monster.or(def);
+                //     }
+                //     default -> {
+                //         return other.or(def);
+                //     }
+                // }
+                throw new NotImplementedError();
             }
         }
     }
@@ -425,6 +430,7 @@ public class WorldConfiguration extends ConfigurationPart {
         }
 
         public TreasureMaps treasureMaps;
+
         public class TreasureMaps extends ConfigurationPart {
             public boolean enabled = true;
             @NestedSetting({"find-already-discovered", "villager-trade"})
@@ -515,7 +521,8 @@ public class WorldConfiguration extends ConfigurationPart {
 
         @PostProcess
         private void postProcess() {
-            FeatureHooks.setPlayerChunkUnloadDelay(this.delayChunkUnloadsBy.ticks());
+            throw new NotImplementedError();
+            // FeatureHooks.setPlayerChunkUnloadDelay(this.delayChunkUnloadsBy.ticks());
         }
     }
 
@@ -581,7 +588,7 @@ public class WorldConfiguration extends ConfigurationPart {
         }
 
         public enum AlternateCurrentUpdateOrder {
-        	HORIZONTAL_FIRST_OUTWARD, HORIZONTAL_FIRST_INWARD, VERTICAL_FIRST_OUTWARD, VERTICAL_FIRST_INWARD
+            HORIZONTAL_FIRST_OUTWARD, HORIZONTAL_FIRST_INWARD, VERTICAL_FIRST_OUTWARD, VERTICAL_FIRST_INWARD
         }
     }
 }

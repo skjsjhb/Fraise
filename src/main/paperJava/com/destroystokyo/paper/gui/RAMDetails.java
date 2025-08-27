@@ -4,11 +4,9 @@ import net.minecraft.Util;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.TimeUtil;
 
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListSelectionModel;
-import javax.swing.JList;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Dimension;
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
@@ -60,19 +58,20 @@ public class RAMDetails extends JList<String> {
         Vector<String> vector = new Vector<>();
 
         // Follows CraftServer#getTPS
-        double[] tps = new double[] {
-            server.tps1.getAverage(),
-            server.tps5.getAverage(),
-            server.tps15.getAverage()
+        double[] tps = new double[]{
+            // server.tps1.getAverage(),
+            // server.tps5.getAverage(),
+            // server.tps15.getAverage(),
         };
+        // throw new NotImplementedError();
         String[] tpsAvg = new String[tps.length];
 
-        for ( int g = 0; g < tps.length; g++) {
-            tpsAvg[g] = format( tps[g] );
+        for (int g = 0; g < tps.length; g++) {
+            tpsAvg[g] = format(tps[g]);
         }
         vector.add("Memory use: " + (data.getUsedMem() / 1024L / 1024L) + " mb (" + (data.getFree() * 100L / data.getMax()) + "% free)");
         vector.add("Heap: " + (data.getTotal() / 1024L / 1024L) + " / " + (data.getMax() / 1024L / 1024L) + " mb");
-        vector.add("Avg tick: " + DECIMAL_FORMAT.format((double)this.server.getAverageTickTimeNanos() / (double) TimeUtil.NANOSECONDS_PER_MILLISECOND) + " ms");
+        vector.add("Avg tick: " + DECIMAL_FORMAT.format((double) this.server.getAverageTickTimeNanos() / (double) TimeUtil.NANOSECONDS_PER_MILLISECOND) + " ms");
         vector.add("TPS from last 1m, 5m, 15m: " + String.join(", ", tpsAvg));
         setListData(vector);
     }
@@ -86,6 +85,6 @@ public class RAMDetails extends JList<String> {
     }
 
     private static String format(double tps) {
-        return ( ( tps > 21.0 ) ? "*" : "" ) + Math.min( Math.round( tps * 100.0 ) / 100.0, 20.0 );
+        return ((tps > 21.0) ? "*" : "") + Math.min(Math.round(tps * 100.0) / 100.0, 20.0);
     }
 }

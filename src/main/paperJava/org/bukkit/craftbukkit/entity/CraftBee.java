@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
@@ -26,8 +27,9 @@ public class CraftBee extends CraftAnimals implements Bee {
 
     @Override
     public void setHive(Location location) {
-        Preconditions.checkArgument(location == null || this.getWorld().equals(location.getWorld()), "Hive must be in same world");
-        this.getHandle().hivePos = (location == null) ? null : CraftLocation.toBlockPosition(location);
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(location == null || this.getWorld().equals(location.getWorld()), "Hive must be in same world");
+        // this.getHandle().hivePos = (location == null) ? null : CraftLocation.toBlockPosition(location);
     }
 
     @Override
@@ -49,7 +51,8 @@ public class CraftBee extends CraftAnimals implements Bee {
 
     @Override
     public void setHasNectar(boolean nectar) {
-        this.getHandle().setHasNectar(nectar);
+        throw new NotImplementedError();
+        // this.getHandle().setHasNectar(nectar);
     }
 
     @Override
@@ -59,7 +62,8 @@ public class CraftBee extends CraftAnimals implements Bee {
 
     @Override
     public void setHasStung(boolean stung) {
-        this.getHandle().setHasStung(stung);
+        throw new NotImplementedError();
+        // this.getHandle().setHasStung(stung);
     }
 
     @Override
@@ -74,7 +78,8 @@ public class CraftBee extends CraftAnimals implements Bee {
 
     @Override
     public int getCannotEnterHiveTicks() {
-        return this.getHandle().stayOutOfHiveCountdown;
+        throw new NotImplementedError();
+        // return this.getHandle().stayOutOfHiveCountdown;
     }
 
     @Override
@@ -84,49 +89,58 @@ public class CraftBee extends CraftAnimals implements Bee {
 
     @Override
     public void setRollingOverride(net.kyori.adventure.util.TriState rolling) {
-        this.getHandle().rollingOverride = rolling;
-
-        this.getHandle().setRolling(this.getHandle().isRolling()); // Refresh rolling state
+        throw new NotImplementedError();
+        // this.getHandle().rollingOverride = rolling;
+        //
+        // this.getHandle().setRolling(this.getHandle().isRolling()); // Refresh rolling state
     }
 
     @Override
     public boolean isRolling() {
-        return this.getRollingOverride().toBooleanOrElse(this.getHandle().isRolling());
+        throw new NotImplementedError();
+        // return this.getRollingOverride().toBooleanOrElse(this.getHandle().isRolling());
     }
 
     @Override
     public net.kyori.adventure.util.TriState getRollingOverride() {
-        return this.getHandle().rollingOverride;
+        throw new NotImplementedError();
+        // return this.getHandle().rollingOverride;
     }
 
     @Override
     public void setCropsGrownSincePollination(int crops) {
-        this.getHandle().numCropsGrownSincePollination = crops;
+        throw new NotImplementedError();
+        // this.getHandle().numCropsGrownSincePollination = crops;
     }
 
     @Override
     public int getCropsGrownSincePollination() {
-        return this.getHandle().numCropsGrownSincePollination;
+        throw new NotImplementedError();
+        // return this.getHandle().numCropsGrownSincePollination;
     }
 
     @Override
     public void setTicksSincePollination(int ticks) {
-        this.getHandle().ticksWithoutNectarSinceExitingHive = ticks;
+        throw new NotImplementedError();
+        // this.getHandle().ticksWithoutNectarSinceExitingHive = ticks;
     }
 
     @Override
     public int getTicksSincePollination() {
-        return this.getHandle().ticksWithoutNectarSinceExitingHive;
+        throw new NotImplementedError();
+        // return this.getHandle().ticksWithoutNectarSinceExitingHive;
     }
 
     @Override
     public void setTimeSinceSting(int time) {
         Preconditions.checkArgument(time >= 0, "Time since sting cannot be negative");
-        this.getHandle().timeSinceSting = time;
+        throw new NotImplementedError();
+        // this.getHandle().timeSinceSting = time;
     }
 
     @Override
     public int getTimeSinceSting() {
-        return this.getHandle().timeSinceSting;
+        throw new NotImplementedError();
+        // return this.getHandle().timeSinceSting;
     }
 }

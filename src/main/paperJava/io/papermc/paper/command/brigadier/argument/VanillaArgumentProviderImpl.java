@@ -2,7 +2,6 @@ package io.papermc.paper.command.brigadier.argument;
 
 import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Range;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.arguments.ArgumentType;
@@ -29,12 +28,7 @@ import io.papermc.paper.registry.RegistryAccess;
 import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.TypedKey;
 import io.papermc.paper.util.MCUtil;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Function;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -44,9 +38,7 @@ import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.ColorArgument;
 import net.minecraft.commands.arguments.ComponentArgument;
-import net.minecraft.commands.arguments.DimensionArgument;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
-import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.commands.arguments.GameModeArgument;
 import net.minecraft.commands.arguments.GameProfileArgument;
 import net.minecraft.commands.arguments.HeightmapTypeArgument;
@@ -63,19 +55,12 @@ import net.minecraft.commands.arguments.TemplateMirrorArgument;
 import net.minecraft.commands.arguments.TemplateRotationArgument;
 import net.minecraft.commands.arguments.TimeArgument;
 import net.minecraft.commands.arguments.UuidArgument;
-import net.minecraft.commands.arguments.blocks.BlockStateArgument;
 import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
 import net.minecraft.commands.arguments.coordinates.RotationArgument;
 import net.minecraft.commands.arguments.coordinates.Vec3Argument;
 import net.minecraft.commands.arguments.item.ItemArgument;
 import net.minecraft.commands.arguments.item.ItemPredicateArgument;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.GameMode;
@@ -87,9 +72,6 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.structure.Mirror;
 import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.craftbukkit.CraftHeightMap;
-import org.bukkit.craftbukkit.CraftRegistry;
-import org.bukkit.craftbukkit.block.CraftBlockEntityState;
-import org.bukkit.craftbukkit.block.CraftBlockStates;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.scoreboard.CraftCriteria;
 import org.bukkit.craftbukkit.scoreboard.CraftScoreboardTranslations;
@@ -98,8 +80,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 import static java.util.Objects.requireNonNull;
 
@@ -108,30 +95,34 @@ public class VanillaArgumentProviderImpl implements VanillaArgumentProvider {
 
     @Override
     public ArgumentType<EntitySelectorArgumentResolver> entity() {
-        return this.wrap(EntityArgument.entity(), (result) -> sourceStack -> {
-            return List.of(result.findSingleEntity((CommandSourceStack) sourceStack).getBukkitEntity());
-        });
+        throw new NotImplementedError();
+        // return this.wrap(EntityArgument.entity(), (result) -> sourceStack -> {
+        //     return List.of(result.findSingleEntity((CommandSourceStack) sourceStack).getBukkitEntity());
+        // });
     }
 
     @Override
     public ArgumentType<EntitySelectorArgumentResolver> entities() {
-        return this.wrap(EntityArgument.entities(), (result) -> sourceStack -> {
-            return Lists.transform(result.findEntities((CommandSourceStack) sourceStack), net.minecraft.world.entity.Entity::getBukkitEntity);
-        });
+        throw new NotImplementedError();
+        // return this.wrap(EntityArgument.entities(), (result) -> sourceStack -> {
+        //     return Lists.transform(result.findEntities((CommandSourceStack) sourceStack), net.minecraft.world.entity.Entity::getBukkitEntity);
+        // });
     }
 
     @Override
     public ArgumentType<PlayerSelectorArgumentResolver> player() {
-        return this.wrap(EntityArgument.player(), (result) -> sourceStack -> {
-            return List.of(result.findSinglePlayer((CommandSourceStack) sourceStack).getBukkitEntity());
-        });
+        throw new NotImplementedError();
+        // return this.wrap(EntityArgument.player(), (result) -> sourceStack -> {
+        //     return List.of(result.findSinglePlayer((CommandSourceStack) sourceStack).getBukkitEntity());
+        // });
     }
 
     @Override
     public ArgumentType<PlayerSelectorArgumentResolver> players() {
-        return this.wrap(EntityArgument.players(), (result) -> sourceStack -> {
-            return Lists.transform(result.findPlayers((CommandSourceStack) sourceStack), ServerPlayer::getBukkitEntity);
-        });
+        throw new NotImplementedError();
+        // return this.wrap(EntityArgument.players(), (result) -> sourceStack -> {
+        //     return Lists.transform(result.findPlayers((CommandSourceStack) sourceStack), ServerPlayer::getBukkitEntity);
+        // });
     }
 
     @Override
@@ -174,13 +165,14 @@ public class VanillaArgumentProviderImpl implements VanillaArgumentProvider {
 
     @Override
     public ArgumentType<BlockState> blockState() {
-        return this.wrap(BlockStateArgument.block(PaperCommands.INSTANCE.getBuildContext()), (result) -> {
-            final BlockState snapshot = CraftBlockStates.getBlockState(CraftRegistry.getMinecraftRegistry(), BlockPos.ZERO, result.getState(), null);
-            if (result.tag != null && snapshot instanceof final CraftBlockEntityState<?> blockEntitySnapshot) {
-                blockEntitySnapshot.loadData(result.tag);
-            }
-            return snapshot;
-        });
+        throw new NotImplementedError();
+        // return this.wrap(BlockStateArgument.block(PaperCommands.INSTANCE.getBuildContext()), (result) -> {
+        //     final BlockState snapshot = CraftBlockStates.getBlockState(CraftRegistry.getMinecraftRegistry(), BlockPos.ZERO, result.getState(), null);
+        //     if (result.tag != null && snapshot instanceof final CraftBlockEntityState<?> blockEntitySnapshot) {
+        //         blockEntitySnapshot.loadData(result.tag);
+        //     }
+        //     return snapshot;
+        // });
     }
 
     @Override
@@ -267,16 +259,17 @@ public class VanillaArgumentProviderImpl implements VanillaArgumentProvider {
 
     @Override
     public ArgumentType<World> world() {
-        return this.wrap(DimensionArgument.dimension(), dimensionLocation -> {
-            // based on DimensionArgument#getDimension
-            final ResourceKey<Level> resourceKey = ResourceKey.create(Registries.DIMENSION, dimensionLocation);
-            final @Nullable ServerLevel serverLevel = MinecraftServer.getServer().getLevel(resourceKey);
-            if (serverLevel == null) {
-                throw DimensionArgument.ERROR_INVALID_VALUE.create(dimensionLocation);
-            } else {
-                return serverLevel.getWorld();
-            }
-        });
+        throw new NotImplementedError();
+        // return this.wrap(DimensionArgument.dimension(), dimensionLocation -> {
+        //     // based on DimensionArgument#getDimension
+        //     final ResourceKey<Level> resourceKey = ResourceKey.create(Registries.DIMENSION, dimensionLocation);
+        //     final @Nullable ServerLevel serverLevel = MinecraftServer.getServer().getLevel(resourceKey);
+        //     if (serverLevel == null) {
+        //         throw DimensionArgument.ERROR_INVALID_VALUE.create(dimensionLocation);
+        //     } else {
+        //         return serverLevel.getWorld();
+        //     }
+        // });
     }
 
     @Override

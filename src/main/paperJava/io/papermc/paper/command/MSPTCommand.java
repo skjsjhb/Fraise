@@ -1,18 +1,17 @@
 package io.papermc.paper.command;
 
 import net.kyori.adventure.text.Component;
-import net.minecraft.server.MinecraftServer;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.DefaultQualifier;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.format.NamedTextColor.GOLD;
@@ -42,12 +41,13 @@ public final class MSPTCommand extends Command {
     public boolean execute(CommandSender sender, String commandLabel, String[] args) {
         if (!testPermission(sender)) return true;
 
-        MinecraftServer server = MinecraftServer.getServer();
+        // MinecraftServer server = MinecraftServer.getServer();
 
         List<Component> times = new ArrayList<>();
-        times.addAll(eval(server.tickTimes5s.getTimes()));
-        times.addAll(eval(server.tickTimes10s.getTimes()));
-        times.addAll(eval(server.tickTimes60s.getTimes()));
+        // times.addAll(eval(server.tickTimes5s.getTimes()));
+        // times.addAll(eval(server.tickTimes10s.getTimes()));
+        // times.addAll(eval(server.tickTimes60s.getTimes()));
+        // throw new NotImplementedError();
 
         sender.sendMessage(text().content("Server tick times ").color(GOLD)
             .append(text().color(YELLOW)

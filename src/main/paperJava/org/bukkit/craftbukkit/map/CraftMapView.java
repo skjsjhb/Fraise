@@ -1,5 +1,13 @@
 package org.bukkit.craftbukkit.map;
 
+import kotlin.NotImplementedError;
+import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.map.MapRenderer;
+import org.bukkit.map.MapView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -7,16 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 import java.util.logging.Level;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.saveddata.maps.MapItemSavedData;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.craftbukkit.CraftWorld;
-import org.bukkit.craftbukkit.entity.CraftPlayer;
-import org.bukkit.map.MapRenderer;
-import org.bukkit.map.MapView;
 
 public final class CraftMapView implements MapView {
 
@@ -32,7 +30,8 @@ public final class CraftMapView implements MapView {
 
     @Override
     public int getId() {
-        return this.worldMap.id.id();
+        // return this.worldMap.id.id();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -47,28 +46,31 @@ public final class CraftMapView implements MapView {
 
     @Override
     public void setScale(Scale scale) {
-        this.worldMap.scale = scale.getValue();
+        // this.worldMap.scale = scale.getValue();
+        throw new NotImplementedError();
     }
 
     @Override
     public World getWorld() {
-        ResourceKey<net.minecraft.world.level.Level> dimension = this.worldMap.dimension;
-        ServerLevel world = MinecraftServer.getServer().getLevel(dimension);
-
-        if (world != null) {
-            return world.getWorld();
-        }
-
-        if (this.worldMap.uniqueId != null) {
-            return Bukkit.getServer().getWorld(this.worldMap.uniqueId);
-        }
-        return null;
+        throw new NotImplementedError();
+        // ResourceKey<net.minecraft.world.level.Level> dimension = this.worldMap.dimension;
+        // ServerLevel world = MinecraftServer.getServer().getLevel(dimension);
+        //
+        // if (world != null) {
+        //     return world.getWorld();
+        // }
+        //
+        // if (this.worldMap.uniqueId != null) {
+        //     return Bukkit.getServer().getWorld(this.worldMap.uniqueId);
+        // }
+        // return null;
     }
 
     @Override
     public void setWorld(World world) {
-        this.worldMap.dimension = ((CraftWorld) world).getHandle().dimension();
-        this.worldMap.uniqueId = world.getUID();
+        throw new NotImplementedError();
+        // this.worldMap.dimension = ((CraftWorld) world).getHandle().dimension();
+        // this.worldMap.uniqueId = world.getUID();
     }
 
     @Override
@@ -83,12 +85,14 @@ public final class CraftMapView implements MapView {
 
     @Override
     public void setCenterX(int x) {
-        this.worldMap.centerX = x;
+        // this.worldMap.centerX = x;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setCenterZ(int z) {
-        this.worldMap.centerZ = z;
+        // this.worldMap.centerZ = z;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -139,7 +143,7 @@ public final class CraftMapView implements MapView {
             this.renderCache.put(context ? player : null, render);
         }
 
-        if (context && this.renderCache.containsKey(null)) {
+        if (context) {
             this.renderCache.remove(null);
         }
 
@@ -177,22 +181,26 @@ public final class CraftMapView implements MapView {
 
     @Override
     public boolean isTrackingPosition() {
-        return this.worldMap.trackingPosition;
+        // return this.worldMap.trackingPosition;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setTrackingPosition(boolean trackingPosition) {
-        this.worldMap.trackingPosition = trackingPosition;
+        // this.worldMap.trackingPosition = trackingPosition;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean isUnlimitedTracking() {
-        return this.worldMap.unlimitedTracking;
+        // return this.worldMap.unlimitedTracking;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setUnlimitedTracking(boolean unlimited) {
-        this.worldMap.unlimitedTracking = unlimited;
+        // this.worldMap.unlimitedTracking = unlimited;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -202,6 +210,7 @@ public final class CraftMapView implements MapView {
 
     @Override
     public void setLocked(boolean locked) {
-        this.worldMap.locked = locked;
+        // this.worldMap.locked = locked;
+        throw new NotImplementedError();
     }
 }

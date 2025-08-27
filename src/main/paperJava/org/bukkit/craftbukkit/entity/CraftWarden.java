@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.entity.monster.warden.WardenAi;
@@ -61,7 +62,8 @@ public class CraftWarden extends CraftMonster implements org.bukkit.entity.Warde
 
     @Override
     public LivingEntity getEntityAngryAt() {
-        return (LivingEntity) this.getHandle().getEntityAngryAt().map(net.minecraft.world.entity.Entity::getBukkitEntity).orElse(null);
+        // return (LivingEntity) this.getHandle().getEntityAngryAt().map(net.minecraft.world.entity.Entity::getBukkitEntity).orElse(null);
+        throw new NotImplementedError();
     }
 
     @Override

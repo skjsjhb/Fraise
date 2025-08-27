@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.vehicle.AbstractBoat;
 import org.bukkit.TreeSpecies;
@@ -39,67 +40,77 @@ public abstract class CraftBoat extends CraftVehicle implements Boat, io.papermc
 
     @Override
     public double getMaxSpeed() {
-        return this.getHandle().maxSpeed;
+        throw new NotImplementedError();
+        // return this.getHandle().maxSpeed;
     }
 
     @Override
     public void setMaxSpeed(double speed) {
-        if (speed >= 0D) {
-            this.getHandle().maxSpeed = speed;
-        }
+        throw new NotImplementedError();
+        // if (speed >= 0D) {
+        //     this.getHandle().maxSpeed = speed;
+        // }
     }
 
     @Override
     public double getOccupiedDeceleration() {
-        return this.getHandle().occupiedDeceleration;
+        throw new NotImplementedError();
+        // return this.getHandle().occupiedDeceleration;
     }
 
     @Override
     public void setOccupiedDeceleration(double speed) {
-        if (speed >= 0D) {
-            this.getHandle().occupiedDeceleration = speed;
-        }
+        throw new NotImplementedError();
+        // if (speed >= 0D) {
+        //     this.getHandle().occupiedDeceleration = speed;
+        // }
     }
 
     @Override
     public double getUnoccupiedDeceleration() {
-        return this.getHandle().unoccupiedDeceleration;
+        throw new NotImplementedError();
+        // return this.getHandle().unoccupiedDeceleration;
     }
 
     @Override
     public void setUnoccupiedDeceleration(double speed) {
-        this.getHandle().unoccupiedDeceleration = speed;
+        throw new NotImplementedError();
+        // this.getHandle().unoccupiedDeceleration = speed;
     }
 
     @Override
     public boolean getWorkOnLand() {
-        return this.getHandle().landBoats;
+        throw new NotImplementedError();
+        // return this.getHandle().landBoats;
     }
 
     @Override
     public void setWorkOnLand(boolean workOnLand) {
-        this.getHandle().landBoats = workOnLand;
+        throw new NotImplementedError();
+        // this.getHandle().landBoats = workOnLand;
     }
 
     @Override
     public org.bukkit.Material getBoatMaterial() {
-        return org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(this.getHandle().getDropItem());
+        throw new NotImplementedError();
+        // return org.bukkit.craftbukkit.util.CraftMagicNumbers.getMaterial(this.getHandle().getDropItem());
     }
 
     @Override
     public Status getStatus() {
-        // Paper start - Fix NPE on Boat getStatus
-        final net.minecraft.world.entity.vehicle.AbstractBoat handle = this.getHandle();
-        if (handle.status == null) {
-            if (handle.valid) {
-                // Don't actually set the status because it would skew the old status check in the next tick
-                return CraftBoat.boatStatusFromNms(handle.getStatus());
-            } else {
-                return Status.NOT_IN_WORLD;
-            }
-        }
-        // Paper end - Fix NPE on Boat getStatus
-        return CraftBoat.boatStatusFromNms(this.getHandle().status);
+        throw new NotImplementedError();
+        // // Paper start - Fix NPE on Boat getStatus
+        // final net.minecraft.world.entity.vehicle.AbstractBoat handle = this.getHandle();
+        // if (handle.status == null) {
+        //     if (handle.valid) {
+        //         // Don't actually set the status because it would skew the old status check in the next tick
+        //         return CraftBoat.boatStatusFromNms(handle.getStatus());
+        //     } else {
+        //         return Status.NOT_IN_WORLD;
+        //     }
+        // }
+        // // Paper end - Fix NPE on Boat getStatus
+        // return CraftBoat.boatStatusFromNms(this.getHandle().status);
     }
 
     public static Boat.Type boatTypeFromNms(EntityType<?> boatType) {
@@ -144,12 +155,12 @@ public abstract class CraftBoat extends CraftVehicle implements Boat, io.papermc
 
     public static Status boatStatusFromNms(net.minecraft.world.entity.vehicle.AbstractBoat.Status enumStatus) { // Paper - remap fixes
         return switch (enumStatus) {
-            default -> throw new EnumConstantNotPresentException(Status.class, enumStatus.name());
             case IN_AIR -> Status.IN_AIR;
             case ON_LAND -> Status.ON_LAND;
             case UNDER_WATER -> Status.UNDER_WATER;
             case UNDER_FLOWING_WATER -> Status.UNDER_FLOWING_WATER;
             case IN_WATER -> Status.IN_WATER;
+            default -> throw new EnumConstantNotPresentException(Status.class, enumStatus.name());
         };
     }
 

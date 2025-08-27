@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Ravager;
 
@@ -21,7 +22,8 @@ public class CraftRavager extends CraftRaider implements Ravager {
 
     @Override
     public void setAttackTicks(int ticks) {
-        this.getHandle().attackTick = ticks;
+        // this.getHandle().attackTick = ticks;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -31,7 +33,8 @@ public class CraftRavager extends CraftRaider implements Ravager {
 
     @Override
     public void setStunnedTicks(int ticks) {
-        this.getHandle().stunnedTick = ticks;
+        // this.getHandle().stunnedTick = ticks;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -41,6 +44,7 @@ public class CraftRavager extends CraftRaider implements Ravager {
 
     @Override
     public void setRoarTicks(int ticks) {
-        this.getHandle().roarTick = ticks;
+        // this.getHandle().roarTick = ticks;
+        throw new NotImplementedError();
     }
 }

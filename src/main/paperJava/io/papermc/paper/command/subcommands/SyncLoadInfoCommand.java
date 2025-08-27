@@ -6,6 +6,13 @@ import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonWriter;
 import io.papermc.paper.command.CommandUtil;
 import io.papermc.paper.command.PaperSubcommand;
+import kotlin.NotImplementedError;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
+import org.bukkit.command.CommandSender;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.DefaultQualifier;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
@@ -14,13 +21,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
-import net.minecraft.server.MinecraftServer;
-import org.bukkit.command.CommandSender;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.format.NamedTextColor.GRAY;
@@ -48,7 +48,7 @@ public final class SyncLoadInfoCommand implements PaperSubcommand {
             String systemFlag = "-Dpaper.debug-sync-loads=true";
             sender.sendMessage(text().color(RED).append(text("This command requires the server startup flag '")).append(
                 text(systemFlag, WHITE).clickEvent(ClickEvent.copyToClipboard(systemFlag))
-                                       .hoverEvent(HoverEvent.showText(text("Click to copy the system flag")))).append(
+                    .hoverEvent(HoverEvent.showText(text("Click to copy the system flag")))).append(
                 text("' to be set.")));
             return;
         }
@@ -82,7 +82,8 @@ public final class SyncLoadInfoCommand implements PaperSubcommand {
             sender.sendMessage(text("Successfully written sync load information!", GREEN));
         } catch (Throwable thr) {
             sender.sendMessage(text("Failed to write sync load information! See the console for more info.", RED));
-            MinecraftServer.LOGGER.warn("Error occurred while dumping sync chunk load info", thr);
+            // MinecraftServer.LOGGER.warn("Error occurred while dumping sync chunk load info", thr);
+            throw new NotImplementedError();
         }
     }
 }

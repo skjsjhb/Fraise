@@ -2,13 +2,14 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
-import java.util.Collections;
-import java.util.List;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.trading.MerchantOffers;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
+
+import java.util.List;
 
 public interface CraftMerchant extends Merchant {
 
@@ -19,7 +20,8 @@ public interface CraftMerchant extends Merchant {
         return List.copyOf(Lists.transform(this.getMerchant().getOffers(), new Function<net.minecraft.world.item.trading.MerchantOffer, MerchantRecipe>() { // Paper - javadoc says 'an immutable list of trades' - not 'an unmodifiable view of a list of trades'. fixes issue with setRecipes(getRecipes())
             @Override
             public MerchantRecipe apply(net.minecraft.world.item.trading.MerchantOffer recipe) {
-                return recipe.asBukkit();
+                // return recipe.asBukkit();
+                throw new NotImplementedError();
             }
         }));
     }
@@ -35,7 +37,8 @@ public interface CraftMerchant extends Merchant {
 
     @Override
     default MerchantRecipe getRecipe(int i) {
-        return this.getMerchant().getOffers().get(i).asBukkit();
+        // return this.getMerchant().getOffers().get(i).asBukkit();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -56,6 +59,7 @@ public interface CraftMerchant extends Merchant {
     @Override
     default HumanEntity getTrader() {
         Player eh = this.getMerchant().getTradingPlayer();
-        return eh == null ? null : eh.getBukkitEntity();
+        // return eh == null ? null : eh.getBukkitEntity();
+        throw new NotImplementedError();
     }
 }

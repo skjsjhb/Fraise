@@ -1,13 +1,12 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.Optionull;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.projectile.EyeOfEnder;
 import net.minecraft.world.item.Items;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.EnderSignal;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,7 +22,8 @@ public class CraftEnderSignal extends CraftEntity implements EnderSignal {
 
     @Override
     public Location getTargetLocation() {
-        return Optionull.map(this.getHandle().target, target -> CraftLocation.toBukkit(target, this.getWorld(), this.getHandle().getYRot(), this.getHandle().getXRot()));
+        throw new NotImplementedError();
+        // return Optionull.map(this.getHandle().target, target -> CraftLocation.toBukkit(target, this.getWorld(), this.getHandle().getYRot(), this.getHandle().getXRot()));
     }
 
     @Override
@@ -36,17 +36,20 @@ public class CraftEnderSignal extends CraftEntity implements EnderSignal {
     public void setTargetLocation(Location location, boolean update) {
         // Paper end - Change EnderEye target without changing other things
         Preconditions.checkArgument(this.getWorld().equals(location.getWorld()), "Cannot target EnderSignal across worlds");
-        this.getHandle().signalTo(CraftLocation.toVec3(location), update); // Paper - Change EnderEye target without changing other things
+        throw new NotImplementedError();
+        // this.getHandle().signalTo(CraftLocation.toVec3(location), update); // Paper - Change EnderEye target without changing other things
     }
 
     @Override
     public boolean getDropItem() {
-        return this.getHandle().surviveAfterDeath;
+        throw new NotImplementedError();
+        // return this.getHandle().surviveAfterDeath;
     }
 
     @Override
     public void setDropItem(boolean shouldDropItem) {
-        this.getHandle().surviveAfterDeath = shouldDropItem;
+        throw new NotImplementedError();
+        // this.getHandle().surviveAfterDeath = shouldDropItem;
     }
 
     @Override
@@ -61,11 +64,13 @@ public class CraftEnderSignal extends CraftEntity implements EnderSignal {
 
     @Override
     public int getDespawnTimer() {
-        return this.getHandle().life;
+        throw new NotImplementedError();
+        // return this.getHandle().life;
     }
 
     @Override
     public void setDespawnTimer(int time) {
-        this.getHandle().life = time;
+        throw new NotImplementedError();
+        // this.getHandle().life = time;
     }
 }

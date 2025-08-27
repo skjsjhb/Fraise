@@ -1,8 +1,8 @@
 package io.papermc.paper.advancement;
 
 import io.papermc.paper.adventure.PaperAdventure;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
 import org.bukkit.NamespacedKey;
@@ -56,7 +56,8 @@ public record PaperAdvancementDisplay(DisplayInfo handle) implements Advancement
 
     @Override
     public @NotNull Component displayName() {
-        return PaperAdventure.asAdventure(Advancement.decorateName(java.util.Objects.requireNonNull(this.handle, "cannot build display name for null handle, invalid state")));
+        throw new NotImplementedError();
+        // return PaperAdventure.asAdventure(Advancement.decorateName(java.util.Objects.requireNonNull(this.handle, "cannot build display name for null handle, invalid state")));
     }
 
     public static @NotNull Frame asPaperFrame(final @NotNull AdvancementType frameType) {

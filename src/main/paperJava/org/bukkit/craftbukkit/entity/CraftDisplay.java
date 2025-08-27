@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.Color;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Display;
@@ -50,13 +51,15 @@ public class CraftDisplay extends CraftEntity implements Display {
 
     @Override
     public int getTeleportDuration() {
-        return this.getHandle().getEntityData().get(net.minecraft.world.entity.Display.DATA_POS_ROT_INTERPOLATION_DURATION_ID);
+        throw new NotImplementedError();
+        // return this.getHandle().getEntityData().get(net.minecraft.world.entity.Display.DATA_POS_ROT_INTERPOLATION_DURATION_ID);
     }
 
     @Override
     public void setTeleportDuration(int duration) {
         Preconditions.checkArgument(duration >= 0 && duration <= 59, "duration (%s) cannot be lower than 0 or higher than 59", duration);
-        this.getHandle().getEntityData().set(net.minecraft.world.entity.Display.DATA_POS_ROT_INTERPOLATION_DURATION_ID, duration);
+        throw new NotImplementedError();
+        // this.getHandle().getEntityData().set(net.minecraft.world.entity.Display.DATA_POS_ROT_INTERPOLATION_DURATION_ID, duration);
     }
 
     @Override

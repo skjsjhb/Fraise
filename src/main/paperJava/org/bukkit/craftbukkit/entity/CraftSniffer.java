@@ -1,14 +1,14 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.Collection;
-import java.util.stream.Collectors;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.Sniffer;
+
+import java.util.Collection;
 
 public class CraftSniffer extends CraftAnimals implements Sniffer {
 
@@ -23,7 +23,8 @@ public class CraftSniffer extends CraftAnimals implements Sniffer {
 
     @Override
     public Collection<Location> getExploredLocations() {
-        return this.getHandle().getExploredPositions().map(blockPosition -> CraftLocation.toBukkit(blockPosition.pos(), this.server.getServer().getLevel(blockPosition.dimension()))).collect(Collectors.toList());
+        // return this.getHandle().getExploredPositions().map(blockPosition -> CraftLocation.toBukkit(blockPosition.pos(), this.server.getServer().getLevel(blockPosition.dimension()))).collect(Collectors.toList());
+        throw new NotImplementedError();
     }
 
     @Override
@@ -33,7 +34,8 @@ public class CraftSniffer extends CraftAnimals implements Sniffer {
         BlockPos pos = CraftLocation.toBlockPosition(location);
         net.minecraft.world.level.Level level = location.getWorld() != null ? ((org.bukkit.craftbukkit.CraftWorld) location.getWorld()).getHandle() : this.getHandle().level();
         net.minecraft.core.GlobalPos globalPos = net.minecraft.core.GlobalPos.of(level.dimension(), pos);
-        this.getHandle().getBrain().setMemory(MemoryModuleType.SNIFFER_EXPLORED_POSITIONS, this.getHandle().getExploredPositions().filter(blockPositionExplored -> !blockPositionExplored.equals(globalPos)).collect(Collectors.toList()));
+        // this.getHandle().getBrain().setMemory(MemoryModuleType.SNIFFER_EXPLORED_POSITIONS, this.getHandle().getExploredPositions().filter(blockPositionExplored -> !blockPositionExplored.equals(globalPos)).collect(Collectors.toList()));
+        throw new NotImplementedError();
     }
 
     @Override
@@ -43,12 +45,14 @@ public class CraftSniffer extends CraftAnimals implements Sniffer {
             return;
         }
 
-        this.getHandle().storeExploredPosition(CraftLocation.toBlockPosition(location));
+        // this.getHandle().storeExploredPosition(CraftLocation.toBlockPosition(location));
+        throw new NotImplementedError();
     }
 
     @Override
     public Sniffer.State getState() {
-        return this.stateToBukkit(this.getHandle().getState());
+        // return this.stateToBukkit(this.getHandle().getState());
+        throw new NotImplementedError();
     }
 
     @Override
@@ -59,12 +63,14 @@ public class CraftSniffer extends CraftAnimals implements Sniffer {
 
     @Override
     public Location findPossibleDigLocation() {
-        return this.getHandle().calculateDigPosition().map(blockPosition -> CraftLocation.toBukkit(blockPosition, this.getLocation().getWorld())).orElse(null);
+        // return this.getHandle().calculateDigPosition().map(blockPosition -> CraftLocation.toBukkit(blockPosition, this.getLocation().getWorld())).orElse(null);
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean canDig() {
-        return this.getHandle().canDig();
+        // return this.getHandle().canDig();
+        throw new NotImplementedError();
     }
 
     private net.minecraft.world.entity.animal.sniffer.Sniffer.State stateToNMS(Sniffer.State state) {

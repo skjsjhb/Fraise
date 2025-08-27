@@ -19,12 +19,13 @@ import com.mojang.brigadier.tree.RootCommandNode;
 import io.papermc.paper.command.brigadier.argument.CustomArgumentType;
 import io.papermc.paper.command.brigadier.argument.VanillaArgumentProviderImpl;
 import io.papermc.paper.command.brigadier.argument.WrappedArgumentCommandNode;
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.Set;
 import net.minecraft.commands.synchronization.ArgumentTypeInfos;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.lang.reflect.Method;
+import java.util.Collection;
+import java.util.Set;
 
 /**
  * This root command node is responsible for wrapping around vanilla's dispatcher.
@@ -58,7 +59,7 @@ public abstract class ApiMirrorRootNode extends RootCommandNode<CommandSourceSta
             if (!ArgumentTypeInfos.isClassRecognized(type.getClass())) {
                 throw new IllegalArgumentException("This whitelisted primitive argument type is not recognized by the server!");
             }
-        } else if (!(type instanceof VanillaArgumentProviderImpl.NativeWrapperArgumentType<?,?> nativeWrapperArgumentType) || !ArgumentTypeInfos.isClassRecognized(nativeWrapperArgumentType.nativeNmsArgumentType().getClass())) {
+        } else if (!(type instanceof VanillaArgumentProviderImpl.NativeWrapperArgumentType<?, ?> nativeWrapperArgumentType) || !ArgumentTypeInfos.isClassRecognized(nativeWrapperArgumentType.nativeNmsArgumentType().getClass())) {
             throw new IllegalArgumentException("Custom argument type was passed, this was not a recognized type to send to the client! You must only pass vanilla arguments or primitive brig args in the wrapper!");
         }
     }
@@ -85,9 +86,10 @@ public abstract class ApiMirrorRootNode extends RootCommandNode<CommandSourceSta
         /*
         This node already has had an unwrapped node created, so we can assume that it's safe to reuse that cached copy.
          */
-        if (maybeWrappedNode.unwrappedCached != null) {
-            return maybeWrappedNode.unwrappedCached;
-        }
+        // throw new NotImplementedError();
+        // if (maybeWrappedNode.unwrappedCached != null) {
+        //     return maybeWrappedNode.unwrappedCached;
+        // }
 
         // convert the pure brig node into one compatible with the nms dispatcher
         return this.convertFromPureBrigNode(maybeWrappedNode);
@@ -147,8 +149,9 @@ public abstract class ApiMirrorRootNode extends RootCommandNode<CommandSourceSta
         }
 
         // Store unwrapped node before unwrapping children to avoid infinite recursion in cyclic redirects.
-        converted.wrappedCached = pureNode;
-        pureNode.unwrappedCached = converted;
+        // throw new NotImplementedError();
+        // converted.wrappedCached = pureNode;
+        // pureNode.unwrappedCached = converted;
 
         /*
         Add the children to the node, unwrapping each child in the process.
@@ -181,9 +184,10 @@ public abstract class ApiMirrorRootNode extends RootCommandNode<CommandSourceSta
         This was most likely created by API and has a wrapped variant,
         so we can return this safely.
          */
-        if (unwrapped.wrappedCached != null) {
-            return unwrapped.wrappedCached;
-        }
+        // throw new NotImplementedError();
+        // if (unwrapped.wrappedCached != null) {
+        //     return unwrapped.wrappedCached;
+        // }
 
         /*
         We don't know the type of this, or where this came from.
@@ -191,7 +195,8 @@ public abstract class ApiMirrorRootNode extends RootCommandNode<CommandSourceSta
         restrictive access.
          */
         CommandNode<CommandSourceStack> shadow = new ShadowBrigNode(unwrapped);
-        unwrapped.wrappedCached = shadow;
+        // throw new NotImplementedError();
+        // unwrapped.wrappedCached = shadow;
         return shadow;
     }
 
@@ -225,15 +230,16 @@ public abstract class ApiMirrorRootNode extends RootCommandNode<CommandSourceSta
     }
 
     // These are needed for bukkit... we should NOT allow this
-    @Override
-    public void removeCommand(String name) {
-        this.getDispatcher().getRoot().removeCommand(name);
-    }
-
-    @Override
-    public void clearAll() {
-        this.getDispatcher().getRoot().clearAll();
-    }
+    // throw new NotImplementedError();
+    // @Override
+    // public void removeCommand(String name) {
+    //     this.getDispatcher().getRoot().removeCommand(name);
+    // }
+    //
+    // @Override
+    // public void clearAll() {
+    //     this.getDispatcher().getRoot().clearAll();
+    // }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     private CommandNode<CommandSourceStack> unwrapArgumentWrapper(final ArgumentCommandNode pureNode, final ArgumentType pureArgumentType, final ArgumentType possiblyWrappedNativeArgumentType, @Nullable SuggestionProvider argumentTypeSuggestionProvider) {
@@ -242,7 +248,7 @@ public abstract class ApiMirrorRootNode extends RootCommandNode<CommandSourceSta
         // If there is already a custom suggestion provider, ignore the suggestion provider from the argument type
         final SuggestionProvider suggestionProvider = pureNode.getCustomSuggestions() != null ? pureNode.getCustomSuggestions() : argumentTypeSuggestionProvider;
 
-        final ArgumentType nativeArgumentType = possiblyWrappedNativeArgumentType instanceof final VanillaArgumentProviderImpl.NativeWrapperArgumentType<?,?> nativeWrapperArgumentType ? nativeWrapperArgumentType.nativeNmsArgumentType() : possiblyWrappedNativeArgumentType;
+        final ArgumentType nativeArgumentType = possiblyWrappedNativeArgumentType instanceof final VanillaArgumentProviderImpl.NativeWrapperArgumentType<?, ?> nativeWrapperArgumentType ? nativeWrapperArgumentType.nativeNmsArgumentType() : possiblyWrappedNativeArgumentType;
         return new WrappedArgumentCommandNode<>(pureNode.getName(), pureArgumentType, nativeArgumentType, pureNode.getCommand(), pureNode.getRequirement(), redirectNode, pureNode.getRedirectModifier(), pureNode.isFork(), suggestionProvider);
     }
 

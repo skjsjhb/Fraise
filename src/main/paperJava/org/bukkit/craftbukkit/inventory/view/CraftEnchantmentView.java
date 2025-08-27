@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.inventory.view;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Holder;
 import net.minecraft.core.IdMap;
 import net.minecraft.core.registries.Registries;
@@ -28,7 +29,8 @@ public class CraftEnchantmentView extends CraftInventoryView<EnchantmentMenu, En
 
     @Override
     public void setEnchantmentSeed(int seed) {
-        this.container.setEnchantmentSeed(seed);
+        // this.container.setEnchantmentSeed(seed);
+        throw new NotImplementedError();
     }
 
     @NotNull

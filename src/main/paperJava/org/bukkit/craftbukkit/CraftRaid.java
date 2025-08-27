@@ -1,18 +1,16 @@
 package org.bukkit.craftbukkit;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.function.Function;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.bukkit.Location;
 import org.bukkit.Raid;
-import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.Raider;
+
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public final class CraftRaid implements Raid {
 
@@ -31,25 +29,29 @@ public final class CraftRaid implements Raid {
 
     @Override
     public long getActiveTicks() {
-        return this.handle.ticksActive;
+        throw new NotImplementedError();
+        // return this.handle.ticksActive;
     }
 
     @Override
     public int getBadOmenLevel() {
-        return this.handle.raidOmenLevel;
+        throw new NotImplementedError();
+        // return this.handle.raidOmenLevel;
     }
 
     @Override
     public void setBadOmenLevel(int badOmenLevel) {
         int max = this.handle.getMaxRaidOmenLevel();
         Preconditions.checkArgument(0 <= badOmenLevel && badOmenLevel <= max, "Bad Omen level must be between 0 and %s", max);
-        this.handle.raidOmenLevel = badOmenLevel;
+        // this.handle.raidOmenLevel = badOmenLevel;
+        throw new NotImplementedError();
     }
 
     @Override
     public Location getLocation() {
         BlockPos pos = this.handle.getCenter();
-        return CraftLocation.toBukkit(pos, this.level.getWorld());
+        // return CraftLocation.toBukkit(pos, this.level.getWorld());
+        throw new NotImplementedError();
     }
 
     @Override
@@ -72,12 +74,14 @@ public final class CraftRaid implements Raid {
 
     @Override
     public int getTotalGroups() {
-        return this.handle.numGroups + (this.handle.raidOmenLevel > 1 ? 1 : 0);
+        // return this.handle.numGroups + (this.handle.raidOmenLevel > 1 ? 1 : 0);
+        throw new NotImplementedError();
     }
 
     @Override
     public int getTotalWaves() {
-        return this.handle.numGroups;
+        // return this.handle.numGroups;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -87,17 +91,19 @@ public final class CraftRaid implements Raid {
 
     @Override
     public Set<UUID> getHeroes() {
-        return Collections.unmodifiableSet(this.handle.heroesOfTheVillage);
+        throw new NotImplementedError();
+        // return Collections.unmodifiableSet(this.handle.heroesOfTheVillage);
     }
 
     @Override
     public List<Raider> getRaiders() {
-        return this.handle.getRaiders().stream().map(new Function<net.minecraft.world.entity.raid.Raider, Raider>() {
-            @Override
-            public Raider apply(net.minecraft.world.entity.raid.Raider entityRaider) {
-                return (Raider) entityRaider.getBukkitEntity();
-            }
-        }).collect(ImmutableList.toImmutableList());
+        throw new NotImplementedError();
+        // return this.handle.getRaiders().stream().map(new Function<net.minecraft.world.entity.raid.Raider, Raider>() {
+        //     @Override
+        //     public Raider apply(net.minecraft.world.entity.raid.Raider entityRaider) {
+        //         return (Raider) entityRaider.getBukkitEntity();
+        //     }
+        // }).collect(ImmutableList.toImmutableList());
     }
 
     public net.minecraft.world.entity.raid.Raid getHandle() {
@@ -106,17 +112,20 @@ public final class CraftRaid implements Raid {
 
     @Override
     public int getId() {
-        return this.handle.idOrNegativeOne;
+        throw new NotImplementedError();
+        // return this.handle.idOrNegativeOne;
     }
 
     @Override
     public org.bukkit.boss.BossBar getBossBar() {
-        return new org.bukkit.craftbukkit.boss.CraftBossBar(this.handle.raidEvent);
+        throw new NotImplementedError();
+        // return new org.bukkit.craftbukkit.boss.CraftBossBar(this.handle.raidEvent);
     }
 
     @Override
     public org.bukkit.persistence.PersistentDataContainer getPersistentDataContainer() {
-        return this.handle.persistentDataContainer;
+        throw new NotImplementedError();
+        // return this.handle.persistentDataContainer;
     }
 
     @Override

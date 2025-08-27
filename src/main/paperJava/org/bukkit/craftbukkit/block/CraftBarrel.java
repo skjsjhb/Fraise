@@ -1,9 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.level.block.BarrelBlock;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
-import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Barrel;
@@ -36,32 +34,34 @@ public class CraftBarrel extends CraftLootable<BarrelBlockEntity> implements Bar
 
     @Override
     public void open() {
-        this.requirePlaced();
-        if (!this.getBlockEntity().openersCounter.opened) {
-            BlockState state = this.getBlockEntity().getBlockState();
-            boolean open = state.getValue(BarrelBlock.OPEN);
-
-            if (!open) {
-                this.getBlockEntity().updateBlockState(state, true);
-                if (this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
-                    this.getBlockEntity().playSound(state, SoundEvents.BARREL_OPEN);
-                }
-            }
-        }
-        this.getBlockEntity().openersCounter.opened = true;
+        throw new NotImplementedError();
+        // this.requirePlaced();
+        // if (!this.getBlockEntity().openersCounter.opened) {
+        //     BlockState state = this.getBlockEntity().getBlockState();
+        //     boolean open = state.getValue(BarrelBlock.OPEN);
+        //
+        //     if (!open) {
+        //         this.getBlockEntity().updateBlockState(state, true);
+        //         if (this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
+        //             this.getBlockEntity().playSound(state, SoundEvents.BARREL_OPEN);
+        //         }
+        //     }
+        // }
+        // this.getBlockEntity().openersCounter.opened = true;
     }
 
     @Override
     public void close() {
-        this.requirePlaced();
-        if (this.getBlockEntity().openersCounter.opened) {
-            BlockState state = this.getBlockEntity().getBlockState();
-            this.getBlockEntity().updateBlockState(state, false);
-            if (this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
-                this.getBlockEntity().playSound(state, SoundEvents.BARREL_CLOSE);
-            }
-        }
-        this.getBlockEntity().openersCounter.opened = false;
+        throw new NotImplementedError();
+        // this.requirePlaced();
+        // if (this.getBlockEntity().openersCounter.opened) {
+        //     BlockState state = this.getBlockEntity().getBlockState();
+        //     this.getBlockEntity().updateBlockState(state, false);
+        //     if (this.getWorldHandle() instanceof net.minecraft.world.level.Level) {
+        //         this.getBlockEntity().playSound(state, SoundEvents.BARREL_CLOSE);
+        //     }
+        // }
+        // this.getBlockEntity().openersCounter.opened = false;
     }
 
     @Override
@@ -77,7 +77,8 @@ public class CraftBarrel extends CraftLootable<BarrelBlockEntity> implements Bar
     // Paper start - More Lidded Block API
     @Override
     public boolean isOpen() {
-        return getBlockEntity().openersCounter.opened;
+        throw new NotImplementedError();
+        // return getBlockEntity().openersCounter.opened;
     }
     // Paper end - More Lidded Block API
 }

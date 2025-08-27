@@ -1,25 +1,16 @@
 package org.bukkit.craftbukkit.generator;
 
 import com.google.common.base.Preconditions;
-import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
-import java.util.function.Consumer;
 import com.mojang.logging.LogUtils;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ProtoChunk;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
-import net.minecraft.world.level.storage.TagValueInput;
 import org.bukkit.HeightMap;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -34,6 +25,13 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.util.BoundingBox;
 import org.slf4j.Logger;
+
+import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
+import java.util.function.Consumer;
 
 public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRegion {
 
@@ -60,7 +58,8 @@ public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRe
         this.centerChunkX = center.x;
         this.centerChunkZ = center.z;
 
-        World world = access.getMinecraftWorld().getWorld();
+        World world = null; // access.getMinecraftWorld().getWorld();
+        if (true) throw new NotImplementedError();
         int xCenter = this.centerChunkX << 4;
         int zCenter = this.centerChunkZ << 4;
         int xMin = xCenter - this.getBuffer();
@@ -90,15 +89,16 @@ public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRe
             for (int z = -(this.buffer >> 4); z <= (this.buffer >> 4); z++) {
                 ProtoChunk chunk = (ProtoChunk) access.getChunk(this.centerChunkX + x, this.centerChunkZ + z);
                 for (CompoundTag compound : chunk.getEntities()) {
-                    EntityType.loadEntityRecursive(compound, access.getMinecraftWorld(), EntitySpawnReason.LOAD, (entity) -> {
-                        if (this.region.contains(entity.getX(), entity.getY(), entity.getZ())) {
-                            entity.generation = true;
-                            this.entities.add(entity);
-                        } else {
-                            this.outsideEntities.add(entity);
-                        }
-                        return entity;
-                    });
+                    throw new NotImplementedError();
+                    // EntityType.loadEntityRecursive(compound, access.getMinecraftWorld(), EntitySpawnReason.LOAD, (entity) -> {
+                    //     if (this.region.contains(entity.getX(), entity.getY(), entity.getZ())) {
+                    //         entity.generation = true;
+                    //         this.entities.add(entity);
+                    //     } else {
+                    //         this.outsideEntities.add(entity);
+                    //     }
+                    //     return entity;
+                    // });
                 }
             }
         }
@@ -184,7 +184,8 @@ public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRe
     public void setBiome(int x, int y, int z, Holder<net.minecraft.world.level.biome.Biome> biomeBase) {
         Preconditions.checkArgument(this.isInRegion(x, y, z), "Coordinates %s, %s, %s are not in the region", x, y, z);
         ChunkAccess chunk = this.getHandle().getChunk(x >> 4, z >> 4, ChunkStatus.EMPTY);
-        chunk.setBiome(x >> 2, y >> 2, z >> 2, biomeBase);
+        // chunk.setBiome(x >> 2, y >> 2, z >> 2, biomeBase);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -273,20 +274,21 @@ public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRe
     // Paper start - Add more LimitedRegion API
     @Override
     public void setBlockState(int x, int y, int z, BlockState state) {
-        BlockPos pos = new BlockPos(x, y, z);
-        if (!state.getBlockData().matches(getHandle().getBlockState(pos).createCraftBlockData())) {
-            throw new IllegalArgumentException("BlockData does not match! Expected " + state.getBlockData().getAsString(false) + ", got " + getHandle().getBlockState(pos).createCraftBlockData().getAsString(false));
-        }
-
-        try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-            () -> "CraftLimitedRegion@" + pos.toShortString(), LOGGER
-        )) {
-            getHandle().getBlockEntity(pos).loadWithComponents(TagValueInput.create(
-                problemReporter,
-                this.getHandle().registryAccess(),
-                ((org.bukkit.craftbukkit.block.CraftBlockEntityState<?>) state).getSnapshotNBT()
-            ));
-        }
+        throw new NotImplementedError();
+        // BlockPos pos = new BlockPos(x, y, z);
+        // if (!state.getBlockData().matches(getHandle().getBlockState(pos).createCraftBlockData())) {
+        //     throw new IllegalArgumentException("BlockData does not match! Expected " + state.getBlockData().getAsString(false) + ", got " + getHandle().getBlockState(pos).createCraftBlockData().getAsString(false));
+        // }
+        //
+        // try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //     () -> "CraftLimitedRegion@" + pos.toShortString(), LOGGER
+        // )) {
+        //     getHandle().getBlockEntity(pos).loadWithComponents(TagValueInput.create(
+        //         problemReporter,
+        //         this.getHandle().registryAccess(),
+        //         ((org.bukkit.craftbukkit.block.CraftBlockEntityState<?>) state).getSnapshotNBT()
+        //     ));
+        // }
     }
 
     @Override
@@ -306,7 +308,8 @@ public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRe
         // reading/writing the returned Minecraft world causes a deadlock.
         // By implementing this, and covering it in warnings, we're assuming people won't be stupid, and
         // if they are stupid, they'll figure it out pretty fast.
-        return getHandle().getMinecraftWorld().getWorld();
+        // return getHandle().getMinecraftWorld().getWorld();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -318,6 +321,7 @@ public class CraftLimitedRegion extends CraftRegionAccessor implements LimitedRe
     public int getCenterChunkZ() {
         return centerChunkZ;
     }
+
     // Paper end - Add more LimitedRegion API
     // Paper start - Fluid API
     @Override

@@ -1,8 +1,8 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.projectile.ThrownTrident;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Trident;
 import org.bukkit.inventory.ItemStack;
 
@@ -19,12 +19,14 @@ public class CraftTrident extends CraftAbstractArrow implements Trident {
 
     @Override
     public ItemStack getItem() {
-        return CraftItemStack.asBukkitCopy(this.getHandle().pickupItemStack);
+        // return CraftItemStack.asBukkitCopy(this.getHandle().pickupItemStack);
+        throw new NotImplementedError();
     }
 
     @Override
     public void setItem(ItemStack itemStack) {
-        this.getHandle().pickupItemStack = CraftItemStack.asNMSCopy(itemStack);
+        // this.getHandle().pickupItemStack = CraftItemStack.asNMSCopy(itemStack);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -34,27 +36,32 @@ public class CraftTrident extends CraftAbstractArrow implements Trident {
 
     @Override
     public void setGlint(boolean glint) {
-        this.getHandle().setFoil(glint);
+        // this.getHandle().setFoil(glint);
+        throw new NotImplementedError();
     }
 
     @Override
     public int getLoyaltyLevel() {
-        return this.getHandle().getLoyalty();
+        // return this.getHandle().getLoyalty();
+        throw new NotImplementedError();
     }
 
     @Override
     public void setLoyaltyLevel(int loyaltyLevel) {
-        com.google.common.base.Preconditions.checkArgument(loyaltyLevel >= 0 && loyaltyLevel <= 127, "The loyalty level has to be between 0 and 127");
-        this.getHandle().setLoyalty((byte) loyaltyLevel);
+        throw new NotImplementedError();
+        // com.google.common.base.Preconditions.checkArgument(loyaltyLevel >= 0 && loyaltyLevel <= 127, "The loyalty level has to be between 0 and 127");
+        // this.getHandle().setLoyalty((byte) loyaltyLevel);
     }
 
     @Override
     public boolean hasDealtDamage() {
-        return this.getHandle().dealtDamage;
+        // return this.getHandle().dealtDamage;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setHasDealtDamage(boolean hasDealtDamage) {
-        this.getHandle().dealtDamage = hasDealtDamage;
+        // this.getHandle().dealtDamage = hasDealtDamage;
+        throw new NotImplementedError();
     }
 }

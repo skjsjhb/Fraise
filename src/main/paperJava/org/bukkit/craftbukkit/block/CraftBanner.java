@@ -2,8 +2,7 @@ package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
 import io.papermc.paper.registry.RegistryKey;
-import java.util.ArrayList;
-import java.util.List;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.AbstractBannerBlock;
 import net.minecraft.world.level.block.entity.BannerBlockEntity;
 import net.minecraft.world.level.block.entity.BannerPatternLayers;
@@ -12,7 +11,9 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Banner;
 import org.bukkit.block.banner.Pattern;
-import org.bukkit.craftbukkit.block.banner.CraftPatternType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CraftBanner extends CraftBlockEntityState<BannerBlockEntity> implements Banner {
 
@@ -94,16 +95,17 @@ public class CraftBanner extends CraftBlockEntityState<BannerBlockEntity> implem
 
     @Override
     public void applyTo(BannerBlockEntity blockEntity) {
-        super.applyTo(blockEntity);
-
-        blockEntity.baseColor = net.minecraft.world.item.DyeColor.byId(this.base.getWoolData());
-
-        List<BannerPatternLayers.Layer> newPatterns = new ArrayList<>();
-
-        for (Pattern p : this.patterns) {
-            newPatterns.add(new net.minecraft.world.level.block.entity.BannerPatternLayers.Layer(CraftPatternType.bukkitToMinecraftHolder(p.getPattern()), net.minecraft.world.item.DyeColor.byId(p.getColor().getWoolData())));
-        }
-        blockEntity.setPatterns(new BannerPatternLayers(newPatterns));
+        throw new NotImplementedError();
+        // super.applyTo(blockEntity);
+        //
+        // blockEntity.baseColor = net.minecraft.world.item.DyeColor.byId(this.base.getWoolData());
+        //
+        // List<BannerPatternLayers.Layer> newPatterns = new ArrayList<>();
+        //
+        // for (Pattern p : this.patterns) {
+        //     newPatterns.add(new net.minecraft.world.level.block.entity.BannerPatternLayers.Layer(CraftPatternType.bukkitToMinecraftHolder(p.getPattern()), net.minecraft.world.item.DyeColor.byId(p.getColor().getWoolData())));
+        // }
+        // blockEntity.setPatterns(new BannerPatternLayers(newPatterns));
     }
 
     @Override
@@ -118,12 +120,14 @@ public class CraftBanner extends CraftBlockEntityState<BannerBlockEntity> implem
 
     @Override
     public net.kyori.adventure.text.Component customName() {
-        return this.getSnapshot().name == null ? null : io.papermc.paper.adventure.PaperAdventure.asAdventure(this.getSnapshot().name);
+        throw new NotImplementedError();
+        // return this.getSnapshot().name == null ? null : io.papermc.paper.adventure.PaperAdventure.asAdventure(this.getSnapshot().name);
     }
 
     @Override
     public void customName(net.kyori.adventure.text.Component customName) {
-        this.getSnapshot().name = customName == null ? null : io.papermc.paper.adventure.PaperAdventure.asVanilla(customName);
+        throw new NotImplementedError();
+        // this.getSnapshot().name = customName == null ? null : io.papermc.paper.adventure.PaperAdventure.asVanilla(customName);
     }
 
     @Override
@@ -133,6 +137,6 @@ public class CraftBanner extends CraftBlockEntityState<BannerBlockEntity> implem
 
     @Override
     public void setCustomName(String name) {
-       this.customName(net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserializeOrNull(name));
+        this.customName(net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserializeOrNull(name));
     }
 }

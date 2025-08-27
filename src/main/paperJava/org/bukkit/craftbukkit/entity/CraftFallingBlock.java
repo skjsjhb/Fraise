@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import org.bukkit.Material;
 import org.bukkit.block.data.BlockData;
@@ -31,17 +32,19 @@ public class CraftFallingBlock extends CraftEntity implements FallingBlock {
 
     @Override
     public void setBlockData(final BlockData blockData) {
-        Preconditions.checkArgument(blockData != null, "blockData");
-        final net.minecraft.world.level.block.state.BlockState oldState = this.getHandle().blockState, newState = ((CraftBlockData) blockData).getState();
-        this.getHandle().blockState = newState;
-        this.getHandle().blockData = null;
-
-        if (oldState != newState) this.update();
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(blockData != null, "blockData");
+        // final net.minecraft.world.level.block.state.BlockState oldState = this.getHandle().blockState, newState = ((CraftBlockData) blockData).getState();
+        // this.getHandle().blockState = newState;
+        // this.getHandle().blockData = null;
+        //
+        // if (oldState != newState) this.update();
     }
 
     @Override
     public org.bukkit.block.BlockState getBlockState() {
-        return org.bukkit.craftbukkit.block.CraftBlockStates.getBlockState(this.getHandle().blockState, this.getHandle().blockData);
+        throw new NotImplementedError();
+        // return org.bukkit.craftbukkit.block.CraftBlockStates.getBlockState(this.getHandle().blockState, this.getHandle().blockData);
     }
 
     @Override
@@ -50,7 +53,8 @@ public class CraftFallingBlock extends CraftEntity implements FallingBlock {
         // Calls #update if needed, the block data compound tag is not synced with the client and hence can be mutated after the sync with clients.
         // The call also clears any potential old block data.
         this.setBlockData(blockState.getBlockData());
-        if (blockState instanceof final org.bukkit.craftbukkit.block.CraftBlockEntityState<?> blockEntitySnapshot) this.getHandle().blockData = blockEntitySnapshot.getSnapshotNBT();
+        if (blockState instanceof final org.bukkit.craftbukkit.block.CraftBlockEntityState<?> blockEntitySnapshot)
+            this.getHandle().blockData = blockEntitySnapshot.getSnapshotNBT();
     }
 
     @Override
@@ -65,22 +69,26 @@ public class CraftFallingBlock extends CraftEntity implements FallingBlock {
 
     @Override
     public boolean getCancelDrop() {
-        return this.getHandle().cancelDrop;
+        throw new NotImplementedError();
+        // return this.getHandle().cancelDrop;
     }
 
     @Override
     public void setCancelDrop(boolean cancelDrop) {
-        this.getHandle().cancelDrop = cancelDrop;
+        throw new NotImplementedError();
+        // this.getHandle().cancelDrop = cancelDrop;
     }
 
     @Override
     public boolean canHurtEntities() {
-        return this.getHandle().hurtEntities;
+        throw new NotImplementedError();
+        // return this.getHandle().hurtEntities;
     }
 
     @Override
     public void setHurtEntities(boolean hurtEntities) {
-        this.getHandle().hurtEntities = hurtEntities;
+        throw new NotImplementedError();
+        // this.getHandle().hurtEntities = hurtEntities;
     }
 
     @Override
@@ -93,41 +101,47 @@ public class CraftFallingBlock extends CraftEntity implements FallingBlock {
 
     @Override
     public float getDamagePerBlock() {
-        return this.getHandle().fallDamagePerDistance;
+        throw new NotImplementedError();
+        // return this.getHandle().fallDamagePerDistance;
     }
 
     @Override
     public void setDamagePerBlock(float damage) {
-        Preconditions.checkArgument(damage >= 0.0, "damage must be >= 0.0, given %s", damage);
-
-        this.getHandle().fallDamagePerDistance = damage;
-        if (damage > 0.0) {
-            this.setHurtEntities(true);
-        }
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(damage >= 0.0, "damage must be >= 0.0, given %s", damage);
+        //
+        // this.getHandle().fallDamagePerDistance = damage;
+        // if (damage > 0.0) {
+        //     this.setHurtEntities(true);
+        // }
     }
 
     @Override
     public int getMaxDamage() {
-        return this.getHandle().fallDamageMax;
+        throw new NotImplementedError();
+        // return this.getHandle().fallDamageMax;
     }
 
     @Override
     public void setMaxDamage(int damage) {
-        Preconditions.checkArgument(damage >= 0, "damage must be >= 0, given %s", damage);
-
-        this.getHandle().fallDamageMax = damage;
-        if (damage > 0) {
-            this.setHurtEntities(true);
-        }
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(damage >= 0, "damage must be >= 0, given %s", damage);
+        //
+        // this.getHandle().fallDamageMax = damage;
+        // if (damage > 0) {
+        //     this.setHurtEntities(true);
+        // }
     }
 
     @Override
     public boolean doesAutoExpire() {
-        return this.getHandle().autoExpire;
+        throw new NotImplementedError();
+        // return this.getHandle().autoExpire;
     }
 
     @Override
     public void shouldAutoExpire(boolean autoExpires) {
-        this.getHandle().autoExpire = autoExpires;
+        throw new NotImplementedError();
+        // this.getHandle().autoExpire = autoExpires;
     }
 }

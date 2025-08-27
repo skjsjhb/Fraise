@@ -1,13 +1,11 @@
 package io.papermc.paper.plugin.storage;
 
-import com.mojang.logging.LogUtils;
-import io.papermc.paper.plugin.provider.entrypoint.DependencyContext;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.plugin.entrypoint.dependency.DependencyContextHolder;
 import io.papermc.paper.plugin.entrypoint.strategy.ProviderConfiguration;
 import io.papermc.paper.plugin.manager.PaperPluginManagerImpl;
 import io.papermc.paper.plugin.provider.PluginProvider;
-import io.papermc.paper.plugin.provider.ProviderStatus;
-import io.papermc.paper.plugin.provider.ProviderStatusHolder;
+import io.papermc.paper.plugin.provider.entrypoint.DependencyContext;
 import io.papermc.paper.plugin.provider.type.paper.PaperPluginParent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,7 +15,7 @@ import java.util.List;
 
 public class ServerPluginProviderStorage extends ConfiguredProviderStorage<JavaPlugin> {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     public ServerPluginProviderStorage() {
         super(new ProviderConfiguration<>() {

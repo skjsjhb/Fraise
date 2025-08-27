@@ -1,8 +1,7 @@
 package io.papermc.paper.plugin.storage;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.plugin.PluginInitializerManager;
-import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrap;
 import io.papermc.paper.plugin.bootstrap.PluginBootstrapContextImpl;
 import io.papermc.paper.plugin.entrypoint.dependency.BootstrapMetaDependencyTree;
@@ -18,7 +17,7 @@ import org.slf4j.Logger;
 
 public class BootstrapProviderStorage extends SimpleProviderStorage<PluginBootstrap> {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     public BootstrapProviderStorage() {
         super(new ModernPluginLoadingStrategy<>(new ProviderConfiguration<>() {

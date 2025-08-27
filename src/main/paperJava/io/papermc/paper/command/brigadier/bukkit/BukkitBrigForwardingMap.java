@@ -6,7 +6,11 @@ import com.mojang.brigadier.tree.CommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.PaperBrigadier;
 import io.papermc.paper.command.brigadier.PaperCommands;
-import io.papermc.paper.command.brigadier.PluginVanillaCommandWrapper;
+import kotlin.NotImplementedError;
+import org.bukkit.command.Command;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.AbstractCollection;
 import java.util.AbstractSet;
 import java.util.ArrayList;
@@ -19,10 +23,6 @@ import java.util.Set;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
-import org.bukkit.command.Command;
-import org.bukkit.craftbukkit.command.VanillaCommandWrapper;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /*
 This map is supposed to act as a legacy bridge for the command map and the command dispatcher.
@@ -95,29 +95,31 @@ public class BukkitBrigForwardingMap extends HashMap<String, Command> {
     @Nullable
     @Override
     public Command put(String key, Command value) {
-        Command old = this.get(key);
-        this.getDispatcher().getRoot().removeCommand(key); // Override previous command
-        if (value instanceof VanillaCommandWrapper wrapper && wrapper.getName().equals(key)) {
-            // Don't break when some plugin tries to remove and add back a plugin command registered with modern API...
-            this.getDispatcher().getRoot().addChild((CommandNode) wrapper.vanillaCommand);
-        } else {
-            this.getDispatcher().getRoot().addChild(BukkitCommandNode.of(key, value));
-        }
-        return old;
+        throw new NotImplementedError();
+        // Command old = this.get(key);
+        // this.getDispatcher().getRoot().removeCommand(key); // Override previous command
+        // if (value instanceof VanillaCommandWrapper wrapper && wrapper.getName().equals(key)) {
+        //     // Don't break when some plugin tries to remove and add back a plugin command registered with modern API...
+        //     this.getDispatcher().getRoot().addChild((CommandNode) wrapper.vanillaCommand);
+        // } else {
+        //     this.getDispatcher().getRoot().addChild(BukkitCommandNode.of(key, value));
+        // }
+        // return old;
     }
 
     @Override
     public Command remove(Object key) {
-        if (!(key instanceof String string)) {
-            return null;
-        }
-
-        Command old = this.get(key);
-         if (old != null) {
-             this.getDispatcher().getRoot().removeCommand(string);
-         }
-
-        return old;
+        throw new NotImplementedError();
+        // if (!(key instanceof String string)) {
+        //     return null;
+        // }
+        //
+        // Command old = this.get(key);
+        //  if (old != null) {
+        //      this.getDispatcher().getRoot().removeCommand(string);
+        //  }
+        //
+        // return old;
     }
 
     @Override
@@ -140,7 +142,8 @@ public class BukkitBrigForwardingMap extends HashMap<String, Command> {
 
     @Override
     public void clear() {
-        this.getDispatcher().getRoot().clearAll();
+        throw new NotImplementedError();
+        // this.getDispatcher().getRoot().clearAll();
     }
 
     @NotNull

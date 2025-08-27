@@ -1,6 +1,6 @@
 package io.papermc.paper.plugin;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.configuration.PaperConfigurations;
 import io.papermc.paper.plugin.entrypoint.Entrypoint;
 import io.papermc.paper.plugin.entrypoint.LaunchEntryPointHandler;
@@ -8,9 +8,6 @@ import io.papermc.paper.plugin.provider.PluginProvider;
 import io.papermc.paper.plugin.provider.type.paper.PaperPluginParent;
 import io.papermc.paper.plugin.provider.type.spigot.SpigotPluginProvider;
 import io.papermc.paper.pluginremap.PluginRemapper;
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Function;
 import joptsimple.OptionSet;
 import net.minecraft.server.dedicated.DedicatedServer;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,10 +20,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Function;
 
 public class PluginInitializerManager {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
     private static PluginInitializerManager impl;
     private final Path pluginDirectory;
     private final Path updateDirectory;
@@ -151,7 +151,8 @@ public class PluginInitializerManager {
         // Wipe the provider storage
         LaunchEntryPointHandler.INSTANCE.populateProviderStorage();
         try {
-            load(dedicatedServer.options);
+            // throw new NotImplementedError();
+            // load(dedicatedServer.options);
         } catch (Exception e) {
             throw new RuntimeException("Failed to reload!", e);
         }

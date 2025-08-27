@@ -3,11 +3,7 @@ package io.papermc.paper.command.subcommands;
 import com.google.common.collect.ImmutableMap;
 import io.papermc.paper.command.CommandUtil;
 import io.papermc.paper.command.PaperSubcommand;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.function.ToIntFunction;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
 import net.kyori.adventure.text.JoinConfiguration;
@@ -28,6 +24,12 @@ import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.function.ToIntFunction;
 
 @DefaultQualifier(NonNull.class)
 public final class MobcapsCommand implements PaperSubcommand {
@@ -55,7 +57,8 @@ public final class MobcapsCommand implements PaperSubcommand {
     public List<String> tabComplete(final CommandSender sender, final String subCommand, final String[] args) {
         return switch (subCommand) {
             case "mobcaps" -> CommandUtil.getListMatchingLast(sender, args, this.suggestMobcaps(args));
-            case "playermobcaps" -> CommandUtil.getListMatchingLast(sender, args, this.suggestPlayerMobcaps(sender, args));
+            case "playermobcaps" ->
+                CommandUtil.getListMatchingLast(sender, args, this.suggestPlayerMobcaps(sender, args));
             default -> throw new IllegalArgumentException();
         };
     }
@@ -127,16 +130,17 @@ public final class MobcapsCommand implements PaperSubcommand {
                 Component.text(" (" + chunks + " spawnable chunks)")
             ));
 
-            sender.sendMessage(createMobcapsComponent(
-                category -> {
-                    if (state == null) {
-                        return 0;
-                    } else {
-                        return state.getMobCategoryCounts().getOrDefault(category, 0);
-                    }
-                },
-                category -> NaturalSpawner.globalLimitForCategory(level, category, chunks)
-            ));
+            throw new NotImplementedError();
+            // sender.sendMessage(createMobcapsComponent(
+            //     category -> {
+            //         if (state == null) {
+            //             return 0;
+            //         } else {
+            //             return state.getMobCategoryCounts().getOrDefault(category, 0);
+            //         }
+            //     },
+            //     category -> NaturalSpawner.globalLimitForCategory(level, category, chunks)
+            // ));
         }
     }
 
@@ -164,16 +168,17 @@ public final class MobcapsCommand implements PaperSubcommand {
         final ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
         final ServerLevel level = serverPlayer.level();
 
-        if (!level.paperConfig().entities.spawning.perPlayerMobSpawns) {
-            sender.sendMessage(Component.text("Use '/paper mobcaps' for worlds where per-player mob spawning is disabled.", NamedTextColor.RED));
-            return;
-        }
-
-        sender.sendMessage(Component.join(JoinConfiguration.noSeparators(), Component.text("Mobcaps for player: "), Component.text(player.getName(), NamedTextColor.GREEN)));
-        sender.sendMessage(createMobcapsComponent(
-            category -> level.chunkSource.chunkMap.getMobCountNear(serverPlayer, category),
-            category -> level.getWorld().getSpawnLimitUnsafe(org.bukkit.craftbukkit.util.CraftSpawnCategory.toBukkit(category))
-        ));
+        throw new NotImplementedError();
+        // if (!level.paperConfig().entities.spawning.perPlayerMobSpawns) {
+        //     sender.sendMessage(Component.text("Use '/paper mobcaps' for worlds where per-player mob spawning is disabled.", NamedTextColor.RED));
+        //     return;
+        // }
+        //
+        // sender.sendMessage(Component.join(JoinConfiguration.noSeparators(), Component.text("Mobcaps for player: "), Component.text(player.getName(), NamedTextColor.GREEN)));
+        // sender.sendMessage(createMobcapsComponent(
+        //     category -> level.chunkSource.chunkMap.getMobCountNear(serverPlayer, category),
+        //     category -> level.getWorld().getSpawnLimitUnsafe(org.bukkit.craftbukkit.util.CraftSpawnCategory.toBukkit(category))
+        // ));
     }
 
     private static Component createMobcapsComponent(final ToIntFunction<MobCategory> countGetter, final ToIntFunction<MobCategory> limitGetter) {

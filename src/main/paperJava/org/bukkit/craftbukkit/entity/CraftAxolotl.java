@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Axolotl;
 
@@ -34,6 +35,7 @@ public class CraftAxolotl extends CraftAnimals implements Axolotl, io.papermc.pa
     public void setVariant(Variant variant) {
         Preconditions.checkArgument(variant != null, "variant cannot be null");
 
-        this.getHandle().setVariant(net.minecraft.world.entity.animal.axolotl.Axolotl.Variant.byId(variant.ordinal()));
+        throw new NotImplementedError();
+        // this.getHandle().setVariant(net.minecraft.world.entity.animal.axolotl.Axolotl.Variant.byId(variant.ordinal()));
     }
 }

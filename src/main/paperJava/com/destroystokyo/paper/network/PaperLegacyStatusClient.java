@@ -6,15 +6,15 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.server.MinecraftServer;
 import org.apache.commons.lang3.StringUtils;
 
-import java.net.InetSocketAddress;
-
 import javax.annotation.Nullable;
+import java.net.InetSocketAddress;
 
 public final class PaperLegacyStatusClient implements StatusClient {
 
     private final InetSocketAddress address;
     private final int protocolVersion;
-    @Nullable private final InetSocketAddress virtualHost;
+    @Nullable
+    private final InetSocketAddress virtualHost;
 
     private PaperLegacyStatusClient(InetSocketAddress address, int protocolVersion, @Nullable InetSocketAddress virtualHost) {
         this.address = address;
@@ -43,12 +43,16 @@ public final class PaperLegacyStatusClient implements StatusClient {
         return true;
     }
 
-    public static PaperServerListPingEvent processRequest(MinecraftServer server,
-            InetSocketAddress address, int protocolVersion, @Nullable InetSocketAddress virtualHost) {
+    public static PaperServerListPingEvent processRequest(
+        MinecraftServer server,
+        InetSocketAddress address, int protocolVersion, @Nullable InetSocketAddress virtualHost
+    ) {
 
-        PaperServerListPingEvent event =  new PaperServerListPingEventImpl(server,
-                new PaperLegacyStatusClient(address, protocolVersion, virtualHost), Byte.MAX_VALUE, null);
-        server.server.getPluginManager().callEvent(event);
+        PaperServerListPingEvent event = new PaperServerListPingEventImpl(server,
+            new PaperLegacyStatusClient(address, protocolVersion, virtualHost), Byte.MAX_VALUE, null);
+
+        // throw new NotImplementedError();
+        // server.server.getPluginManager().callEvent(event);
 
         if (event.isCancelled()) {
             return null;

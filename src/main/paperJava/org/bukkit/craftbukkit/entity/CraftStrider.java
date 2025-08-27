@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -41,31 +42,35 @@ public class CraftStrider extends CraftAnimals implements Strider {
 
     @Override
     public int getBoostTicks() {
-        return this.getHandle().steering.boosting ? this.getHandle().steering.boostTimeTotal() : 0;
+        // return this.getHandle().steering.boosting ? this.getHandle().steering.boostTimeTotal() : 0;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setBoostTicks(int ticks) {
         Preconditions.checkArgument(ticks >= 0, "ticks must be >= 0");
 
-        this.getHandle().steering.setBoostTicks(ticks);
+        // this.getHandle().steering.setBoostTicks(ticks);
+        throw new NotImplementedError();
     }
 
     @Override
     public int getCurrentBoostTicks() {
-        return this.getHandle().steering.boosting ? this.getHandle().steering.boostTime : 0;
+        // return this.getHandle().steering.boosting ? this.getHandle().steering.boostTime : 0;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setCurrentBoostTicks(int ticks) {
-        if (!this.getHandle().steering.boosting) {
-            return;
-        }
-
-        int max = this.getHandle().steering.boostTimeTotal();
-        Preconditions.checkArgument(ticks >= 0 && ticks <= max, "boost ticks must not exceed 0 or %s (inclusive)", max);
-
-        this.getHandle().steering.boostTime = ticks;
+        throw new NotImplementedError();
+        // if (!this.getHandle().steering.boosting) {
+        //     return;
+        // }
+        //
+        // int max = this.getHandle().steering.boostTimeTotal();
+        // Preconditions.checkArgument(ticks >= 0 && ticks <= max, "boost ticks must not exceed 0 or %s (inclusive)", max);
+        //
+        // this.getHandle().steering.boostTime = ticks;
     }
 
     @Override

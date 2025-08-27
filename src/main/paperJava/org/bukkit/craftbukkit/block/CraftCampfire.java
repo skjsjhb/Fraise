@@ -1,6 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
-import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.CampfireBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -36,22 +36,26 @@ public class CraftCampfire extends CraftBlockEntityState<CampfireBlockEntity> im
 
     @Override
     public int getCookTime(int index) {
-        return this.getSnapshot().cookingProgress[index];
+        throw new NotImplementedError();
+        // return this.getSnapshot().cookingProgress[index];
     }
 
     @Override
     public void setCookTime(int index, int cookTime) {
-        this.getSnapshot().cookingProgress[index] = cookTime;
+        throw new NotImplementedError();
+        // this.getSnapshot().cookingProgress[index] = cookTime;
     }
 
     @Override
     public int getCookTimeTotal(int index) {
-        return this.getSnapshot().cookingTime[index];
+        throw new NotImplementedError();
+        // return this.getSnapshot().cookingTime[index];
     }
 
     @Override
     public void setCookTimeTotal(int index, int cookTimeTotal) {
-        this.getSnapshot().cookingTime[index] = cookTimeTotal;
+        throw new NotImplementedError();
+        // this.getSnapshot().cookingTime[index] = cookTimeTotal;
     }
 
     @Override
@@ -66,35 +70,40 @@ public class CraftCampfire extends CraftBlockEntityState<CampfireBlockEntity> im
 
     @Override
     public void stopCooking() {
-        for (int i = 0; i < this.getSnapshot().stopCooking.length; ++i)
-            this.stopCooking(i);
+        throw new NotImplementedError();
+        // for (int i = 0; i < this.getSnapshot().stopCooking.length; ++i)
+        //     this.stopCooking(i);
     }
 
     @Override
     public void startCooking() {
-        for (int i = 0; i < this.getSnapshot().stopCooking.length; ++i)
-            this.startCooking(i);
+        throw new NotImplementedError();
+        // for (int i = 0; i < this.getSnapshot().stopCooking.length; ++i)
+        //     this.startCooking(i);
     }
 
     @Override
     public boolean stopCooking(int index) {
-        Preconditions.checkArgument(-1 < index && index < 4, "Slot index must be between 0 (incl) to 3 (incl)");
-        boolean previous = this.isCookingDisabled(index);
-        this.getSnapshot().stopCooking[index] = true;
-        return previous;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(-1 < index && index < 4, "Slot index must be between 0 (incl) to 3 (incl)");
+        // boolean previous = this.isCookingDisabled(index);
+        // this.getSnapshot().stopCooking[index] = true;
+        // return previous;
     }
 
     @Override
     public boolean startCooking(int index) {
-        Preconditions.checkArgument(-1 < index && index < 4, "Slot index must be between 0 (incl) to 3 (incl)");
-        boolean previous = this.isCookingDisabled(index);
-        this.getSnapshot().stopCooking[index] = false;
-        return previous;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(-1 < index && index < 4, "Slot index must be between 0 (incl) to 3 (incl)");
+        // boolean previous = this.isCookingDisabled(index);
+        // this.getSnapshot().stopCooking[index] = false;
+        // return previous;
     }
 
     @Override
     public boolean isCookingDisabled(int index) {
-        Preconditions.checkArgument(-1 < index && index < 4, "Slot index must be between 0 (incl) to 3 (incl)");
-        return this.getSnapshot().stopCooking[index];
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(-1 < index && index < 4, "Slot index must be between 0 (incl) to 3 (incl)");
+        // return this.getSnapshot().stopCooking[index];
     }
 }

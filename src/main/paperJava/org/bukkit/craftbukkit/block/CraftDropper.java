@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DropperBlock;
 import net.minecraft.world.level.block.entity.DropperBlockEntity;
@@ -44,7 +45,8 @@ public class CraftDropper extends CraftLootable<DropperBlockEntity> implements D
             CraftWorld world = (CraftWorld) this.getWorld();
             DropperBlock drop = (DropperBlock) Blocks.DROPPER;
 
-            drop.dispenseFrom(world.getHandle(), this.getHandle(), this.getPosition());
+            throw new NotImplementedError();
+            // drop.dispenseFrom(world.getHandle(), this.getHandle(), this.getPosition());
         }
     }
 

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.AbstractSkeleton;
 import org.bukkit.entity.Skeleton;
@@ -22,11 +23,13 @@ public abstract class CraftAbstractSkeleton extends CraftMonster implements Abst
 
     @Override
     public boolean shouldBurnInDay() {
-        return getHandle().shouldBurnInDay();
+        throw new NotImplementedError();
+        // return getHandle().shouldBurnInDay();
     }
 
     @Override
     public void setShouldBurnInDay(boolean shouldBurnInDay) {
-        getHandle().setShouldBurnInDay(shouldBurnInDay);
+        throw new NotImplementedError();
+        // getHandle().setShouldBurnInDay(shouldBurnInDay);
     }
 }

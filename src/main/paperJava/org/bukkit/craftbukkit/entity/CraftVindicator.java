@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Vindicator;
 
@@ -16,11 +17,13 @@ public class CraftVindicator extends CraftIllager implements Vindicator {
 
     @Override
     public boolean isJohnny() {
-        return this.getHandle().isJohnny;
+        // return this.getHandle().isJohnny;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setJohnny(boolean johnny) {
-        this.getHandle().isJohnny = johnny;
+        // this.getHandle().isJohnny = johnny;
+        throw new NotImplementedError();
     }
 }

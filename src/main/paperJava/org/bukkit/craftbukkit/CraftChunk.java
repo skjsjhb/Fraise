@@ -3,12 +3,7 @@ package org.bukkit.craftbukkit;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.mojang.serialization.Codec;
-import io.papermc.paper.FeatureHooks;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Predicate;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -21,14 +16,12 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.biome.Biomes;
 import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.DataLayer;
-import net.minecraft.world.level.chunk.ImposterProtoChunk;
 import net.minecraft.world.level.chunk.LevelChunkSection;
 import net.minecraft.world.level.chunk.PalettedContainer;
 import net.minecraft.world.level.chunk.PalettedContainerRO;
 import net.minecraft.world.level.chunk.status.ChunkStatus;
 import net.minecraft.world.level.chunk.storage.SerializableChunkData;
 import net.minecraft.world.level.levelgen.Heightmap;
-import net.minecraft.world.level.levelgen.WorldgenRandom;
 import net.minecraft.world.level.lighting.LevelLightEngine;
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
@@ -47,18 +40,26 @@ import org.bukkit.generator.structure.Structure;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.function.Predicate;
+
 public class CraftChunk implements Chunk {
     private final ServerLevel level;
     private final int x;
     private final int z;
-    private static final PalettedContainer<net.minecraft.world.level.block.state.BlockState> emptyBlockIDs = FeatureHooks.emptyPalettedBlockContainer();
+    // throw new NotImplementedError();
+    private static final PalettedContainer<net.minecraft.world.level.block.state.BlockState> emptyBlockIDs = null; // FeatureHooks.emptyPalettedBlockContainer();
     private static final byte[] FULL_LIGHT = new byte[2048];
     private static final byte[] EMPTY_LIGHT = new byte[2048];
 
     public CraftChunk(net.minecraft.world.level.chunk.LevelChunk chunk) {
-        this.level = chunk.level;
+        this.level = null; // chunk.level;
         this.x = chunk.getPos().x;
         this.z = chunk.getPos().z;
+        throw new NotImplementedError();
     }
 
     public CraftChunk(ServerLevel level, int x, int z) {
@@ -69,7 +70,8 @@ public class CraftChunk implements Chunk {
 
     @Override
     public World getWorld() {
-        return this.level.getWorld();
+        // return this.level.getWorld();
+        throw new NotImplementedError();
     }
 
     public CraftWorld getCraftWorld() {
@@ -77,20 +79,21 @@ public class CraftChunk implements Chunk {
     }
 
     public ChunkAccess getHandle(ChunkStatus chunkStatus) {
-        // Paper start - chunk system
-        net.minecraft.world.level.chunk.LevelChunk full = this.level.getChunkIfLoaded(this.x, this.z);
-        if (full != null) {
-            return full;
-        }
-        // Paper end - chunk system
-        ChunkAccess chunkAccess = this.level.getChunk(this.x, this.z, chunkStatus);
-
-        // SPIGOT-7332: Get unwrapped extension
-        if (chunkAccess instanceof ImposterProtoChunk extension) {
-            return extension.getWrapped();
-        }
-
-        return chunkAccess;
+        throw new NotImplementedError();
+        // // Paper start - chunk system
+        // net.minecraft.world.level.chunk.LevelChunk full = this.level.getChunkIfLoaded(this.x, this.z);
+        // if (full != null) {
+        //     return full;
+        // }
+        // // Paper end - chunk system
+        // ChunkAccess chunkAccess = this.level.getChunk(this.x, this.z, chunkStatus);
+        //
+        // // SPIGOT-7332: Get unwrapped extension
+        // if (chunkAccess instanceof ImposterProtoChunk extension) {
+        //     return extension.getWrapped();
+        // }
+        //
+        // return chunkAccess;
     }
 
     @Override
@@ -122,7 +125,8 @@ public class CraftChunk implements Chunk {
 
     @Override
     public Entity[] getEntities() {
-        return FeatureHooks.getChunkEntities(this.level, this.x, this.z); // Paper - chunk system
+        throw new NotImplementedError();
+        // return FeatureHooks.getChunkEntities(this.level, this.x, this.z); // Paper - chunk system
     }
 
     @Override
@@ -132,19 +136,20 @@ public class CraftChunk implements Chunk {
 
     @Override
     public BlockState[] getTileEntities(boolean useSnapshot) {
-        if (!this.isLoaded()) {
-            this.getWorld().getChunkAt(this.x, this.z); // Transient load for this tick
-        }
-
-        int index = 0;
-        ChunkAccess chunk = this.getHandle(ChunkStatus.FULL);
-
-        BlockState[] states = new BlockState[chunk.blockEntities.size()];
-        for (BlockPos pos : chunk.blockEntities.keySet()) {
-            states[index++] = CraftBlock.at(this.level, pos).getState(useSnapshot);
-        }
-
-        return states;
+        // if (!this.isLoaded()) {
+        //     this.getWorld().getChunkAt(this.x, this.z); // Transient load for this tick
+        // }
+        //
+        // int index = 0;
+        // ChunkAccess chunk = this.getHandle(ChunkStatus.FULL);
+        //
+        // BlockState[] states = new BlockState[chunk.blockEntities.size()];
+        // for (BlockPos pos : chunk.blockEntities.keySet()) {
+        //     states[index++] = CraftBlock.at(this.level, pos).getState(useSnapshot);
+        // }
+        //
+        // return states;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -157,12 +162,13 @@ public class CraftChunk implements Chunk {
         ChunkAccess chunk = this.getHandle(ChunkStatus.FULL);
 
         List<BlockState> states = new ArrayList<>();
-        for (BlockPos pos : chunk.blockEntities.keySet()) {
-            Block block = CraftBlock.at(this.level, pos);
-            if (blockPredicate.test(block)) {
-                states.add(block.getState(useSnapshot));
-            }
-        }
+        // throw new NotImplementedError();
+        // for (BlockPos pos : chunk.blockEntities.keySet()) {
+        //     Block block = CraftBlock.at(this.level, pos);
+        //     if (blockPredicate.test(block)) {
+        //         states.add(block.getState(useSnapshot));
+        //     }
+        // }
 
         return states;
     }
@@ -196,7 +202,8 @@ public class CraftChunk implements Chunk {
     @Override
     public boolean isSlimeChunk() {
         // 987234911L is taken from Slime when seeing if a slime can spawn in a chunk
-        return this.level.paperConfig().entities.spawning.allChunksAreSlimeChunks || WorldgenRandom.seedSlimeChunk(this.getX(), this.getZ(), this.getWorld().getSeed(), level.spigotConfig.slimeSeed).nextInt(10) == 0; // Paper
+        // return this.level.paperConfig().entities.spawning.allChunksAreSlimeChunks || WorldgenRandom.seedSlimeChunk(this.getX(), this.getZ(), this.getWorld().getSeed(), level.spigotConfig.slimeSeed).nextInt(10) == 0; // Paper
+        throw new NotImplementedError();
     }
 
     @Override
@@ -330,7 +337,8 @@ public class CraftChunk implements Chunk {
 
         if (includeMaxBlockY) {
             heightmap = new Heightmap(chunk, Heightmap.Types.MOTION_BLOCKING);
-            heightmap.setRawData(chunk, Heightmap.Types.MOTION_BLOCKING, chunk.heightmaps.get(Heightmap.Types.MOTION_BLOCKING).getRawData());
+            // throw new NotImplementedError();
+            // heightmap.setRawData(chunk, Heightmap.Types.MOTION_BLOCKING, chunk.heightmaps.get(Heightmap.Types.MOTION_BLOCKING).getRawData());
         }
 
         World world = this.getWorld();
@@ -339,16 +347,18 @@ public class CraftChunk implements Chunk {
 
     @Override
     public PersistentDataContainer getPersistentDataContainer() {
-        return this.getHandle(ChunkStatus.STRUCTURE_STARTS).persistentDataContainer;
+        throw new NotImplementedError();
+        // return this.getHandle(ChunkStatus.STRUCTURE_STARTS).persistentDataContainer;
     }
 
     @Override
     public LoadLevel getLoadLevel() {
-        net.minecraft.world.level.chunk.LevelChunk chunk = this.level.getChunkIfLoaded(this.getX(), this.getZ());
-        if (chunk == null) {
-            return LoadLevel.UNLOADED;
-        }
-        return LoadLevel.values()[chunk.getFullStatus().ordinal()];
+        throw new NotImplementedError();
+        // net.minecraft.world.level.chunk.LevelChunk chunk = this.level.getChunkIfLoaded(this.getX(), this.getZ());
+        // if (chunk == null) {
+        //     return LoadLevel.UNLOADED;
+        // }
+        // return LoadLevel.values()[chunk.getFullStatus().ordinal()];
     }
 
     @Override

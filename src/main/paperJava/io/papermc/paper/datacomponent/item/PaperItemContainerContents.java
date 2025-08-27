@@ -1,12 +1,11 @@
 package io.papermc.paper.datacomponent.item;
 
-import com.google.common.base.Preconditions;
-import io.papermc.paper.util.MCUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import java.util.List;
-import org.bukkit.craftbukkit.inventory.CraftItemStack;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.util.Handleable;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public record PaperItemContainerContents(
     net.minecraft.world.item.component.ItemContainerContents impl
@@ -19,7 +18,8 @@ public record PaperItemContainerContents(
 
     @Override
     public List<ItemStack> contents() {
-        return MCUtil.transformUnmodifiable(this.impl.items, CraftItemStack::asBukkitCopy);
+        throw new NotImplementedError();
+        // return MCUtil.transformUnmodifiable(this.impl.items, CraftItemStack::asBukkitCopy);
     }
 
     static final class BuilderImpl implements ItemContainerContents.Builder {
@@ -28,30 +28,32 @@ public record PaperItemContainerContents(
 
         @Override
         public ItemContainerContents.Builder add(final ItemStack stack) {
-            Preconditions.checkArgument(stack != null, "Item cannot be null");
-            Preconditions.checkArgument(
-                this.items.size() + 1 <= net.minecraft.world.item.component.ItemContainerContents.MAX_SIZE,
-                "Cannot have more than %s items, had %s",
-                net.minecraft.world.item.component.ItemContainerContents.MAX_SIZE,
-                this.items.size() + 1
-            );
-            this.items.add(CraftItemStack.asNMSCopy(stack));
-            return this;
+            throw new NotImplementedError();
+            // Preconditions.checkArgument(stack != null, "Item cannot be null");
+            // Preconditions.checkArgument(
+            //     this.items.size() + 1 <= net.minecraft.world.item.component.ItemContainerContents.MAX_SIZE,
+            //     "Cannot have more than %s items, had %s",
+            //     net.minecraft.world.item.component.ItemContainerContents.MAX_SIZE,
+            //     this.items.size() + 1
+            // );
+            // this.items.add(CraftItemStack.asNMSCopy(stack));
+            // return this;
         }
 
         @Override
         public ItemContainerContents.Builder addAll(final List<ItemStack> stacks) {
-            Preconditions.checkArgument(
-                this.items.size() + stacks.size() <= net.minecraft.world.item.component.ItemContainerContents.MAX_SIZE,
-                "Cannot have more than %s items, had %s",
-                net.minecraft.world.item.component.ItemContainerContents.MAX_SIZE,
-                this.items.size() + stacks.size()
-            );
-            MCUtil.addAndConvert(this.items, stacks, stack -> {
-                Preconditions.checkArgument(stack != null, "Cannot pass null item!");
-                return CraftItemStack.asNMSCopy(stack);
-            });
-            return this;
+            throw new NotImplementedError();
+            // Preconditions.checkArgument(
+            //     this.items.size() + stacks.size() <= net.minecraft.world.item.component.ItemContainerContents.MAX_SIZE,
+            //     "Cannot have more than %s items, had %s",
+            //     net.minecraft.world.item.component.ItemContainerContents.MAX_SIZE,
+            //     this.items.size() + stacks.size()
+            // );
+            // MCUtil.addAndConvert(this.items, stacks, stack -> {
+            //     Preconditions.checkArgument(stack != null, "Cannot pass null item!");
+            //     return CraftItemStack.asNMSCopy(stack);
+            // });
+            // return this;
         }
 
         @Override

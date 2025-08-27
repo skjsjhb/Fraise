@@ -1,6 +1,5 @@
 package io.papermc.paper.command;
 
-import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.command.subcommands.DumpItemCommand;
 import io.papermc.paper.command.subcommands.DumpListenersCommand;
 import io.papermc.paper.command.subcommands.DumpPluginsCommand;
@@ -11,15 +10,6 @@ import io.papermc.paper.command.subcommands.ReloadCommand;
 import io.papermc.paper.command.subcommands.SyncLoadInfoCommand;
 import io.papermc.paper.command.subcommands.VersionCommand;
 import it.unimi.dsi.fastutil.Pair;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 import net.minecraft.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -31,6 +21,16 @@ import org.bukkit.plugin.PluginManager;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.format.NamedTextColor.RED;
@@ -51,7 +51,8 @@ public final class PaperCommand extends Command {
         commands.put(Set.of("dumpitem"), new DumpItemCommand());
         commands.put(Set.of("mobcaps", "playermobcaps"), new MobcapsCommand());
         commands.put(Set.of("dumplisteners"), new DumpListenersCommand());
-        FeatureHooks.registerPaperCommands(commands);
+        // throw new NotImplementedError();
+        // FeatureHooks.registerPaperCommands(commands);
 
         return commands.entrySet().stream()
             .flatMap(entry -> entry.getKey().stream().map(s -> Map.entry(s, entry.getValue())))

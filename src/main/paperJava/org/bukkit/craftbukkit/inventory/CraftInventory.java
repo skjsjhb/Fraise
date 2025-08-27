@@ -1,14 +1,11 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import java.util.HashMap;
-import java.util.List;
-import java.util.ListIterator;
+import kotlin.NotImplementedError;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.inventory.MerchantContainer;
 import net.minecraft.world.inventory.PlayerEnderChestContainer;
-import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import net.minecraft.world.level.block.entity.BarrelBlockEntity;
 import net.minecraft.world.level.block.entity.BlastFurnaceBlockEntity;
@@ -19,7 +16,6 @@ import net.minecraft.world.level.block.entity.DispenserBlockEntity;
 import net.minecraft.world.level.block.entity.DropperBlockEntity;
 import net.minecraft.world.level.block.entity.Hopper;
 import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
-import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.entity.SmokerBlockEntity;
 import org.bukkit.Location;
@@ -30,6 +26,10 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
 
 public class CraftInventory implements Inventory {
     protected final Container inventory;
@@ -77,9 +77,10 @@ public class CraftInventory implements Inventory {
 
     @Override
     public ItemStack[] getContents() {
-        List<net.minecraft.world.item.ItemStack> mcItems = this.getInventory().getContents();
+        // List<net.minecraft.world.item.ItemStack> mcItems = this.getInventory().getContents();
 
-        return this.asCraftMirror(mcItems);
+        // return this.asCraftMirror(mcItems);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -439,12 +440,14 @@ public class CraftInventory implements Inventory {
             this.clear(i);
         }
     }
+
     // Paper start
     @Override
     public int close() {
-        int count = this.inventory.getViewers().size();
-        com.google.common.collect.Lists.newArrayList(this.inventory.getViewers()).forEach(HumanEntity::closeInventory);
-        return count;
+        throw new NotImplementedError();
+        // int count = this.inventory.getViewers().size();
+        // com.google.common.collect.Lists.newArrayList(this.inventory.getViewers()).forEach(HumanEntity::closeInventory);
+        // return count;
     }
     // Paper end
 
@@ -463,7 +466,8 @@ public class CraftInventory implements Inventory {
 
     @Override
     public List<HumanEntity> getViewers() {
-        return this.inventory.getViewers();
+        // return this.inventory.getViewers();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -496,7 +500,7 @@ public class CraftInventory implements Inventory {
             // Paper start
         } else if (this.inventory instanceof io.papermc.paper.inventory.PaperInventoryCustomHolderContainer holderContainer) {
             return holderContainer.getType();
-        // Paper end
+            // Paper end
         } else if (this.inventory instanceof PlayerEnderChestContainer) {
             return InventoryType.ENDER_CHEST;
         } else if (this.inventory instanceof MerchantContainer) {
@@ -513,9 +517,12 @@ public class CraftInventory implements Inventory {
             return InventoryType.SHULKER_BOX;
         } else if (this.inventory instanceof BarrelBlockEntity) {
             return InventoryType.BARREL;
-        } else if (this.inventory instanceof LecternBlockEntity.LecternInventory) {
-            return InventoryType.LECTERN;
-        } else if (this.inventory instanceof ChiseledBookShelfBlockEntity) {
+        }
+        // else if (this.inventory instanceof LecternBlockEntity.LecternInventory) {
+        //     return InventoryType.LECTERN;
+        // }
+        // throw new NotImplementedError();
+        else if (this.inventory instanceof ChiseledBookShelfBlockEntity) {
             return InventoryType.CHISELED_BOOKSHELF;
         } else if (this instanceof CraftInventoryLoom) {
             return InventoryType.LOOM;
@@ -525,9 +532,12 @@ public class CraftInventory implements Inventory {
             return InventoryType.GRINDSTONE;
         } else if (this instanceof CraftInventoryStonecutter) {
             return InventoryType.STONECUTTER;
-        } else if (this.inventory instanceof ComposterBlock.EmptyContainer || this.inventory instanceof ComposterBlock.InputContainer || this.inventory instanceof ComposterBlock.OutputContainer) {
-            return InventoryType.COMPOSTER;
-        } else if (this.inventory instanceof JukeboxBlockEntity) {
+        }
+        // else if (this.inventory instanceof ComposterBlock.EmptyContainer || this.inventory instanceof ComposterBlock.InputContainer || this.inventory instanceof ComposterBlock.OutputContainer) {
+        //     return InventoryType.COMPOSTER;
+        // }
+        // throw new NotImplementedError();
+        else if (this.inventory instanceof JukeboxBlockEntity) {
             return InventoryType.JUKEBOX;
             // Paper start
         } else if (this.inventory instanceof net.minecraft.world.level.block.entity.DecoratedPotBlockEntity) {
@@ -540,13 +550,15 @@ public class CraftInventory implements Inventory {
 
     @Override
     public InventoryHolder getHolder() {
-        return this.inventory.getOwner();
+        // return this.inventory.getOwner();
+        throw new NotImplementedError();
     }
 
     // Paper start - getHolder without snapshot
     @Override
     public InventoryHolder getHolder(boolean useSnapshot) {
-        return this.inventory instanceof net.minecraft.world.level.block.entity.BlockEntity blockEntity ? blockEntity.getOwner(useSnapshot) : getHolder();
+        // return this.inventory instanceof net.minecraft.world.level.block.entity.BlockEntity blockEntity ? blockEntity.getOwner(useSnapshot) : getHolder();
+        throw new NotImplementedError();
     }
     // Paper end
 
@@ -557,7 +569,8 @@ public class CraftInventory implements Inventory {
 
     @Override
     public void setMaxStackSize(int size) {
-        this.inventory.setMaxStackSize(size);
+        // this.inventory.setMaxStackSize(size);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -572,6 +585,7 @@ public class CraftInventory implements Inventory {
 
     @Override
     public Location getLocation() {
-        return this.inventory.getLocation();
+        // return this.inventory.getLocation();
+        throw new NotImplementedError();
     }
 }

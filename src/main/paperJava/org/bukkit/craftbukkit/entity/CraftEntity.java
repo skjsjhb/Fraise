@@ -1,42 +1,23 @@
 package org.bukkit.craftbukkit.entity;
 
-import com.google.common.base.Function;
 import com.google.common.base.Preconditions;
-import com.google.common.base.Predicates;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Lists;
 import com.mojang.logging.LogUtils;
 import io.papermc.paper.datacomponent.DataComponentType;
-import io.papermc.paper.entity.TeleportFlag;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 import io.papermc.paper.entity.LookAnchor;
-import java.util.concurrent.CompletableFuture;
+import io.papermc.paper.entity.TeleportFlag;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.pointer.PointersSupplier;
 import net.kyori.adventure.util.TriState;
+import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ChunkMap;
-import net.minecraft.server.level.ServerChunkCache;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.level.TicketType;
-import net.minecraft.server.network.ServerPlayerConnection;
-import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.boss.EnderDragonPart;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
-import net.minecraft.world.entity.projectile.AbstractArrow;
-import net.minecraft.world.level.portal.TeleportTransition;
-import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.Vec3;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Server;
@@ -45,13 +26,10 @@ import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.PistonMoveReaction;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.CraftSound;
-import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.persistence.CraftPersistentDataContainer;
 import org.bukkit.craftbukkit.persistence.CraftPersistentDataTypeRegistry;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
-import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.craftbukkit.util.CraftSpawnCategory;
 import org.bukkit.craftbukkit.util.CraftVector;
 import org.bukkit.entity.EntitySnapshot;
@@ -61,7 +39,6 @@ import org.bukkit.entity.Pose;
 import org.bukkit.entity.SpawnCategory;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityRemoveEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
@@ -74,11 +51,15 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
-
-import net.md_5.bungee.api.chat.BaseComponent; // Spigot
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
@@ -104,7 +85,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     @Override
     public final io.papermc.paper.threadedregions.scheduler.EntityScheduler getScheduler() {
         return this.apiScheduler;
-    };
+    }
+
     // Paper end - Folia schedulers
 
     public CraftEntity(final CraftServer server, final Entity entity) {
@@ -173,21 +155,23 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public Location getLocation() {
-        return CraftLocation.toBukkit(this.entity.position(), this.getWorld(), this.entity.getBukkitYaw(), this.entity.getXRot());
+        throw new NotImplementedError();
+        // return CraftLocation.toBukkit(this.entity.position(), this.getWorld(), this.entity.getBukkitYaw(), this.entity.getXRot());
     }
 
     @Override
     public Location getLocation(Location loc) {
-        if (loc != null) {
-            loc.setWorld(this.getWorld());
-            loc.setX(this.entity.getX());
-            loc.setY(this.entity.getY());
-            loc.setZ(this.entity.getZ());
-            loc.setYaw(this.entity.getBukkitYaw());
-            loc.setPitch(this.entity.getXRot());
-        }
-
-        return loc;
+        throw new NotImplementedError();
+        // if (loc != null) {
+        //     loc.setWorld(this.getWorld());
+        //     loc.setX(this.entity.getX());
+        //     loc.setY(this.entity.getY());
+        //     loc.setZ(this.entity.getZ());
+        //     loc.setYaw(this.entity.getBukkitYaw());
+        //     loc.setPitch(this.entity.getXRot());
+        // }
+        //
+        // return loc;
     }
 
     @Override
@@ -212,7 +196,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
      * Checks if the given velocity is not necessarily safe in all situations.
      * This function returning true does not mean the velocity is dangerous or to be avoided, only that it may be
      * a detriment to performance on the server.
-     *
+     * <p>
      * It is not to be used as a hard rule of any sort.
      * Paper only uses it to warn server owners in watchdog crashes.
      *
@@ -224,11 +208,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         final double y = vel.getY();
         final double z = vel.getZ();
 
-        if (x > 4 || x < -4 || y > 4 || y < -4 || z > 4 || z < -4) {
-            return true;
-        }
-
-        return false;
+        return x > 4 || x < -4 || y > 4 || y < -4 || z > 4 || z < -4;
     }
 
     @Override
@@ -249,10 +229,11 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isOnGround() {
-        if (this.entity instanceof AbstractArrow abstractArrow) {
-            return abstractArrow.isInGround();
-        }
-        return this.entity.onGround();
+        throw new NotImplementedError();
+        // if (this.entity instanceof AbstractArrow abstractArrow) {
+        //     return abstractArrow.isInGround();
+        // }
+        // return this.entity.onGround();
     }
 
     @Override
@@ -262,7 +243,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public World getWorld() {
-        return this.entity.level().getWorld();
+        throw new NotImplementedError();
+        // return this.entity.level().getWorld();
     }
 
     @Override
@@ -332,16 +314,18 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
         // Let the server handle cross world teleports
         if (location.getWorld() != null && !location.getWorld().equals(this.getWorld())) {
             // Prevent teleportation to an other world during world generation
-            Preconditions.checkState(!this.entity.generation, "Cannot teleport entity to an other world during world generation");
-            this.entity.teleport(new TeleportTransition(((CraftWorld) location.getWorld()).getHandle(), CraftLocation.toVec3(location), Vec3.ZERO, location.getPitch(), location.getYaw(), Set.of(), TeleportTransition.DO_NOTHING, TeleportCause.PLUGIN));
-            return true;
+            throw new NotImplementedError();
+            // Preconditions.checkState(!this.entity.generation, "Cannot teleport entity to an other world during world generation");
+            // this.entity.teleport(new TeleportTransition(((CraftWorld) location.getWorld()).getHandle(), CraftLocation.toVec3(location), Vec3.ZERO, location.getPitch(), location.getYaw(), Set.of(), TeleportTransition.DO_NOTHING, TeleportCause.PLUGIN));
+            // return true;
         }
 
         // entity.snapTo() throws no event, and so cannot be cancelled
         this.entity.snapTo(location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch()); // Paper - use proper moveTo, as per vanilla teleporting
 
         // Ensure passengers of entity are teleported
-        if (retainPassengers && this.entity.isVehicle()) this.entity.teleportPassengers();
+        // throw new NotImplementedError();
+        // if (retainPassengers && this.entity.isVehicle()) this.entity.teleportPassengers();
 
         return true;
     }
@@ -377,16 +361,17 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public List<org.bukkit.entity.Entity> getNearbyEntities(double x, double y, double z) {
-        Preconditions.checkState(!this.entity.generation, "Cannot get nearby entities during world generation");
-        org.spigotmc.AsyncCatcher.catchOp("getNearbyEntities"); // Spigot
-
-        List<Entity> entities = this.getHandle().level().getEntities(this.entity, this.entity.getBoundingBox().inflate(x, y, z), Predicates.alwaysTrue());
-        List<org.bukkit.entity.Entity> result = new java.util.ArrayList<>(entities.size());
-
-        for (Entity entity : entities) {
-            result.add(entity.getBukkitEntity());
-        }
-        return result;
+        throw new NotImplementedError();
+        // Preconditions.checkState(!this.entity.generation, "Cannot get nearby entities during world generation");
+        // org.spigotmc.AsyncCatcher.catchOp("getNearbyEntities"); // Spigot
+        //
+        // List<Entity> entities = this.getHandle().level().getEntities(this.entity, this.entity.getBoundingBox().inflate(x, y, z), Predicates.alwaysTrue());
+        // List<org.bukkit.entity.Entity> result = new java.util.ArrayList<>(entities.size());
+        //
+        // for (Entity entity : entities) {
+        //     result.add(entity.getBukkitEntity());
+        // }
+        // return result;
     }
 
     @Override
@@ -401,7 +386,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public int getMaxFireTicks() {
-        return this.getHandle().getFireImmuneTicks();
+        throw new NotImplementedError();
+        // return this.getHandle().getFireImmuneTicks();
     }
 
     @Override
@@ -418,7 +404,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     @Override
     public void setVisualFire(final TriState fire) {
         Preconditions.checkArgument(fire != null, "TriState cannot be null");
-        this.getHandle().visualFire = fire;
+        throw new NotImplementedError();
+        // this.getHandle().visualFire = fire;
     }
 
     @Override
@@ -428,7 +415,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public TriState getVisualFire() {
-        return this.getHandle().visualFire;
+        throw new NotImplementedError();
+        // return this.getHandle().visualFire;
     }
 
     @Override
@@ -455,18 +443,21 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isFreezeTickingLocked() {
-        return this.entity.freezeLocked;
+        throw new NotImplementedError();
+        // return this.entity.freezeLocked;
     }
 
     @Override
     public void lockFreezeTicks(boolean locked) {
-        this.entity.freezeLocked = locked;
+        throw new NotImplementedError();
+        // this.entity.freezeLocked = locked;
     }
 
     @Override
     public void remove() {
-        this.entity.pluginRemoved = true;
-        this.entity.discard(this.getHandle().generation ? null : EntityRemoveEvent.Cause.PLUGIN);
+        throw new NotImplementedError();
+        // this.entity.pluginRemoved = true;
+        // this.entity.discard(this.getHandle().generation ? null : EntityRemoveEvent.Cause.PLUGIN);
     }
 
     @Override
@@ -476,7 +467,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isValid() {
-        return this.entity.isAlive() && this.entity.valid;
+        throw new NotImplementedError();
+        // return this.entity.isAlive() && this.entity.valid;
     }
 
     @Override
@@ -486,17 +478,20 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isPersistent() {
-        return this.entity.persist;
+        throw new NotImplementedError();
+        // return this.entity.persist;
     }
 
     @Override
     public void setPersistent(boolean persistent) {
-        this.entity.persist = persistent;
+        throw new NotImplementedError();
+        // this.entity.persist = persistent;
     }
 
     @Override
     public org.bukkit.entity.Entity getPassenger() {
-        return this.isEmpty() ? null : this.getHandle().getPassengers().getFirst().getBukkitEntity();
+        throw new NotImplementedError();
+        // return this.isEmpty() ? null : this.getHandle().getPassengers().getFirst().getBukkitEntity();
     }
 
     @Override
@@ -512,7 +507,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public List<org.bukkit.entity.Entity> getPassengers() {
-        return Lists.newArrayList(Lists.transform(this.getHandle().getPassengers(), (Function<Entity, org.bukkit.entity.Entity>) Entity::getBukkitEntity));
+        throw new NotImplementedError();
+        // return Lists.newArrayList(Lists.transform(this.getHandle().getPassengers(), (Function<Entity, org.bukkit.entity.Entity>) Entity::getBukkitEntity));
     }
 
     @Override
@@ -548,8 +544,9 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public ItemStack getPickItemStack() {
-        net.minecraft.world.item.ItemStack stack = this.getHandle().getPickResult();
-        return stack == null ? ItemStack.empty() : stack.asBukkitCopy();
+        throw new NotImplementedError();
+        // net.minecraft.world.item.ItemStack stack = this.getHandle().getPickResult();
+        // return stack == null ? ItemStack.empty() : stack.asBukkitCopy();
     }
 
     @Override
@@ -579,14 +576,16 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public int getTicksLived() {
-        return this.getHandle().totalEntityAge;
+        throw new NotImplementedError();
+        // return this.getHandle().totalEntityAge;
     }
 
     @Override
     public void setTicksLived(int value) {
-        Preconditions.checkArgument(value > 0, "Age value (%s) must be greater than 0", value);
-        this.getHandle().tickCount = value;
-        this.getHandle().totalEntityAge = value;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(value > 0, "Age value (%s) must be greater than 0", value);
+        // this.getHandle().tickCount = value;
+        // this.getHandle().totalEntityAge = value;
     }
 
     @Override
@@ -596,26 +595,30 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public void playEffect(EntityEffect effect) {
-        Preconditions.checkArgument(effect != null, "Entity effect cannot be null");
-        Preconditions.checkState(!this.entity.generation, "Cannot play effect during world generation");
-        Preconditions.checkArgument(effect.isApplicableTo(this), "Entity effect cannot apply to this entity");
-
-        this.getHandle().level().broadcastEntityEvent(this.getHandle(), effect.getData());
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(effect != null, "Entity effect cannot be null");
+        // Preconditions.checkState(!this.entity.generation, "Cannot play effect during world generation");
+        // Preconditions.checkArgument(effect.isApplicableTo(this), "Entity effect cannot apply to this entity");
+        //
+        // this.getHandle().level().broadcastEntityEvent(this.getHandle(), effect.getData());
     }
 
     @Override
     public Sound getSwimSound() {
-        return CraftSound.minecraftToBukkit(this.getHandle().getSwimSound());
+        throw new NotImplementedError();
+        // return CraftSound.minecraftToBukkit(this.getHandle().getSwimSound());
     }
 
     @Override
     public Sound getSwimSplashSound() {
-        return CraftSound.minecraftToBukkit(this.getHandle().getSwimSplashSound());
+        throw new NotImplementedError();
+        // return CraftSound.minecraftToBukkit(this.getHandle().getSwimSplashSound());
     }
 
     @Override
     public Sound getSwimHighSpeedSplashSound() {
-        return CraftSound.minecraftToBukkit(this.getHandle().getSwimHighSpeedSplashSound());
+        throw new NotImplementedError();
+        // return CraftSound.minecraftToBukkit(this.getHandle().getSwimHighSpeedSplashSound());
     }
 
     @Override
@@ -659,7 +662,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
             return null;
         }
 
-        return this.getHandle().getVehicle().getBukkitEntity();
+        throw new NotImplementedError();
+        // return this.getHandle().getVehicle().getBukkitEntity();
     }
 
     @Override
@@ -711,55 +715,59 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public void setVisibleByDefault(boolean visible) {
-        if (this.getHandle().visibleByDefault != visible) {
-            if (visible) {
-                // Making visible by default, reset and show to all players
-                for (Player player : this.server.getOnlinePlayers()) {
-                    ((CraftPlayer) player).resetAndShowEntity(this);
-                }
-            } else {
-                // Hiding by default, reset and hide from all players
-                for (Player player : this.server.getOnlinePlayers()) {
-                    ((CraftPlayer) player).resetAndHideEntity(this);
-                }
-            }
-
-            this.getHandle().visibleByDefault = visible;
-        }
+        throw new NotImplementedError();
+        // if (this.getHandle().visibleByDefault != visible) {
+        //     if (visible) {
+        //         // Making visible by default, reset and show to all players
+        //         for (Player player : this.server.getOnlinePlayers()) {
+        //             ((CraftPlayer) player).resetAndShowEntity(this);
+        //         }
+        //     } else {
+        //         // Hiding by default, reset and hide from all players
+        //         for (Player player : this.server.getOnlinePlayers()) {
+        //             ((CraftPlayer) player).resetAndHideEntity(this);
+        //         }
+        //     }
+        //
+        //     this.getHandle().visibleByDefault = visible;
+        // }
     }
 
     @Override
     public boolean isVisibleByDefault() {
-        return this.getHandle().visibleByDefault;
+        throw new NotImplementedError();
+        // return this.getHandle().visibleByDefault;
     }
 
     @Override
     public Set<Player> getTrackedBy() {
-        Preconditions.checkState(!this.entity.generation, "Cannot get tracking players during world generation");
-        ImmutableSet.Builder<Player> players = ImmutableSet.builder();
-
-        ServerLevel world = ((CraftWorld) this.getWorld()).getHandle();
-        ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(this.getEntityId());
-
-        if (entityTracker != null) {
-            for (ServerPlayerConnection connection : entityTracker.seenBy) {
-                players.add(connection.getPlayer().getBukkitEntity());
-            }
-        }
-
-        return players.build();
+        throw new NotImplementedError();
+        // Preconditions.checkState(!this.entity.generation, "Cannot get tracking players during world generation");
+        // ImmutableSet.Builder<Player> players = ImmutableSet.builder();
+        //
+        // ServerLevel world = ((CraftWorld) this.getWorld()).getHandle();
+        // ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(this.getEntityId());
+        //
+        // if (entityTracker != null) {
+        //     for (ServerPlayerConnection connection : entityTracker.seenBy) {
+        //         players.add(connection.getPlayer().getBukkitEntity());
+        //     }
+        // }
+        //
+        // return players.build();
     }
 
     @Override
     public boolean isTrackedBy(final Player player) {
-        Preconditions.checkState(!this.entity.generation, "Cannot check tracking players during world generation");
-        Preconditions.checkArgument(player != null, "Player cannot be null");
-
-        ServerLevel world = ((CraftWorld) this.getWorld()).getHandle();
-        ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(this.getEntityId());
-        if (entityTracker == null) return false;
-
-        return entityTracker.seenBy.contains(((CraftPlayer) player).getHandle().connection);
+        throw new NotImplementedError();
+        // Preconditions.checkState(!this.entity.generation, "Cannot check tracking players during world generation");
+        // Preconditions.checkArgument(player != null, "Player cannot be null");
+        //
+        // ServerLevel world = ((CraftWorld) this.getWorld()).getHandle();
+        // ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(this.getEntityId());
+        // if (entityTracker == null) return false;
+        //
+        // return entityTracker.seenBy.contains(((CraftPlayer) player).getHandle().connection);
     }
 
     @Override
@@ -879,7 +887,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isInvulnerable() {
-        return this.getHandle().isInvulnerableToBase(this.getHandle().damageSources().generic());
+        throw new NotImplementedError();
+        // return this.getHandle().isInvulnerableToBase(this.getHandle().damageSources().generic());
     }
 
     @Override
@@ -960,16 +969,18 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public void setPose(Pose pose, boolean fixed) {
-        Preconditions.checkNotNull(pose, "Pose cannot be null");
-        final Entity handle = this.getHandle();
-        handle.fixedPose = false;
-        handle.setPose(net.minecraft.world.entity.Pose.values()[pose.ordinal()]);
-        handle.fixedPose = fixed;
+        throw new NotImplementedError();
+        // Preconditions.checkNotNull(pose, "Pose cannot be null");
+        // final Entity handle = this.getHandle();
+        // handle.fixedPose = false;
+        // handle.setPose(net.minecraft.world.entity.Pose.values()[pose.ordinal()]);
+        // handle.fixedPose = fixed;
     }
 
     @Override
     public boolean hasFixedPose() {
-        return this.getHandle().fixedPose;
+        throw new NotImplementedError();
+        // return this.getHandle().fixedPose;
     }
 
     @Override
@@ -979,24 +990,26 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isInWorld() {
-        return this.getHandle().inWorld;
+        throw new NotImplementedError();
+        // return this.getHandle().inWorld;
     }
 
     @Override
     public String getAsString() {
-        try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-            () -> "Entity#toString", LOGGER
-        )) {
-            final TagValueOutput output = TagValueOutput.createWithContext(
-                problemReporter,
-                this.getHandle().registryAccess()
-            );
-            if (!this.getHandle().saveAsPassenger(output, false, true, true)) {
-                return null;
-            }
-
-            return output.buildResult().toString();
-        }
+        throw new NotImplementedError();
+        // try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //     () -> "Entity#toString", LOGGER
+        // )) {
+        //     final TagValueOutput output = TagValueOutput.createWithContext(
+        //         problemReporter,
+        //         this.getHandle().registryAccess()
+        //     );
+        //     if (!this.getHandle().saveAsPassenger(output, false, true, true)) {
+        //         return null;
+        //     }
+        //
+        //     return output.buildResult().toString();
+        // }
     }
 
     @Override
@@ -1006,32 +1019,35 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public org.bukkit.entity.Entity copy() {
-        Entity copy = this.copy(this.getHandle().level());
-        Preconditions.checkArgument(copy != null, "Error creating new entity.");
-
-        return copy.getBukkitEntity();
+        throw new NotImplementedError();
+        // Entity copy = this.copy(this.getHandle().level());
+        // Preconditions.checkArgument(copy != null, "Error creating new entity.");
+        //
+        // return copy.getBukkitEntity();
     }
 
     @Override
     public org.bukkit.entity.Entity copy(Location location) {
-        Preconditions.checkArgument(location.getWorld() != null, "Location has no world");
-
-        Entity copy = this.copy(((CraftWorld) location.getWorld()).getHandle());
-        Preconditions.checkArgument(copy != null, "Error creating new entity.");
-
-        copy.setPos(location.getX(), location.getY(), location.getZ());
-        return location.getWorld().addEntity(copy.getBukkitEntity());
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(location.getWorld() != null, "Location has no world");
+        //
+        // Entity copy = this.copy(((CraftWorld) location.getWorld()).getHandle());
+        // Preconditions.checkArgument(copy != null, "Error creating new entity.");
+        //
+        // copy.setPos(location.getX(), location.getY(), location.getZ());
+        // return location.getWorld().addEntity(copy.getBukkitEntity());
     }
 
     private Entity copy(net.minecraft.world.level.Level level) {
-        try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-            () -> "Entity#copy", LOGGER
-        )) {
-            final TagValueOutput output = TagValueOutput.createWithContext(problemReporter, level.registryAccess());
-            this.getHandle().saveAsPassenger(output, false, true, true);
-
-            return net.minecraft.world.entity.EntityType.loadEntityRecursive(output.buildResult(), level, EntitySpawnReason.LOAD, java.util.function.Function.identity());
-        }
+        throw new NotImplementedError();
+        // try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //     () -> "Entity#copy", LOGGER
+        // )) {
+        //     final TagValueOutput output = TagValueOutput.createWithContext(problemReporter, level.registryAccess());
+        //     this.getHandle().saveAsPassenger(output, false, true, true);
+        //
+        //     return net.minecraft.world.entity.EntityType.loadEntityRecursive(output.buildResult(), level, EntitySpawnReason.LOAD, java.util.function.Function.identity());
+        // }
     }
 
     public void storeBukkitValues(ValueOutput output) {
@@ -1045,52 +1061,55 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     }
 
     protected CompoundTag save() {
-        try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-            () -> "Entity#save", LOGGER
-        )) {
-            final TagValueOutput tagValueOutput = TagValueOutput.createWithContext(
-                problemReporter,
-                this.getHandle().registryAccess()
-            );
-
-            tagValueOutput.putString(Entity.TAG_ID, this.getHandle().getEncodeId(true));
-            this.getHandle().saveWithoutId(tagValueOutput);
-
-            return tagValueOutput.buildResult();
-        }
+        throw new NotImplementedError();
+        // try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //     () -> "Entity#save", LOGGER
+        // )) {
+        //     final TagValueOutput tagValueOutput = TagValueOutput.createWithContext(
+        //         problemReporter,
+        //         this.getHandle().registryAccess()
+        //     );
+        //
+        //     tagValueOutput.putString(Entity.TAG_ID, this.getHandle().getEncodeId(true));
+        //     this.getHandle().saveWithoutId(tagValueOutput);
+        //
+        //     return tagValueOutput.buildResult();
+        // }
     }
 
     // re-sends the spawn entity packet to updated values which cannot be updated otherwise
     protected void update() {
-        if (!this.getHandle().isAlive()) {
-            return;
-        }
-
-        ServerLevel world = ((CraftWorld) this.getWorld()).getHandle();
-        ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(this.getEntityId());
-
-        if (entityTracker == null) {
-            return;
-        }
-
-        for (final ServerPlayerConnection connection : entityTracker.seenBy) {
-            this.getHandle().resendPossiblyDesyncedEntityData(connection.getPlayer());
-        }
+        throw new NotImplementedError();
+        // if (!this.getHandle().isAlive()) {
+        //     return;
+        // }
+        //
+        // ServerLevel world = ((CraftWorld) this.getWorld()).getHandle();
+        // ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(this.getEntityId());
+        //
+        // if (entityTracker == null) {
+        //     return;
+        // }
+        //
+        // for (final ServerPlayerConnection connection : entityTracker.seenBy) {
+        //     this.getHandle().resendPossiblyDesyncedEntityData(connection.getPlayer());
+        // }
     }
 
     public void update(ServerPlayer player) {
-        if (!this.getHandle().isAlive()) {
-            return;
-        }
-
-        ServerLevel world = ((CraftWorld) this.getWorld()).getHandle();
-        ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(this.getEntityId());
-
-        if (entityTracker == null) {
-            return;
-        }
-
-        player.connection.send(this.getHandle().getAddEntityPacket(entityTracker.serverEntity));
+        throw new NotImplementedError();
+        // if (!this.getHandle().isAlive()) {
+        //     return;
+        // }
+        //
+        // ServerLevel world = ((CraftWorld) this.getWorld()).getHandle();
+        // ChunkMap.TrackedEntity entityTracker = world.getChunkSource().chunkMap.entityMap.get(this.getEntityId());
+        //
+        // if (entityTracker == null) {
+        //     return;
+        // }
+        //
+        // player.connection.send(this.getHandle().getAddEntityPacket(entityTracker.serverEntity));
     }
 
     private static PermissibleBase getPermissibleBase() {
@@ -1114,33 +1133,34 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
     // Paper start - more teleport API / async chunk API
     @Override
     public CompletableFuture<Boolean> teleportAsync(final Location location, final TeleportCause cause, final TeleportFlag... teleportFlags) {
-        Preconditions.checkArgument(location != null, "location");
-        location.checkFinite();
-        Location locationClone = location.clone(); // clone so we don't need to worry about mutations after this call.
-
-        ServerLevel world = ((CraftWorld)locationClone.getWorld()).getHandle();
-        CompletableFuture<Boolean> ret = new java.util.concurrent.CompletableFuture<>();
-
-        world.loadChunksForMoveAsync(this.getHandle().getBoundingBoxAt(locationClone.getX(), locationClone.getY(), locationClone.getZ()),
-            this instanceof CraftPlayer ? ca.spottedleaf.concurrentutil.util.Priority.HIGHER : ca.spottedleaf.concurrentutil.util.Priority.NORMAL, (list) -> {
-                MinecraftServer.getServer().scheduleOnMain(() -> {
-                    final ServerChunkCache chunkCache = world.getChunkSource();
-                    for (final net.minecraft.world.level.chunk.ChunkAccess chunk : list) {
-                        chunkCache.addTicketAtLevel(TicketType.POST_TELEPORT, chunk.getPos(), 33);
-                    }
-                    try {
-                        ret.complete(CraftEntity.this.teleport(locationClone, cause, teleportFlags) ? Boolean.TRUE : Boolean.FALSE);
-                    } catch (Throwable throwable) {
-                        if (throwable instanceof ThreadDeath) {
-                            throw (ThreadDeath)throwable;
-                        }
-                        MinecraftServer.LOGGER.error("Failed to teleport entity " + CraftEntity.this, throwable);
-                        ret.completeExceptionally(throwable);
-                    }
-                });
-            });
-
-        return ret;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(location != null, "location");
+        // location.checkFinite();
+        // Location locationClone = location.clone(); // clone so we don't need to worry about mutations after this call.
+        //
+        // ServerLevel world = ((CraftWorld)locationClone.getWorld()).getHandle();
+        // CompletableFuture<Boolean> ret = new java.util.concurrent.CompletableFuture<>();
+        //
+        // world.loadChunksForMoveAsync(this.getHandle().getBoundingBoxAt(locationClone.getX(), locationClone.getY(), locationClone.getZ()),
+        //     this instanceof CraftPlayer ? ca.spottedleaf.concurrentutil.util.Priority.HIGHER : ca.spottedleaf.concurrentutil.util.Priority.NORMAL, (list) -> {
+        //         MinecraftServer.getServer().scheduleOnMain(() -> {
+        //             final ServerChunkCache chunkCache = world.getChunkSource();
+        //             for (final net.minecraft.world.level.chunk.ChunkAccess chunk : list) {
+        //                 chunkCache.addTicketAtLevel(TicketType.POST_TELEPORT, chunk.getPos(), 33);
+        //             }
+        //             try {
+        //                 ret.complete(CraftEntity.this.teleport(locationClone, cause, teleportFlags) ? Boolean.TRUE : Boolean.FALSE);
+        //             } catch (Throwable throwable) {
+        //                 if (throwable instanceof ThreadDeath) {
+        //                     throw (ThreadDeath)throwable;
+        //                 }
+        //                 MinecraftServer.LOGGER.error("Failed to teleport entity " + CraftEntity.this, throwable);
+        //                 ret.completeExceptionally(throwable);
+        //             }
+        //         });
+        //     });
+        //
+        // return ret;
     }
     // Paper end - more teleport API / async chunk API
 
@@ -1169,26 +1189,29 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public Location getOrigin() {
-        if (this.getHandle().origin == null) {
-            return null;
-        }
-
-        World world = this.getWorld();
-        if (this.getHandle().originWorld != null) {
-            world = org.bukkit.Bukkit.getWorld(this.getHandle().originWorld);
-        }
-
-        return CraftVector.toBukkit(this.getHandle().origin).toLocation(world);
+        throw new NotImplementedError();
+        // if (this.getHandle().origin == null) {
+        //     return null;
+        // }
+        //
+        // World world = this.getWorld();
+        // if (this.getHandle().originWorld != null) {
+        //     world = org.bukkit.Bukkit.getWorld(this.getHandle().originWorld);
+        // }
+        //
+        // return CraftVector.toBukkit(this.getHandle().origin).toLocation(world);
     }
 
     @Override
     public boolean fromMobSpawner() {
-        return this.getHandle().spawnedViaMobSpawner;
+        throw new NotImplementedError();
+        // return this.getHandle().spawnedViaMobSpawner;
     }
 
     @Override
     public org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason getEntitySpawnReason() {
-        return this.getHandle().spawnReason;
+        throw new NotImplementedError();
+        // return this.getHandle().spawnReason;
     }
 
     @Override
@@ -1198,7 +1221,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isInRain() {
-        return this.getHandle().isInRain();
+        throw new NotImplementedError();
+        // return this.getHandle().isInRain();
     }
 
     @Override
@@ -1208,36 +1232,39 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean isTicking() {
-        return this.getHandle().isTicking();
+        throw new NotImplementedError();
+        // return this.getHandle().isTicking();
     }
 
     @Override
     public Set<org.bukkit.entity.Player> getTrackedPlayers() {
-        ServerLevel world = (net.minecraft.server.level.ServerLevel)this.entity.level();
-        ChunkMap.TrackedEntity tracker = world == null ? null : world.getChunkSource().chunkMap.entityMap.get(this.entity.getId());
-        if (tracker == null) {
-            return java.util.Collections.emptySet();
-        }
-
-        Set<org.bukkit.entity.Player> set = new java.util.HashSet<>(tracker.seenBy.size());
-        for (net.minecraft.server.network.ServerPlayerConnection connection : tracker.seenBy) {
-            set.add(connection.getPlayer().getBukkitEntity().getPlayer());
-        }
-        return set;
+        throw new NotImplementedError();
+        // ServerLevel world = (net.minecraft.server.level.ServerLevel)this.entity.level();
+        // ChunkMap.TrackedEntity tracker = world == null ? null : world.getChunkSource().chunkMap.entityMap.get(this.entity.getId());
+        // if (tracker == null) {
+        //     return java.util.Collections.emptySet();
+        // }
+        //
+        // Set<org.bukkit.entity.Player> set = new java.util.HashSet<>(tracker.seenBy.size());
+        // for (net.minecraft.server.network.ServerPlayerConnection connection : tracker.seenBy) {
+        //     set.add(connection.getPlayer().getBukkitEntity().getPlayer());
+        // }
+        // return set;
     }
 
     @Override
     public boolean spawnAt(Location location, CreatureSpawnEvent.SpawnReason reason) {
-        Preconditions.checkNotNull(location, "location cannot be null");
-        Preconditions.checkNotNull(reason, "reason cannot be null");
-        this.entity.setLevel(((CraftWorld) location.getWorld()).getHandle());
-        this.entity.setPos(location.getX(), location.getY(), location.getZ());
-        this.entity.setRot(location.getYaw(), location.getPitch());
-        final boolean spawned = !this.entity.valid && this.entity.level().addFreshEntity(this.entity, reason);
-        if (!spawned) return false; // Do not attempt to spawn rest if root was not spawned in
-        // Like net.minecraft.world.level.ServerLevelAccessor.addFreshEntityWithPassengers(net.minecraft.world.entity.Entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason)
-        this.entity.getIndirectPassengers().forEach(e -> e.level().addFreshEntity(e, reason));
-        return true;
+        throw new NotImplementedError();
+        // Preconditions.checkNotNull(location, "location cannot be null");
+        // Preconditions.checkNotNull(reason, "reason cannot be null");
+        // this.entity.setLevel(((CraftWorld) location.getWorld()).getHandle());
+        // this.entity.setPos(location.getX(), location.getY(), location.getZ());
+        // this.entity.setRot(location.getYaw(), location.getPitch());
+        // final boolean spawned = !this.entity.valid && this.entity.level().addFreshEntity(this.entity, reason);
+        // if (!spawned) return false; // Do not attempt to spawn rest if root was not spawned in
+        // // Like net.minecraft.world.level.ServerLevelAccessor.addFreshEntityWithPassengers(net.minecraft.world.entity.Entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason)
+        // this.entity.getIndirectPassengers().forEach(e -> e.level().addFreshEntity(e, reason));
+        // return true;
     }
 
     @Override
@@ -1267,7 +1294,8 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public float getYaw() {
-        return this.entity.getBukkitYaw();
+        throw new NotImplementedError();
+        // return this.entity.getBukkitYaw();
     }
 
     @Override
@@ -1277,8 +1305,9 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public void setInvisible(boolean invisible) {
-        this.getHandle().persistentInvisibility = invisible;
-        this.getHandle().setSharedFlag(Entity.FLAG_INVISIBLE, invisible);
+        throw new NotImplementedError();
+        // this.getHandle().persistentInvisibility = invisible;
+        // this.getHandle().setSharedFlag(Entity.FLAG_INVISIBLE, invisible);
     }
 
     @Override
@@ -1293,9 +1322,10 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
 
     @Override
     public boolean collidesAt(@org.jetbrains.annotations.NotNull Location location) {
-        net.minecraft.world.phys.AABB box = this.getHandle().getBoundingBoxAt(location.getX(), location.getY(), location.getZ());
-
-        return !this.getHandle().level().noCollision(this.getHandle(), box);
+        throw new NotImplementedError();
+        // net.minecraft.world.phys.AABB box = this.getHandle().getBoundingBoxAt(location.getX(), location.getY(), location.getZ());
+        //
+        // return !this.getHandle().level().noCollision(this.getHandle(), box);
     }
 
     @Override
@@ -1318,6 +1348,7 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
             ((CraftPlayer) player).sendHurtAnimation(0, this);
         }
     }
+
     @Override
     public <T> @Nullable T getData(@NotNull final DataComponentType.Valued<T> type) {
         return this.entity.get(io.papermc.paper.datacomponent.PaperDataComponentType.bukkitToMinecraft(type));

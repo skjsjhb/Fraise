@@ -1,10 +1,7 @@
 package com.destroystokyo.paper.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 import org.bukkit.Location;
@@ -12,6 +9,10 @@ import org.bukkit.craftbukkit.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class PaperPathfinder implements com.destroystokyo.paper.entity.Pathfinder {
 
@@ -23,7 +24,8 @@ public class PaperPathfinder implements com.destroystokyo.paper.entity.Pathfinde
 
     @Override
     public Mob getEntity() {
-        return (Mob) this.entity.getBukkitEntity();
+        throw new NotImplementedError();
+        // return (Mob) this.entity.getBukkitEntity();
     }
 
     public void setHandle(net.minecraft.world.entity.Mob entity) {
@@ -72,32 +74,38 @@ public class PaperPathfinder implements com.destroystokyo.paper.entity.Pathfinde
 
     @Override
     public boolean canOpenDoors() {
-        return this.entity.getNavigation().pathFinder.nodeEvaluator.canOpenDoors();
+        throw new NotImplementedError();
+        // return this.entity.getNavigation().pathFinder.nodeEvaluator.canOpenDoors();
     }
 
     @Override
     public void setCanOpenDoors(boolean canOpenDoors) {
-        this.entity.getNavigation().pathFinder.nodeEvaluator.setCanOpenDoors(canOpenDoors);
+        throw new NotImplementedError();
+        // this.entity.getNavigation().pathFinder.nodeEvaluator.setCanOpenDoors(canOpenDoors);
     }
 
     @Override
     public boolean canPassDoors() {
-        return this.entity.getNavigation().pathFinder.nodeEvaluator.canPassDoors();
+        throw new NotImplementedError();
+        // return this.entity.getNavigation().pathFinder.nodeEvaluator.canPassDoors();
     }
 
     @Override
     public void setCanPassDoors(boolean canPassDoors) {
-        this.entity.getNavigation().pathFinder.nodeEvaluator.setCanPassDoors(canPassDoors);
+        throw new NotImplementedError();
+        // this.entity.getNavigation().pathFinder.nodeEvaluator.setCanPassDoors(canPassDoors);
     }
 
     @Override
     public boolean canFloat() {
-        return this.entity.getNavigation().pathFinder.nodeEvaluator.canFloat();
+        throw new NotImplementedError();
+        // return this.entity.getNavigation().pathFinder.nodeEvaluator.canFloat();
     }
 
     @Override
     public void setCanFloat(boolean canFloat) {
-        this.entity.getNavigation().pathFinder.nodeEvaluator.setCanFloat(canFloat);
+        throw new NotImplementedError();
+        // this.entity.getNavigation().pathFinder.nodeEvaluator.setCanFloat(canFloat);
     }
 
     public class PaperPathResult implements com.destroystokyo.paper.entity.PaperPathfinder.PathResult {
@@ -122,11 +130,12 @@ public class PaperPathfinder implements com.destroystokyo.paper.entity.Pathfinde
 
         @Override
         public List<Location> getPoints() {
-            List<Location> points = new ArrayList<>();
-            for (Node point : this.path.nodes) {
-                points.add(CraftLocation.toBukkit(point, PaperPathfinder.this.entity.level()));
-            }
-            return points;
+            throw new NotImplementedError();
+            // List<Location> points = new ArrayList<>();
+            // for (Node point : this.path.nodes) {
+            //     points.add(CraftLocation.toBukkit(point, PaperPathfinder.this.entity.level()));
+            // }
+            // return points;
         }
 
         @Override
@@ -137,10 +146,11 @@ public class PaperPathfinder implements com.destroystokyo.paper.entity.Pathfinde
         @Nullable
         @Override
         public Location getNextPoint() {
-            if (this.path.isDone()) {
-                return null;
-            }
-            return CraftLocation.toBukkit(this.path.nodes.get(this.path.getNextNodeIndex()), PaperPathfinder.this.entity.level());
+            throw new NotImplementedError();
+            // if (this.path.isDone()) {
+            //     return null;
+            // }
+            // return CraftLocation.toBukkit(this.path.nodes.get(this.path.getNextNodeIndex()), PaperPathfinder.this.entity.level());
         }
     }
 }

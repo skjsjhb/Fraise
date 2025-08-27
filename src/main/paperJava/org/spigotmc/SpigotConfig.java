@@ -1,6 +1,19 @@
 package org.spigotmc;
 
 import com.google.common.base.Throwables;
+import kotlin.NotImplementedError;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.LoggerContext;
+import org.apache.logging.log4j.core.config.Configuration;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
+
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -14,20 +27,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.logging.Level;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.LoggerContext;
-import org.apache.logging.log4j.core.config.Configuration;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.InvalidConfigurationException;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 public class SpigotConfig {
 
@@ -75,7 +74,8 @@ public class SpigotConfig {
 
     public static void registerCommands() {
         for (Map.Entry<String, Command> entry : SpigotConfig.commands.entrySet()) {
-            MinecraftServer.getServer().server.getCommandMap().register(entry.getKey(), "Spigot", entry.getValue());
+            // MinecraftServer.getServer().server.getCommandMap().register(entry.getKey(), "Spigot", entry.getValue());
+            throw new NotImplementedError();
         }
     }
 
@@ -118,7 +118,7 @@ public class SpigotConfig {
 
     private static <T> List getList(String path, T def) {
         SpigotConfig.config.addDefault(path, def);
-        return (List<T>) SpigotConfig.config.getList(path, SpigotConfig.config.getList(path));
+        return SpigotConfig.config.getList(path, SpigotConfig.config.getList(path));
     }
 
     private static String getString(String path, String def) {
@@ -132,12 +132,14 @@ public class SpigotConfig {
     }
 
     public static boolean logCommands;
+
     private static void logCommands() {
         SpigotConfig.logCommands = SpigotConfig.getBoolean("commands.log", true);
     }
 
     public static int tabComplete;
     public static boolean sendNamespaced;
+
     private static void tabComplete() {
         if (SpigotConfig.version < 6) {
             boolean oldValue = SpigotConfig.getBoolean("commands.tab-complete", true);
@@ -178,6 +180,7 @@ public class SpigotConfig {
     public static boolean restartOnCrash = true;
     public static String restartScript = "./start.sh";
     public static String restartMessage;
+
     private static void watchdog() {
         SpigotConfig.timeoutTime = SpigotConfig.getInt("settings.timeout-time", SpigotConfig.timeoutTime);
         SpigotConfig.restartOnCrash = SpigotConfig.getBoolean("settings.restart-on-crash", SpigotConfig.restartOnCrash);
@@ -187,6 +190,7 @@ public class SpigotConfig {
     }
 
     public static boolean bungee;
+
     private static void bungee() {
         if (SpigotConfig.version < 4) {
             SpigotConfig.set("settings.bungeecord", false);
@@ -233,18 +237,21 @@ public class SpigotConfig {
     }
 
     public static int playerSample;
+
     private static void playerSample() {
         SpigotConfig.playerSample = Math.max(SpigotConfig.getInt("settings.sample-count", 12), 0); // Paper - Avoid negative counts
         Bukkit.getLogger().log(Level.INFO, "Server Ping Player Sample Count: {0}", playerSample); // Paper - Use logger
     }
 
     public static int playerShuffle;
+
     private static void playerShuffle() {
         SpigotConfig.playerShuffle = SpigotConfig.getInt("settings.player-shuffle", 0);
     }
 
     public static boolean enableSpamExclusions = false;
     public static List<String> spamExclusions;
+
     private static void spamExclusions() {
         SpigotConfig.spamExclusions = SpigotConfig.getList("commands.spam-exclusions", List.of("/skill"));
         Object enabled = SpigotConfig.config.get("commands.enable-spam-exclusions");
@@ -263,11 +270,13 @@ public class SpigotConfig {
     }
 
     public static boolean silentCommandBlocks;
+
     private static void silentCommandBlocks() {
         SpigotConfig.silentCommandBlocks = SpigotConfig.getBoolean("commands.silent-commandblock-console", false);
     }
 
     public static Set<String> replaceCommands;
+
     private static void replaceCommands() {
         if (SpigotConfig.config.contains("replace-commands")) {
             SpigotConfig.set("commands.replace-commands", SpigotConfig.config.getStringList("replace-commands"));
@@ -278,21 +287,25 @@ public class SpigotConfig {
     }
 
     public static int userCacheCap;
+
     private static void userCacheCap() {
         SpigotConfig.userCacheCap = SpigotConfig.getInt("settings.user-cache-size", 1000);
     }
 
     public static boolean saveUserCacheOnStopOnly;
+
     private static void saveUserCacheOnStopOnly() {
         SpigotConfig.saveUserCacheOnStopOnly = SpigotConfig.getBoolean("settings.save-user-cache-on-stop-only", false);
     }
 
     public static double movedWronglyThreshold;
+
     private static void movedWronglyThreshold() {
         SpigotConfig.movedWronglyThreshold = SpigotConfig.getDouble("settings.moved-wrongly-threshold", 0.0625D);
     }
 
     public static double movedTooQuicklyMultiplier;
+
     private static void movedTooQuicklyMultiplier() {
         SpigotConfig.movedTooQuicklyMultiplier = SpigotConfig.getDouble("settings.moved-too-quickly-multiplier", 10.0D);
     }
@@ -301,18 +314,21 @@ public class SpigotConfig {
     public static double maxHealth = 1024;
     public static double movementSpeed = 1024;
     public static double attackDamage = 2048;
+
     private static void attributeMaxes() {
-        SpigotConfig.maxAbsorption = SpigotConfig.getDouble("settings.attribute.maxAbsorption.max", SpigotConfig.maxAbsorption);
-        ((RangedAttribute) Attributes.MAX_ABSORPTION.value()).maxValue = SpigotConfig.maxAbsorption;
-        SpigotConfig.maxHealth = SpigotConfig.getDouble("settings.attribute.maxHealth.max", SpigotConfig.maxHealth);
-        ((RangedAttribute) Attributes.MAX_HEALTH.value()).maxValue = SpigotConfig.maxHealth;
-        SpigotConfig.movementSpeed = SpigotConfig.getDouble("settings.attribute.movementSpeed.max", SpigotConfig.movementSpeed);
-        ((RangedAttribute) Attributes.MOVEMENT_SPEED.value()).maxValue = SpigotConfig.movementSpeed;
-        SpigotConfig.attackDamage = SpigotConfig.getDouble("settings.attribute.attackDamage.max", SpigotConfig.attackDamage);
-        ((RangedAttribute) Attributes.ATTACK_DAMAGE.value()).maxValue = SpigotConfig.attackDamage;
+        throw new NotImplementedError();
+        // SpigotConfig.maxAbsorption = SpigotConfig.getDouble("settings.attribute.maxAbsorption.max", SpigotConfig.maxAbsorption);
+        // ((RangedAttribute) Attributes.MAX_ABSORPTION.value()).maxValue = SpigotConfig.maxAbsorption;
+        // SpigotConfig.maxHealth = SpigotConfig.getDouble("settings.attribute.maxHealth.max", SpigotConfig.maxHealth);
+        // ((RangedAttribute) Attributes.MAX_HEALTH.value()).maxValue = SpigotConfig.maxHealth;
+        // SpigotConfig.movementSpeed = SpigotConfig.getDouble("settings.attribute.movementSpeed.max", SpigotConfig.movementSpeed);
+        // ((RangedAttribute) Attributes.MOVEMENT_SPEED.value()).maxValue = SpigotConfig.movementSpeed;
+        // SpigotConfig.attackDamage = SpigotConfig.getDouble("settings.attribute.attackDamage.max", SpigotConfig.attackDamage);
+        // ((RangedAttribute) Attributes.ATTACK_DAMAGE.value()).maxValue = SpigotConfig.attackDamage;
     }
 
     public static boolean debug;
+
     private static void debug() {
         SpigotConfig.debug = SpigotConfig.getBoolean("settings.debug", false);
 
@@ -331,6 +347,7 @@ public class SpigotConfig {
 
     public static boolean disableAdvancementSaving;
     public static List<String> disabledAdvancements;
+
     private static void disabledAdvancements() {
         SpigotConfig.disableAdvancementSaving = SpigotConfig.getBoolean("advancements.disable-saving", false);
         SpigotConfig.disabledAdvancements = SpigotConfig.getList("advancements.disabled", List.of("minecraft:story/disabled"));
@@ -338,17 +355,20 @@ public class SpigotConfig {
 
     public static boolean logVillagerDeaths;
     public static boolean logNamedDeaths;
+
     private static void logDeaths() {
         SpigotConfig.logVillagerDeaths = SpigotConfig.getBoolean("settings.log-villager-deaths", true);
         SpigotConfig.logNamedDeaths = SpigotConfig.getBoolean("settings.log-named-deaths", true);
     }
 
     public static boolean disablePlayerDataSaving;
+
     private static void disablePlayerDataSaving() {
         SpigotConfig.disablePlayerDataSaving = SpigotConfig.getBoolean("players.disable-saving", false);
     }
 
     public static boolean belowZeroGenerationInExistingChunks;
+
     private static void belowZeroGenerationInExistingChunks() {
         SpigotConfig.belowZeroGenerationInExistingChunks = SpigotConfig.getBoolean("world-settings.default.below-zero-generation-in-existing-chunks", true);
     }

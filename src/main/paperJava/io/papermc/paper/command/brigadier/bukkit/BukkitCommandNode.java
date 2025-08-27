@@ -9,22 +9,22 @@ import com.mojang.brigadier.suggestion.Suggestions;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
-import java.util.ArrayList;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.minecraft.commands.CommandSource;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.server.TabCompleteEvent;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.logging.Level;
-import org.bukkit.entity.Player;
-import org.bukkit.event.server.TabCompleteEvent;
 
 public class BukkitCommandNode extends LiteralCommandNode<CommandSourceStack> {
 
@@ -35,11 +35,12 @@ public class BukkitCommandNode extends LiteralCommandNode<CommandSourceStack> {
             literal, bukkitBrigCommand, source -> {
                 // If the source is null, assume it's true.
                 // As bukkit doesn't really map the command sender well in all cases
-                if (source instanceof net.minecraft.commands.CommandSourceStack commandSourceStack && commandSourceStack.source == CommandSource.NULL) {
-                    return true;
-                } else {
-                    return command.testPermissionSilent(source.getSender());
-                }
+                // if (source instanceof net.minecraft.commands.CommandSourceStack commandSourceStack && commandSourceStack.source == CommandSource.NULL) {
+                //     return true;
+                // } else {
+                //     return command.testPermissionSilent(source.getSender());
+                // }
+                throw new NotImplementedError();
             },
             null, null, false
         );

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.BrewingStandBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -33,35 +34,41 @@ public class CraftBrewingStand extends CraftContainer<BrewingStandBlockEntity> i
 
     @Override
     public int getBrewingTime() {
-        return this.getSnapshot().brewTime;
+        throw new NotImplementedError();
+        // return this.getSnapshot().brewTime;
     }
 
     @Override
     public void setBrewingTime(int brewTime) {
-        this.getSnapshot().brewTime = brewTime;
+        throw new NotImplementedError();
+        // this.getSnapshot().brewTime = brewTime;
     }
 
     // Paper start - Add recipeBrewTime
     @Override
     public void setRecipeBrewTime(int recipeBrewTime) {
         com.google.common.base.Preconditions.checkArgument(recipeBrewTime > 0, "recipeBrewTime must be positive");
-        this.getSnapshot().recipeBrewTime = recipeBrewTime;
+        throw new NotImplementedError();
+        // this.getSnapshot().recipeBrewTime = recipeBrewTime;
     }
 
     @Override
     public int getRecipeBrewTime() {
-        return this.getSnapshot().recipeBrewTime;
+        throw new NotImplementedError();
+        // return this.getSnapshot().recipeBrewTime;
     }
     // Paper end - Add recipeBrewTime
 
     @Override
     public int getFuelLevel() {
-        return this.getSnapshot().fuel;
+        throw new NotImplementedError();
+        // return this.getSnapshot().fuel;
     }
 
     @Override
     public void setFuelLevel(int level) {
-        this.getSnapshot().fuel = level;
+        throw new NotImplementedError();
+        // this.getSnapshot().fuel = level;
     }
 
     @Override

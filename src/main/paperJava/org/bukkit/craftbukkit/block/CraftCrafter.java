@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.CrafterBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -44,12 +45,13 @@ public class CraftCrafter extends CraftLootable<CrafterBlockEntity> implements C
 
     @Override
     public int getCraftingTicks() {
-        return this.getSnapshot().craftingTicksRemaining;
+        throw new NotImplementedError();
+        // return this.getSnapshot().craftingTicksRemaining;
     }
 
     @Override
     public void setCraftingTicks(int ticks) {
-      this.getSnapshot().setCraftingTicksRemaining(ticks);
+        this.getSnapshot().setCraftingTicksRemaining(ticks);
     }
 
     @Override

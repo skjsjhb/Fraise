@@ -1,26 +1,24 @@
 package org.bukkit.craftbukkit.potion;
 
-import com.google.common.base.Preconditions;
 import com.google.common.base.Suppliers;
 import io.papermc.paper.util.Holderable;
 import io.papermc.paper.world.flag.PaperFeatureDependent;
-import java.util.Map;
-import java.util.function.Supplier;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import org.bukkit.Color;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.craftbukkit.CraftRegistry;
-import org.bukkit.craftbukkit.attribute.CraftAttribute;
-import org.bukkit.craftbukkit.attribute.CraftAttributeInstance;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionEffectTypeCategory;
 import org.jspecify.annotations.NullMarked;
+
+import java.util.Map;
+import java.util.function.Supplier;
 
 @NullMarked
 public class CraftPotionEffectType extends PotionEffectType implements Holderable<MobEffect>, io.papermc.paper.world.flag.PaperFeatureDependent<MobEffect> {
@@ -136,24 +134,26 @@ public class CraftPotionEffectType extends PotionEffectType implements Holderabl
 
     @Override
     public Map<org.bukkit.attribute.Attribute, AttributeModifier> getEffectAttributes() {
+        throw new NotImplementedError();
         // re-create map each time because a nms MobEffect can have its attributes modified
-        final Map<org.bukkit.attribute.Attribute, AttributeModifier> attributeMap = new java.util.HashMap<>();
-        this.getHandle().attributeModifiers.forEach((attribute, attributeModifier) -> {
-            attributeMap.put(
-                CraftAttribute.minecraftHolderToBukkit(attribute),
-                // use zero as amplifier to get the base amount, as it is amount = base * (amplifier + 1)
-                CraftAttributeInstance.convert(attributeModifier.create(0))
-            );
-        });
-        return Map.copyOf(attributeMap);
+        // final Map<org.bukkit.attribute.Attribute, AttributeModifier> attributeMap = new java.util.HashMap<>();
+        // this.getHandle().attributeModifiers.forEach((attribute, attributeModifier) -> {
+        //     attributeMap.put(
+        //         CraftAttribute.minecraftHolderToBukkit(attribute),
+        //         // use zero as amplifier to get the base amount, as it is amount = base * (amplifier + 1)
+        //         CraftAttributeInstance.convert(attributeModifier.create(0))
+        //     );
+        // });
+        // return Map.copyOf(attributeMap);
     }
 
     @Override
     public double getAttributeModifierAmount(org.bukkit.attribute.Attribute attribute, int effectAmplifier) {
-        Preconditions.checkArgument(effectAmplifier >= 0, "effectAmplifier must be greater than or equal to 0");
-        Holder<Attribute> nmsAttribute = CraftAttribute.bukkitToMinecraftHolder(attribute);
-        Preconditions.checkArgument(this.getHandle().attributeModifiers.containsKey(nmsAttribute), attribute + " is not present on " + this.getKey());
-        return this.getHandle().attributeModifiers.get(nmsAttribute).create(effectAmplifier).amount();
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(effectAmplifier >= 0, "effectAmplifier must be greater than or equal to 0");
+        // Holder<Attribute> nmsAttribute = CraftAttribute.bukkitToMinecraftHolder(attribute);
+        // Preconditions.checkArgument(this.getHandle().attributeModifiers.containsKey(nmsAttribute), attribute + " is not present on " + this.getKey());
+        // return this.getHandle().attributeModifiers.get(nmsAttribute).create(effectAmplifier).amount();
     }
 
     @Override

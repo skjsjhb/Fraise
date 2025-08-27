@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
+import kotlin.NotImplementedError;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.entity.vault.VaultBlockEntity;
 import net.minecraft.world.level.block.entity.vault.VaultConfig;
@@ -15,6 +15,7 @@ import org.bukkit.loot.LootTable;
 import org.jetbrains.annotations.Unmodifiable;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
 import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
@@ -71,7 +72,8 @@ public class CraftVault extends CraftBlockEntityState<VaultBlockEntity> implemen
 
     @Override
     public ItemStack getKeyItem() {
-        return this.getSnapshot().getConfig().keyItem().asBukkitCopy();
+        throw new NotImplementedError();
+        // return this.getSnapshot().getConfig().keyItem().asBukkitCopy();
     }
 
     @Override
@@ -110,44 +112,52 @@ public class CraftVault extends CraftBlockEntityState<VaultBlockEntity> implemen
 
     @Override
     public long getNextStateUpdateTime() {
-        return this.getSnapshot().serverData.stateUpdatingResumesAt();
+        throw new NotImplementedError();
+        // return this.getSnapshot().serverData.stateUpdatingResumesAt();
     }
 
     @Override
     public void setNextStateUpdateTime(final long nextStateUpdateTime) {
-        this.getSnapshot().serverData.pauseStateUpdatingUntil(nextStateUpdateTime);
+        throw new NotImplementedError();
+        // this.getSnapshot().serverData.pauseStateUpdatingUntil(nextStateUpdateTime);
     }
 
     @Override
     public @Unmodifiable Collection<UUID> getRewardedPlayers() {
-        return ImmutableSet.copyOf(this.getSnapshot().serverData.getRewardedPlayers());
+        throw new NotImplementedError();
+        // return ImmutableSet.copyOf(this.getSnapshot().serverData.getRewardedPlayers());
     }
 
     @Override
     public boolean addRewardedPlayer(final UUID playerUUID) {
-        Preconditions.checkArgument(playerUUID != null, "playerUUID must not be null");
-        return this.getSnapshot().serverData.addToRewardedPlayers(playerUUID);
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(playerUUID != null, "playerUUID must not be null");
+        // return this.getSnapshot().serverData.addToRewardedPlayers(playerUUID);
     }
 
     @Override
     public boolean removeRewardedPlayer(final UUID playerUUID) {
-        Preconditions.checkArgument(playerUUID != null, "playerUUID must not be null");
-        return this.getSnapshot().serverData.removeFromRewardedPlayers(playerUUID);
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(playerUUID != null, "playerUUID must not be null");
+        // return this.getSnapshot().serverData.removeFromRewardedPlayers(playerUUID);
     }
 
     @Override
     public boolean hasRewardedPlayer(final UUID playerUUID) {
-        return this.getSnapshot().serverData.getRewardedPlayers().contains(playerUUID);
+        throw new NotImplementedError();
+        // return this.getSnapshot().serverData.getRewardedPlayers().contains(playerUUID);
     }
 
     @Override
     public @Unmodifiable Set<UUID> getConnectedPlayers() {
-        return ImmutableSet.copyOf(this.getSnapshot().getSharedData().getConnectedPlayers());
+        throw new NotImplementedError();
+        // return ImmutableSet.copyOf(this.getSnapshot().getSharedData().getConnectedPlayers());
     }
 
     @Override
     public boolean hasConnectedPlayer(final UUID playerUUID) {
-        return this.getSnapshot().getSharedData().getConnectedPlayers().contains(playerUUID);
+        throw new NotImplementedError();
+        // return this.getSnapshot().getSharedData().getConnectedPlayers().contains(playerUUID);
     }
 
     @Override

@@ -1,10 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
-import java.lang.ref.WeakReference;
-import java.util.List;
-import java.util.Objects;
-import javax.annotation.Nullable;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelAccessor;
 import org.bukkit.Chunk;
@@ -22,6 +19,11 @@ import org.bukkit.material.Attachable;
 import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+
+import javax.annotation.Nullable;
+import java.lang.ref.WeakReference;
+import java.util.List;
+import java.util.Objects;
 
 public class CraftBlockState implements BlockState {
 
@@ -178,7 +180,8 @@ public class CraftBlockState implements BlockState {
 
     @Override
     public Material getType() {
-        return this.data.getBukkitMaterial();
+        throw new NotImplementedError();
+        // return this.data.getBukkitMaterial();
     }
 
     public void setFlags(int flags) {
@@ -236,7 +239,7 @@ public class CraftBlockState implements BlockState {
         }
 
         // Update levers etc
-        if (false && applyPhysics && this.getData() instanceof Attachable) { // Call does not map to new API
+        if (false) { // Call does not map to new API
             this.world.getHandle().updateNeighborsAt(this.position.relative(CraftBlock.blockFaceToNotch(((Attachable) this.getData()).getAttachedFace())), newBlock.getBlock());
         }
 
@@ -256,10 +259,10 @@ public class CraftBlockState implements BlockState {
     public boolean revertPlace() {
         return this.place(
             net.minecraft.world.level.block.Block.UPDATE_CLIENTS |
-            net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE |
-            net.minecraft.world.level.block.Block.UPDATE_SUPPRESS_DROPS |
-            net.minecraft.world.level.block.Block.UPDATE_SKIP_ON_PLACE |
-            net.minecraft.world.level.block.Block.UPDATE_SKIP_BLOCK_ENTITY_SIDEEFFECTS
+                net.minecraft.world.level.block.Block.UPDATE_KNOWN_SHAPE |
+                net.minecraft.world.level.block.Block.UPDATE_SUPPRESS_DROPS |
+                net.minecraft.world.level.block.Block.UPDATE_SKIP_ON_PLACE |
+                net.minecraft.world.level.block.Block.UPDATE_SKIP_BLOCK_ENTITY_SIDEEFFECTS
         );
     }
 
@@ -360,7 +363,8 @@ public class CraftBlockState implements BlockState {
 
     @Override
     public boolean isCollidable() {
-        return this.data.getBlock().hasCollision;
+        throw new NotImplementedError();
+        // return this.data.getBlock().hasCollision;
     }
 
     @Override

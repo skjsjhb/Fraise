@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.AgeableMob;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Ageable;
@@ -26,12 +27,14 @@ public class CraftAgeable extends CraftCreature implements Ageable {
 
     @Override
     public void setAgeLock(boolean lock) {
-        this.getHandle().ageLocked = lock;
+        throw new NotImplementedError();
+        // this.getHandle().ageLocked = lock;
     }
 
     @Override
     public boolean getAgeLock() {
-        return this.getHandle().ageLocked;
+        throw new NotImplementedError();
+        // return this.getHandle().ageLocked;
     }
 
     @Override

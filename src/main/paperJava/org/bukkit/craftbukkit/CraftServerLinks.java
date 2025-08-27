@@ -1,12 +1,14 @@
 package org.bukkit.craftbukkit;
 
 import com.google.common.base.Preconditions;
-import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
+import kotlin.NotImplementedError;
 import net.minecraft.server.dedicated.DedicatedServer;
 import org.bukkit.ServerLinks;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CraftServerLinks implements ServerLinks {
 
@@ -113,7 +115,8 @@ public class CraftServerLinks implements ServerLinks {
 
     private void setLinks(net.minecraft.server.ServerLinks links) {
         if (this.server != null) {
-            this.server.serverLinks = links;
+            throw new NotImplementedError();
+            // this.server.serverLinks = links;
         } else {
             this.serverLinks = links;
         }

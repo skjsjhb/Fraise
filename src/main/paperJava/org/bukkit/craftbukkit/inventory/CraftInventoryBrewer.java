@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.Container;
 import org.bukkit.block.BrewingStand;
 import org.bukkit.inventory.BrewerInventory;
@@ -22,7 +23,8 @@ public class CraftInventoryBrewer extends CraftInventory implements BrewerInvent
 
     @Override
     public BrewingStand getHolder() {
-        return (BrewingStand) this.inventory.getOwner();
+        // return (BrewingStand) this.inventory.getOwner();
+        throw new NotImplementedError();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.inventory.MerchantContainer;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantInventory;
@@ -16,13 +17,15 @@ public class CraftInventoryMerchant extends CraftInventory implements MerchantIn
 
     @Override
     public int getSelectedRecipeIndex() {
-        return this.getInventory().selectionHint;
+        // return this.getInventory().selectionHint;
+        throw new NotImplementedError();
     }
 
     @Override
     public MerchantRecipe getSelectedRecipe() {
-        net.minecraft.world.item.trading.MerchantOffer nmsRecipe = this.getInventory().getActiveOffer();
-        return (nmsRecipe == null) ? null : nmsRecipe.asBukkit();
+        // net.minecraft.world.item.trading.MerchantOffer nmsRecipe = this.getInventory().getActiveOffer();
+        // return (nmsRecipe == null) ? null : nmsRecipe.asBukkit();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -32,6 +35,7 @@ public class CraftInventoryMerchant extends CraftInventory implements MerchantIn
 
     @Override
     public Merchant getMerchant() {
-        return this.merchant.getCraftMerchant();
+        // return this.merchant.getCraftMerchant();
+        throw new NotImplementedError();
     }
 }

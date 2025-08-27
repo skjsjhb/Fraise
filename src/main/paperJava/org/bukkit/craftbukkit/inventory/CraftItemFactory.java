@@ -3,8 +3,8 @@ package org.bukkit.craftbukkit.inventory;
 import com.google.common.base.Preconditions;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import java.util.Optional;
 import io.papermc.paper.registry.data.util.Conversions;
+import kotlin.NotImplementedError;
 import net.minecraft.commands.arguments.item.ItemParser;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryAccess;
@@ -23,7 +23,6 @@ import org.bukkit.World;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.craftbukkit.CraftRegistry;
 import org.bukkit.craftbukkit.CraftWorld;
-import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.entity.CraftEntityType;
 import org.bukkit.craftbukkit.inventory.components.CraftCustomModelDataComponent;
 import org.bukkit.craftbukkit.inventory.components.CraftEquippableComponent;
@@ -37,6 +36,8 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.Optional;
 
 public final class CraftItemFactory implements ItemFactory {
     static final Color DEFAULT_LEATHER_COLOR = Color.fromRGB(0xA06540);
@@ -190,7 +191,8 @@ public final class CraftItemFactory implements ItemFactory {
     public ItemStack enchantItem(Entity entity, ItemStack itemStack, int level, boolean allowTreasures) {
         Preconditions.checkArgument(entity != null, "The entity must not be null");
 
-        return CraftItemFactory.enchantItem(((CraftEntity) entity).getHandle().random, itemStack, level, allowTreasures);
+        // return CraftItemFactory.enchantItem(((CraftEntity) entity).getHandle().random, itemStack, level, allowTreasures);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -305,24 +307,27 @@ public final class CraftItemFactory implements ItemFactory {
         net.minecraft.resources.ResourceLocation typeKey = ResourceLocation.parse(typeId);
         net.minecraft.world.entity.EntityType<?> nmsType = net.minecraft.core.registries.BuiltInRegistries.ENTITY_TYPE.getValue(typeKey);
         net.minecraft.world.item.SpawnEggItem eggItem = net.minecraft.world.item.SpawnEggItem.byId(nmsType);
-        return eggItem == null ? null : new net.minecraft.world.item.ItemStack(eggItem).asBukkitMirror();
+        // return eggItem == null ? null : new net.minecraft.world.item.ItemStack(eggItem).asBukkitMirror();
+        throw new NotImplementedError();
     }
+
     // Paper end - old getSpawnEgg API
     // Paper start - enchantWithLevels API
     @Override
     public ItemStack enchantWithLevels(ItemStack itemStack, int levels, boolean allowTreasure, java.util.Random random) {
-        return enchantWithLevels(
-            itemStack,
-            levels,
-            allowTreasure
-                ? Optional.empty()
-                // While IN_ENCHANTING_TABLE is not logically the same as all but TREASURE, the tag is defined as
-                // NON_TREASURE, which does contain all enchantments not in the treasure tag.
-                // Additionally, the allowTreasure boolean is more intended to configure this method to behave like
-                // an enchanting table.
-                : net.minecraft.server.MinecraftServer.getServer().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.IN_ENCHANTING_TABLE),
-            random
-        );
+        throw new NotImplementedError();
+        // return enchantWithLevels(
+        //     itemStack,
+        //     levels,
+        //     allowTreasure
+        //         ? Optional.empty()
+        //         // While IN_ENCHANTING_TABLE is not logically the same as all but TREASURE, the tag is defined as
+        //         // NON_TREASURE, which does contain all enchantments not in the treasure tag.
+        //         // Additionally, the allowTreasure boolean is more intended to configure this method to behave like
+        //         // an enchanting table.
+        //         : net.minecraft.server.MinecraftServer.getServer().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).get(EnchantmentTags.IN_ENCHANTING_TABLE),
+        //     random
+        // );
     }
 
     @Override
@@ -348,22 +353,23 @@ public final class CraftItemFactory implements ItemFactory {
         Optional<? extends net.minecraft.core.HolderSet<net.minecraft.world.item.enchantment.Enchantment>> possibleEnchantments,
         java.util.Random random
     ) {
-        Preconditions.checkArgument(itemStack != null, "Argument 'itemStack' must not be null");
-        Preconditions.checkArgument(!itemStack.isEmpty(), "Argument 'itemStack' cannot be empty");
-        Preconditions.checkArgument(random != null, "Argument 'random' must not be null");
-        final net.minecraft.world.item.ItemStack internalStack = CraftItemStack.asNMSCopy(itemStack);
-        if (internalStack.isEnchanted()) {
-            internalStack.set(net.minecraft.core.component.DataComponents.ENCHANTMENTS, net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
-        }
-        final net.minecraft.core.RegistryAccess registryAccess = net.minecraft.server.MinecraftServer.getServer().registryAccess();
-        final net.minecraft.world.item.ItemStack enchanted = net.minecraft.world.item.enchantment.EnchantmentHelper.enchantItem(
-            new org.bukkit.craftbukkit.util.RandomSourceWrapper(random),
-            internalStack,
-            levels,
-            registryAccess,
-            possibleEnchantments
-        );
-        return CraftItemStack.asCraftMirror(enchanted);
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(itemStack != null, "Argument 'itemStack' must not be null");
+        // Preconditions.checkArgument(!itemStack.isEmpty(), "Argument 'itemStack' cannot be empty");
+        // Preconditions.checkArgument(random != null, "Argument 'random' must not be null");
+        // final net.minecraft.world.item.ItemStack internalStack = CraftItemStack.asNMSCopy(itemStack);
+        // if (internalStack.isEnchanted()) {
+        //     internalStack.set(net.minecraft.core.component.DataComponents.ENCHANTMENTS, net.minecraft.world.item.enchantment.ItemEnchantments.EMPTY);
+        // }
+        // final net.minecraft.core.RegistryAccess registryAccess = net.minecraft.server.MinecraftServer.getServer().registryAccess();
+        // final net.minecraft.world.item.ItemStack enchanted = net.minecraft.world.item.enchantment.EnchantmentHelper.enchantItem(
+        //     new org.bukkit.craftbukkit.util.RandomSourceWrapper(random),
+        //     internalStack,
+        //     levels,
+        //     registryAccess,
+        //     possibleEnchantments
+        // );
+        // return CraftItemStack.asCraftMirror(enchanted);
     }
     // Paper end - enchantWithLevels API
 }

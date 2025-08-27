@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftVector;
@@ -21,22 +22,26 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
 
     @Override
     public float getYield() {
-        return this.getHandle().bukkitYield;
+        throw new NotImplementedError();
+        // return this.getHandle().bukkitYield;
     }
 
     @Override
     public boolean isIncendiary() {
-        return this.getHandle().isIncendiary;
+        throw new NotImplementedError();
+        // return this.getHandle().isIncendiary;
     }
 
     @Override
     public void setIsIncendiary(boolean isIncendiary) {
-        this.getHandle().isIncendiary = isIncendiary;
+        throw new NotImplementedError();
+        // this.getHandle().isIncendiary = isIncendiary;
     }
 
     @Override
     public void setYield(float yield) {
-        this.getHandle().bukkitYield = yield;
+        throw new NotImplementedError();
+        // this.getHandle().bukkitYield = yield;
     }
 
     @Override
@@ -60,11 +65,12 @@ public class CraftFireball extends AbstractProjectile implements Fireball {
 
     @Override
     public void setAcceleration(@NotNull Vector acceleration) {
-        Preconditions.checkArgument(acceleration != null, "Vector acceleration cannot be null");
-        // SPIGOT-6993: AbstractHurtingProjectile#assignDirectionalMovement will normalize the given values
-        // Note: Because of MC-80142 the fireball will stutter on the client when setting the power to something other than 0 or the normalized vector * 0.1
-        this.getHandle().assignDirectionalMovement(CraftVector.toVec3(acceleration), acceleration.length());
-        this.update(); // SPIGOT-6579
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(acceleration != null, "Vector acceleration cannot be null");
+        // // SPIGOT-6993: AbstractHurtingProjectile#assignDirectionalMovement will normalize the given values
+        // // Note: Because of MC-80142 the fireball will stutter on the client when setting the power to something other than 0 or the normalized vector * 0.1
+        // this.getHandle().assignDirectionalMovement(CraftVector.toVec3(acceleration), acceleration.length());
+        // this.update(); // SPIGOT-6579
     }
 
     @NotNull

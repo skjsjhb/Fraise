@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Horse.Variant;
 import org.bukkit.entity.SkeletonHorse;
@@ -32,11 +33,13 @@ public class CraftSkeletonHorse extends CraftAbstractHorse implements SkeletonHo
 
     @Override
     public int getTrapTime() {
-        return this.getHandle().trapTime;
+        // return this.getHandle().trapTime;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setTrapTime(int trapTime) {
-        this.getHandle().trapTime = trapTime;
+        // this.getHandle().trapTime = trapTime;
+        throw new NotImplementedError();
     }
 }

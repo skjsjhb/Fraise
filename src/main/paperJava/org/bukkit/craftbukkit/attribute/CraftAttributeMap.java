@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.attribute;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
@@ -55,6 +56,7 @@ public class CraftAttributeMap implements Attributable {
     @Override
     public void registerAttribute(Attribute attribute) {
         Preconditions.checkArgument(attribute != null, "attribute");
-        this.handle.registerAttribute(CraftAttribute.bukkitToMinecraftHolder(attribute));
+        throw new NotImplementedError();
+        // this.handle.registerAttribute(CraftAttribute.bukkitToMinecraftHolder(attribute));
     }
 }

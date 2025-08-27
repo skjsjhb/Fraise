@@ -1,10 +1,12 @@
 package org.bukkit.craftbukkit.entity;
 
-import java.util.UUID;
+import kotlin.NotImplementedError;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Interaction;
+
+import java.util.UUID;
 
 public class CraftInteraction extends CraftEntity implements Interaction {
 
@@ -49,16 +51,18 @@ public class CraftInteraction extends CraftEntity implements Interaction {
 
     @Override
     public PreviousInteraction getLastAttack() {
-        net.minecraft.world.entity.Interaction.PlayerAction last = this.getHandle().attack;
-
-        return (last != null) ? new CraftPreviousInteraction(last.player(), last.timestamp()) : null;
+        throw new NotImplementedError();
+        // net.minecraft.world.entity.Interaction.PlayerAction last = this.getHandle().attack;
+        //
+        // return (last != null) ? new CraftPreviousInteraction(last.player(), last.timestamp()) : null;
     }
 
     @Override
     public PreviousInteraction getLastInteraction() {
-        net.minecraft.world.entity.Interaction.PlayerAction last = this.getHandle().interaction;
-
-        return (last != null) ? new CraftPreviousInteraction(last.player(), last.timestamp()) : null;
+        throw new NotImplementedError();
+        // net.minecraft.world.entity.Interaction.PlayerAction last = this.getHandle().interaction;
+        //
+        // return (last != null) ? new CraftPreviousInteraction(last.player(), last.timestamp()) : null;
     }
 
     private static class CraftPreviousInteraction implements PreviousInteraction {

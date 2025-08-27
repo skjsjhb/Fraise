@@ -1,28 +1,17 @@
 package io.papermc.paper.command.subcommands;
 
 import com.google.common.collect.Maps;
-import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.command.CommandUtil;
 import io.papermc.paper.command.PaperSubcommand;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
+import kotlin.NotImplementedError;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerChunkCache;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
 import org.apache.commons.lang3.tuple.MutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Bukkit;
-import org.bukkit.HeightMap;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.CraftWorld;
@@ -31,8 +20,14 @@ import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static net.kyori.adventure.text.Component.text;
-import static net.kyori.adventure.text.format.NamedTextColor.GREEN;
 import static net.kyori.adventure.text.format.NamedTextColor.RED;
 
 @DefaultQualifier(NonNull.class)
@@ -102,17 +97,18 @@ public final class EntityCommand implements PaperSubcommand {
             ServerLevel world = ((CraftWorld) bukkitWorld).getHandle();
             Map<ResourceLocation, Integer> nonEntityTicking = Maps.newHashMap();
             ServerChunkCache chunkProviderServer = world.getChunkSource();
-            FeatureHooks.getAllEntities(world).forEach(e -> {
-                ResourceLocation key = EntityType.getKey(e.getType());
-
-                MutablePair<Integer, Map<ChunkPos, Integer>> info = list.computeIfAbsent(key, k -> MutablePair.of(0, Maps.newHashMap()));
-                ChunkPos chunk = e.chunkPosition();
-                info.left++;
-                info.right.put(chunk, info.right.getOrDefault(chunk, 0) + 1);
-                if (!world.isPositionEntityTicking(e.blockPosition()) || (e instanceof net.minecraft.world.entity.Marker && !world.paperConfig().entities.markers.tick)) { // Paper - Configurable marker ticking
-                    nonEntityTicking.merge(key, 1, Integer::sum);
-                }
-            });
+            // throw new NotImplementedError();
+            // FeatureHooks.getAllEntities(world).forEach(e -> {
+            //     ResourceLocation key = EntityType.getKey(e.getType());
+            //
+            //     MutablePair<Integer, Map<ChunkPos, Integer>> info = list.computeIfAbsent(key, k -> MutablePair.of(0, Maps.newHashMap()));
+            //     ChunkPos chunk = e.chunkPosition();
+            //     info.left++;
+            //     info.right.put(chunk, info.right.getOrDefault(chunk, 0) + 1);
+            //     if (!world.isPositionEntityTicking(e.blockPosition()) || (e instanceof net.minecraft.world.entity.Marker && !world.paperConfig().entities.markers.tick)) { // Paper - Configurable marker ticking
+            //         nonEntityTicking.merge(key, 1, Integer::sum);
+            //     }
+            // });
             if (names.size() == 1) {
                 ResourceLocation name = names.iterator().next();
                 Pair<Integer, Map<ChunkPos, Integer>> info = list.get(name);
@@ -127,10 +123,11 @@ public final class EntityCommand implements PaperSubcommand {
                     .limit(10).forEach(e -> {
                         final int x = (e.getKey().x << 4) + 8;
                         final int z = (e.getKey().z << 4) + 8;
-                        final Component message = text("  " + e.getValue() + ": " + e.getKey().x + ", " + e.getKey().z + (chunkProviderServer.isPositionTicking(e.getKey().toLong()) ? " (Ticking)" : " (Non-Ticking)"))
-                            .hoverEvent(HoverEvent.showText(text("Click to teleport to chunk", GREEN)))
-                            .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/minecraft:execute as @s in " + world.getWorld().getKey() + " run tp " + x + " " + (world.getWorld().getHighestBlockYAt(x, z, HeightMap.MOTION_BLOCKING) + 1) + " " + z));
-                        sender.sendMessage(message);
+                        throw new NotImplementedError();
+                        // final Component message = text("  " + e.getValue() + ": " + e.getKey().x + ", " + e.getKey().z + (chunkProviderServer.isPositionTicking(e.getKey().toLong()) ? " (Ticking)" : " (Non-Ticking)"))
+                        //     .hoverEvent(HoverEvent.showText(text("Click to teleport to chunk", GREEN)))
+                        //     .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/minecraft:execute as @s in " + world.getWorld().getKey() + " run tp " + x + " " + (world.getWorld().getHighestBlockYAt(x, z, HeightMap.MOTION_BLOCKING) + 1) + " " + z));
+                        // sender.sendMessage(message);
                     });
             } else {
                 List<Pair<ResourceLocation, Integer>> info = list.entrySet().stream()

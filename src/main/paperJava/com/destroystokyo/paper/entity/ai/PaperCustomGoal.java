@@ -1,5 +1,6 @@
 package com.destroystokyo.paper.entity.ai;
 
+import kotlin.NotImplementedError;
 import org.bukkit.entity.Mob;
 
 /**
@@ -14,7 +15,8 @@ public class PaperCustomGoal<T extends Mob> extends net.minecraft.world.entity.a
 
         this.setFlags(MobGoalHelper.paperToVanilla(handle.getTypes()));
         if (this.getFlags().size() == 0) {
-            this.addFlag(Flag.UNKNOWN_BEHAVIOR);
+            throw new NotImplementedError();
+            // this.addFlag(Flag.UNKNOWN_BEHAVIOR);
         }
     }
 

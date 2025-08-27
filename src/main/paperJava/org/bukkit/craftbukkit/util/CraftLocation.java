@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.util;
 
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.phys.Vec3;
@@ -28,7 +29,8 @@ public final class CraftLocation {
     }
 
     public static Location toBukkit(BlockPos pos, net.minecraft.world.level.Level world) {
-        return CraftLocation.toBukkit(pos, world.getWorld(), 0.0F, 0.0F);
+        // return CraftLocation.toBukkit(pos, world.getWorld(), 0.0F, 0.0F);
+        throw new NotImplementedError();
     }
 
     public static Location toBukkit(BlockPos pos, World world) {
@@ -40,7 +42,8 @@ public final class CraftLocation {
     }
 
     public static Location toBukkit(Node point, net.minecraft.world.level.Level world) {
-        return new Location(world.getWorld(), point.x, point.y, point.z);
+        // return new Location(world.getWorld(), point.x, point.y, point.z);
+        throw new NotImplementedError();
     }
 
     public static BlockPos toBlockPosition(Location loc) {
@@ -52,7 +55,8 @@ public final class CraftLocation {
     }
 
     public static Location fromGlobalPos(net.minecraft.core.GlobalPos globalPos) {
-        return CraftLocation.toBukkit(globalPos.pos(), net.minecraft.server.MinecraftServer.getServer().getLevel(globalPos.dimension()));
+        // return CraftLocation.toBukkit(globalPos.pos(), net.minecraft.server.MinecraftServer.getServer().getLevel(globalPos.dimension()));
+        throw new NotImplementedError();
     }
 
     public static Vec3 toVec3(Location loc) {

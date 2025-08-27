@@ -6,13 +6,13 @@ import com.mojang.datafixers.util.Pair;
 import it.unimi.dsi.fastutil.longs.Long2IntMap;
 import it.unimi.dsi.fastutil.longs.Long2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
-import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.Level;
 
 public class SyncLoadFinder {
 
@@ -71,7 +71,8 @@ public class SyncLoadFinder {
 
             final JsonObject worldData = new JsonObject();
 
-            worldData.addProperty("name", world.getWorld().getName());
+            // throw new NotImplementedError();
+            // worldData.addProperty("name", world.getWorld().getName());
 
             final List<Pair<ThrowableWithEquals, SyncLoadInformation>> data = new ArrayList<>();
 
@@ -154,7 +155,7 @@ public class SyncLoadFinder {
                 return false;
             }
 
-            final ThrowableWithEquals other = (ThrowableWithEquals)obj;
+            final ThrowableWithEquals other = (ThrowableWithEquals) obj;
             final StackTraceElement[] otherStackTrace = other.stacktrace;
 
             if (this.stacktrace.length != otherStackTrace.length || this.hash != other.hash) {

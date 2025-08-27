@@ -2,16 +2,9 @@ package io.papermc.paper.configuration.serializer;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.leangen.geantyref.GenericTypeReflector;
 import io.leangen.geantyref.TypeToken;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Predicate;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.PacketFlow;
 import net.minecraft.network.protocol.PacketType;
@@ -29,11 +22,20 @@ import org.slf4j.Logger;
 import org.spongepowered.configurate.serialize.ScalarSerializer;
 import org.spongepowered.configurate.serialize.SerializationException;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.Map;
+import java.util.Set;
+import java.util.function.Predicate;
+
 @SuppressWarnings("Convert2Diamond")
 public final class ServerboundPacketClassSerializer extends ScalarSerializer<Class<? extends Packet<?>>> {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
-    private static final TypeToken<Class<? extends Packet<?>>> TYPE = new TypeToken<Class<? extends Packet<?>>>() {};
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
+    private static final TypeToken<Class<? extends Packet<?>>> TYPE = new TypeToken<Class<? extends Packet<?>>>() {
+    };
     static final Set<Class<?>> PACKET_CLASS_HOLDERS = Set.of(
         PingPacketTypes.class,
         HandshakePacketTypes.class,

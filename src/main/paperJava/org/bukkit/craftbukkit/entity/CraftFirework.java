@@ -1,7 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
-import com.google.common.base.Preconditions;
-import java.util.Random;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import net.minecraft.world.item.ItemStack;
 import org.bukkit.craftbukkit.CraftServer;
@@ -9,6 +8,8 @@ import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.meta.FireworkMeta;
+
+import java.util.Random;
 
 public class CraftFirework extends CraftProjectile implements Firework {
 
@@ -25,7 +26,8 @@ public class CraftFirework extends CraftProjectile implements Firework {
 
     @Override
     public FireworkMeta getFireworkMeta() {
-        return (FireworkMeta) CraftItemStack.getItemMeta(this.getHandle().getEntityData().get(FireworkRocketEntity.DATA_ID_FIREWORKS_ITEM), org.bukkit.inventory.ItemType.FIREWORK_ROCKET); // Paper - Expose firework item directly
+        throw new NotImplementedError();
+        // return (FireworkMeta) CraftItemStack.getItemMeta(this.getHandle().getEntityData().get(FireworkRocketEntity.DATA_ID_FIREWORKS_ITEM), org.bukkit.inventory.ItemType.FIREWORK_ROCKET); // Paper - Expose firework item directly
     }
 
     @Override
@@ -33,63 +35,70 @@ public class CraftFirework extends CraftProjectile implements Firework {
         applyFireworkEffect(meta); // Paper - Expose firework item directly
 
         // Copied from FireworkRocketEntity constructor, update firework lifetime/power
-        this.getHandle().lifetime = 10 * (1 + meta.getPower()) + this.random.nextInt(6) + this.random.nextInt(7);
-
-        this.getHandle().getEntityData().markDirty(FireworkRocketEntity.DATA_ID_FIREWORKS_ITEM);
+        throw new NotImplementedError();
+        // this.getHandle().lifetime = 10 * (1 + meta.getPower()) + this.random.nextInt(6) + this.random.nextInt(7);
+        //
+        // this.getHandle().getEntityData().markDirty(FireworkRocketEntity.DATA_ID_FIREWORKS_ITEM);
     }
 
     @Override
     public boolean setAttachedTo(LivingEntity entity) {
-        if (this.isDetonated()) {
-            return false;
-        }
-
-        this.getHandle().attachedToEntity = (entity != null) ? ((CraftLivingEntity) entity).getHandle() : null;
-        // Paper start - update entity data
-        this.getHandle().getEntityData().set(FireworkRocketEntity.DATA_ATTACHED_TO_TARGET,
-            entity != null ? java.util.OptionalInt.of(entity.getEntityId()) : java.util.OptionalInt.empty());
-        // Paper end - update entity data
-        return true;
+        throw new NotImplementedError();
+        // if (this.isDetonated()) {
+        //     return false;
+        // }
+        //
+        // this.getHandle().attachedToEntity = (entity != null) ? ((CraftLivingEntity) entity).getHandle() : null;
+        // // Paper start - update entity data
+        // this.getHandle().getEntityData().set(FireworkRocketEntity.DATA_ATTACHED_TO_TARGET,
+        //     entity != null ? java.util.OptionalInt.of(entity.getEntityId()) : java.util.OptionalInt.empty());
+        // // Paper end - update entity data
+        // return true;
     }
 
     @Override
     public LivingEntity getAttachedTo() {
-        net.minecraft.world.entity.LivingEntity entity = this.getHandle().attachedToEntity;
-        return (entity != null) ? (LivingEntity) entity.getBukkitEntity() : null;
+        throw new NotImplementedError();
+        // net.minecraft.world.entity.LivingEntity entity = this.getHandle().attachedToEntity;
+        // return (entity != null) ? (LivingEntity) entity.getBukkitEntity() : null;
     }
 
     @Override
     public boolean setLife(int ticks) {
-        Preconditions.checkArgument(ticks >= 0, "ticks must be greater than or equal to 0");
-
-        if (this.isDetonated()) {
-            return false;
-        }
-
-        this.getHandle().life = ticks;
-        return true;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(ticks >= 0, "ticks must be greater than or equal to 0");
+        //
+        // if (this.isDetonated()) {
+        //     return false;
+        // }
+        //
+        // this.getHandle().life = ticks;
+        // return true;
     }
 
     @Override
     public int getLife() {
-        return this.getHandle().life;
+        // return this.getHandle().life;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean setMaxLife(int ticks) {
-        Preconditions.checkArgument(ticks > 0, "ticks must be greater than 0");
-
-        if (this.isDetonated()) {
-            return false;
-        }
-
-        this.getHandle().lifetime = ticks;
-        return true;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(ticks > 0, "ticks must be greater than 0");
+        //
+        // if (this.isDetonated()) {
+        //     return false;
+        // }
+        //
+        // this.getHandle().lifetime = ticks;
+        // return true;
     }
 
     @Override
     public int getMaxLife() {
-        return this.getHandle().lifetime;
+        throw new NotImplementedError();
+        // return this.getHandle().lifetime;
     }
 
     @Override
@@ -99,7 +108,8 @@ public class CraftFirework extends CraftProjectile implements Firework {
 
     @Override
     public boolean isDetonated() {
-        return this.getHandle().life > this.getHandle().lifetime;
+        throw new NotImplementedError();
+        // return this.getHandle().life > this.getHandle().lifetime;
     }
 
     @Override
@@ -109,12 +119,14 @@ public class CraftFirework extends CraftProjectile implements Firework {
 
     @Override
     public void setShotAtAngle(boolean shotAtAngle) {
-        this.getHandle().getEntityData().set(FireworkRocketEntity.DATA_SHOT_AT_ANGLE, shotAtAngle);
+        throw new NotImplementedError();
+        // this.getHandle().getEntityData().set(FireworkRocketEntity.DATA_SHOT_AT_ANGLE, shotAtAngle);
     }
 
     @Override
     public java.util.UUID getSpawningEntity() {
-        return getHandle().spawningEntity;
+        throw new NotImplementedError();
+        // return getHandle().spawningEntity;
     }
 
     // Paper start - Expose firework item directly + manually setting flight
@@ -125,38 +137,44 @@ public class CraftFirework extends CraftProjectile implements Firework {
 
     @Override
     public void setItem(org.bukkit.inventory.ItemStack itemStack) {
-        FireworkMeta meta = getFireworkMeta();
-        ItemStack nmsItem = itemStack == null ? FireworkRocketEntity.getDefaultItem() : CraftItemStack.asNMSCopy(itemStack);
-        this.getHandle().getEntityData().set(FireworkRocketEntity.DATA_ID_FIREWORKS_ITEM, nmsItem);
-
-        applyFireworkEffect(meta);
+        throw new NotImplementedError();
+        // FireworkMeta meta = getFireworkMeta();
+        // ItemStack nmsItem = itemStack == null ? FireworkRocketEntity.getDefaultItem() : CraftItemStack.asNMSCopy(itemStack);
+        // this.getHandle().getEntityData().set(FireworkRocketEntity.DATA_ID_FIREWORKS_ITEM, nmsItem);
+        //
+        // applyFireworkEffect(meta);
     }
 
     @Override
     public int getTicksFlown() {
-        return this.getHandle().life;
+        throw new NotImplementedError();
+        // return this.getHandle().life;
     }
 
     @Override
     public void setTicksFlown(int ticks) {
-        this.getHandle().life = ticks;
+        throw new NotImplementedError();
+        // this.getHandle().life = ticks;
     }
 
     @Override
     public int getTicksToDetonate() {
-        return this.getHandle().lifetime;
+        throw new NotImplementedError();
+        // return this.getHandle().lifetime;
     }
 
     @Override
     public void setTicksToDetonate(int ticks) {
-        this.getHandle().lifetime = ticks;
+        throw new NotImplementedError();
+        // this.getHandle().lifetime = ticks;
     }
 
     void applyFireworkEffect(FireworkMeta meta) {
         ItemStack item = this.getHandle().getItem();
         CraftItemStack.applyMetaToItem(item, meta);
 
-        this.getHandle().getEntityData().set(FireworkRocketEntity.DATA_ID_FIREWORKS_ITEM, item);
+        throw new NotImplementedError();
+        // this.getHandle().getEntityData().set(FireworkRocketEntity.DATA_ID_FIREWORKS_ITEM, item);
     }
     // Paper end - Expose firework item directly + manually setting flight
 }

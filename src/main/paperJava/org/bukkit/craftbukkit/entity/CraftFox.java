@@ -1,13 +1,15 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.Optional;
+import kotlin.NotImplementedError;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.LivingEntity;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Fox;
+
+import java.util.Optional;
 
 public class CraftFox extends CraftAnimals implements Fox {
 
@@ -29,7 +31,8 @@ public class CraftFox extends CraftAnimals implements Fox {
     public void setFoxType(Type type) {
         Preconditions.checkArgument(type != null, "type");
 
-        this.getHandle().setVariant(net.minecraft.world.entity.animal.Fox.Variant.values()[type.ordinal()]);
+        throw new NotImplementedError();
+        // this.getHandle().setVariant(net.minecraft.world.entity.animal.Fox.Variant.values()[type.ordinal()]);
     }
 
     @Override
@@ -54,7 +57,8 @@ public class CraftFox extends CraftAnimals implements Fox {
 
     @Override
     public void setSleeping(boolean sleeping) {
-        this.getHandle().setSleeping(sleeping);
+        throw new NotImplementedError();
+        // this.getHandle().setSleeping(sleeping);
     }
 
     private AnimalTamer getTrustedPlayer(EntityDataAccessor<Optional<EntityReference<LivingEntity>>> entityDataKey) {
@@ -72,30 +76,34 @@ public class CraftFox extends CraftAnimals implements Fox {
 
     @Override
     public AnimalTamer getFirstTrustedPlayer() {
-        return this.getTrustedPlayer(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_0);
+        throw new NotImplementedError();
+        // return this.getTrustedPlayer(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_0);
     }
 
     @Override
     public void setFirstTrustedPlayer(AnimalTamer player) {
-        if (player == null) {
-            Preconditions.checkState(this.getHandle().getEntityData().get(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_1).isEmpty(), "Must remove second trusted player first");
-        }
-
-        this.getHandle().getEntityData().set(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_0, player == null ? Optional.empty() : Optional.of(new EntityReference<>(player.getUniqueId())));
+        throw new NotImplementedError();
+        // if (player == null) {
+        //     Preconditions.checkState(this.getHandle().getEntityData().get(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_1).isEmpty(), "Must remove second trusted player first");
+        // }
+        //
+        // this.getHandle().getEntityData().set(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_0, player == null ? Optional.empty() : Optional.of(new EntityReference<>(player.getUniqueId())));
     }
 
     @Override
     public AnimalTamer getSecondTrustedPlayer() {
-        return this.getTrustedPlayer(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_1);
+        throw new NotImplementedError();
+        // return this.getTrustedPlayer(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_1);
     }
 
     @Override
     public void setSecondTrustedPlayer(AnimalTamer player) {
-        if (player != null) {
-            Preconditions.checkState(this.getHandle().getEntityData().get(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_0).isPresent(), "Must add first trusted player first");
-        }
-
-        this.getHandle().getEntityData().set(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_1, player == null ? Optional.empty() : Optional.of(new EntityReference<>(player.getUniqueId())));
+        throw new NotImplementedError();
+        // if (player != null) {
+        //     Preconditions.checkState(this.getHandle().getEntityData().get(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_0).isPresent(), "Must add first trusted player first");
+        // }
+        //
+        // this.getHandle().getEntityData().set(net.minecraft.world.entity.animal.Fox.DATA_TRUSTED_ID_1, player == null ? Optional.empty() : Optional.of(new EntityReference<>(player.getUniqueId())));
     }
 
     @Override
@@ -126,17 +134,20 @@ public class CraftFox extends CraftAnimals implements Fox {
 
     @Override
     public void setDefending(boolean defending) {
-        this.getHandle().setDefending(defending);
+        throw new NotImplementedError();
+        // this.getHandle().setDefending(defending);
     }
 
     @Override
     public boolean isDefending() {
-        return this.getHandle().isDefending();
+        throw new NotImplementedError();
+        // return this.getHandle().isDefending();
     }
 
     @Override
     public void setFaceplanted(boolean faceplanted) {
-        this.getHandle().setFaceplanted(faceplanted);
+        throw new NotImplementedError();
+        // this.getHandle().setFaceplanted(faceplanted);
     }
     // Paper end - Add more fox behavior API
 }

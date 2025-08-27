@@ -1,9 +1,7 @@
 package org.bukkit.craftbukkit.packs;
 
 import com.google.common.base.Preconditions;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import kotlin.NotImplementedError;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackRepository;
 import org.bukkit.Material;
@@ -18,6 +16,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemType;
 import org.bukkit.packs.DataPack;
 import org.bukkit.packs.DataPackManager;
+
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class CraftDataPackManager implements DataPackManager {
 
@@ -49,30 +50,32 @@ public class CraftDataPackManager implements DataPackManager {
 
     @Override
     public Collection<DataPack> getEnabledDataPacks(World world) {
-        Preconditions.checkArgument(world != null, "world cannot be null");
-
-        CraftWorld craftWorld = ((CraftWorld) world);
-        return craftWorld.getHandle().serverLevelData.getDataConfiguration().dataPacks().getEnabled().stream().map(packName -> {
-            Pack resourcePackLoader = this.getHandle().getPack(packName);
-            if (resourcePackLoader != null) {
-                return new CraftDataPack(resourcePackLoader);
-            }
-            return null;
-        }).filter(Objects::nonNull).collect(Collectors.toUnmodifiableList());
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(world != null, "world cannot be null");
+        //
+        // CraftWorld craftWorld = ((CraftWorld) world);
+        // return craftWorld.getHandle().serverLevelData.getDataConfiguration().dataPacks().getEnabled().stream().map(packName -> {
+        //     Pack resourcePackLoader = this.getHandle().getPack(packName);
+        //     if (resourcePackLoader != null) {
+        //         return new CraftDataPack(resourcePackLoader);
+        //     }
+        //     return null;
+        // }).filter(Objects::nonNull).collect(Collectors.toUnmodifiableList());
     }
 
     @Override
     public Collection<DataPack> getDisabledDataPacks(World world) {
-        Preconditions.checkArgument(world != null, "world cannot be null");
-
-        CraftWorld craftWorld = ((CraftWorld) world);
-        return craftWorld.getHandle().serverLevelData.getDataConfiguration().dataPacks().getDisabled().stream().map(packName -> {
-            Pack resourcePackLoader = this.getHandle().getPack(packName);
-            if (resourcePackLoader != null) {
-                return new CraftDataPack(resourcePackLoader);
-            }
-            return null;
-        }).filter(Objects::nonNull).collect(Collectors.toUnmodifiableList());
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(world != null, "world cannot be null");
+        //
+        // CraftWorld craftWorld = ((CraftWorld) world);
+        // return craftWorld.getHandle().serverLevelData.getDataConfiguration().dataPacks().getDisabled().stream().map(packName -> {
+        //     Pack resourcePackLoader = this.getHandle().getPack(packName);
+        //     if (resourcePackLoader != null) {
+        //         return new CraftDataPack(resourcePackLoader);
+        //     }
+        //     return null;
+        // }).filter(Objects::nonNull).collect(Collectors.toUnmodifiableList());
     }
 
     @Override

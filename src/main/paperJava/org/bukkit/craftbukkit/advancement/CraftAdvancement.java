@@ -1,12 +1,14 @@
 package org.bukkit.craftbukkit.advancement;
 
-import java.util.Collection;
-import java.util.Collections;
+import kotlin.NotImplementedError;
 import net.minecraft.advancements.AdvancementHolder;
 import org.bukkit.NamespacedKey;
 import org.bukkit.advancement.AdvancementDisplay;
 import org.bukkit.advancement.AdvancementRequirements;
 import org.bukkit.craftbukkit.util.CraftNamespacedKey;
+
+import java.util.Collection;
+import java.util.Collections;
 
 public class CraftAdvancement implements org.bukkit.advancement.Advancement {
 
@@ -37,7 +39,8 @@ public class CraftAdvancement implements org.bukkit.advancement.Advancement {
 
     @Override
     public io.papermc.paper.advancement.AdvancementDisplay getDisplay() {
-        return this.handle.value().display().map(d -> d.paper).orElse(null);
+        throw new NotImplementedError();
+        // return this.handle.value().display().map(d -> d.paper).orElse(null);
     }
 
     @Deprecated
@@ -52,27 +55,30 @@ public class CraftAdvancement implements org.bukkit.advancement.Advancement {
 
     @Override
     public org.bukkit.advancement.Advancement getParent() {
-        return this.handle.value().parent()
-            .map(net.minecraft.server.MinecraftServer.getServer().getAdvancements()::get)
-            .map(AdvancementHolder::toBukkit)
-            .orElse(null);
+        throw new NotImplementedError();
+        // return this.handle.value().parent()
+        //     .map(net.minecraft.server.MinecraftServer.getServer().getAdvancements()::get)
+        //     .map(AdvancementHolder::toBukkit)
+        //     .orElse(null);
     }
 
     @Override
     public Collection<org.bukkit.advancement.Advancement> getChildren() {
-        final com.google.common.collect.ImmutableList.Builder<org.bukkit.advancement.Advancement> children = com.google.common.collect.ImmutableList.builder();
-        final net.minecraft.advancements.AdvancementNode advancementNode = net.minecraft.server.MinecraftServer.getServer().getAdvancements().tree().get(this.handle);
-        if (advancementNode != null) {
-            for (final net.minecraft.advancements.AdvancementNode child : advancementNode.children()) {
-                children.add(child.holder().toBukkit());
-            }
-        }
-        return children.build();
+        throw new NotImplementedError();
+        // final com.google.common.collect.ImmutableList.Builder<org.bukkit.advancement.Advancement> children = com.google.common.collect.ImmutableList.builder();
+        // final net.minecraft.advancements.AdvancementNode advancementNode = net.minecraft.server.MinecraftServer.getServer().getAdvancements().tree().get(this.handle);
+        // if (advancementNode != null) {
+        //     for (final net.minecraft.advancements.AdvancementNode child : advancementNode.children()) {
+        //         children.add(child.holder().toBukkit());
+        //     }
+        // }
+        // return children.build();
     }
 
     @Override
     public org.bukkit.advancement.Advancement getRoot() {
-        final net.minecraft.advancements.AdvancementNode advancementNode = net.minecraft.server.MinecraftServer.getServer().getAdvancements().tree().get(this.handle);
-        return java.util.Objects.requireNonNull(advancementNode, "could not find internal advancement node for advancement " + this.handle.id()).root().holder().toBukkit();
+        throw new NotImplementedError();
+        // final net.minecraft.advancements.AdvancementNode advancementNode = net.minecraft.server.MinecraftServer.getServer().getAdvancements().tree().get(this.handle);
+        // return java.util.Objects.requireNonNull(advancementNode, "could not find internal advancement node for advancement " + this.handle.id()).root().holder().toBukkit();
     }
 }

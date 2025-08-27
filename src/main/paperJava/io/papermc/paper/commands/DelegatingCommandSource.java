@@ -1,11 +1,7 @@
 package io.papermc.paper.commands;
 
 import net.minecraft.commands.CommandSource;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
-import org.bukkit.command.CommandSender;
-
-import java.util.UUID;
 
 public class DelegatingCommandSource implements CommandSource {
 
@@ -35,8 +31,9 @@ public class DelegatingCommandSource implements CommandSource {
         return delegate.shouldInformAdmins();
     }
 
-    @Override
-    public CommandSender getBukkitSender(CommandSourceStack wrapper) {
-        return delegate.getBukkitSender(wrapper);
-    }
+    // @Override
+    // public CommandSender getBukkitSender(CommandSourceStack wrapper) {
+    //     return delegate.getBukkitSender(wrapper);
+    // }
+    // throw new NotImplementedError();
 }

@@ -1,19 +1,11 @@
 package org.bukkit.craftbukkit.structure;
 
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 import com.mojang.logging.LogUtils;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.util.ProblemReporter;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
@@ -21,8 +13,6 @@ import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockRotProcessor;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.storage.TagValueInput;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.RegionAccessor;
 import org.bukkit.World;
@@ -43,6 +33,11 @@ import org.bukkit.util.BlockTransformer;
 import org.bukkit.util.BlockVector;
 import org.bukkit.util.EntityTransformer;
 import org.slf4j.Logger;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class CraftStructure implements Structure {
 
@@ -74,7 +69,7 @@ public class CraftStructure implements Structure {
 
     @Override
     public void place(RegionAccessor regionAccessor, BlockVector location, boolean includeEntities, StructureRotation structureRotation, Mirror mirror, int palette, float integrity, Random random) {
-       this.place(regionAccessor, location, includeEntities, structureRotation, mirror, palette, integrity, random, Collections.emptyList(), Collections.emptyList());
+        this.place(regionAccessor, location, includeEntities, structureRotation, mirror, palette, integrity, random, Collections.emptyList(), Collections.emptyList());
     }
 
     @Override
@@ -89,12 +84,13 @@ public class CraftStructure implements Structure {
 
         RandomSource randomSource = new RandomSourceWrapper(random);
         StructurePlaceSettings definedstructureinfo = new StructurePlaceSettings()
-                .setMirror(net.minecraft.world.level.block.Mirror.valueOf(mirror.name()))
-                .setRotation(Rotation.valueOf(structureRotation.name()))
-                .setIgnoreEntities(!includeEntities)
-                .addProcessor(new BlockRotProcessor(integrity))
-                .setRandom(randomSource);
-        definedstructureinfo.palette = palette;
+            .setMirror(net.minecraft.world.level.block.Mirror.valueOf(mirror.name()))
+            .setRotation(Rotation.valueOf(structureRotation.name()))
+            .setIgnoreEntities(!includeEntities)
+            .addProcessor(new BlockRotProcessor(integrity))
+            .setRandom(randomSource);
+        // definedstructureinfo.palette = palette;
+        if (true) throw new NotImplementedError();
 
         BlockPos pos = CraftBlockVector.toBlockPosition(location);
         WorldGenLevel handle = ((CraftRegionAccessor) regionAccessor).getHandle();
@@ -137,42 +133,47 @@ public class CraftStructure implements Structure {
 
     @Override
     public List<Entity> getEntities() {
-        List<Entity> entities = new ArrayList<>();
-        for (StructureTemplate.StructureEntityInfo entity : this.structure.entityInfoList) {
-            try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-                () -> "entity@" + entity.pos, LOGGER
-            )) {
-                EntityType.create(
-                    TagValueInput.createGlobal(problemReporter, entity.nbt),
-                    ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle(),
-                    EntitySpawnReason.STRUCTURE
-                ).ifPresent(dummyEntity -> {
-                    dummyEntity.setPos(entity.pos.x, entity.pos.y, entity.pos.z);
-                    entities.add(dummyEntity.getBukkitEntity());
-                });
-            }
-        }
-        return Collections.unmodifiableList(entities);
+        throw new NotImplementedError();
+        // List<Entity> entities = new ArrayList<>();
+        // for (StructureTemplate.StructureEntityInfo entity : this.structure.entityInfoList) {
+        //     try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //         () -> "entity@" + entity.pos, LOGGER
+        //     )) {
+        //         EntityType.create(
+        //             TagValueInput.createGlobal(problemReporter, entity.nbt),
+        //             ((CraftWorld) Bukkit.getServer().getWorlds().get(0)).getHandle(),
+        //             EntitySpawnReason.STRUCTURE
+        //         ).ifPresent(dummyEntity -> {
+        //             dummyEntity.setPos(entity.pos.x, entity.pos.y, entity.pos.z);
+        //             entities.add(dummyEntity.getBukkitEntity());
+        //         });
+        //     }
+        // }
+        // return Collections.unmodifiableList(entities);
     }
 
     @Override
     public int getEntityCount() {
-        return this.structure.entityInfoList.size();
+        // return this.structure.entityInfoList.size();
+        throw new NotImplementedError();
     }
 
     @Override
     public List<Palette> getPalettes() {
-        return this.structure.palettes.stream().map((palette) -> new CraftPalette(palette, this.registry)).collect(Collectors.toList());
+        // return this.structure.palettes.stream().map((palette) -> new CraftPalette(palette, this.registry)).collect(Collectors.toList());
+        throw new NotImplementedError();
     }
 
     @Override
     public int getPaletteCount() {
-        return this.structure.palettes.size();
+        // return this.structure.palettes.size();
+        throw new NotImplementedError();
     }
 
     @Override
     public PersistentDataContainer getPersistentDataContainer() {
-        return this.getHandle().persistentDataContainer;
+        // return this.getHandle().persistentDataContainer;
+        throw new NotImplementedError();
     }
 
     public StructureTemplate getHandle() {

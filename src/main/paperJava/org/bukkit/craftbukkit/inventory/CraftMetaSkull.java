@@ -2,8 +2,7 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.collect.ImmutableMap.Builder;
 import com.mojang.authlib.GameProfile;
-import java.util.Map;
-import java.util.Objects;
+import kotlin.NotImplementedError;
 import net.minecraft.Util;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.core.component.DataComponentPatch;
@@ -22,6 +21,9 @@ import org.bukkit.craftbukkit.util.CraftNamespacedKey;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.profile.PlayerProfile;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.Map;
+import java.util.Objects;
 
 @DelegateDeserialization(SerializableMeta.class)
 class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
@@ -180,12 +182,13 @@ class CraftMetaSkull extends CraftMetaItem implements SkullMeta {
         if (name == null) {
             this.setProfile(null);
         } else {
+            throw new NotImplementedError();
             // Paper start - Use Online Players Skull
-            GameProfile newProfile = null;
-            net.minecraft.server.level.ServerPlayer player = net.minecraft.server.MinecraftServer.getServer().getPlayerList().getPlayerByName(name);
-            if (player != null) newProfile = player.getGameProfile();
-            if (newProfile == null) newProfile = new GameProfile(Util.NIL_UUID, name);
-            this.setProfile(new ResolvableProfile(newProfile));
+            // GameProfile newProfile = null;
+            // net.minecraft.server.level.ServerPlayer player = net.minecraft.server.MinecraftServer.getServer().getPlayerList().getPlayerByName(name);
+            // if (player != null) newProfile = player.getGameProfile();
+            // if (newProfile == null) newProfile = new GameProfile(Util.NIL_UUID, name);
+            // this.setProfile(new ResolvableProfile(newProfile));
             // Paper end
         }
 

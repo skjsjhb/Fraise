@@ -1,7 +1,9 @@
 package io.papermc.paper.plugin.provider.source;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.plugin.entrypoint.EntrypointHandler;
+import org.slf4j.Logger;
+
 import java.io.IOException;
 import java.nio.file.FileVisitOption;
 import java.nio.file.Files;
@@ -9,7 +11,6 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
-import org.slf4j.Logger;
 
 /**
  * Loads all plugin providers in the given directory.
@@ -18,7 +19,7 @@ public class DirectoryProviderSource implements ProviderSource<Path, List<Path>>
 
     public static final DirectoryProviderSource INSTANCE = new DirectoryProviderSource();
     private static final FileProviderSource FILE_PROVIDER_SOURCE = new FileProviderSource("Directory '%s'"::formatted, false); // Paper - Remap plugins
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     @Override
     public List<Path> prepareContext(Path context) throws IOException {

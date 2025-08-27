@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -16,7 +17,6 @@ import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.inventory.FurnaceMenu;
 import net.minecraft.world.inventory.GrindstoneMenu;
 import net.minecraft.world.inventory.HopperMenu;
-import net.minecraft.world.inventory.LecternMenu;
 import net.minecraft.world.inventory.LoomMenu;
 import net.minecraft.world.inventory.MerchantMenu;
 import net.minecraft.world.inventory.ShulkerBoxMenu;
@@ -33,7 +33,7 @@ import org.bukkit.inventory.MenuType;
 public class CraftContainer extends AbstractContainerMenu {
 
     private final InventoryView view;
-    private InventoryType cachedType;
+    private final InventoryType cachedType;
     private AbstractContainerMenu delegate;
 
     public CraftContainer(InventoryView view, Player player, int id) {
@@ -64,7 +64,8 @@ public class CraftContainer extends AbstractContainerMenu {
 
             @Override
             public HumanEntity getPlayer() {
-                return player.getBukkitEntity();
+                // return player.getBukkitEntity();
+                throw new NotImplementedError();
             }
 
             @Override
@@ -103,10 +104,10 @@ public class CraftContainer extends AbstractContainerMenu {
         }, player, id);
     }
 
-    @Override
-    public InventoryView getBukkitView() {
-        return this.view;
-    }
+    // @Override
+    // public InventoryView getBukkitView() {
+    //     return this.view;
+    // }
 
     public static net.minecraft.world.inventory.MenuType getNotchInventoryType(Inventory inventory) {
         final InventoryType type = inventory.getType();
@@ -184,8 +185,9 @@ public class CraftContainer extends AbstractContainerMenu {
                 this.delegate = new BlastFurnaceMenu(windowId, bottom, top, new SimpleContainerData(4));
                 break;
             case LECTERN:
-                this.delegate = new LecternMenu(windowId, top, new SimpleContainerData(1), bottom);
-                break;
+                // this.delegate = new LecternMenu(windowId, top, new SimpleContainerData(1), bottom);
+                throw new NotImplementedError();
+                // break;
             case SMOKER:
                 this.delegate = new SmokerMenu(windowId, bottom, top, new SimpleContainerData(4));
                 break;
@@ -214,13 +216,14 @@ public class CraftContainer extends AbstractContainerMenu {
         }
 
         if (this.delegate != null) {
-            this.lastSlots = this.delegate.lastSlots;
-            this.slots = this.delegate.slots;
-            this.remoteSlots = this.delegate.remoteSlots;
-            // Paper start - copy data slots for InventoryView#set/getProperty
-            this.dataSlots = this.delegate.dataSlots;
-            this.remoteDataSlots = this.delegate.remoteDataSlots;
-            // Paper end
+            throw new NotImplementedError();
+            // this.lastSlots = this.delegate.lastSlots;
+            // this.slots = this.delegate.slots;
+            // this.remoteSlots = this.delegate.remoteSlots;
+            // // Paper start - copy data slots for InventoryView#set/getProperty
+            // this.dataSlots = this.delegate.dataSlots;
+            // this.remoteDataSlots = this.delegate.remoteDataSlots;
+            // // Paper end
         }
 
         // SPIGOT-4598 - we should still delegate the shift click handler

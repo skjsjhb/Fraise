@@ -1,8 +1,8 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.AbstractWindCharge;
-import org.bukkit.event.entity.EntityRemoveEvent;
 
 public abstract class CraftAbstractWindCharge extends CraftFireball implements AbstractWindCharge {
     public CraftAbstractWindCharge(CraftServer server, net.minecraft.world.entity.projectile.windcharge.AbstractWindCharge entity) {
@@ -16,7 +16,8 @@ public abstract class CraftAbstractWindCharge extends CraftFireball implements A
 
     @Override
     public void explode() {
-        this.getHandle().explode(this.getHandle().position());
-        this.getHandle().discard(EntityRemoveEvent.Cause.EXPLODE); // SPIGOT-7577 - explode doesn't discard the entity, this happens only in tick and onHitBlock
+        throw new NotImplementedError();
+        // this.getHandle().explode(this.getHandle().position());
+        // this.getHandle().discard(EntityRemoveEvent.Cause.EXPLODE); // SPIGOT-7577 - explode doesn't discard the entity, this happens only in tick and onHitBlock
     }
 }

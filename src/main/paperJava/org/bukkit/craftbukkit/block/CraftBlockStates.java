@@ -1,10 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.BiFunction;
-import javax.annotation.Nullable;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +15,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.craftbukkit.CraftRegistry;
 import org.bukkit.craftbukkit.CraftWorld;
+
+import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 public final class CraftBlockStates {
 
@@ -79,6 +81,7 @@ public final class CraftBlockStates {
     };
 
     private static final Map<BlockEntityType<?>, BlockStateFactory<?>> FACTORIES_BY_BLOCK_ENTITY_TYPE = new HashMap<>();
+
     private static void register(BlockEntityType<?> type, BlockStateFactory<?> factory) {
         FACTORIES_BY_BLOCK_ENTITY_TYPE.put(type, factory);
     }
@@ -141,15 +144,16 @@ public final class CraftBlockStates {
     }
 
     private static <T extends BlockEntity, B extends CraftBlockEntityState<T>> void register(
-            net.minecraft.world.level.block.entity.BlockEntityType<? extends T> blockEntityType,
-            Class<B> blockStateType,
-            BiFunction<World, T, B> blockStateConstructor
+        net.minecraft.world.level.block.entity.BlockEntityType<? extends T> blockEntityType,
+        Class<B> blockStateType,
+        BiFunction<World, T, B> blockStateConstructor
     ) {
-        BlockStateFactory<B> factory = new BlockEntityStateFactory<>(blockStateType, blockStateConstructor, blockEntityType);
-        for (net.minecraft.world.level.block.Block block : blockEntityType.validBlocks) {
-            CraftBlockStates.register(CraftBlockType.minecraftToBukkit(block), factory);
-        }
-        CraftBlockStates.register(blockEntityType, factory);
+        throw new NotImplementedError();
+        // BlockStateFactory<B> factory = new BlockEntityStateFactory<>(blockStateType, blockStateConstructor, blockEntityType);
+        // for (net.minecraft.world.level.block.Block block : blockEntityType.validBlocks) {
+        //     CraftBlockStates.register(CraftBlockType.minecraftToBukkit(block), factory);
+        // }
+        // CraftBlockStates.register(blockEntityType, factory);
     }
 
     private static BlockStateFactory<?> getFactory(Material material) {
@@ -263,7 +267,7 @@ public final class CraftBlockStates {
     @Nullable
     public static BlockEntityType<?> getBlockEntityType(final Material material) {
         final BlockStateFactory<?> factory = org.bukkit.craftbukkit.block.CraftBlockStates.FACTORIES.get(material);
-        return factory instanceof final BlockEntityStateFactory<?,?> blockEntityStateFactory ? blockEntityStateFactory.blockEntityType : null;
+        return factory instanceof final BlockEntityStateFactory<?, ?> blockEntityStateFactory ? blockEntityStateFactory.blockEntityType : null;
     }
 
     private CraftBlockStates() {

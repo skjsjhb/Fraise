@@ -5,10 +5,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import kotlin.NotImplementedError;
 import net.minecraft.commands.arguments.blocks.BlockStateParser;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -18,7 +15,6 @@ import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.level.EmptyBlockGetter;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.state.StateHolder;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
@@ -48,6 +44,10 @@ import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 public class CraftBlockData implements BlockData {
 
     private net.minecraft.world.level.block.state.BlockState state;
@@ -63,7 +63,8 @@ public class CraftBlockData implements BlockData {
 
     @Override
     public Material getMaterial() {
-        return this.state.getBukkitMaterial(); // Paper - optimise getType calls
+        throw new NotImplementedError();
+        // return this.state.getBukkitMaterial(); // Paper - optimise getType calls
     }
 
     public net.minecraft.world.level.block.state.BlockState getState() {
@@ -73,9 +74,9 @@ public class CraftBlockData implements BlockData {
     /**
      * Get a given BlockStateEnum's value as its Bukkit counterpart.
      *
-     * @param nms the NMS state to convert
+     * @param nms    the NMS state to convert
      * @param bukkit the Bukkit class
-     * @param <B> the type
+     * @param <B>    the type
      * @return the matching Bukkit type
      */
     protected <B extends Enum<B>> B get(EnumProperty<?> nms, Class<B> bukkit) {
@@ -86,9 +87,9 @@ public class CraftBlockData implements BlockData {
      * Convert all values from the given BlockStateEnum to their appropriate
      * Bukkit counterpart.
      *
-     * @param nms the NMS state to get values from
+     * @param nms    the NMS state to get values from
      * @param bukkit the bukkit class to convert the values to
-     * @param <B> the bukkit class type
+     * @param <B>    the bukkit class type
      * @return an immutable Set of values in their appropriate Bukkit type
      */
     @SuppressWarnings("unchecked")
@@ -105,10 +106,10 @@ public class CraftBlockData implements BlockData {
     /**
      * Set a given {@link EnumProperty} with the matching enum from Bukkit.
      *
-     * @param nms the NMS BlockStateEnum to set
+     * @param nms    the NMS BlockStateEnum to set
      * @param bukkit the matching Bukkit Enum
-     * @param <B> the Bukkit type
-     * @param <N> the NMS type
+     * @param <B>    the Bukkit type
+     * @param <N>    the NMS type
      */
     protected <B extends Enum<B>, N extends Enum<N> & StringRepresentable> void set(EnumProperty<N> nms, Enum<B> bukkit) {
         this.parsedStates = null;
@@ -136,11 +137,10 @@ public class CraftBlockData implements BlockData {
         if (data == null) {
             return false;
         }
-        if (!(data instanceof CraftBlockData)) {
+        if (!(data instanceof final CraftBlockData craft)) {
             return false;
         }
 
-        CraftBlockData craft = (CraftBlockData) data;
         if (this.state.getBlock() != craft.state.getBlock()) {
             return false;
         }
@@ -176,7 +176,7 @@ public class CraftBlockData implements BlockData {
      * Convert a given Bukkit enum to its matching NMS enum type.
      *
      * @param bukkit the Bukkit enum to convert
-     * @param nms the NMS class
+     * @param nms    the NMS class
      * @return the matching NMS type
      * @throws IllegalStateException if the Enum could not be converted
      */
@@ -204,7 +204,7 @@ public class CraftBlockData implements BlockData {
      * Set the specified state's value.
      *
      * @param ibs the state to set
-     * @param v the new value
+     * @param v   the new value
      * @param <T> the state's type
      * @param <V> the value's type. Must match the state's type.
      */
@@ -240,15 +240,16 @@ public class CraftBlockData implements BlockData {
 
     // Mimicked from BlockDataAbstract#toString()
     public String toString(Map<Property<?>, Comparable<?>> states) {
-        StringBuilder stateString = new StringBuilder(BuiltInRegistries.BLOCK.getKey(this.state.getBlock()).toString());
+        final String stateString = BuiltInRegistries.BLOCK.getKey(this.state.getBlock()).toString();
 
         if (!states.isEmpty()) {
-            stateString.append('[');
-            stateString.append(states.entrySet().stream().map(StateHolder.PROPERTY_ENTRY_TO_STRING_FUNCTION).collect(Collectors.joining(",")));
-            stateString.append(']');
+            throw new NotImplementedError();
+            // stateString.append('[');
+            // stateString.append(states.entrySet().stream().map(StateHolder.PROPERTY_ENTRY_TO_STRING_FUNCTION).collect(Collectors.joining(",")));
+            // stateString.append(']');
         }
 
-        return stateString.toString();
+        return stateString;
     }
 
     public Map<String, String> toStates(boolean hideUnspecified) {
@@ -259,7 +260,7 @@ public class CraftBlockData implements BlockData {
         Map<String, String> compound = new HashMap<>();
 
         for (Map.Entry<Property<?>, Comparable<?>> entry : states.entrySet()) {
-            Property iblockstate = (Property) entry.getKey();
+            Property iblockstate = entry.getKey();
 
             compound.put(iblockstate.getName(), iblockstate.getName(entry.getValue()));
         }
@@ -313,12 +314,12 @@ public class CraftBlockData implements BlockData {
      * Get a specified {@link Property} from a given block's class with a
      * given name
      *
-     * @param block the class to retrieve the state from
-     * @param name the name of the state to retrieve
+     * @param block    the class to retrieve the state from
+     * @param name     the name of the state to retrieve
      * @param optional if the state can be null
      * @return the specified state or null
      * @throws IllegalStateException if the state is null and {@code optional}
-     * is false.
+     *                               is false.
      */
     private static Property<?> getState(Class<? extends Block> block, String name, boolean optional) {
         Property<?> state = null;
@@ -354,7 +355,8 @@ public class CraftBlockData implements BlockData {
      * @return the maximum value allowed
      */
     protected static int getMax(IntegerProperty state) {
-        return state.max;
+        throw new NotImplementedError();
+        // return state.max;
     }
 
     private static final Map<Class<? extends Block>, Function<net.minecraft.world.level.block.state.BlockState, CraftBlockData>> MAP = new HashMap<>();
@@ -551,7 +553,7 @@ public class CraftBlockData implements BlockData {
     }
 
     // Paper start - cache block data strings
-    private static Map<String, CraftBlockData> stringDataCache = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final Map<String, CraftBlockData> stringDataCache = new java.util.concurrent.ConcurrentHashMap<>();
 
     static {
         // cache all of the default states at startup, will not cache ones with the custom states inside of the
@@ -560,8 +562,9 @@ public class CraftBlockData implements BlockData {
     }
 
     public static void reloadCache() {
-        stringDataCache.clear();
-        Block.BLOCK_STATE_REGISTRY.forEach(blockData -> stringDataCache.put(blockData.toString(), blockData.createCraftBlockData()));
+        throw new NotImplementedError();
+        // stringDataCache.clear();
+        // Block.BLOCK_STATE_REGISTRY.forEach(blockData -> stringDataCache.put(blockData.toString(), blockData.createCraftBlockData()));
     }
     // Paper end - cache block data strings
 
@@ -615,10 +618,13 @@ public class CraftBlockData implements BlockData {
     // Paper start - optimize creating BlockData to not need a map lookup
     static {
         // Initialize cached data for all BlockState instances after registration
-        Block.BLOCK_STATE_REGISTRY.iterator().forEachRemaining(net.minecraft.world.level.block.state.BlockState::createCraftBlockData);
+        // throw new NotImplementedError();
+        // Block.BLOCK_STATE_REGISTRY.iterator().forEachRemaining(net.minecraft.world.level.block.state.BlockState::createCraftBlockData);
     }
+
     public static CraftBlockData fromData(net.minecraft.world.level.block.state.BlockState data) {
-        return data.createCraftBlockData();
+        throw new NotImplementedError();
+        // return data.createCraftBlockData();
     }
 
     public static CraftBlockData createData(net.minecraft.world.level.block.state.BlockState data) {
@@ -765,7 +771,8 @@ public class CraftBlockData implements BlockData {
                     switch (attributeModifier.operation()) {
                         case ADD_VALUE -> modifiedBaseValue.add(attributeModifier.amount());
                         case ADD_MULTIPLIED_BASE -> baseValMul.add(attributeModifier.amount());
-                        case ADD_MULTIPLIED_TOTAL -> totalValMul.setValue(totalValMul.doubleValue() * (1D + attributeModifier.amount()));
+                        case ADD_MULTIPLIED_TOTAL ->
+                            totalValMul.setValue(totalValMul.doubleValue() * (1D + attributeModifier.amount()));
                     }
                 }
             );

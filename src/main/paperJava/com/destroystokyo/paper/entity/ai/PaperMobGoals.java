@@ -1,16 +1,18 @@
 package com.destroystokyo.paper.entity.ai;
 
+import kotlin.NotImplementedError;
+import net.minecraft.world.entity.ai.goal.GoalSelector;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import org.bukkit.craftbukkit.entity.CraftMob;
+import org.bukkit.entity.Mob;
+import org.jspecify.annotations.NullMarked;
+
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import net.minecraft.world.entity.ai.goal.GoalSelector;
-import net.minecraft.world.entity.ai.goal.WrappedGoal;
-import org.bukkit.craftbukkit.entity.CraftMob;
-import org.bukkit.entity.Mob;
-import org.jspecify.annotations.NullMarked;
 
 @NullMarked
 public class PaperMobGoals implements MobGoals {
@@ -116,45 +118,47 @@ public class PaperMobGoals implements MobGoals {
 
     @Override
     public <T extends Mob> Collection<Goal<T>> getAllGoals(T mob, GoalType type) {
-        CraftMob craftMob = (CraftMob) mob;
-        Set<Goal<T>> goals = new HashSet<>();
-        for (WrappedGoal item : getHandle(craftMob, type).getAvailableGoals()) {
-            if (!item.getGoal().hasFlag(MobGoalHelper.paperToVanilla(type))) {
-                continue;
-            }
-
-            if (item.getGoal() instanceof PaperCustomGoal) {
-                //noinspection unchecked
-                goals.add(((PaperCustomGoal<T>) item.getGoal()).getHandle());
-            } else {
-                goals.add(item.getGoal().asPaperGoal());
-            }
-        }
-        return goals;
+        throw new NotImplementedError();
+        // CraftMob craftMob = (CraftMob) mob;
+        // Set<Goal<T>> goals = new HashSet<>();
+        // for (WrappedGoal item : getHandle(craftMob, type).getAvailableGoals()) {
+        //     if (!item.getGoal().hasFlag(MobGoalHelper.paperToVanilla(type))) {
+        //         continue;
+        //     }
+        //
+        //     if (item.getGoal() instanceof PaperCustomGoal) {
+        //         //noinspection unchecked
+        //         goals.add(((PaperCustomGoal<T>) item.getGoal()).getHandle());
+        //     } else {
+        //         goals.add(item.getGoal().asPaperGoal());
+        //     }
+        // }
+        // return goals;
     }
 
     @Override
     public <T extends Mob> Collection<Goal<T>> getAllGoalsWithout(T mob, GoalType type) {
-        CraftMob craftMob = (CraftMob) mob;
-        Set<Goal<T>> goals = new HashSet<>();
-        for (GoalType internalType : GoalType.values()) {
-            if (internalType == type) {
-                continue;
-            }
-            for (WrappedGoal item : getHandle(craftMob, internalType).getAvailableGoals()) {
-                if (item.getGoal().hasFlag(MobGoalHelper.paperToVanilla(type))) {
-                    continue;
-                }
-
-                if (item.getGoal() instanceof PaperCustomGoal) {
-                    //noinspection unchecked
-                    goals.add(((PaperCustomGoal<T>) item.getGoal()).getHandle());
-                } else {
-                    goals.add(item.getGoal().asPaperGoal());
-                }
-            }
-        }
-        return goals;
+        throw new NotImplementedError();
+        // CraftMob craftMob = (CraftMob) mob;
+        // Set<Goal<T>> goals = new HashSet<>();
+        // for (GoalType internalType : GoalType.values()) {
+        //     if (internalType == type) {
+        //         continue;
+        //     }
+        //     for (WrappedGoal item : getHandle(craftMob, internalType).getAvailableGoals()) {
+        //         if (item.getGoal().hasFlag(MobGoalHelper.paperToVanilla(type))) {
+        //             continue;
+        //         }
+        //
+        //         if (item.getGoal() instanceof PaperCustomGoal) {
+        //             //noinspection unchecked
+        //             goals.add(((PaperCustomGoal<T>) item.getGoal()).getHandle());
+        //         } else {
+        //             goals.add(item.getGoal().asPaperGoal());
+        //         }
+        //     }
+        // }
+        // return goals;
     }
 
     @Override
@@ -168,59 +172,63 @@ public class PaperMobGoals implements MobGoals {
 
     @Override
     public <T extends Mob> Collection<Goal<T>> getRunningGoals(T mob, GoalType type) {
-        CraftMob craftMob = (CraftMob) mob;
-        Set<Goal<T>> goals = new HashSet<>();
-        getHandle(craftMob, type).getAvailableGoals()
-            .stream().filter(WrappedGoal::isRunning)
-            .filter(item -> item.getGoal().hasFlag(MobGoalHelper.paperToVanilla(type)))
-            .forEach(item -> {
-                if (item.getGoal() instanceof PaperCustomGoal) {
-                    //noinspection unchecked
-                    goals.add(((PaperCustomGoal<T>) item.getGoal()).getHandle());
-                } else {
-                    goals.add(item.getGoal().asPaperGoal());
-                }
-            });
-        return goals;
+        throw new NotImplementedError();
+        // CraftMob craftMob = (CraftMob) mob;
+        // Set<Goal<T>> goals = new HashSet<>();
+        // getHandle(craftMob, type).getAvailableGoals()
+        //     .stream().filter(WrappedGoal::isRunning)
+        //     .filter(item -> item.getGoal().hasFlag(MobGoalHelper.paperToVanilla(type)))
+        //     .forEach(item -> {
+        //         if (item.getGoal() instanceof PaperCustomGoal) {
+        //             //noinspection unchecked
+        //             goals.add(((PaperCustomGoal<T>) item.getGoal()).getHandle());
+        //         } else {
+        //             goals.add(item.getGoal().asPaperGoal());
+        //         }
+        //     });
+        // return goals;
     }
 
     @Override
     public <T extends Mob> Collection<Goal<T>> getRunningGoalsWithout(T mob, GoalType type) {
-        CraftMob craftMob = (CraftMob) mob;
-        Set<Goal<T>> goals = new HashSet<>();
-        for (GoalType internalType : GoalType.values()) {
-            if (internalType == type) {
-                continue;
-            }
-            getHandle(craftMob, internalType).getAvailableGoals()
-                .stream()
-                .filter(WrappedGoal::isRunning)
-                .filter(item -> !item.getGoal().hasFlag(MobGoalHelper.paperToVanilla(type)))
-                .forEach(item -> {
-                    if (item.getGoal() instanceof PaperCustomGoal) {
-                        //noinspection unchecked
-                        goals.add(((PaperCustomGoal<T>) item.getGoal()).getHandle());
-                    } else {
-                        goals.add(item.getGoal().asPaperGoal());
-                    }
-                });
-        }
-        return goals;
+        throw new NotImplementedError();
+        // CraftMob craftMob = (CraftMob) mob;
+        // Set<Goal<T>> goals = new HashSet<>();
+        // for (GoalType internalType : GoalType.values()) {
+        //     if (internalType == type) {
+        //         continue;
+        //     }
+        //     getHandle(craftMob, internalType).getAvailableGoals()
+        //         .stream()
+        //         .filter(WrappedGoal::isRunning)
+        //         .filter(item -> !item.getGoal().hasFlag(MobGoalHelper.paperToVanilla(type)))
+        //         .forEach(item -> {
+        //             if (item.getGoal() instanceof PaperCustomGoal) {
+        //                 //noinspection unchecked
+        //                 goals.add(((PaperCustomGoal<T>) item.getGoal()).getHandle());
+        //             } else {
+        //                 goals.add(item.getGoal().asPaperGoal());
+        //             }
+        //         });
+        // }
+        // return goals;
     }
 
     private GoalSelector getHandle(CraftMob mob, EnumSet<GoalType> types) {
-        if (types.contains(GoalType.TARGET)) {
-            return mob.getHandle().targetSelector;
-        } else {
-            return mob.getHandle().goalSelector;
-        }
+        throw new NotImplementedError();
+        // if (types.contains(GoalType.TARGET)) {
+        //     return mob.getHandle().targetSelector;
+        // } else {
+        //     return mob.getHandle().goalSelector;
+        // }
     }
 
     private GoalSelector getHandle(CraftMob mob, GoalType type) {
-        if (type == GoalType.TARGET) {
-            return mob.getHandle().targetSelector;
-        } else {
-            return mob.getHandle().goalSelector;
-        }
+        throw new NotImplementedError();
+        // if (type == GoalType.TARGET) {
+        //     return mob.getHandle().targetSelector;
+        // } else {
+        //     return mob.getHandle().goalSelector;
+        // }
     }
 }

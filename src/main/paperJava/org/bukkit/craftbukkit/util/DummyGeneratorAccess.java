@@ -1,7 +1,5 @@
 package org.bukkit.craftbukkit.util;
 
-import java.util.List;
-import java.util.function.Predicate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Holder;
@@ -40,6 +38,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.ticks.BlackholeTickAccess;
 import net.minecraft.world.ticks.LevelTickAccess;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 public class DummyGeneratorAccess implements WorldGenLevel {
 
@@ -213,20 +214,21 @@ public class DummyGeneratorAccess implements WorldGenLevel {
         return Fluids.EMPTY.defaultFluidState(); // SPIGOT-6634
     }
 
-    @Override
-    public ChunkAccess getChunkIfLoadedImmediately(int x, int z) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public BlockState getBlockStateIfLoaded(BlockPos pos) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public FluidState getFluidIfLoaded(BlockPos pos) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    // throw new NotImplementedError();
+    // @Override
+    // public ChunkAccess getChunkIfLoadedImmediately(int x, int z) {
+    //     throw new UnsupportedOperationException("Not supported yet.");
+    // }
+    //
+    // @Override
+    // public BlockState getBlockStateIfLoaded(BlockPos pos) {
+    //     throw new UnsupportedOperationException("Not supported yet.");
+    // }
+    //
+    // @Override
+    // public FluidState getFluidIfLoaded(BlockPos pos) {
+    //     throw new UnsupportedOperationException("Not supported yet.");
+    // }
 
     @Override
     public WorldBorder getWorldBorder() {
@@ -259,11 +261,14 @@ public class DummyGeneratorAccess implements WorldGenLevel {
     }
 
     @Override
-    public void scheduleTick(BlockPos pos, Fluid fluid, int delay) {}
+    public void scheduleTick(BlockPos pos, Fluid fluid, int delay) {
+    }
 
     @Override
-    public void scheduleTick(BlockPos pos, Block block, int delay, net.minecraft.world.ticks.TickPriority priority) {}
+    public void scheduleTick(BlockPos pos, Block block, int delay, net.minecraft.world.ticks.TickPriority priority) {
+    }
 
     @Override
-    public void scheduleTick(BlockPos pos, Fluid fluid, int delay, net.minecraft.world.ticks.TickPriority priority) {}
+    public void scheduleTick(BlockPos pos, Fluid fluid, int delay, net.minecraft.world.ticks.TickPriority priority) {
+    }
 }

@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
-import java.util.Set;
 import com.mojang.logging.LogUtils;
+import kotlin.NotImplementedError;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentPatch;
@@ -9,21 +9,20 @@ import net.minecraft.core.component.DataComponentType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.storage.TagValueInput;
-import net.minecraft.world.level.storage.TagValueOutput;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.TileState;
 import org.bukkit.craftbukkit.CraftRegistry;
-import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+
+import java.util.Set;
 
 public abstract class CraftBlockEntityState<T extends BlockEntity> extends CraftBlockState implements TileState { // Paper - revert upstream's revert of the block state changes
 
@@ -40,22 +39,22 @@ public abstract class CraftBlockEntityState<T extends BlockEntity> extends Craft
         this.blockEntity = blockEntity;
 
         try { // Paper - Show blockstate location if we failed to read it
-        // Paper start
-        this.snapshotDisabled = DISABLE_SNAPSHOT;
-        if (DISABLE_SNAPSHOT) {
-            this.snapshot = this.blockEntity;
-        } else {
-            this.snapshot = this.createSnapshot(blockEntity);
-        }
-        // copy block entity data:
-        if (this.snapshot != null) {
-            this.load(this.snapshot);
-        }
-        // Paper end
-        // Paper start - Show blockstate location if we failed to read it
+            // Paper start
+            this.snapshotDisabled = DISABLE_SNAPSHOT;
+            if (DISABLE_SNAPSHOT) {
+                this.snapshot = this.blockEntity;
+            } else {
+                this.snapshot = this.createSnapshot(blockEntity);
+            }
+            // copy block entity data:
+            if (this.snapshot != null) {
+                this.load(this.snapshot);
+            }
+            // Paper end
+            // Paper start - Show blockstate location if we failed to read it
         } catch (Throwable thr) {
             if (thr instanceof ThreadDeath) {
-                throw (ThreadDeath)thr;
+                throw (ThreadDeath) thr;
             }
             throw new RuntimeException(
                 world == null
@@ -89,9 +88,10 @@ public abstract class CraftBlockEntityState<T extends BlockEntity> extends Craft
     }
 
     public Set<DataComponentType<?>> applyComponents(DataComponentMap datacomponentmap, DataComponentPatch datacomponentpatch) {
-        Set<DataComponentType<?>> result = this.snapshot.applyComponentsSet(datacomponentmap, datacomponentpatch);
-        this.load(this.snapshot);
-        return result;
+        throw new NotImplementedError();
+        // Set<DataComponentType<?>> result = this.snapshot.applyComponentsSet(datacomponentmap, datacomponentpatch);
+        // this.load(this.snapshot);
+        // return result;
     }
 
     public DataComponentMap collectComponents() {
@@ -153,22 +153,23 @@ public abstract class CraftBlockEntityState<T extends BlockEntity> extends Craft
 
     // Paper start - properly save blockentity itemstacks
     public CompoundTag getSnapshotCustomNbtOnly() {
-        this.applyTo(this.snapshot);
-        try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-            () -> "CraftBlockEntityState@" + getPosition().toShortString(), LOGGER
-        )) {
-            final TagValueOutput output = TagValueOutput.createWrappingWithContext(
-                problemReporter,
-                this.getRegistryAccess(),
-                this.snapshot.saveCustomOnly(this.getRegistryAccess())
-            );
-            this.snapshot.removeComponentsFromTag(output);
-            if (!output.isEmpty()) {
-                // have to include the "id" if it's going to have block entity data
-                this.snapshot.saveId(output);
-            }
-            return output.buildResult();
-        }
+        throw new NotImplementedError();
+        // this.applyTo(this.snapshot);
+        // try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //     () -> "CraftBlockEntityState@" + getPosition().toShortString(), LOGGER
+        // )) {
+        //     final TagValueOutput output = TagValueOutput.createWrappingWithContext(
+        //         problemReporter,
+        //         this.getRegistryAccess(),
+        //         this.snapshot.saveCustomOnly(this.getRegistryAccess())
+        //     );
+        //     this.snapshot.removeComponentsFromTag(output);
+        //     if (!output.isEmpty()) {
+        //         // have to include the "id" if it's going to have block entity data
+        //         this.snapshot.saveId(output);
+        //     }
+        //     return output.buildResult();
+        // }
     }
     // Paper end
 
@@ -214,12 +215,14 @@ public abstract class CraftBlockEntityState<T extends BlockEntity> extends Craft
 
     @Override
     public PersistentDataContainer getPersistentDataContainer() {
-        return this.getSnapshot().persistentDataContainer;
+        throw new NotImplementedError();
+        // return this.getSnapshot().persistentDataContainer;
     }
 
     @Nullable
     public Packet<ClientGamePacketListener> getUpdatePacket(@NotNull Location location) {
-        return new ClientboundBlockEntityDataPacket(CraftLocation.toBlockPosition(location), this.snapshot.getType(), this.getUpdateNBT());
+        throw new NotImplementedError();
+        // return new ClientboundBlockEntityDataPacket(CraftLocation.toBlockPosition(location), this.snapshot.getType(), this.getUpdateNBT());
     }
 
     @Override

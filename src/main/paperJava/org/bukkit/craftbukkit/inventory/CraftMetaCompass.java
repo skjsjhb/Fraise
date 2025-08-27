@@ -2,9 +2,7 @@ package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap.Builder;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.core.component.DataComponentPatch;
@@ -12,15 +10,16 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.component.LodestoneTracker;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.configuration.serialization.DelegateDeserialization;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.inventory.meta.CompassMeta;
+
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 
 @DelegateDeserialization(SerializableMeta.class)
 public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {
@@ -103,12 +102,13 @@ public class CraftMetaCompass extends CraftMetaItem implements CompassMeta {
 
     @Override
     public Location getLodestone() {
-        if (this.tracker == null || this.tracker.target().isEmpty()) {
-            return null;
-        }
-        ServerLevel level = MinecraftServer.getServer().getLevel(this.tracker.target().get().dimension());
-        World world = level != null ? level.getWorld() : null;
-        return org.bukkit.craftbukkit.util.CraftLocation.toBukkit(this.tracker.target().get().pos(), world); // world may be null here, if the referenced world is not loaded
+        // if (this.tracker == null || this.tracker.target().isEmpty()) {
+        //     return null;
+        // }
+        // ServerLevel level = MinecraftServer.getServer().getLevel(this.tracker.target().get().dimension());
+        // World world = level != null ? level.getWorld() : null;
+        // return org.bukkit.craftbukkit.util.CraftLocation.toBukkit(this.tracker.target().get().pos(), world); // world may be null here, if the referenced world is not loaded
+        throw new NotImplementedError();
     }
 
     @Override

@@ -83,7 +83,8 @@ public class CraftJukebox extends CraftBlockEntityState<JukeboxBlockEntity> impl
         ItemStack nms = CraftItemStack.asNMSCopy(record);
 
         JukeboxBlockEntity snapshot = this.getSnapshot();
-        snapshot.setSongItemWithoutPlaying(nms, snapshot.getSongPlayer().getTicksSinceSongStarted());
+        // snapshot.setSongItemWithoutPlaying(nms, snapshot.getSongPlayer().getTicksSinceSongStarted());
+        // throw new NotImplementedError();
 
         this.data = this.data.setValue(JukeboxBlock.HAS_RECORD, !nms.isEmpty());
     }
@@ -131,9 +132,8 @@ public class CraftJukebox extends CraftBlockEntityState<JukeboxBlockEntity> impl
         this.ensureNoWorldGeneration();
 
         BlockEntity blockEntity = this.getBlockEntityFromWorld();
-        if (!(blockEntity instanceof JukeboxBlockEntity)) return false;
+        if (!(blockEntity instanceof final JukeboxBlockEntity jukebox)) return false;
 
-        JukeboxBlockEntity jukebox = (JukeboxBlockEntity) blockEntity;
         boolean result = !jukebox.getTheItem().isEmpty();
         jukebox.popOutTheItem();
         return result;

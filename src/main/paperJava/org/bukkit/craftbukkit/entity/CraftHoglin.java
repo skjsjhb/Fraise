@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Hoglin;
 
@@ -17,7 +18,8 @@ public class CraftHoglin extends CraftAnimals implements Hoglin, CraftEnemy {
 
     @Override
     public boolean isImmuneToZombification() {
-        return this.getHandle().isImmuneToZombification();
+        throw new NotImplementedError();
+        // return this.getHandle().isImmuneToZombification();
     }
 
     @Override
@@ -27,28 +29,32 @@ public class CraftHoglin extends CraftAnimals implements Hoglin, CraftEnemy {
 
     @Override
     public boolean isAbleToBeHunted() {
-        return this.getHandle().cannotBeHunted;
+        throw new NotImplementedError();
+        // return this.getHandle().cannotBeHunted;
     }
 
     @Override
     public void setIsAbleToBeHunted(boolean flag) {
-        this.getHandle().cannotBeHunted = flag;
+        throw new NotImplementedError();
+        // this.getHandle().cannotBeHunted = flag;
     }
 
     @Override
     public int getConversionTime() {
         Preconditions.checkState(this.isConverting(), "Entity not converting");
-        return this.getHandle().timeInOverworld;
+        throw new NotImplementedError();
+        // return this.getHandle().timeInOverworld;
     }
 
     @Override
     public void setConversionTime(int time) {
-        if (time < 0) {
-            this.getHandle().timeInOverworld = -1;
-            this.getHandle().setImmuneToZombification(false);
-        } else {
-            this.getHandle().timeInOverworld = time;
-        }
+        throw new NotImplementedError();
+        // if (time < 0) {
+        //     this.getHandle().timeInOverworld = -1;
+        //     this.getHandle().setImmuneToZombification(false);
+        // } else {
+        //     this.getHandle().timeInOverworld = time;
+        // }
     }
 
     @Override

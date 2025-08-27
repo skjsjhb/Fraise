@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -24,12 +25,14 @@ public class CraftWitch extends CraftRaider implements Witch, com.destroystokyo.
     }
 
     public int getPotionUseTimeLeft() {
-        return this.getHandle().usingTime;
+        // return this.getHandle().usingTime;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setPotionUseTimeLeft(int ticks) {
-        this.getHandle().usingTime = ticks;
+        // this.getHandle().usingTime = ticks;
+        throw new NotImplementedError();
     }
 
     public ItemStack getDrinkingPotion() {
@@ -38,6 +41,7 @@ public class CraftWitch extends CraftRaider implements Witch, com.destroystokyo.
 
     public void setDrinkingPotion(ItemStack potion) {
         Preconditions.checkArgument(potion == null || potion.getType().isEmpty() || potion.getType() == Material.POTION, "must be potion, air, or null");
-        this.getHandle().setDrinkingPotion(CraftItemStack.asNMSCopy(potion));
+        // this.getHandle().setDrinkingPotion(CraftItemStack.asNMSCopy(potion));
+        throw new NotImplementedError();
     }
 }

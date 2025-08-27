@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.PiglinAbstract;
@@ -18,7 +19,8 @@ public class CraftPiglinAbstract extends CraftMonster implements PiglinAbstract 
 
     @Override
     public boolean isImmuneToZombification() {
-        return this.getHandle().isImmuneToZombification();
+        throw new NotImplementedError();
+        // return this.getHandle().isImmuneToZombification();
     }
 
     @Override
@@ -29,17 +31,19 @@ public class CraftPiglinAbstract extends CraftMonster implements PiglinAbstract 
     @Override
     public int getConversionTime() {
         Preconditions.checkState(this.isConverting(), "Entity not converting");
-        return this.getHandle().timeInOverworld;
+        throw new NotImplementedError();
+        // return this.getHandle().timeInOverworld;
     }
 
     @Override
     public void setConversionTime(int time) {
-        if (time < 0) {
-            this.getHandle().timeInOverworld = -1;
-            this.getHandle().setImmuneToZombification(false);
-        } else {
-            this.getHandle().timeInOverworld = time;
-        }
+        throw new NotImplementedError();
+        // if (time < 0) {
+        //     this.getHandle().timeInOverworld = -1;
+        //     this.getHandle().setImmuneToZombification(false);
+        // } else {
+        //     this.getHandle().timeInOverworld = time;
+        // }
     }
 
     @Override

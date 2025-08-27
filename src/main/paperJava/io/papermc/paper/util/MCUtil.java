@@ -6,40 +6,41 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import io.papermc.paper.math.BlockPosition;
 import io.papermc.paper.math.FinePosition;
 import io.papermc.paper.math.Position;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.craftbukkit.util.CraftNamespacedKey;
-import org.bukkit.craftbukkit.util.Waitable;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class MCUtil {
     public static final java.util.concurrent.Executor MAIN_EXECUTOR = (run) -> {
         if (!isMainThread()) {
-            MinecraftServer.getServer().execute(run);
+            throw new NotImplementedError();
+            // MinecraftServer.getServer().execute(run);
         } else {
             run.run();
         }
     };
     public static final ExecutorService ASYNC_EXECUTOR = Executors.newFixedThreadPool(2, new ThreadFactoryBuilder()
         .setNameFormat("Paper Async Task Handler Thread - %1$d")
-        .setUncaughtExceptionHandler(new net.minecraft.DefaultUncaughtExceptionHandlerWithName(MinecraftServer.LOGGER))
+        // throw new NotImplementedError();
+        // .setUncaughtExceptionHandler(new net.minecraft.DefaultUncaughtExceptionHandlerWithName(MinecraftServer.LOGGER))
         .build()
     );
 
@@ -82,7 +83,8 @@ public final class MCUtil {
     }
 
     public static boolean isMainThread() {
-        return MinecraftServer.getServer().isSameThread();
+        throw new NotImplementedError();
+        // return MinecraftServer.getServer().isSameThread();
     }
 
     public static void ensureMain(Runnable run) {
@@ -95,10 +97,12 @@ public final class MCUtil {
     public static void ensureMain(String reason, Runnable run) {
         if (!isMainThread()) {
             if (reason != null) {
-                MinecraftServer.LOGGER.warn("Asynchronous " + reason + "!", new IllegalStateException());
+                throw new NotImplementedError();
+                // MinecraftServer.LOGGER.warn("Asynchronous " + reason + "!", new IllegalStateException());
             }
-            MinecraftServer.getServer().processQueue.add(run);
-            return;
+            throw new NotImplementedError();
+            // MinecraftServer.getServer().processQueue.add(run);
+            // return;
         }
         run.run();
     }
@@ -124,22 +128,23 @@ public final class MCUtil {
      */
     public static <T> T ensureMain(String reason, Supplier<T> run) {
         if (!isMainThread()) {
-            if (reason != null) {
-                MinecraftServer.LOGGER.warn("Asynchronous " + reason + "! Blocking thread until it returns ", new IllegalStateException());
-            }
-            Waitable<T> wait = new Waitable<>() {
-                @Override
-                protected T evaluate() {
-                    return run.get();
-                }
-            };
-            MinecraftServer.getServer().processQueue.add(wait);
-            try {
-                return wait.get();
-            } catch (InterruptedException | ExecutionException e) {
-                MinecraftServer.LOGGER.warn("Encountered exception", e);
-            }
-            return null;
+            throw new NotImplementedError();
+            // if (reason != null) {
+            //     MinecraftServer.LOGGER.warn("Asynchronous " + reason + "! Blocking thread until it returns ", new IllegalStateException());
+            // }
+            // Waitable<T> wait = new Waitable<>() {
+            //     @Override
+            //     protected T evaluate() {
+            //         return run.get();
+            //     }
+            // };
+            // MinecraftServer.getServer().processQueue.add(wait);
+            // try {
+            //     return wait.get();
+            // } catch (InterruptedException | ExecutionException e) {
+            //     MinecraftServer.LOGGER.warn("Encountered exception", e);
+            // }
+            // return null;
         }
         return run.get();
     }
@@ -156,14 +161,16 @@ public final class MCUtil {
      * Converts a NMS World/Vector to Bukkit Location
      */
     public static Location toLocation(Level world, Vec3 pos) {
-        return new Location(world.getWorld(), pos.x(), pos.y(), pos.z());
+        throw new NotImplementedError();
+        // return new Location(world.getWorld(), pos.x(), pos.y(), pos.z());
     }
 
     /**
      * Converts a NMS World/Vector to Bukkit Location
      */
     public static Location toLocation(Level world, Vec3 pos, float yaw, float pitch) {
-        return new Location(world.getWorld(), pos.x(), pos.y(), pos.z(), yaw, pitch);
+        throw new NotImplementedError();
+        // return new Location(world.getWorld(), pos.x(), pos.y(), pos.z(), yaw, pitch);
     }
 
     public static BlockPos toBlockPos(Position pos) {

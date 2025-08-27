@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import net.minecraft.core.BlockPos;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.animal.allay.Allay;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -28,27 +28,32 @@ public class CraftAllay extends CraftCreature implements org.bukkit.entity.Allay
 
     @Override
     public boolean canDuplicate() {
-        return this.getHandle().canDuplicate();
+        throw new NotImplementedError();
+        // return this.getHandle().canDuplicate();
     }
 
     @Override
     public void setCanDuplicate(boolean canDuplicate) {
-        this.getHandle().setCanDuplicate(canDuplicate);
+        throw new NotImplementedError();
+        // this.getHandle().setCanDuplicate(canDuplicate);
     }
 
     @Override
     public long getDuplicationCooldown() {
-        return this.getHandle().duplicationCooldown;
+        throw new NotImplementedError();
+        // return this.getHandle().duplicationCooldown;
     }
 
     @Override
     public void setDuplicationCooldown(long l) {
-        this.getHandle().duplicationCooldown = l;
+        throw new NotImplementedError();
+        // this.getHandle().duplicationCooldown = l;
     }
 
     @Override
     public void resetDuplicationCooldown() {
-        this.getHandle().resetDuplicationCooldown();
+        throw new NotImplementedError();
+        // this.getHandle().resetDuplicationCooldown();
     }
 
     @Override
@@ -65,25 +70,29 @@ public class CraftAllay extends CraftCreature implements org.bukkit.entity.Allay
 
     @Override
     public void startDancing() {
-        this.getHandle().forceDancing = true;
-        this.getHandle().setDancing(true);
+        throw new NotImplementedError();
+        // this.getHandle().forceDancing = true;
+        // this.getHandle().setDancing(true);
     }
 
     @Override
     public void stopDancing() {
-        this.getHandle().forceDancing = false;
-        this.getHandle().jukeboxPos = null;
-        this.getHandle().setDancing(false); // Paper - Directly modify set dancing to avoid NPE
+        throw new NotImplementedError();
+        // this.getHandle().forceDancing = false;
+        // this.getHandle().jukeboxPos = null;
+        // this.getHandle().setDancing(false); // Paper - Directly modify set dancing to avoid NPE
     }
 
     @Override
     public org.bukkit.entity.Allay duplicateAllay() {
-        Allay nmsAllay = this.getHandle().duplicateAllay();
-        return (nmsAllay != null) ? (org.bukkit.entity.Allay) nmsAllay.getBukkitEntity() : null;
+        throw new NotImplementedError();
+        // Allay nmsAllay = this.getHandle().duplicateAllay();
+        // return (nmsAllay != null) ? (org.bukkit.entity.Allay) nmsAllay.getBukkitEntity() : null;
     }
 
     public Location getJukebox() {
-        BlockPos nmsJukeboxPos = this.getHandle().jukeboxPos;
-        return (nmsJukeboxPos != null) ? CraftLocation.toBukkit(nmsJukeboxPos, this.getWorld()) : null;
+        throw new NotImplementedError();
+        // BlockPos nmsJukeboxPos = this.getHandle().jukeboxPos;
+        // return (nmsJukeboxPos != null) ? CraftLocation.toBukkit(nmsJukeboxPos, this.getWorld()) : null;
     }
 }

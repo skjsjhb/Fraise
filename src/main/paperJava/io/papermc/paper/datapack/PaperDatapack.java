@@ -1,13 +1,14 @@
 package io.papermc.paper.datapack;
 
 import io.papermc.paper.adventure.PaperAdventure;
-import io.papermc.paper.event.server.ServerResourcesReloadedEvent;
-import java.util.ArrayList;
-import java.util.List;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.packs.repository.Pack;
 import org.jspecify.annotations.NullMarked;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NullMarked
 public class PaperDatapack extends PaperDiscoveredDatapack implements Datapack {
@@ -28,7 +29,8 @@ public class PaperDatapack extends PaperDiscoveredDatapack implements Datapack {
 
     @Override
     public void setEnabled(final boolean enabled) {
-        final MinecraftServer server = MinecraftServer.getServer();
+        if (true) throw new NotImplementedError();
+        final MinecraftServer server = null; // MinecraftServer.getServer();
         final List<Pack> enabledPacks = new ArrayList<>(server.getPackRepository().getSelectedPacks());
         final Pack packToChange = server.getPackRepository().getPack(this.getName());
         if (packToChange == null) {
@@ -42,7 +44,7 @@ public class PaperDatapack extends PaperDiscoveredDatapack implements Datapack {
         } else {
             enabledPacks.remove(packToChange);
         }
-        server.reloadResources(enabledPacks.stream().map(Pack::getId).toList(), ServerResourcesReloadedEvent.Cause.PLUGIN);
+        // server.reloadResources(enabledPacks.stream().map(Pack::getId).toList(), ServerResourcesReloadedEvent.Cause.PLUGIN);
     }
 
     @Override

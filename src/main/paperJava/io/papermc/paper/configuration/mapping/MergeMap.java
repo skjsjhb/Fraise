@@ -1,9 +1,11 @@
 package io.papermc.paper.configuration.mapping;
 
 import com.google.common.collect.Sets;
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.configuration.ConfigurationPart;
 import io.papermc.paper.configuration.serializer.collection.map.MapSerializer;
+import org.slf4j.Logger;
+
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,7 +14,6 @@ import java.lang.annotation.Target;
 import java.lang.reflect.AnnotatedType;
 import java.util.Map;
 import java.util.Set;
-import org.slf4j.Logger;
 
 import static com.google.common.base.Preconditions.checkState;
 
@@ -27,7 +28,7 @@ import static com.google.common.base.Preconditions.checkState;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MergeMap {
 
-    Logger LOGGER = LogUtils.getClassLogger();
+    Logger LOGGER = LogUtilsExt.getClassLogger();
     Definition<MergeMap, Map<?, ?>, Factory> DEFINITION = new Definition<>(MergeMap.class, MapSerializer.TYPE, new Factory());
 
     /**

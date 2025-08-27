@@ -7,16 +7,11 @@ import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import org.bukkit.Location;
-import org.bukkit.craftbukkit.entity.CraftHumanEntity;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
-
-import java.util.List;
 
 @DefaultQualifier(NonNull.class)
 public final class PaperInventoryCustomHolderContainer implements Container {
@@ -99,40 +94,42 @@ public final class PaperInventoryCustomHolderContainer implements Container {
         return this.delegate.stillValid(player);
     }
 
-    @Override
-    public List<ItemStack> getContents() {
-        return this.delegate.getContents();
-    }
+    // throw new NotImplementedError();
 
-    @Override
-    public void onOpen(CraftHumanEntity player) {
-        this.delegate.onOpen(player);
-    }
-
-    @Override
-    public void onClose(CraftHumanEntity player) {
-        this.delegate.onClose(player);
-    }
-
-    @Override
-    public List<HumanEntity> getViewers() {
-        return this.delegate.getViewers();
-    }
-
-    @Override
-    public InventoryHolder getOwner() {
-        return this.owner;
-    }
-
-    @Override
-    public void setMaxStackSize(int size) {
-        this.delegate.setMaxStackSize(size);
-    }
-
-    @Override
-    public Location getLocation() {
-        return this.delegate.getLocation();
-    }
+    // @Override
+    // public List<ItemStack> getContents() {
+    //     return this.delegate.getContents();
+    // }
+    //
+    // @Override
+    // public void onOpen(CraftHumanEntity player) {
+    //     this.delegate.onOpen(player);
+    // }
+    //
+    // @Override
+    // public void onClose(CraftHumanEntity player) {
+    //     this.delegate.onClose(player);
+    // }
+    //
+    // @Override
+    // public List<HumanEntity> getViewers() {
+    //     return this.delegate.getViewers();
+    // }
+    //
+    // @Override
+    // public InventoryHolder getOwner() {
+    //     return this.owner;
+    // }
+    //
+    // @Override
+    // public void setMaxStackSize(int size) {
+    //     this.delegate.setMaxStackSize(size);
+    // }
+    //
+    // @Override
+    // public Location getLocation() {
+    //     return this.delegate.getLocation();
+    // }
 
     @Override
     public void clearContent() {

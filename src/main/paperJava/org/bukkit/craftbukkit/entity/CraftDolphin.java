@@ -1,8 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
-import net.minecraft.Optionull;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.Dolphin;
 
 public class CraftDolphin extends CraftAgeable implements Dolphin {
@@ -38,11 +37,13 @@ public class CraftDolphin extends CraftAgeable implements Dolphin {
 
     @Override
     public org.bukkit.Location getTreasureLocation() {
-        return Optionull.map(this.getHandle().treasurePos, pos -> CraftLocation.toBukkit(pos, this.getHandle().level()));
+        // return Optionull.map(this.getHandle().treasurePos, pos -> CraftLocation.toBukkit(pos, this.getHandle().level()));
+        throw new NotImplementedError();
     }
 
     @Override
     public void setTreasureLocation(org.bukkit.Location location) {
-        this.getHandle().treasurePos = location == null ? null : CraftLocation.toBlockPosition(location);
+        // this.getHandle().treasurePos = location == null ? null : CraftLocation.toBlockPosition(location);
+        throw new NotImplementedError();
     }
 }

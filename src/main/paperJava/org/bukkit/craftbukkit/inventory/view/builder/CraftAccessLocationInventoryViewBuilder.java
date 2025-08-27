@@ -1,8 +1,8 @@
 package org.bukkit.craftbukkit.inventory.view.builder;
 
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.level.Level;
@@ -35,9 +35,10 @@ public class CraftAccessLocationInventoryViewBuilder<V extends InventoryView> ex
             effectiveBlockState = block.defaultBlockState();
         }
 
-        final MenuProvider provider = block.getMenuProvider(effectiveBlockState, effectiveLevel, effectiveBlockPos);
-        super.defaultTitle = provider.getDisplayName();
-        return provider.createMenu(player.nextContainerCounter(), player.getInventory(), player);
+        throw new NotImplementedError();
+        // final MenuProvider provider = block.getMenuProvider(effectiveBlockState, effectiveLevel, effectiveBlockPos);
+        // super.defaultTitle = provider.getDisplayName();
+        // return provider.createMenu(player.nextContainerCounter(), player.getInventory(), player);
     }
 
     @Override

@@ -1,17 +1,17 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.UUID;
+import kotlin.NotImplementedError;
 import net.minecraft.Optionull;
 import net.minecraft.world.entity.EntityReference;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.inventory.CraftSaddledInventory;
 import org.bukkit.entity.AbstractHorse;
 import org.bukkit.entity.AnimalTamer;
 import org.bukkit.entity.Horse;
 import org.bukkit.inventory.AbstractHorseInventory;
+
+import java.util.UUID;
 
 public abstract class CraftAbstractHorse extends CraftAnimals implements AbstractHorse {
 
@@ -47,8 +47,9 @@ public abstract class CraftAbstractHorse extends CraftAnimals implements Abstrac
 
     @Override
     public void setMaxDomestication(int value) {
-        Preconditions.checkArgument(value > 0, "Max domestication (%s) cannot be zero or less", value);
-        this.getHandle().maxDomestication = value;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(value > 0, "Max domestication (%s) cannot be zero or less", value);
+        // this.getHandle().maxDomestication = value;
     }
 
     @Override
@@ -80,14 +81,15 @@ public abstract class CraftAbstractHorse extends CraftAnimals implements Abstrac
 
     @Override
     public void setOwner(AnimalTamer owner) {
-        if (owner != null) {
-            this.setTamed(true);
-            this.getHandle().setTarget(null, null);
-            this.setOwnerUUID(owner.getUniqueId());
-        } else {
-            this.setTamed(false);
-            this.setOwnerUUID(null);
-        }
+        throw new NotImplementedError();
+        // if (owner != null) {
+        //     this.setTamed(true);
+        //     this.getHandle().setTarget(null, null);
+        //     this.setOwnerUUID(owner.getUniqueId());
+        // } else {
+        //     this.setTamed(false);
+        //     this.setOwnerUUID(null);
+        // }
     }
 
     @Override
@@ -100,7 +102,8 @@ public abstract class CraftAbstractHorse extends CraftAnimals implements Abstrac
     }
 
     public void setOwnerUUID(UUID uuid) {
-        this.getHandle().owner = uuid == null ? null : new EntityReference<>(uuid);
+        throw new NotImplementedError();
+        // this.getHandle().owner = uuid == null ? null : new EntityReference<>(uuid);
     }
 
     @Override
@@ -115,11 +118,12 @@ public abstract class CraftAbstractHorse extends CraftAnimals implements Abstrac
 
     @Override
     public AbstractHorseInventory getInventory() {
-        return new CraftSaddledInventory(
-            this.getHandle().inventory,
-            this.getHandle().createEquipmentSlotContainer(EquipmentSlot.BODY),
-            this.getHandle().createEquipmentSlotContainer(EquipmentSlot.SADDLE)
-        );
+        throw new NotImplementedError();
+        // return new CraftSaddledInventory(
+        //     this.getHandle().inventory,
+        //     this.getHandle().createEquipmentSlotContainer(EquipmentSlot.BODY),
+        //     this.getHandle().createEquipmentSlotContainer(EquipmentSlot.SADDLE)
+        // );
     }
 
     @Override
@@ -148,11 +152,13 @@ public abstract class CraftAbstractHorse extends CraftAnimals implements Abstrac
 
     @Override
     public boolean isEating() {
-        return this.getHandle().isMouthOpen();
+        throw new NotImplementedError();
+        // return this.getHandle().isMouthOpen();
     }
 
     @Override
     public void setEating(boolean eating) {
-       this.getHandle().setMouthOpen(eating);
+        throw new NotImplementedError();
+        // this.getHandle().setMouthOpen(eating);
     }
 }

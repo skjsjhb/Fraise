@@ -1,10 +1,9 @@
 package org.bukkit.craftbukkit.entity;
 
-import net.minecraft.world.entity.EntityReference;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.item.PrimedTnt;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.TNTPrimed;
 
 public class CraftTNTPrimed extends CraftEntity implements TNTPrimed {
@@ -20,22 +19,26 @@ public class CraftTNTPrimed extends CraftEntity implements TNTPrimed {
 
     @Override
     public float getYield() {
-        return this.getHandle().explosionPower;
+        // return this.getHandle().explosionPower;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean isIncendiary() {
-        return this.getHandle().isIncendiary;
+        // return this.getHandle().isIncendiary;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setIsIncendiary(boolean isIncendiary) {
-        this.getHandle().isIncendiary = isIncendiary;
+        // this.getHandle().isIncendiary = isIncendiary;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setYield(float yield) {
-        this.getHandle().explosionPower = yield;
+        // this.getHandle().explosionPower = yield;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -52,16 +55,18 @@ public class CraftTNTPrimed extends CraftEntity implements TNTPrimed {
     public Entity getSource() {
         net.minecraft.world.entity.LivingEntity source = this.getHandle().getOwner();
 
-        return (source != null) ? source.getBukkitEntity() : null;
+        // return (source != null) ? source.getBukkitEntity() : null;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setSource(Entity source) {
-        if (source instanceof LivingEntity) {
-            this.getHandle().owner = new EntityReference<>(((CraftLivingEntity) source).getHandle());
-        } else {
-            this.getHandle().owner = null;
-        }
+        throw new NotImplementedError();
+        // if (source instanceof LivingEntity) {
+        //     this.getHandle().owner = new EntityReference<>(((CraftLivingEntity) source).getHandle());
+        // } else {
+        //     this.getHandle().owner = null;
+        // }
     }
 
     @Override

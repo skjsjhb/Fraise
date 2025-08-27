@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.Turtle;
 
 public class CraftTurtle extends CraftAnimals implements Turtle {
@@ -27,21 +27,25 @@ public class CraftTurtle extends CraftAnimals implements Turtle {
 
     @Override
     public org.bukkit.Location getHome() {
-        return CraftLocation.toBukkit(this.getHandle().homePos, this.getHandle().level());
+        // return CraftLocation.toBukkit(this.getHandle().homePos, this.getHandle().level());
+        throw new NotImplementedError();
     }
 
     @Override
     public void setHome(org.bukkit.Location location) {
-        this.getHandle().homePos = CraftLocation.toBlockPosition(location);
+        // this.getHandle().homePos = CraftLocation.toBlockPosition(location);
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean isGoingHome() {
-        return this.getHandle().goingHome;
+        // return this.getHandle().goingHome;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setHasEgg(boolean hasEgg) {
-        this.getHandle().setHasEgg(hasEgg);
+        // this.getHandle().setHasEgg(hasEgg);
+        throw new NotImplementedError();
     }
 }

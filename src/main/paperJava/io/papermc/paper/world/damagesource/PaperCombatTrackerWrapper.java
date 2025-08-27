@@ -3,15 +3,15 @@ package io.papermc.paper.world.damagesource;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import io.papermc.paper.adventure.PaperAdventure;
-import java.util.ArrayList;
-import java.util.List;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
-import net.minecraft.Optionull;
 import net.minecraft.Util;
 import net.minecraft.world.damagesource.FallLocation;
 import org.bukkit.entity.LivingEntity;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
+import java.util.List;
 
 @NullMarked
 public record PaperCombatTrackerWrapper(
@@ -20,36 +20,42 @@ public record PaperCombatTrackerWrapper(
 
     @Override
     public LivingEntity getEntity() {
-        return this.handle.mob.getBukkitLivingEntity();
+        throw new NotImplementedError();
+        // return this.handle.mob.getBukkitLivingEntity();
     }
 
     @Override
     public List<CombatEntry> getCombatEntries() {
-        final List<CombatEntry> combatEntries = new ArrayList<>(this.handle.entries.size());
-        this.handle.entries.forEach(combatEntry -> combatEntries.add(new PaperCombatEntryWrapper(combatEntry)));
-        return combatEntries;
+        throw new NotImplementedError();
+        // final List<CombatEntry> combatEntries = new ArrayList<>(this.handle.entries.size());
+        // this.handle.entries.forEach(combatEntry -> combatEntries.add(new PaperCombatEntryWrapper(combatEntry)));
+        // return combatEntries;
     }
 
     @Override
     public void setCombatEntries(final List<CombatEntry> combatEntries) {
-        this.handle.entries.clear();
-        combatEntries.forEach(combatEntry -> this.handle.entries.add(((PaperCombatEntryWrapper) combatEntry).handle()));
+        throw new NotImplementedError();
+        // this.handle.entries.clear();
+        // combatEntries.forEach(combatEntry -> this.handle.entries.add(((PaperCombatEntryWrapper) combatEntry).handle()));
     }
 
     @Override
     public @Nullable CombatEntry computeMostSignificantFall() {
-        final net.minecraft.world.damagesource.CombatEntry combatEntry = this.handle.getMostSignificantFall();
-        return combatEntry == null ? null : new PaperCombatEntryWrapper(combatEntry);
+        throw new NotImplementedError();
+        // final net.minecraft.world.damagesource.CombatEntry combatEntry = this.handle.getMostSignificantFall();
+        // return combatEntry == null ? null : new PaperCombatEntryWrapper(combatEntry);
     }
 
     @Override
     public boolean isInCombat() {
-        return this.handle.inCombat;
+        throw new NotImplementedError();
+        // return this.handle.inCombat;
     }
 
     @Override
     public boolean isTakingDamage() {
-        return this.handle.takingDamage;
+        throw new NotImplementedError();
+        // return this.handle.takingDamage;
     }
 
     @Override
@@ -59,8 +65,9 @@ public record PaperCombatTrackerWrapper(
 
     @Override
     public void addCombatEntry(final CombatEntry combatEntry) {
-        final net.minecraft.world.damagesource.CombatEntry entry = ((PaperCombatEntryWrapper) combatEntry).handle();
-        this.handle.recordDamageAndCheckCombatState(entry);
+        throw new NotImplementedError();
+        // final net.minecraft.world.damagesource.CombatEntry entry = ((PaperCombatEntryWrapper) combatEntry).handle();
+        // this.handle.recordDamageAndCheckCombatState(entry);
     }
 
     @Override
@@ -70,13 +77,15 @@ public record PaperCombatTrackerWrapper(
 
     @Override
     public void resetCombatState() {
-        this.handle.resetCombatState();
+        throw new NotImplementedError();
+        // this.handle.resetCombatState();
     }
 
     @Override
     public FallLocationType calculateFallLocationType() {
-        final FallLocation fallLocation = FallLocation.getCurrentFallLocation(this.handle().mob);
-        return Optionull.map(fallLocation, PaperCombatTrackerWrapper::minecraftToPaper);
+        throw new NotImplementedError();
+        // final FallLocation fallLocation = FallLocation.getCurrentFallLocation(this.handle().mob);
+        // return Optionull.map(fallLocation, PaperCombatTrackerWrapper::minecraftToPaper);
     }
 
     private static final BiMap<FallLocation, FallLocationType> FALL_LOCATION_MAPPING = Util.make(() -> {

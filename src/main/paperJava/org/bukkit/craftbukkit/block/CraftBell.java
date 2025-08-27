@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.BellBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BellBlockEntity;
@@ -47,7 +48,8 @@ public class CraftBell extends CraftBlockEntityState<BellBlockEntity> implements
 
     @Override
     public boolean isResonating() {
-        return this.getSnapshot().resonating;
+        throw new NotImplementedError();
+        // return this.getSnapshot().resonating;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Panda;
 
@@ -48,12 +49,14 @@ public class CraftPanda extends CraftAnimals implements Panda {
 
     @Override
     public void setEatingTicks(int ticks) {
-        this.getHandle().setEatCounter(ticks);
+        // this.getHandle().setEatCounter(ticks);
+        throw new NotImplementedError();
     }
 
     @Override
     public int getEatingTicks() {
-        return this.getHandle().getEatCounter();
+        // return this.getHandle().getEatCounter();
+        throw new NotImplementedError();
     }
 
     @Override

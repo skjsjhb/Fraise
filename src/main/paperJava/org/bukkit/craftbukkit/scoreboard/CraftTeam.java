@@ -2,10 +2,7 @@ package org.bukkit.craftbukkit.scoreboard;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.audience.Audience;
 import net.minecraft.world.scores.PlayerTeam;
 import net.minecraft.world.scores.Team.Visibility;
@@ -15,6 +12,11 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.scoreboard.NameTagVisibility;
 import org.bukkit.scoreboard.Team;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 final class CraftTeam extends CraftScoreboardComponent implements Team {
     private final PlayerTeam team;
@@ -250,7 +252,8 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
         Preconditions.checkArgument(entries != null, "Entries cannot be null");
         this.checkState();
 
-        ((net.minecraft.server.ServerScoreboard) this.getScoreboard().getHandle()).addPlayersToTeam(entries, this.team);
+        // ((net.minecraft.server.ServerScoreboard) this.getScoreboard().getHandle()).addPlayersToTeam(entries, this.team);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -284,8 +287,9 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
 
         for (String entry : entries) {
             if (this.team.getPlayers().contains(entry)) {
-                ((net.minecraft.server.ServerScoreboard) this.getScoreboard().getHandle()).removePlayersFromTeam(entries, this.team);
-                return true;
+                // ((net.minecraft.server.ServerScoreboard) this.getScoreboard().getHandle()).removePlayersFromTeam(entries, this.team);
+                throw new NotImplementedError();
+                // return true;
             }
         }
 
@@ -331,7 +335,8 @@ final class CraftTeam extends CraftScoreboardComponent implements Team {
         switch (option) {
             case NAME_TAG_VISIBILITY -> this.team.setNameTagVisibility(Visibility.values()[status.ordinal()]);
             case DEATH_MESSAGE_VISIBILITY -> this.team.setDeathMessageVisibility(Visibility.values()[status.ordinal()]);
-            case COLLISION_RULE -> this.team.setCollisionRule(net.minecraft.world.scores.Team.CollisionRule.values()[status.ordinal()]);
+            case COLLISION_RULE ->
+                this.team.setCollisionRule(net.minecraft.world.scores.Team.CollisionRule.values()[status.ordinal()]);
             default -> throw new IllegalArgumentException("Unrecognised option " + option);
         }
     }

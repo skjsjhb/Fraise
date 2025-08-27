@@ -1,8 +1,8 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Rotations;
-import org.bukkit.craftbukkit.CraftEquipmentSlot;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.EquipmentSlot;
@@ -182,7 +182,8 @@ public class CraftArmorStand extends CraftLivingEntity implements ArmorStand {
 
     @Override
     public void setSmall(boolean small) {
-        this.getHandle().setSmall(small);
+        throw new NotImplementedError();
+        // this.getHandle().setSmall(small);
     }
 
     private static EulerAngle fromNMS(Rotations old) {
@@ -208,32 +209,38 @@ public class CraftArmorStand extends CraftLivingEntity implements ArmorStand {
 
     @Override
     public void setMarker(boolean marker) {
-        this.getHandle().setMarker(marker);
+        throw new NotImplementedError();
+        // this.getHandle().setMarker(marker);
     }
 
     @Override
     public void addEquipmentLock(EquipmentSlot equipmentSlot, LockType lockType) {
-        this.getHandle().disabledSlots |= (1 << CraftEquipmentSlot.getNMS(equipmentSlot).getFilterBit(lockType.ordinal() * 8));
+        throw new NotImplementedError();
+        // this.getHandle().disabledSlots |= (1 << CraftEquipmentSlot.getNMS(equipmentSlot).getFilterBit(lockType.ordinal() * 8));
     }
 
     @Override
     public void removeEquipmentLock(EquipmentSlot equipmentSlot, LockType lockType) {
-        this.getHandle().disabledSlots &= ~(1 << CraftEquipmentSlot.getNMS(equipmentSlot).getFilterBit(lockType.ordinal() * 8));
+        throw new NotImplementedError();
+        // this.getHandle().disabledSlots &= ~(1 << CraftEquipmentSlot.getNMS(equipmentSlot).getFilterBit(lockType.ordinal() * 8));
     }
 
     @Override
     public boolean hasEquipmentLock(EquipmentSlot equipmentSlot, LockType lockType) {
-        return (this.getHandle().disabledSlots & (1 << CraftEquipmentSlot.getNMS(equipmentSlot).getFilterBit(lockType.ordinal() * 8))) != 0;
+        throw new NotImplementedError();
+        // return (this.getHandle().disabledSlots & (1 << CraftEquipmentSlot.getNMS(equipmentSlot).getFilterBit(lockType.ordinal() * 8))) != 0;
     }
 
     @Override
     public boolean canMove() {
-        return this.getHandle().canMove;
+        throw new NotImplementedError();
+        // return this.getHandle().canMove;
     }
 
     @Override
     public void setCanMove(boolean move) {
-        this.getHandle().canMove = move;
+        throw new NotImplementedError();
+        // this.getHandle().canMove = move;
     }
 
     @Override
@@ -269,7 +276,8 @@ public class CraftArmorStand extends CraftLivingEntity implements ArmorStand {
             net.minecraft.world.entity.EquipmentSlot nmsSlot = org.bukkit.craftbukkit.CraftEquipmentSlot.getNMS(slot);
             disabled += (1 << nmsSlot.getFilterBit(0)) + (1 << nmsSlot.getFilterBit(8)) + (1 << nmsSlot.getFilterBit(16));
         }
-        this.getHandle().disabledSlots = disabled;
+        throw new NotImplementedError();
+        // this.getHandle().disabledSlots = disabled;
     }
 
     @Override
@@ -288,7 +296,8 @@ public class CraftArmorStand extends CraftLivingEntity implements ArmorStand {
 
     @Override
     public boolean isSlotDisabled(org.bukkit.inventory.EquipmentSlot slot) {
-        return this.getHandle().isDisabled(org.bukkit.craftbukkit.CraftEquipmentSlot.getNMS(slot));
+        throw new NotImplementedError();
+        // return this.getHandle().isDisabled(org.bukkit.craftbukkit.CraftEquipmentSlot.getNMS(slot));
     }
 
     @Override
@@ -361,12 +370,14 @@ public class CraftArmorStand extends CraftLivingEntity implements ArmorStand {
 
     @Override
     public boolean canTick() {
-        return this.getHandle().canTick;
+        throw new NotImplementedError();
+        // return this.getHandle().canTick;
     }
 
     @Override
     public void setCanTick(final boolean tick) {
-        this.getHandle().canTick = tick;
-        this.getHandle().canTickSetByAPI = true;
+        throw new NotImplementedError();
+        // this.getHandle().canTick = tick;
+        // this.getHandle().canTickSetByAPI = true;
     }
 }

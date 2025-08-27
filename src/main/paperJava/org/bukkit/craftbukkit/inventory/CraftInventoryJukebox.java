@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.Container;
 import org.bukkit.block.Jukebox;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +28,7 @@ public class CraftInventoryJukebox extends CraftInventory implements JukeboxInve
 
     @Override
     public Jukebox getHolder() {
-        return (Jukebox) this.inventory.getOwner();
+        // return (Jukebox) this.inventory.getOwner();
+        throw new NotImplementedError();
     }
 }

@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.Mob;
 import org.apache.commons.lang3.ArrayUtils;
 import org.bukkit.craftbukkit.CraftEquipmentSlot;
@@ -160,7 +161,8 @@ public class CraftEntityEquipment implements EntityEquipment {
     }
 
     private void setEquipment(net.minecraft.world.entity.EquipmentSlot slot, ItemStack stack, boolean silent) {
-        this.entity.getHandle().setItemSlot(slot, CraftItemStack.asNMSCopy(stack), silent);
+        // this.entity.getHandle().setItemSlot(slot, CraftItemStack.asNMSCopy(stack), silent);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -187,7 +189,7 @@ public class CraftEntityEquipment implements EntityEquipment {
 
     @Override
     public float getItemInMainHandDropChance() {
-       return this.getDropChance(net.minecraft.world.entity.EquipmentSlot.MAINHAND);
+        return this.getDropChance(net.minecraft.world.entity.EquipmentSlot.MAINHAND);
     }
 
     @Override
@@ -244,6 +246,7 @@ public class CraftEntityEquipment implements EntityEquipment {
     public void setBootsDropChance(float chance) {
         this.setDropChance(net.minecraft.world.entity.EquipmentSlot.FEET, chance);
     }
+
     // Paper start
     @Override
     public float getDropChance(EquipmentSlot slot) {

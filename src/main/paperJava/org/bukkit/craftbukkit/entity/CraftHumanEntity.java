@@ -2,46 +2,24 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.Set;
-import java.util.function.Consumer;
 import com.mojang.logging.LogUtils;
 import io.papermc.paper.adventure.PaperAdventure;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.key.Key;
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.game.ClientboundHorseScreenOpenPacket;
-import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
-import net.minecraft.network.protocol.game.ServerboundContainerClosePacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntitySpawnReason;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
-import net.minecraft.world.inventory.AbstractContainerMenu;
-import net.minecraft.world.inventory.HorseInventoryMenu;
-import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.inventory.MerchantMenu;
-import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.TagValueInput;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -49,24 +27,16 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.CraftEquipmentSlot;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.event.CraftEventFactory;
-import org.bukkit.craftbukkit.inventory.CraftContainer;
 import org.bukkit.craftbukkit.inventory.CraftInventory;
-import org.bukkit.craftbukkit.inventory.CraftInventoryAbstractHorse;
-import org.bukkit.craftbukkit.inventory.CraftInventoryDoubleChest;
-import org.bukkit.craftbukkit.inventory.CraftInventoryLectern;
 import org.bukkit.craftbukkit.inventory.CraftInventoryPlayer;
-import org.bukkit.craftbukkit.inventory.CraftInventoryView;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.inventory.CraftMerchantCustom;
 import org.bukkit.craftbukkit.inventory.CraftRecipe;
-import org.bukkit.craftbukkit.inventory.util.CraftMenus;
 import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Villager;
-import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
@@ -83,6 +53,14 @@ import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Consumer;
 
 public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
@@ -152,16 +130,18 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public void setItemOnCursor(ItemStack item) {
-        net.minecraft.world.item.ItemStack stack = CraftItemStack.asNMSCopy(item);
-        this.getHandle().containerMenu.setCarried(stack);
-        if (this instanceof CraftPlayer) {
-            this.getHandle().containerMenu.broadcastCarriedItem(); // Send set slot for cursor
-        }
+        throw new NotImplementedError();
+        // net.minecraft.world.item.ItemStack stack = CraftItemStack.asNMSCopy(item);
+        // this.getHandle().containerMenu.setCarried(stack);
+        // if (this instanceof CraftPlayer) {
+        //     this.getHandle().containerMenu.broadcastCarriedItem(); // Send set slot for cursor
+        // }
     }
 
     @Override
     public void setHurtDirection(float hurtDirection) {
-        this.getHandle().hurtDir = hurtDirection;
+        throw new NotImplementedError();
+        // this.getHandle().hurtDir = hurtDirection;
     }
 
     @Override
@@ -171,30 +151,33 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public int getSleepTicks() {
-        return this.getHandle().sleepCounter;
+        throw new NotImplementedError();
+        // return this.getHandle().sleepCounter;
     }
 
     @Override
     public Location getPotentialRespawnLocation() {
-        ServerPlayer.RespawnConfig respawnConfig = ((ServerPlayer) this.getHandle()).getRespawnConfig();
-        if (respawnConfig == null) {
-            return null;
-        }
-
-        net.minecraft.server.level.ServerLevel level = ((ServerPlayer) this.getHandle()).getServer().getLevel(respawnConfig.dimension());
-        if (level == null) {
-            return null;
-        }
-
-        return CraftLocation.toBukkit(respawnConfig.pos(), level.getWorld());
+        throw new NotImplementedError();
+        // ServerPlayer.RespawnConfig respawnConfig = ((ServerPlayer) this.getHandle()).getRespawnConfig();
+        // if (respawnConfig == null) {
+        //     return null;
+        // }
+        //
+        // net.minecraft.server.level.ServerLevel level = ((ServerPlayer) this.getHandle()).getServer().getLevel(respawnConfig.dimension());
+        // if (level == null) {
+        //     return null;
+        // }
+        //
+        // return CraftLocation.toBukkit(respawnConfig.pos(), level.getWorld());
     }
 
     @Override
     public org.bukkit.entity.FishHook getFishHook() {
-        if (getHandle().fishing == null) {
-            return null;
-        }
-        return (org.bukkit.entity.FishHook) getHandle().fishing.getBukkitEntity();
+        throw new NotImplementedError();
+        // if (getHandle().fishing == null) {
+        //     return null;
+        // }
+        // return (org.bukkit.entity.FishHook) getHandle().fishing.getBukkitEntity();
     }
 
     @Override
@@ -209,9 +192,10 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
             return false;
         }
 
-        if (this.getHandle().startSleepInBed(pos, force).left().isPresent()) {
-            return false;
-        }
+        // throw new NotImplementedError();
+        // if (this.getHandle().startSleepInBed(pos, force).left().isPresent()) {
+        //     return false;
+        // }
 
         // From BlockBed
         state = state.setValue(BedBlock.OCCUPIED, true);
@@ -328,71 +312,74 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public InventoryView getOpenInventory() {
-        return this.getHandle().containerMenu.getBukkitView();
+        throw new NotImplementedError();
+        // return this.getHandle().containerMenu.getBukkitView();
     }
 
     @Override
     public InventoryView openInventory(Inventory inventory) {
-        if (!(this.getHandle() instanceof ServerPlayer)) return null;
-        ServerPlayer player = (ServerPlayer) this.getHandle();
-        AbstractContainerMenu formerContainer = this.getHandle().containerMenu;
-
-        MenuProvider menuProvider = null;
-        if (inventory instanceof CraftInventoryDoubleChest) {
-            menuProvider = ((CraftInventoryDoubleChest) inventory).provider;
-        } else if (inventory instanceof CraftInventoryLectern) {
-            menuProvider = ((CraftInventoryLectern) inventory).provider;
-        } else if (inventory instanceof CraftInventory) {
-            CraftInventory craft = (CraftInventory) inventory;
-            if (craft.getInventory() instanceof MenuProvider) {
-                menuProvider = (MenuProvider) craft.getInventory();
-            }
-        }
-
-        if (menuProvider != null) {
-            if (menuProvider instanceof final BlockEntity blockEntity) {
-                if (!blockEntity.hasLevel()) {
-                    blockEntity.setLevel(this.getHandle().level());
-                }
-            }
-        }
-
-        if (menuProvider != null) {
-            this.getHandle().openMenu(menuProvider);
-        } else if (inventory instanceof CraftInventoryAbstractHorse craft && craft.getInventory().getOwner() instanceof CraftAbstractHorse horse) {
-            this.getHandle().openHorseInventory(horse.getHandle(), craft.getInventory());
-        } else {
-            MenuType<?> container = CraftContainer.getNotchInventoryType(inventory);
-            CraftHumanEntity.openCustomInventory(inventory, player, container);
-        }
-
-        if (this.getHandle().containerMenu == formerContainer) {
-            return null;
-        }
-        this.getHandle().containerMenu.checkReachable = false;
-        return this.getHandle().containerMenu.getBukkitView();
+        // if (!(this.getHandle() instanceof ServerPlayer)) return null;
+        // ServerPlayer player = (ServerPlayer) this.getHandle();
+        // AbstractContainerMenu formerContainer = this.getHandle().containerMenu;
+        //
+        // MenuProvider menuProvider = null;
+        // if (inventory instanceof CraftInventoryDoubleChest) {
+        //     menuProvider = ((CraftInventoryDoubleChest) inventory).provider;
+        // } else if (inventory instanceof CraftInventoryLectern) {
+        //     menuProvider = ((CraftInventoryLectern) inventory).provider;
+        // } else if (inventory instanceof CraftInventory) {
+        //     CraftInventory craft = (CraftInventory) inventory;
+        //     if (craft.getInventory() instanceof MenuProvider) {
+        //         menuProvider = (MenuProvider) craft.getInventory();
+        //     }
+        // }
+        //
+        // if (menuProvider != null) {
+        //     if (menuProvider instanceof final BlockEntity blockEntity) {
+        //         if (!blockEntity.hasLevel()) {
+        //             blockEntity.setLevel(this.getHandle().level());
+        //         }
+        //     }
+        // }
+        //
+        // if (menuProvider != null) {
+        //     this.getHandle().openMenu(menuProvider);
+        // } else if (inventory instanceof CraftInventoryAbstractHorse craft && craft.getInventory().getOwner() instanceof CraftAbstractHorse horse) {
+        //     this.getHandle().openHorseInventory(horse.getHandle(), craft.getInventory());
+        // } else {
+        //     MenuType<?> container = CraftContainer.getNotchInventoryType(inventory);
+        //     CraftHumanEntity.openCustomInventory(inventory, player, container);
+        // }
+        //
+        // if (this.getHandle().containerMenu == formerContainer) {
+        //     return null;
+        // }
+        // this.getHandle().containerMenu.checkReachable = false;
+        // return this.getHandle().containerMenu.getBukkitView();
+        throw new NotImplementedError();
     }
 
     private static void openCustomInventory(Inventory inventory, ServerPlayer player, MenuType<?> windowType) {
-        if (player.connection == null) return;
-        Preconditions.checkArgument(windowType != null, "Unknown windowType");
-        AbstractContainerMenu container = new CraftContainer(inventory, player, player.nextContainerCounter());
-
-        // Paper start - Add titleOverride to InventoryOpenEvent
-        final com.mojang.datafixers.util.Pair<net.kyori.adventure.text.Component, AbstractContainerMenu> result = CraftEventFactory.callInventoryOpenEventWithTitle(player, container);
-        container = result.getSecond();
-        // Paper end - Add titleOverride to InventoryOpenEvent
-        if (container == null) return;
-
-        //String title = container.getBukkitView().getTitle(); // Paper - comment
-        net.kyori.adventure.text.Component adventure$title = container.getBukkitView().title(); // Paper
-        if (adventure$title == null) adventure$title = net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize(container.getBukkitView().getTitle()); // Paper
-        if (result.getFirst() != null) adventure$title = result.getFirst(); // Paper - Add titleOverride to InventoryOpenEvent
-
-        //player.connection.send(new ClientboundOpenScreenPacket(container.containerId, windowType, CraftChatMessage.fromString(title)[0])); // Paper - comment
-        if (!player.isImmobile()) player.connection.send(new ClientboundOpenScreenPacket(container.containerId, windowType, io.papermc.paper.adventure.PaperAdventure.asVanilla(adventure$title))); // Paper - Prevent opening inventories when frozen
-        player.containerMenu = container;
-        player.initMenu(container);
+        // if (player.connection == null) return;
+        // Preconditions.checkArgument(windowType != null, "Unknown windowType");
+        // AbstractContainerMenu container = new CraftContainer(inventory, player, player.nextContainerCounter());
+        //
+        // // Paper start - Add titleOverride to InventoryOpenEvent
+        // final com.mojang.datafixers.util.Pair<net.kyori.adventure.text.Component, AbstractContainerMenu> result = CraftEventFactory.callInventoryOpenEventWithTitle(player, container);
+        // container = result.getSecond();
+        // // Paper end - Add titleOverride to InventoryOpenEvent
+        // if (container == null) return;
+        //
+        // //String title = container.getBukkitView().getTitle(); // Paper - comment
+        // net.kyori.adventure.text.Component adventure$title = container.getBukkitView().title(); // Paper
+        // if (adventure$title == null) adventure$title = net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize(container.getBukkitView().getTitle()); // Paper
+        // if (result.getFirst() != null) adventure$title = result.getFirst(); // Paper - Add titleOverride to InventoryOpenEvent
+        //
+        // //player.connection.send(new ClientboundOpenScreenPacket(container.containerId, windowType, CraftChatMessage.fromString(title)[0])); // Paper - comment
+        // if (!player.isImmobile()) player.connection.send(new ClientboundOpenScreenPacket(container.containerId, windowType, io.papermc.paper.adventure.PaperAdventure.asVanilla(adventure$title))); // Paper - Prevent opening inventories when frozen
+        // player.containerMenu = container;
+        // player.initMenu(container);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -407,10 +394,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
             }
         }
         this.getHandle().openMenu(Blocks.CRAFTING_TABLE.defaultBlockState().getMenuProvider(this.getHandle().level(), CraftLocation.toBlockPosition(location)));
-        if (force) {
-            this.getHandle().containerMenu.checkReachable = false;
-        }
-        return this.getHandle().containerMenu.getBukkitView();
+        throw new NotImplementedError();
+        // if (force) {
+        //     this.getHandle().containerMenu.checkReachable = false;
+        // }
+        // return this.getHandle().containerMenu.getBukkitView();
     }
 
     @Override
@@ -440,59 +428,61 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         this.getHandle().openMenu(menuProvider);
         // Paper end
 
-        if (force) {
-            this.getHandle().containerMenu.checkReachable = false;
-        }
-        return this.getHandle().containerMenu.getBukkitView();
+        throw new NotImplementedError();
+        // if (force) {
+        //     this.getHandle().containerMenu.checkReachable = false;
+        // }
+        // return this.getHandle().containerMenu.getBukkitView();
     }
 
     @Override
     public void openInventory(InventoryView inventory) {
-        Preconditions.checkArgument(this.equals(inventory.getPlayer()), "InventoryView must belong to the opening player");
-        if (!(this.getHandle() instanceof ServerPlayer)) return; // TODO: NPC support?
-        if (((ServerPlayer) this.getHandle()).connection == null) return;
-        if (this.getHandle().containerMenu != this.getHandle().inventoryMenu) {
-            // fire INVENTORY_CLOSE if one already open
-            ((ServerPlayer) this.getHandle()).connection.handleContainerClose(new ServerboundContainerClosePacket(this.getHandle().containerMenu.containerId), org.bukkit.event.inventory.InventoryCloseEvent.Reason.OPEN_NEW); // Paper - Inventory close reason
-        }
-        ServerPlayer player = (ServerPlayer) this.getHandle();
-        AbstractContainerMenu container;
-        if (inventory instanceof CraftInventoryView) {
-            container = ((CraftInventoryView) inventory).getHandle();
-            Preconditions.checkArgument(!(container instanceof InventoryMenu), "Can not open player's InventoryView");
-        } else {
-            container = new CraftContainer(inventory, this.getHandle(), player.nextContainerCounter());
-        }
-
-        // Trigger an INVENTORY_OPEN event
-        // Paper start - Add titleOverride to InventoryOpenEvent
-        final com.mojang.datafixers.util.Pair<net.kyori.adventure.text.Component, AbstractContainerMenu> result = CraftEventFactory.callInventoryOpenEventWithTitle(player, container);
-        container = result.getSecond();
-        // Paper end - Add titleOverride to InventoryOpenEvent
-        if (container == null) {
-            return;
-        }
-
-        // Now open the window
-        MenuType<?> windowType = CraftContainer.getNotchInventoryType(inventory.getTopInventory());
-        // we can open these now, delegate for now
-        if (windowType == MenuType.MERCHANT) {
-            CraftMenus.openMerchantMenu(player, (MerchantMenu) container);
-            return;
-        }
-
-        net.kyori.adventure.text.Component adventure$title = inventory.title(); // Paper
-        if (adventure$title == null) adventure$title = net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize(inventory.getTitle()); // Paper
-        if (result.getFirst() != null) adventure$title = result.getFirst(); // Paper - Add titleOverride to InventoryOpenEvent
-        if (!player.isImmobile()) {
-            if (container instanceof HorseInventoryMenu horse) {
-                player.connection.send(new ClientboundHorseScreenOpenPacket(horse.containerId, horse.horse.getInventoryColumns(), horse.horse.getId()));
-            } else {
-                player.connection.send(new ClientboundOpenScreenPacket(container.containerId, windowType, io.papermc.paper.adventure.PaperAdventure.asVanilla(adventure$title)));
-            }
-        }
-        player.containerMenu = container;
-        player.initMenu(container);
+        // Preconditions.checkArgument(this.equals(inventory.getPlayer()), "InventoryView must belong to the opening player");
+        // if (!(this.getHandle() instanceof ServerPlayer)) return; // TODO: NPC support?
+        // if (((ServerPlayer) this.getHandle()).connection == null) return;
+        // if (this.getHandle().containerMenu != this.getHandle().inventoryMenu) {
+        //     // fire INVENTORY_CLOSE if one already open
+        //     ((ServerPlayer) this.getHandle()).connection.handleContainerClose(new ServerboundContainerClosePacket(this.getHandle().containerMenu.containerId), org.bukkit.event.inventory.InventoryCloseEvent.Reason.OPEN_NEW); // Paper - Inventory close reason
+        // }
+        // ServerPlayer player = (ServerPlayer) this.getHandle();
+        // AbstractContainerMenu container;
+        // if (inventory instanceof CraftInventoryView) {
+        //     container = ((CraftInventoryView) inventory).getHandle();
+        //     Preconditions.checkArgument(!(container instanceof InventoryMenu), "Can not open player's InventoryView");
+        // } else {
+        //     container = new CraftContainer(inventory, this.getHandle(), player.nextContainerCounter());
+        // }
+        //
+        // // Trigger an INVENTORY_OPEN event
+        // // Paper start - Add titleOverride to InventoryOpenEvent
+        // final com.mojang.datafixers.util.Pair<net.kyori.adventure.text.Component, AbstractContainerMenu> result = CraftEventFactory.callInventoryOpenEventWithTitle(player, container);
+        // container = result.getSecond();
+        // // Paper end - Add titleOverride to InventoryOpenEvent
+        // if (container == null) {
+        //     return;
+        // }
+        //
+        // // Now open the window
+        // MenuType<?> windowType = CraftContainer.getNotchInventoryType(inventory.getTopInventory());
+        // // we can open these now, delegate for now
+        // if (windowType == MenuType.MERCHANT) {
+        //     CraftMenus.openMerchantMenu(player, (MerchantMenu) container);
+        //     return;
+        // }
+        //
+        // net.kyori.adventure.text.Component adventure$title = inventory.title(); // Paper
+        // if (adventure$title == null) adventure$title = net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection().deserialize(inventory.getTitle()); // Paper
+        // if (result.getFirst() != null) adventure$title = result.getFirst(); // Paper - Add titleOverride to InventoryOpenEvent
+        // if (!player.isImmobile()) {
+        //     if (container instanceof HorseInventoryMenu horse) {
+        //         player.connection.send(new ClientboundHorseScreenOpenPacket(horse.containerId, horse.horse.getInventoryColumns(), horse.horse.getId()));
+        //     } else {
+        //         player.connection.send(new ClientboundOpenScreenPacket(container.containerId, windowType, io.papermc.paper.adventure.PaperAdventure.asVanilla(adventure$title)));
+        //     }
+        // }
+        // player.containerMenu = container;
+        // player.initMenu(container);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -526,13 +516,14 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
             mcMerchant = ((CraftMerchantCustom) merchant).getMerchant();
             name = ((CraftMerchantCustom) merchant).getMerchant().getScoreboardDisplayName();
         } else {
-            throw new IllegalArgumentException("Can't open merchant " + merchant.toString());
+            throw new IllegalArgumentException("Can't open merchant " + merchant);
         }
 
         mcMerchant.setTradingPlayer(this.getHandle());
         mcMerchant.openTradingScreen(this.getHandle(), name, level);
 
-        return this.getHandle().containerMenu.getBukkitView();
+        // return this.getHandle().containerMenu.getBukkitView();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -592,14 +583,16 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         } else {
             throw new IllegalArgumentException("Unsupported inventory type: " + material);
         }
-        this.getHandle().openMenu(block.getMenuProvider(null, this.getHandle().level(), new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ())));
-        this.getHandle().containerMenu.checkReachable = !force;
-        return this.getHandle().containerMenu.getBukkitView();
+        throw new NotImplementedError();
+        // this.getHandle().openMenu(block.getMenuProvider(null, this.getHandle().level(), new BlockPos(location.getBlockX(), location.getBlockY(), location.getBlockZ())));
+        // this.getHandle().containerMenu.checkReachable = !force;
+        // return this.getHandle().containerMenu.getBukkitView();
     }
 
     @Override
     public void closeInventory(org.bukkit.event.inventory.InventoryCloseEvent.Reason reason) {
-        this.getHandle().closeContainer(reason);
+        // this.getHandle().closeContainer(reason);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -619,12 +612,14 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public int getEnchantmentSeed() {
-        return this.getHandle().enchantmentSeed;
+        throw new NotImplementedError();
+        // return this.getHandle().enchantmentSeed;
     }
 
     @Override
     public void setEnchantmentSeed(int i) {
-        this.getHandle().enchantmentSeed = i;
+        throw new NotImplementedError();
+        // this.getHandle().enchantmentSeed = i;
     }
 
     @Override
@@ -674,8 +669,9 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
             return 0;
         }
 
-        ItemCooldowns.CooldownInstance cooldown = this.getHandle().getCooldowns().cooldowns.get(group);
-        return (cooldown == null) ? 0 : Math.max(0, cooldown.endTime() - this.getHandle().getCooldowns().tickCount);
+        throw new NotImplementedError();
+        // ItemCooldowns.CooldownInstance cooldown = this.getHandle().getCooldowns().cooldowns.get(group);
+        // return (cooldown == null) ? 0 : Math.max(0, cooldown.endTime() - this.getHandle().getCooldowns().tickCount);
     }
 
     @Override
@@ -690,8 +686,9 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
     public int getCooldown(Key key) {
         Preconditions.checkArgument(key != null, "Key cannot be null");
 
-        ItemCooldowns.CooldownInstance cooldown = this.getHandle().getCooldowns().cooldowns.get(PaperAdventure.asVanilla(key));
-        return (cooldown == null) ? 0 : Math.max(0, cooldown.endTime() - this.getHandle().getCooldowns().tickCount);
+        throw new NotImplementedError();
+        // ItemCooldowns.CooldownInstance cooldown = this.getHandle().getCooldowns().cooldowns.get(PaperAdventure.asVanilla(key));
+        // return (cooldown == null) ? 0 : Math.max(0, cooldown.endTime() - this.getHandle().getCooldowns().tickCount);
     }
 
     @Override
@@ -704,31 +701,33 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public org.bukkit.entity.Entity releaseLeftShoulderEntity() {
-        if (!getHandle().getShoulderEntityLeft().isEmpty()) {
-            Entity entity = getHandle().releaseLeftShoulderEntity();
-            if (entity != null) {
-                return entity.getBukkitEntity();
-            }
-        }
-
-        return null;
+        throw new NotImplementedError();
+        // if (!getHandle().getShoulderEntityLeft().isEmpty()) {
+        //     Entity entity = getHandle().releaseLeftShoulderEntity();
+        //     if (entity != null) {
+        //         return entity.getBukkitEntity();
+        //     }
+        // }
+        //
+        // return null;
     }
 
     @Override
     public org.bukkit.entity.Entity releaseRightShoulderEntity() {
-        if (!getHandle().getShoulderEntityRight().isEmpty()) {
-            Entity entity = getHandle().releaseRightShoulderEntity();
-            if (entity != null) {
-                return entity.getBukkitEntity();
-            }
-        }
-
-        return null;
+        throw new NotImplementedError();
+        // if (!getHandle().getShoulderEntityRight().isEmpty()) {
+        //     Entity entity = getHandle().releaseRightShoulderEntity();
+        //     if (entity != null) {
+        //         return entity.getBukkitEntity();
+        //     }
+        // }
+        //
+        // return null;
     }
 
     @Override
     public boolean discoverRecipe(NamespacedKey recipe) {
-        return this.discoverRecipes(Arrays.asList(recipe)) != 0;
+        return this.discoverRecipes(List.of(recipe)) != 0;
     }
 
     @Override
@@ -738,7 +737,7 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public boolean undiscoverRecipe(NamespacedKey recipe) {
-        return this.undiscoverRecipes(Arrays.asList(recipe)) != 0;
+        return this.undiscoverRecipes(List.of(recipe)) != 0;
     }
 
     @Override
@@ -774,54 +773,58 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
 
     @Override
     public org.bukkit.entity.Entity getShoulderEntityLeft() {
-        if (!this.getHandle().getShoulderEntityLeft().isEmpty()) {
-            try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.getHandle().problemPath(), LOGGER)) {
-                return EntityType.create(
-                        TagValueInput.create(scopedCollector.forChild(() -> ".shoulder"), this.getHandle().registryAccess(), this.getHandle().getShoulderEntityLeft()),
-                        this.getHandle().level(),
-                        EntitySpawnReason.LOAD
-                    ).map(Entity::getBukkitEntity).orElse(null);
-            }
-        }
-
-        return null;
+        throw new NotImplementedError();
+        // if (!this.getHandle().getShoulderEntityLeft().isEmpty()) {
+        //     try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.getHandle().problemPath(), LOGGER)) {
+        //         return EntityType.create(
+        //                 TagValueInput.create(scopedCollector.forChild(() -> ".shoulder"), this.getHandle().registryAccess(), this.getHandle().getShoulderEntityLeft()),
+        //                 this.getHandle().level(),
+        //                 EntitySpawnReason.LOAD
+        //             ).map(Entity::getBukkitEntity).orElse(null);
+        //     }
+        // }
+        //
+        // return null;
     }
 
     @Override
     public void setShoulderEntityLeft(org.bukkit.entity.Entity entity) {
-        if (entity != null) {
-            Preconditions.checkArgument(((CraftEntity) entity).getHandle().getType().canSerialize(), "Cannot set entity of type %s as a shoulder entity", entity.getType().getKey());
-        }
-        this.getHandle().setShoulderEntityLeft(entity == null ? new CompoundTag() : ((CraftEntity) entity).save());
-        if (entity != null) {
-            entity.remove();
-        }
+        throw new NotImplementedError();
+        // if (entity != null) {
+        //     Preconditions.checkArgument(((CraftEntity) entity).getHandle().getType().canSerialize(), "Cannot set entity of type %s as a shoulder entity", entity.getType().getKey());
+        // }
+        // this.getHandle().setShoulderEntityLeft(entity == null ? new CompoundTag() : ((CraftEntity) entity).save());
+        // if (entity != null) {
+        //     entity.remove();
+        // }
     }
 
     @Override
     public org.bukkit.entity.Entity getShoulderEntityRight() {
-        if (!this.getHandle().getShoulderEntityRight().isEmpty()) {
-            try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.getHandle().problemPath(), LOGGER)) {
-                return EntityType.create(
-                    TagValueInput.create(scopedCollector.forChild(() -> ".shoulder"), this.getHandle().registryAccess(), this.getHandle().getShoulderEntityRight()),
-                    this.getHandle().level(),
-                    EntitySpawnReason.LOAD
-                ).map(Entity::getBukkitEntity).orElse(null);
-            }
-        }
-
-        return null;
+        throw new NotImplementedError();
+        // if (!this.getHandle().getShoulderEntityRight().isEmpty()) {
+        //     try (ProblemReporter.ScopedCollector scopedCollector = new ProblemReporter.ScopedCollector(this.getHandle().problemPath(), LOGGER)) {
+        //         return EntityType.create(
+        //             TagValueInput.create(scopedCollector.forChild(() -> ".shoulder"), this.getHandle().registryAccess(), this.getHandle().getShoulderEntityRight()),
+        //             this.getHandle().level(),
+        //             EntitySpawnReason.LOAD
+        //         ).map(Entity::getBukkitEntity).orElse(null);
+        //     }
+        // }
+        //
+        // return null;
     }
 
     @Override
     public void setShoulderEntityRight(org.bukkit.entity.Entity entity) {
-        if (entity != null) {
-            Preconditions.checkArgument(((CraftEntity) entity).getHandle().getType().canSerialize(), "Cannot set entity of type %s as a shoulder entity", entity.getType().getKey());
-        }
-        this.getHandle().setShoulderEntityRight(entity == null ? new CompoundTag() : ((CraftEntity) entity).save());
-        if (entity != null) {
-            entity.remove();
-        }
+        throw new NotImplementedError();
+        // if (entity != null) {
+        //     Preconditions.checkArgument(((CraftEntity) entity).getHandle().getType().canSerialize(), "Cannot set entity of type %s as a shoulder entity", entity.getType().getKey());
+        // }
+        // this.getHandle().setShoulderEntityRight(entity == null ? new CompoundTag() : ((CraftEntity) entity).save());
+        // if (entity != null) {
+        //     entity.remove();
+        // }
     }
 
     @Override
@@ -837,10 +840,11 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
             return false;
         }
 
-        final net.minecraft.world.entity.player.Inventory inv = player.getInventory();
-        final java.util.OptionalInt optionalSlot = player.containerMenu.findSlot(inv, inv.getSelectedSlot());
-        optionalSlot.ifPresent(slot -> player.containerSynchronizer.sendSlotChange(player.containerMenu, slot, inv.getSelectedItem()));
-        return true;
+        throw new NotImplementedError();
+        // final net.minecraft.world.entity.player.Inventory inv = player.getInventory();
+        // final java.util.OptionalInt optionalSlot = player.containerMenu.findSlot(inv, inv.getSelectedSlot());
+        // optionalSlot.ifPresent(slot -> player.containerSynchronizer.sendSlotChange(player.containerMenu, slot, inv.getSelectedItem()));
+        // return true;
     }
 
     @Override
@@ -865,8 +869,9 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         final net.minecraft.world.item.ItemStack dropContent = nmsItemStack.split(amount);
 
         // This will return the itemstack back to its original amount in case events fail
-        final ItemEntity droppedEntity = this.getHandle().drop(dropContent, throwRandomly, true, true, entityOperation);
-        return droppedEntity == null ? null : (Item) droppedEntity.getBukkitEntity();
+        // final ItemEntity droppedEntity = this.getHandle().drop(dropContent, throwRandomly, true, true, entityOperation);
+        // return droppedEntity == null ? null : (Item) droppedEntity.getBukkitEntity();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -880,68 +885,81 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         final net.minecraft.world.item.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(itemStack);
 
         // Do *not* call the event here, the item is not in the player inventory, they are not dropping it / do not need recovering logic (which would be a dupe).
-        final ItemEntity droppedEntity = this.getHandle().drop(nmsItemStack, throwRandomly, true, false, entityOperation);
-        return droppedEntity == null ? null : (Item) droppedEntity.getBukkitEntity();
+        // final ItemEntity droppedEntity = this.getHandle().drop(nmsItemStack, throwRandomly, true, false, entityOperation);
+        // return droppedEntity == null ? null : (Item) droppedEntity.getBukkitEntity();
+        throw new NotImplementedError();
     }
 
     @Override
     public float getExhaustion() {
-        return this.getHandle().getFoodData().exhaustionLevel;
+        throw new NotImplementedError();
+        // return this.getHandle().getFoodData().exhaustionLevel;
     }
 
     @Override
     public void setExhaustion(float value) {
-        this.getHandle().getFoodData().exhaustionLevel = value;
+        throw new NotImplementedError();
+        // this.getHandle().getFoodData().exhaustionLevel = value;
     }
 
     @Override
     public float getSaturation() {
-        return this.getHandle().getFoodData().saturationLevel;
+        throw new NotImplementedError();
+        // return this.getHandle().getFoodData().saturationLevel;
     }
 
     @Override
     public void setSaturation(float value) {
-        this.getHandle().getFoodData().saturationLevel = value;
+        throw new NotImplementedError();
+        // this.getHandle().getFoodData().saturationLevel = value;
     }
 
     @Override
     public int getFoodLevel() {
-        return this.getHandle().getFoodData().foodLevel;
+        throw new NotImplementedError();
+        // return this.getHandle().getFoodData().foodLevel;
     }
 
     @Override
     public void setFoodLevel(int value) {
-        this.getHandle().getFoodData().foodLevel = value;
+        throw new NotImplementedError();
+        // this.getHandle().getFoodData().foodLevel = value;
     }
 
     @Override
     public int getSaturatedRegenRate() {
-        return this.getHandle().getFoodData().saturatedRegenRate;
+        throw new NotImplementedError();
+        // return this.getHandle().getFoodData().saturatedRegenRate;
     }
 
     @Override
     public void setSaturatedRegenRate(int i) {
-        this.getHandle().getFoodData().saturatedRegenRate = i;
+        throw new NotImplementedError();
+        // this.getHandle().getFoodData().saturatedRegenRate = i;
     }
 
     @Override
     public int getUnsaturatedRegenRate() {
-        return this.getHandle().getFoodData().unsaturatedRegenRate;
+        throw new NotImplementedError();
+        // return this.getHandle().getFoodData().unsaturatedRegenRate;
     }
 
     @Override
     public void setUnsaturatedRegenRate(int i) {
-        this.getHandle().getFoodData().unsaturatedRegenRate = i;
+        throw new NotImplementedError();
+        // this.getHandle().getFoodData().unsaturatedRegenRate = i;
     }
 
     @Override
     public int getStarvationRate() {
-        return this.getHandle().getFoodData().starvationRate;
+        throw new NotImplementedError();
+        // return this.getHandle().getFoodData().starvationRate;
     }
 
     @Override
     public void setStarvationRate(int i) {
-        this.getHandle().getFoodData().starvationRate = i;
+        throw new NotImplementedError();
+        // this.getHandle().getFoodData().starvationRate = i;
     }
 
     @Override
@@ -960,8 +978,9 @@ public class CraftHumanEntity extends CraftLivingEntity implements HumanEntity {
         Preconditions.checkArgument(fireworkItemStack.getType() == Material.FIREWORK_ROCKET, "fireworkItemStack must be of type %s", Material.FIREWORK_ROCKET);
 
         FireworkRocketEntity fireworks = new FireworkRocketEntity(this.getHandle().level(), CraftItemStack.asNMSCopy(fireworkItemStack), this.getHandle());
-        boolean success = this.getHandle().level().addFreshEntity(fireworks, SpawnReason.CUSTOM);
-        return success ? (Firework) fireworks.getBukkitEntity() : null;
+        throw new NotImplementedError();
+        // boolean success = this.getHandle().level().addFreshEntity(fireworks, SpawnReason.CUSTOM);
+        // return success ? (Firework) fireworks.getBukkitEntity() : null;
     }
 
     @Override

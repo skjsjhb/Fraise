@@ -3,11 +3,6 @@ package com.destroystokyo.paper.network;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.mojang.authlib.GameProfile;
 import io.papermc.paper.adventure.AdventureComponent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import javax.annotation.Nonnull;
 import net.minecraft.network.Connection;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.status.ClientboundStatusResponsePacket;
@@ -16,12 +11,21 @@ import net.minecraft.server.MinecraftServer;
 import org.bukkit.craftbukkit.util.CraftIconCache;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 public final class StandardPaperServerListPingEventImpl extends PaperServerListPingEventImpl {
 
     private List<GameProfile> originalSample;
 
     private StandardPaperServerListPingEventImpl(MinecraftServer server, Connection networkManager, ServerStatus ping) {
-        super(server, new PaperStatusClient(networkManager), ping.version().map(ServerStatus.Version::protocol).orElse(-1), server.server.getServerIcon());
+        super(server, new PaperStatusClient(networkManager), ping.version().map(ServerStatus.Version::protocol).orElse(-1),
+            null // throw new NotImplementedError();
+            // server.server.getServerIcon()
+        );
         this.originalSample = ping.players().map(ServerStatus.Players::sample).orElse(null); // GH-1473 - pre-tick race condition NPE
     }
 
@@ -65,7 +69,8 @@ public final class StandardPaperServerListPingEventImpl extends PaperServerListP
 
     public static void processRequest(MinecraftServer server, Connection networkManager) {
         StandardPaperServerListPingEventImpl event = new StandardPaperServerListPingEventImpl(server, networkManager, server.getStatus());
-        server.server.getPluginManager().callEvent(event);
+        // server.server.getPluginManager().callEvent(event);
+        // throw new NotImplementedError();
 
         // Close connection immediately if event is cancelled
         if (event.isCancelled()) {

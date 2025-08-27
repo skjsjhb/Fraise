@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory.view.builder;
 
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.MenuProvider;
@@ -55,31 +56,33 @@ public class CraftBlockEntityInventoryViewBuilder<V extends InventoryView> exten
             return buildFakeBlockEntity(player);
         }
 
-        final AbstractContainerMenu atBlock = container.createMenu(player.nextContainerCounter(), player.getInventory(), player);
-        if (atBlock.getType() != super.handle) {
-            return buildFakeBlockEntity(player);
-        }
-
-        if (!(entity instanceof final MenuProvider provider)) {
-            throw new IllegalStateException("Provided blockEntity during MenuType creation can not find a default title! This is a bug!");
-        }
-
-        super.defaultTitle = provider.getDisplayName();
-        return atBlock;
+        throw new NotImplementedError();
+        // final AbstractContainerMenu atBlock = container.createMenu(player.nextContainerCounter(), player.getInventory(), player);
+        // if (atBlock.getType() != super.handle) {
+        //     return buildFakeBlockEntity(player);
+        // }
+        //
+        // if (!(entity instanceof final MenuProvider provider)) {
+        //     throw new IllegalStateException("Provided blockEntity during MenuType creation can not find a default title! This is a bug!");
+        // }
+        //
+        // super.defaultTitle = provider.getDisplayName();
+        // return atBlock;
     }
 
     private AbstractContainerMenu buildFakeBlockEntity(final ServerPlayer player) {
-        final MenuProvider inventory = this.builder.build(this.position, this.block.defaultBlockState());
-        if (inventory instanceof final BlockEntity blockEntity) {
-            blockEntity.setLevel(this.world);
-            super.defaultTitle = inventory.getDisplayName();
-        }
-
-        if (!this.useFakeBlockEntity) { // gets around open noise for chest
-            return handle.create(player.nextContainerCounter(), player.getInventory());
-        }
-
-        return inventory.createMenu(player.nextContainerCounter(), player.getInventory(), player);
+        throw new NotImplementedError();
+        // final MenuProvider inventory = this.builder.build(this.position, this.block.defaultBlockState());
+        // if (inventory instanceof final BlockEntity blockEntity) {
+        //     blockEntity.setLevel(this.world);
+        //     super.defaultTitle = inventory.getDisplayName();
+        // }
+        //
+        // if (!this.useFakeBlockEntity) { // gets around open noise for chest
+        //     return handle.create(player.nextContainerCounter(), player.getInventory());
+        // }
+        //
+        // return inventory.createMenu(player.nextContainerCounter(), player.getInventory(), player);
     }
 
     @Override

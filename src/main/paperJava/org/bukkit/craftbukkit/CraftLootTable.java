@@ -1,10 +1,7 @@
 package org.bukkit.craftbukkit;
 
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Random;
+import kotlin.NotImplementedError;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +14,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.phys.Vec3;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -31,6 +27,11 @@ import org.bukkit.craftbukkit.util.RandomSourceWrapper;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.loot.LootContext;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Random;
 
 public class CraftLootTable implements org.bukkit.loot.LootTable {
 
@@ -92,7 +93,8 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
         Container handle = craftInventory.getInventory();
 
         // TODO: When events are added, call event here w/ custom reason?
-        this.getHandle().fill(handle, nmsContext, random == null ? null : new RandomSourceWrapper(random), true);
+        // this.getHandle().fill(handle, nmsContext, random == null ? null : new RandomSourceWrapper(random), true);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -149,26 +151,27 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
     }
 
     public static LootContext convertContext(net.minecraft.world.level.storage.loot.LootContext info) {
-        Vec3 position = info.getOptionalParameter(LootContextParams.ORIGIN);
-        if (position == null) {
-            position = info.getOptionalParameter(LootContextParams.THIS_ENTITY).position(); // Every vanilla context has origin or this_entity, see LootContextParamSets
-        }
-        Location location = CraftLocation.toBukkit(position, info.getLevel().getWorld());
-        LootContext.Builder contextBuilder = new LootContext.Builder(location);
-
-        if (info.hasParameter(LootContextParams.ATTACKING_ENTITY)) {
-            CraftEntity killer = info.getOptionalParameter(LootContextParams.ATTACKING_ENTITY).getBukkitEntity();
-            if (killer instanceof CraftHumanEntity) {
-                contextBuilder.killer((CraftHumanEntity) killer);
-            }
-        }
-
-        if (info.hasParameter(LootContextParams.THIS_ENTITY)) {
-            contextBuilder.lootedEntity(info.getOptionalParameter(LootContextParams.THIS_ENTITY).getBukkitEntity());
-        }
-
-        contextBuilder.luck(info.getLuck());
-        return contextBuilder.build();
+        throw new NotImplementedError();
+        // Vec3 position = info.getOptionalParameter(LootContextParams.ORIGIN);
+        // if (position == null) {
+        //     position = info.getOptionalParameter(LootContextParams.THIS_ENTITY).position(); // Every vanilla context has origin or this_entity, see LootContextParamSets
+        // }
+        // Location location = CraftLocation.toBukkit(position, info.getLevel().getWorld());
+        // LootContext.Builder contextBuilder = new LootContext.Builder(location);
+        //
+        // if (info.hasParameter(LootContextParams.ATTACKING_ENTITY)) {
+        //     CraftEntity killer = info.getOptionalParameter(LootContextParams.ATTACKING_ENTITY).getBukkitEntity();
+        //     if (killer instanceof CraftHumanEntity) {
+        //         contextBuilder.killer((CraftHumanEntity) killer);
+        //     }
+        // }
+        //
+        // if (info.hasParameter(LootContextParams.THIS_ENTITY)) {
+        //     contextBuilder.lootedEntity(info.getOptionalParameter(LootContextParams.THIS_ENTITY).getBukkitEntity());
+        // }
+        //
+        // contextBuilder.luck(info.getLuck());
+        // return contextBuilder.build();
     }
 
     @Override
@@ -178,11 +181,10 @@ public class CraftLootTable implements org.bukkit.loot.LootTable {
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof org.bukkit.loot.LootTable)) {
+        if (!(obj instanceof final org.bukkit.loot.LootTable table)) {
             return false;
         }
 
-        org.bukkit.loot.LootTable table = (org.bukkit.loot.LootTable) obj;
         return table.getKey().equals(this.key);
     }
 

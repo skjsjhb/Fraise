@@ -1,6 +1,6 @@
 package io.papermc.paper.plugin.provider.source;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.SparksFly;
 import io.papermc.paper.plugin.PluginInitializerManager;
 import io.papermc.paper.plugin.configuration.PluginMeta;
@@ -8,6 +8,7 @@ import io.papermc.paper.plugin.entrypoint.EntrypointHandler;
 import io.papermc.paper.plugin.provider.type.PluginFileType;
 import org.bukkit.plugin.InvalidPluginException;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.io.IOException;
 import java.nio.file.FileVisitResult;
@@ -19,14 +20,13 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.jar.JarFile;
-import org.slf4j.Logger;
 
 /**
  * Loads a plugin provider at the given plugin jar file path.
  */
 public class FileProviderSource implements ProviderSource<Path, Path> {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
     private final Function<Path, String> contextChecker;
     private final boolean applyRemap;
 

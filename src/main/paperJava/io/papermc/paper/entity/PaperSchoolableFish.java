@@ -1,5 +1,6 @@
 package io.papermc.paper.entity;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.animal.AbstractSchoolingFish;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.entity.CraftFish;
@@ -32,7 +33,8 @@ public class PaperSchoolableFish extends CraftFish implements SchoolableFish {
 
     @Override
     public int getSchoolSize() {
-        return this.getHandle().schoolSize;
+        throw new NotImplementedError();
+        // return this.getHandle().schoolSize;
     }
 
     @Override
@@ -42,11 +44,12 @@ public class PaperSchoolableFish extends CraftFish implements SchoolableFish {
 
     @Override
     public SchoolableFish getSchoolLeader() {
-        AbstractSchoolingFish leader = this.getHandle().leader;
-        if (leader == null) {
-            return null;
-        }
-
-        return (SchoolableFish) leader.getBukkitEntity();
+        throw new NotImplementedError();
+        // AbstractSchoolingFish leader = this.getHandle().leader;
+        // if (leader == null) {
+        //     return null;
+        // }
+        //
+        // return (SchoolableFish) leader.getBukkitEntity();
     }
 }

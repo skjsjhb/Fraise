@@ -1,18 +1,18 @@
 package org.bukkit.craftbukkit.entity;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSet.Builder;
-import java.util.Set;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.boss.EnderDragonPart;
 import net.minecraft.world.entity.boss.enderdragon.phases.EnderDragonPhase;
 import org.bukkit.boss.BossBar;
 import org.bukkit.boss.DragonBattle;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.boss.CraftDragonBattle;
-import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.ComplexEntityPart;
 import org.bukkit.entity.EnderDragon;
+
+import java.util.Set;
 
 public class CraftEnderDragon extends CraftMob implements EnderDragon, CraftEnemy {
 
@@ -30,7 +30,8 @@ public class CraftEnderDragon extends CraftMob implements EnderDragon, CraftEnem
         Builder<ComplexEntityPart> builder = ImmutableSet.builder();
 
         for (EnderDragonPart part : this.getHandle().getSubEntities()) {
-            builder.add((ComplexEntityPart) part.getBukkitEntity());
+            throw new NotImplementedError();
+            // builder.add((ComplexEntityPart) part.getBukkitEntity());
         }
 
         return builder.build();
@@ -73,17 +74,19 @@ public class CraftEnderDragon extends CraftMob implements EnderDragon, CraftEnem
     // Paper start - Allow changing the EnderDragon podium
     @Override
     public org.bukkit.Location getPodium() {
-        return CraftLocation.toBukkit(this.getHandle().getPodium(), this.getWorld());
+        throw new NotImplementedError();
+        // return CraftLocation.toBukkit(this.getHandle().getPodium(), this.getWorld());
     }
 
     @Override
     public void setPodium(org.bukkit.Location location) {
-        if (location == null) {
-            this.getHandle().setPodium(null);
-        } else {
-            Preconditions.checkArgument(location.getWorld() == null || location.getWorld().equals(getWorld()), "You cannot set a podium in a different world to where the dragon is");
-            this.getHandle().setPodium(CraftLocation.toBlockPosition(location));
-        }
+        throw new NotImplementedError();
+        // if (location == null) {
+        //     this.getHandle().setPodium(null);
+        // } else {
+        //     Preconditions.checkArgument(location.getWorld() == null || location.getWorld().equals(getWorld()), "You cannot set a podium in a different world to where the dragon is");
+        //     this.getHandle().setPodium(CraftLocation.toBlockPosition(location));
+        // }
     }
     // Paper end - Allow changing the EnderDragon podium
 }

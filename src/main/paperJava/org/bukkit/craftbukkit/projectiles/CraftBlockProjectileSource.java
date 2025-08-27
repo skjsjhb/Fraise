@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.projectiles;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.core.dispenser.BlockSource;
@@ -26,6 +27,7 @@ import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.TippedArrow;
 import org.bukkit.projectiles.BlockProjectileSource;
 import org.bukkit.util.Vector;
+
 import java.util.function.Consumer;
 
 public class CraftBlockProjectileSource implements BlockProjectileSource {
@@ -99,17 +101,18 @@ public class CraftBlockProjectileSource implements BlockProjectileSource {
 
         Position position = dispenseConfig.positionFunction().getDispensePosition(blockSource, direction);
         net.minecraft.world.entity.projectile.Projectile launch = projectileItem.asProjectile(world, position, itemstack, direction);
-        launch.projectileSource = this;
-        projectileItem.shoot(launch, direction.getStepX(), direction.getStepY(), direction.getStepZ(), dispenseConfig.power(), dispenseConfig.uncertainty());
-
-        if (velocity != null) {
-            launch.getBukkitEntity().setVelocity(velocity);
-        }
-        if (function != null) {
-            function.accept((T) launch.getBukkitEntity());
-        }
-
-        world.addFreshEntity(launch);
-        return (T) launch.getBukkitEntity();
+        throw new NotImplementedError();
+        // launch.projectileSource = this;
+        // projectileItem.shoot(launch, direction.getStepX(), direction.getStepY(), direction.getStepZ(), dispenseConfig.power(), dispenseConfig.uncertainty());
+        //
+        // if (velocity != null) {
+        //     launch.getBukkitEntity().setVelocity(velocity);
+        // }
+        // if (function != null) {
+        //     function.accept((T) launch.getBukkitEntity());
+        // }
+        //
+        // world.addFreshEntity(launch);
+        // return (T) launch.getBukkitEntity();
     }
 }

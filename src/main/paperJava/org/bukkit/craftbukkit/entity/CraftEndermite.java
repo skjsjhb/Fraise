@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Endermite;
 
@@ -26,11 +27,13 @@ public class CraftEndermite extends CraftMonster implements Endermite {
 
     @Override
     public void setLifetimeTicks(int ticks) {
-        this.getHandle().life = ticks;
+        throw new NotImplementedError();
+        // this.getHandle().life = ticks;
     }
 
     @Override
     public int getLifetimeTicks() {
-        return this.getHandle().life;
+        throw new NotImplementedError();
+        // return this.getHandle().life;
     }
 }

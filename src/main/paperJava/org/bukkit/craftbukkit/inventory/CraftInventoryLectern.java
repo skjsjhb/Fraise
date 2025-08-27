@@ -1,8 +1,8 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.Container;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import org.bukkit.block.Lectern;
 import org.bukkit.inventory.LecternInventory;
 
@@ -12,13 +12,15 @@ public class CraftInventoryLectern extends CraftInventory implements LecternInve
 
     public CraftInventoryLectern(Container inventory) {
         super(inventory);
-        if (inventory instanceof LecternBlockEntity.LecternInventory) {
-            this.provider = ((LecternBlockEntity.LecternInventory) inventory).getLectern();
-        }
+        throw new NotImplementedError();
+        // if (inventory instanceof LecternBlockEntity.LecternInventory) {
+        //     this.provider = ((LecternBlockEntity.LecternInventory) inventory).getLectern();
+        // }
     }
 
     @Override
     public Lectern getHolder() {
-        return (Lectern) this.inventory.getOwner();
+        // return (Lectern) this.inventory.getOwner();
+        throw new NotImplementedError();
     }
 }

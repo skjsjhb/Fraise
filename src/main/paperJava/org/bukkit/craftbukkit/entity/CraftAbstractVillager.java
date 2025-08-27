@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.item.trading.Merchant;
 import org.bukkit.craftbukkit.CraftServer;
@@ -32,6 +33,7 @@ public abstract class CraftAbstractVillager extends CraftAgeable implements Craf
 
     @Override
     public void resetOffers() {
-        getHandle().resetOffers();
+        throw new NotImplementedError();
+        // getHandle().resetOffers();
     }
 }

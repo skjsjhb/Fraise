@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.collect.ImmutableList;
-import java.util.Collection;
+import kotlin.NotImplementedError;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.projectile.AbstractThrownPotion;
@@ -12,6 +12,8 @@ import org.bukkit.craftbukkit.potion.CraftPotionUtil;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
+
+import java.util.Collection;
 
 public abstract class CraftThrownPotion extends CraftThrowableProjectile implements ThrownPotion {
 
@@ -47,6 +49,7 @@ public abstract class CraftThrownPotion extends CraftThrowableProjectile impleme
 
     @Override
     public void splash() {
-        this.getHandle().splash(null);
+        // this.getHandle().splash(null);
+        throw new NotImplementedError();
     }
 }

@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
@@ -27,27 +28,31 @@ public class CraftCreeper extends CraftMonster implements Creeper {
         CreeperPowerEvent.PowerCause cause = powered ? CreeperPowerEvent.PowerCause.SET_ON : CreeperPowerEvent.PowerCause.SET_OFF;
 
         // only call event when we are not in world generation
-        if (this.getHandle().generation || !this.callPowerEvent(cause)) {
-            this.getHandle().setPowered(powered);
-        }
+        throw new NotImplementedError();
+        // if (this.getHandle().generation || !this.callPowerEvent(cause)) {
+        //     this.getHandle().setPowered(powered);
+        // }
     }
 
     private boolean callPowerEvent(CreeperPowerEvent.PowerCause cause) {
-        CreeperPowerEvent event = new CreeperPowerEvent((Creeper) this.getHandle().getBukkitEntity(), cause);
-        this.server.getPluginManager().callEvent(event);
-        return event.isCancelled();
+        throw new NotImplementedError();
+        // CreeperPowerEvent event = new CreeperPowerEvent((Creeper) this.getHandle().getBukkitEntity(), cause);
+        // this.server.getPluginManager().callEvent(event);
+        // return event.isCancelled();
     }
 
     @Override
     public void setMaxFuseTicks(int ticks) {
-        Preconditions.checkArgument(ticks >= 0, "ticks < 0");
-
-        this.getHandle().maxSwell = ticks;
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(ticks >= 0, "ticks < 0");
+        //
+        // this.getHandle().maxSwell = ticks;
     }
 
     @Override
     public int getMaxFuseTicks() {
-        return this.getHandle().maxSwell;
+        throw new NotImplementedError();
+        // return this.getHandle().maxSwell;
     }
 
     @Override
@@ -55,36 +60,42 @@ public class CraftCreeper extends CraftMonster implements Creeper {
         Preconditions.checkArgument(ticks >= 0, "ticks < 0");
         Preconditions.checkArgument(ticks <= this.getMaxFuseTicks(), "ticks > maxFuseTicks");
 
-        this.getHandle().swell = ticks;
+        throw new NotImplementedError();
+        // this.getHandle().swell = ticks;
     }
 
     @Override
     public int getFuseTicks() {
-        return this.getHandle().swell;
+        throw new NotImplementedError();
+        // return this.getHandle().swell;
     }
 
     @Override
     public void setExplosionRadius(int radius) {
         Preconditions.checkArgument(radius >= 0, "radius < 0");
 
-        this.getHandle().explosionRadius = radius;
+        throw new NotImplementedError();
+        // this.getHandle().explosionRadius = radius;
     }
 
     @Override
     public int getExplosionRadius() {
-        return this.getHandle().explosionRadius;
+        throw new NotImplementedError();
+        // return this.getHandle().explosionRadius;
     }
 
     @Override
     public void explode() {
-        this.getHandle().explodeCreeper();
+        throw new NotImplementedError();
+        // this.getHandle().explodeCreeper();
     }
 
     @Override
     public void ignite(Entity entity) {
         Preconditions.checkNotNull(entity, "entity cannot be null");
-        this.getHandle().entityIgniter = ((CraftEntity) entity).getHandle();
-        this.getHandle().ignite();
+        throw new NotImplementedError();
+        // this.getHandle().entityIgniter = ((CraftEntity) entity).getHandle();
+        // this.getHandle().ignite();
     }
 
     @Override
@@ -94,13 +105,15 @@ public class CraftCreeper extends CraftMonster implements Creeper {
 
     @Override
     public Entity getIgniter() {
-        return (this.getHandle().entityIgniter != null) ? this.getHandle().entityIgniter.getBukkitEntity() : null;
+        throw new NotImplementedError();
+        // return (this.getHandle().entityIgniter != null) ? this.getHandle().entityIgniter.getBukkitEntity() : null;
     }
 
     // Paper start
     @Override
     public void setIgnited(boolean ignited) {
-        getHandle().setIgnited(ignited);
+        throw new NotImplementedError();
+        // getHandle().setIgnited(ignited);
     }
 
     @Override

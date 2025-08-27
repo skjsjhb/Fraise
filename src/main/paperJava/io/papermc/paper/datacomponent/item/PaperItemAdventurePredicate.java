@@ -1,24 +1,25 @@
 package io.papermc.paper.datacomponent.item;
 
 import io.papermc.paper.block.BlockPredicate;
-import io.papermc.paper.registry.RegistryKey;
 import io.papermc.paper.registry.data.util.Conversions;
 import io.papermc.paper.registry.set.PaperRegistrySets;
-import io.papermc.paper.util.MCUtil;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import java.util.List;
-import java.util.Optional;
+import kotlin.NotImplementedError;
 import net.minecraft.advancements.critereon.DataComponentMatchers;
 import net.minecraft.core.registries.Registries;
 import org.bukkit.craftbukkit.util.Handleable;
+
+import java.util.List;
+import java.util.Optional;
 
 public record PaperItemAdventurePredicate(
     net.minecraft.world.item.AdventureModePredicate impl
 ) implements ItemAdventurePredicate, Handleable<net.minecraft.world.item.AdventureModePredicate> {
 
     private static List<BlockPredicate> convert(final net.minecraft.world.item.AdventureModePredicate nmsModifiers) {
-        return MCUtil.transformUnmodifiable(nmsModifiers.predicates, nms -> BlockPredicate.predicate()
-            .blocks(nms.blocks().map(blocks -> PaperRegistrySets.convertToApi(RegistryKey.BLOCK, blocks)).orElse(null)).build());
+        throw new NotImplementedError();
+        // return MCUtil.transformUnmodifiable(nmsModifiers.predicates, nms -> BlockPredicate.predicate()
+        //     .blocks(nms.blocks().map(blocks -> PaperRegistrySets.convertToApi(RegistryKey.BLOCK, blocks)).orElse(null)).build());
     }
 
     @Override

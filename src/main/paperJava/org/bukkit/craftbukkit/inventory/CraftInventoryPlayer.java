@@ -1,13 +1,12 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import java.util.List;
+import kotlin.NotImplementedError;
 import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
 import net.minecraft.network.protocol.game.ClientboundSetHeldSlotPacket;
 import net.minecraft.network.protocol.game.ClientboundSetPlayerInventoryPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Inventory;
-import org.bukkit.craftbukkit.CraftEquipmentSlot;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.inventory.EntityEquipment;
@@ -46,12 +45,14 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
 
     @Override
     public ItemStack getItemInOffHand() {
-        return CraftItemStack.asCraftMirror(this.getInventory().equipment.get(net.minecraft.world.entity.EquipmentSlot.OFFHAND));
+        // return CraftItemStack.asCraftMirror(this.getInventory().equipment.get(net.minecraft.world.entity.EquipmentSlot.OFFHAND));
+        throw new NotImplementedError();
     }
 
     @Override
     public void setItemInOffHand(ItemStack item) {
-        this.getInventory().equipment.set(net.minecraft.world.entity.EquipmentSlot.OFFHAND, CraftItemStack.asNMSCopy(item));
+        // this.getInventory().equipment.set(net.minecraft.world.entity.EquipmentSlot.OFFHAND, CraftItemStack.asNMSCopy(item));
+        throw new NotImplementedError();
     }
 
     @Override
@@ -133,11 +134,12 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
     public void setItem(EquipmentSlot slot, ItemStack item) {
         Preconditions.checkArgument(slot != null, "slot must not be null");
 
-        switch (slot) {
-            case HAND -> this.setItemInMainHand(item);
-            case OFF_HAND, FEET, LEGS, CHEST, HEAD, BODY, SADDLE ->
-                this.getInventory().equipment.set(CraftEquipmentSlot.getNMS(slot), CraftItemStack.asNMSCopy(item));
-        }
+        // switch (slot) {
+        //     case HAND -> this.setItemInMainHand(item);
+        //     case OFF_HAND, FEET, LEGS, CHEST, HEAD, BODY, SADDLE ->
+        //         this.getInventory().equipment.set(CraftEquipmentSlot.getNMS(slot), CraftItemStack.asNMSCopy(item));
+        // }
+        throw new NotImplementedError();
     }
 
     @Override
@@ -147,12 +149,13 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
 
     @Override
     public ItemStack getItem(EquipmentSlot slot) {
-        Preconditions.checkArgument(slot != null, "slot must not be null");
-
-        return switch (slot) {
-            case HAND -> this.getItemInMainHand();
-            case OFF_HAND, FEET, LEGS, CHEST, HEAD, BODY, SADDLE -> CraftItemStack.asCraftMirror(this.getInventory().equipment.get(CraftEquipmentSlot.getNMS(slot)));
-        };
+        // Preconditions.checkArgument(slot != null, "slot must not be null");
+        //
+        // return switch (slot) {
+        //     case HAND -> this.getItemInMainHand();
+        //     case OFF_HAND, FEET, LEGS, CHEST, HEAD, BODY, SADDLE -> CraftItemStack.asCraftMirror(this.getInventory().equipment.get(CraftEquipmentSlot.getNMS(slot)));
+        // };
+        throw new NotImplementedError();
     }
 
     @Override
@@ -229,7 +232,8 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
 
     @Override
     public ItemStack[] getArmorContents() {
-        return this.asCraftMirror(this.getInventory().getArmorContents());
+        // return this.asCraftMirror(this.getInventory().getArmorContents());
+        throw new NotImplementedError();
     }
 
     private void setSlots(ItemStack[] items, int baseSlot, int length) {
@@ -254,22 +258,26 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
 
     @Override
     public void setArmorContents(ItemStack[] items) {
-        this.setSlots(items, this.getInventory().getNonEquipmentItems().size(), this.getInventory().getArmorContents().size());
+        // this.setSlots(items, this.getInventory().getNonEquipmentItems().size(), this.getInventory().getArmorContents().size());
+        throw new NotImplementedError();
     }
 
     @Override
     public ItemStack[] getExtraContents() {
-        return this.asCraftMirror(this.getInventory().getExtraContent());
+        // return this.asCraftMirror(this.getInventory().getExtraContent());
+        throw new NotImplementedError();
     }
 
     @Override
     public void setExtraContents(ItemStack[] items) {
-        this.setSlots(items, this.getInventory().getNonEquipmentItems().size() + this.getInventory().getArmorContents().size(), 3);
+        // this.setSlots(items, this.getInventory().getNonEquipmentItems().size() + this.getInventory().getArmorContents().size(), 3);
+        throw new NotImplementedError();
     }
 
     @Override
     public HumanEntity getHolder() {
-        return (HumanEntity) this.inventory.getOwner();
+        // return (HumanEntity) this.inventory.getOwner();
+        throw new NotImplementedError();
     }
 
     @Override
@@ -341,6 +349,7 @@ public class CraftInventoryPlayer extends CraftInventory implements org.bukkit.i
     public void setBootsDropChance(float chance) {
         throw new UnsupportedOperationException("Cannot set drop chance for PlayerInventory");
     }
+
     // Paper start
     @Override
     public float getDropChance(EquipmentSlot slot) {

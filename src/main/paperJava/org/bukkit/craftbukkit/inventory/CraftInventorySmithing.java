@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.Container;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.item.crafting.RecipeHolder;
@@ -40,6 +41,7 @@ public class CraftInventorySmithing extends CraftResultInventory implements Smit
     @Override
     public Recipe getRecipe() {
         RecipeHolder<?> recipe = this.getResultInventory().getRecipeUsed();
-        return (recipe == null) ? null : recipe.toBukkitRecipe();
+        // return (recipe == null) ? null : recipe.toBukkitRecipe();
+        throw new NotImplementedError();
     }
 }

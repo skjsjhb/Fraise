@@ -1,14 +1,14 @@
 package org.bukkit.craftbukkit.inventory;
 
-import java.util.ArrayList;
-import java.util.List;
-import net.minecraft.server.MinecraftServer;
+import kotlin.NotImplementedError;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.RecipeChoice;
 import org.bukkit.inventory.ShapelessRecipe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CraftShapelessRecipe extends ShapelessRecipe implements CraftRecipe {
     // TODO: Could eventually use this to add a matches() method or some such
@@ -44,6 +44,7 @@ public class CraftShapelessRecipe extends ShapelessRecipe implements CraftRecipe
             data.add(this.toNMS(i, true));
         }
 
-        MinecraftServer.getServer().getRecipeManager().addRecipe(new RecipeHolder<>(CraftRecipe.toMinecraft(this.getKey()), new net.minecraft.world.item.crafting.ShapelessRecipe(this.getGroup(), CraftRecipe.getCategory(this.getCategory()), CraftItemStack.asNMSCopy(this.getResult()), data)));
+        // MinecraftServer.getServer().getRecipeManager().addRecipe(new RecipeHolder<>(CraftRecipe.toMinecraft(this.getKey()), new net.minecraft.world.item.crafting.ShapelessRecipe(this.getGroup(), CraftRecipe.getCategory(this.getCategory()), CraftItemStack.asNMSCopy(this.getResult()), data)));
+        throw new NotImplementedError();
     }
 }

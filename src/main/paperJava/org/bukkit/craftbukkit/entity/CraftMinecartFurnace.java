@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.vehicle.MinecartFurnace;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.minecart.PoweredMinecart;
@@ -18,13 +19,15 @@ public class CraftMinecartFurnace extends CraftMinecart implements PoweredMineca
 
     @Override
     public int getFuel() {
-        return this.getHandle().fuel;
+        // return this.getHandle().fuel;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setFuel(int fuel) {
         Preconditions.checkArgument(fuel >= 0, "ticks cannot be negative");
-        this.getHandle().fuel = fuel;
+        // this.getHandle().fuel = fuel;
+        throw new NotImplementedError();
     }
 
     @Override

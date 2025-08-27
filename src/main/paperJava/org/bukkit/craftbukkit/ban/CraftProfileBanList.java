@@ -1,19 +1,19 @@
 package org.bukkit.craftbukkit.ban;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableSet;
 import com.mojang.authlib.GameProfile;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Date;
-import java.util.Set;
-import java.util.UUID;
-import net.minecraft.server.MinecraftServer;
+import kotlin.NotImplementedError;
 import net.minecraft.server.players.UserBanList;
 import net.minecraft.server.players.UserBanListEntry;
 import org.bukkit.BanEntry;
 import org.bukkit.ban.ProfileBanList;
 import org.bukkit.profile.PlayerProfile;
+
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
+import java.util.Set;
+import java.util.UUID;
 
 public class CraftProfileBanList implements ProfileBanList {
     private final UserBanList list;
@@ -102,24 +102,26 @@ public class CraftProfileBanList implements ProfileBanList {
 
     @Override
     public Set<BanEntry> getBanEntries() {
-        ImmutableSet.Builder<BanEntry> builder = ImmutableSet.builder();
-        for (UserBanListEntry entry : this.list.getEntries()) {
-            GameProfile profile = entry.getUser();
-            builder.add(new CraftProfileBanEntry(profile, entry, this.list));
-        }
-
-        return builder.build();
+        throw new NotImplementedError();
+        // ImmutableSet.Builder<BanEntry> builder = ImmutableSet.builder();
+        // for (UserBanListEntry entry : this.list.getEntries()) {
+        //     GameProfile profile = entry.getUser();
+        //     builder.add(new CraftProfileBanEntry(profile, entry, this.list));
+        // }
+        //
+        // return builder.build();
     }
 
     @Override
     public Set<BanEntry<com.destroystokyo.paper.profile.PlayerProfile>> getEntries() { // Paper
-        ImmutableSet.Builder<BanEntry<com.destroystokyo.paper.profile.PlayerProfile>> builder = ImmutableSet.builder(); // Paper
-        for (UserBanListEntry entry : this.list.getEntries()) {
-            GameProfile profile = entry.getUser();
-            builder.add(new CraftProfileBanEntry(profile, entry, this.list));
-        }
-
-        return builder.build();
+        throw new NotImplementedError();
+        // ImmutableSet.Builder<BanEntry<com.destroystokyo.paper.profile.PlayerProfile>> builder = ImmutableSet.builder(); // Paper
+        // for (UserBanListEntry entry : this.list.getEntries()) {
+        //     GameProfile profile = entry.getUser();
+        //     builder.add(new CraftProfileBanEntry(profile, entry, this.list));
+        // }
+        //
+        // return builder.build();
     }
 
     @Override
@@ -177,8 +179,8 @@ public class CraftProfileBanList implements ProfileBanList {
         }
 
         UserBanListEntry entry = new UserBanListEntry(profile, new Date(),
-                (source == null || source.isBlank()) ? null : source, expires,
-                (reason == null || reason.isBlank()) ? null : reason);
+            (source == null || source.isBlank()) ? null : source, expires,
+            (reason == null || reason.isBlank()) ? null : reason);
 
         this.list.add(entry);
 
@@ -205,10 +207,12 @@ public class CraftProfileBanList implements ProfileBanList {
     }
 
     static GameProfile getProfileByUUID(UUID uuid) {
-        return (MinecraftServer.getServer() != null) ? MinecraftServer.getServer().getProfileCache().get(uuid).orElse(null) : null;
+        throw new NotImplementedError();
+        // return (MinecraftServer.getServer() != null) ? MinecraftServer.getServer().getProfileCache().get(uuid).orElse(null) : null;
     }
 
     static GameProfile getProfileByName(String name) {
-        return (MinecraftServer.getServer() != null) ? MinecraftServer.getServer().getProfileCache().get(name).orElse(null) : null;
+        throw new NotImplementedError();
+        // return (MinecraftServer.getServer() != null) ? MinecraftServer.getServer().getProfileCache().get(name).orElse(null) : null;
     }
 }

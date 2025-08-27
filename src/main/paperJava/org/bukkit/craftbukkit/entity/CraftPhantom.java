@@ -1,10 +1,10 @@
 package org.bukkit.craftbukkit.entity;
 
-import net.minecraft.Optionull;
+import kotlin.NotImplementedError;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.Phantom;
+
 import java.util.UUID;
 
 public class CraftPhantom extends CraftMob implements Phantom, CraftEnemy {
@@ -30,26 +30,31 @@ public class CraftPhantom extends CraftMob implements Phantom, CraftEnemy {
 
     @Override
     public UUID getSpawningEntity() {
-        return this.getHandle().spawningEntity;
+        // return this.getHandle().spawningEntity;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean shouldBurnInDay() {
-        return this.getHandle().shouldBurnInDay;
+        // return this.getHandle().shouldBurnInDay;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setShouldBurnInDay(boolean shouldBurnInDay) {
-        this.getHandle().shouldBurnInDay = shouldBurnInDay;
+        // this.getHandle().shouldBurnInDay = shouldBurnInDay;
+        throw new NotImplementedError();
     }
 
     @Override
     public Location getAnchorLocation() {
-        return Optionull.map(this.getHandle().anchorPoint, pos -> CraftLocation.toBukkit(pos, this.getHandle().level()));
+        throw new NotImplementedError();
+        // return Optionull.map(this.getHandle().anchorPoint, pos -> CraftLocation.toBukkit(pos, this.getHandle().level()));
     }
 
     @Override
     public void setAnchorLocation(Location location) {
-        this.getHandle().anchorPoint = location == null ? null : CraftLocation.toBlockPosition(location);
+        // this.getHandle().anchorPoint = location == null ? null : CraftLocation.toBlockPosition(location);
+        throw new NotImplementedError();
     }
 }

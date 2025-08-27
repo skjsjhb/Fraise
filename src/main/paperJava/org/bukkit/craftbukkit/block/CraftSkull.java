@@ -2,11 +2,10 @@ package org.bukkit.craftbukkit.block;
 
 import com.google.common.base.Preconditions;
 import com.mojang.authlib.GameProfile;
-import io.papermc.paper.adventure.PaperAdventure;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.minecraft.Util;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.item.component.ResolvableProfile;
 import net.minecraft.world.level.block.entity.SkullBlockEntity;
 import org.bukkit.Bukkit;
@@ -61,17 +60,18 @@ public class CraftSkull extends CraftBlockEntityState<SkullBlockEntity> implemen
 
     @Override
     public boolean setOwner(String name) {
-        if (name == null || name.length() > CraftSkull.MAX_OWNER_LENGTH) {
-            return false;
-        }
-
-        GameProfile profile = MinecraftServer.getServer().getProfileCache().get(name).orElse(null);
-        if (profile == null) {
-            return false;
-        }
-
-        this.profile = new ResolvableProfile(profile);
-        return true;
+        throw new NotImplementedError();
+        // if (name == null || name.length() > CraftSkull.MAX_OWNER_LENGTH) {
+        //     return false;
+        // }
+        //
+        // GameProfile profile = MinecraftServer.getServer().getProfileCache().get(name).orElse(null);
+        // if (profile == null) {
+        //     return false;
+        // }
+        //
+        // this.profile = new ResolvableProfile(profile);
+        // return true;
     }
 
     @Override
@@ -142,11 +142,12 @@ public class CraftSkull extends CraftBlockEntityState<SkullBlockEntity> implemen
 
     @Override
     public void setNoteBlockSound(@Nullable NamespacedKey namespacedKey) {
-        if (namespacedKey == null) {
-            this.getSnapshot().noteBlockSound = null;
-            return;
-        }
-        this.getSnapshot().noteBlockSound = CraftNamespacedKey.toMinecraft(namespacedKey);
+        throw new NotImplementedError();
+        // if (namespacedKey == null) {
+        //     this.getSnapshot().noteBlockSound = null;
+        //     return;
+        // }
+        // this.getSnapshot().noteBlockSound = CraftNamespacedKey.toMinecraft(namespacedKey);
     }
 
     @Override
@@ -221,13 +222,15 @@ public class CraftSkull extends CraftBlockEntityState<SkullBlockEntity> implemen
 
     @Override
     public @Nullable Component customName() {
-        SkullBlockEntity snapshot = getSnapshot();
-        return snapshot.customName == null ? null : PaperAdventure.asAdventure(snapshot.customName);
+        throw new NotImplementedError();
+        // SkullBlockEntity snapshot = getSnapshot();
+        // return snapshot.customName == null ? null : PaperAdventure.asAdventure(snapshot.customName);
     }
 
     @Override
     public void customName(@Nullable Component customName) {
-        SkullBlockEntity snapshot = getSnapshot();
-        snapshot.customName = customName == null ? null : PaperAdventure.asVanilla(customName);
+        throw new NotImplementedError();
+        // SkullBlockEntity snapshot = getSnapshot();
+        // snapshot.customName = customName == null ? null : PaperAdventure.asVanilla(customName);
     }
 }

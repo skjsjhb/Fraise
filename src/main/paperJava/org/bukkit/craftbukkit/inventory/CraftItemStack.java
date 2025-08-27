@@ -1,13 +1,8 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import com.google.common.collect.ImmutableMap;
 import io.papermc.paper.adventure.PaperAdventure;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.minecraft.advancements.critereon.DataComponentMatchers;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -37,11 +32,18 @@ import org.bukkit.material.MaterialData;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Collections;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
 @DelegateDeserialization(ItemStack.class)
 public final class CraftItemStack extends ItemStack {
 
     // Paper start - delegate api-ItemStack to CraftItemStack
     private static final java.lang.invoke.VarHandle API_ITEM_STACK_CRAFT_DELEGATE_FIELD;
+
     static {
         try {
             API_ITEM_STACK_CRAFT_DELEGATE_FIELD = java.lang.invoke.MethodHandles.privateLookupIn(
@@ -142,8 +144,7 @@ public final class CraftItemStack extends ItemStack {
     }
 
     public static CraftItemStack asCraftCopy(ItemStack original) {
-        if (original instanceof CraftItemStack) {
-            CraftItemStack stack = (CraftItemStack) original;
+        if (original instanceof final CraftItemStack stack) {
             return new CraftItemStack(stack.handle == null ? null : stack.handle.copy());
         }
         return new CraftItemStack(original);
@@ -206,7 +207,8 @@ public final class CraftItemStack extends ItemStack {
             this.handle = new net.minecraft.world.item.ItemStack(CraftItemType.bukkitToMinecraft(type), 1);
         } else {
             final Material oldType = CraftMagicNumbers.getMaterial(this.handle.getItem()); // Paper
-            this.handle.setItem(CraftItemType.bukkitToMinecraft(type));
+            // this.handle.setItem(CraftItemType.bukkitToMinecraft(type));
+            // throw new NotImplementedError();
             if (this.hasItemMeta()) {
                 // This will create the appropriate item meta, which will contain all the data we intend to keep
                 this.adjustTagForItemMeta(oldType); // Paper
@@ -272,9 +274,10 @@ public final class CraftItemStack extends ItemStack {
             return;
         }
 
-        EnchantmentHelper.updateEnchantments(this.handle, mutable -> { // data component api doesn't really support mutable things once already set yet
-            mutable.set(CraftEnchantment.bukkitToMinecraftHolder(enchant), level);
-        }, true);
+        throw new NotImplementedError();
+        // EnchantmentHelper.updateEnchantments(this.handle, mutable -> { // data component api doesn't really support mutable things once already set yet
+        //     mutable.set(CraftEnchantment.bukkitToMinecraftHolder(enchant), level);
+        // }, true);
     }
 
     @Override
@@ -342,6 +345,7 @@ public final class CraftItemStack extends ItemStack {
     public ItemMeta getItemMeta() {
         return CraftItemStack.getItemMeta(this.handle);
     }
+
     // Paper start - improve handled tags on type change
     public void adjustTagForItemMeta(final Material oldType) {
         final CraftMetaItem oldMeta = (CraftMetaItem) CraftItemFactory.instance().getItemMeta(oldType);
@@ -377,13 +381,16 @@ public final class CraftItemStack extends ItemStack {
         // Paper start - handled tags on type change
         return getItemMeta(item, metaForType, null);
     }
+
     public static ItemMeta getItemMeta(net.minecraft.world.item.ItemStack item, org.bukkit.inventory.ItemType metaForType, final java.util.Set<net.minecraft.core.component.DataComponentType<?>> extraHandledDcts) {
         // Paper end - handled tags on type change
         if (!CraftItemStack.hasItemMeta(item)) {
             return CraftItemFactory.instance().getItemMeta(CraftItemStack.getType(item));
         }
 
-        if (metaForType != null) { return ((CraftItemType<?>) metaForType).getItemMeta(item, extraHandledDcts); } // Paper
+        if (metaForType != null) {
+            return ((CraftItemType<?>) metaForType).getItemMeta(item, extraHandledDcts);
+        } // Paper
         return ((CraftItemType<?>) CraftItemType.minecraftToBukkitNew(item.getItem())).getItemMeta(item, extraHandledDcts); // Paper
     }
 
@@ -401,8 +408,9 @@ public final class CraftItemStack extends ItemStack {
             return false;
         }
         if (CraftItemFactory.instance().equals(itemMeta, null)) {
-            item.restorePatch(DataComponentPatch.EMPTY);
-            return true;
+            // item.restorePatch(DataComponentPatch.EMPTY);
+            throw new NotImplementedError();
+            // return true;
         }
         if (!CraftItemFactory.instance().isApplicable(itemMeta, CraftItemStack.getType(item))) {
             return false;
@@ -422,8 +430,9 @@ public final class CraftItemStack extends ItemStack {
             // Paper end - support updating profile after resolving it
 
             ((CraftMetaItem) itemMeta).applyToItem(tag);
-            item.restorePatch(DataComponentPatch.EMPTY); // Paper - properly apply the new patch from itemmeta
-            item.applyComponents(tag.build()); // Paper - properly apply the new patch from itemmeta
+            // item.restorePatch(DataComponentPatch.EMPTY); // Paper - properly apply the new patch from itemmeta
+            // item.applyComponents(tag.build()); // Paper - properly apply the new patch from itemmeta
+            throw new NotImplementedError();
         }
         // Paper - this is no longer needed
 
@@ -461,6 +470,7 @@ public final class CraftItemStack extends ItemStack {
     static boolean hasItemMeta(net.minecraft.world.item.ItemStack item) {
         return !(item == null || item.getComponentsPatch().isEmpty());
     }
+
     // Paper start - with type
     @Override
     public ItemStack withType(final Material type) {
@@ -483,6 +493,7 @@ public final class CraftItemStack extends ItemStack {
     // Paper end
 
     public static final String PDC_CUSTOM_DATA_KEY = "PublicBukkitValues";
+
     private net.minecraft.nbt.CompoundTag getPdcTag() {
         if (this.handle == null) {
             return new net.minecraft.nbt.CompoundTag();
@@ -506,6 +517,7 @@ public final class CraftItemStack extends ItemStack {
             return CraftItemStack.this.getPdcTag().get(key);
         }
     };
+
     @Override
     public io.papermc.paper.persistence.PersistentDataContainerView getPersistentDataContainer() {
         return this.pdcView;

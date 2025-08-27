@@ -4,13 +4,14 @@ import com.mojang.serialization.Lifecycle;
 import io.papermc.paper.registry.data.util.Conversions;
 import io.papermc.paper.registry.entry.RegistryEntryMeta;
 import io.papermc.paper.registry.event.WritableRegistry;
-import java.util.Optional;
-import java.util.function.Consumer;
+import kotlin.NotImplementedError;
 import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.RegistrationInfo;
-import net.minecraft.resources.ResourceKey;
 import org.bukkit.Keyed;
 import org.bukkit.craftbukkit.CraftRegistry;
+
+import java.util.Optional;
+import java.util.function.Consumer;
 
 public class WritableCraftRegistry<M, T extends Keyed, B extends PaperRegistryBuilder<M, T>> extends CraftRegistry<T, M> {
 
@@ -29,18 +30,19 @@ public class WritableCraftRegistry<M, T extends Keyed, B extends PaperRegistryBu
     }
 
     public void register(final TypedKey<T> key, final Consumer<RegistryBuilderFactory<T, B>> value, final Conversions conversions) {
-        final ResourceKey<M> resourceKey = PaperRegistries.toNms(key);
-        this.registry.validateWrite(resourceKey);
-        final PaperRegistryBuilderFactory<M, T, B> builderFactory = new PaperRegistryBuilderFactory<>(this.registry.key(), conversions, this.meta.builderFiller(), this.registry::getValueForCopying);
-        value.accept(builderFactory);
-        PaperRegistryListenerManager.INSTANCE.registerWithListeners(
-            this.registry,
-            this.meta,
-            resourceKey,
-            builderFactory.requireBuilder(),
-            FROM_PLUGIN,
-            conversions
-        );
+        throw new NotImplementedError();
+        // final ResourceKey<M> resourceKey = PaperRegistries.toNms(key);
+        // this.registry.validateWrite(resourceKey);
+        // final PaperRegistryBuilderFactory<M, T, B> builderFactory = new PaperRegistryBuilderFactory<>(this.registry.key(), conversions, this.meta.builderFiller(), this.registry::getValueForCopying);
+        // value.accept(builderFactory);
+        // PaperRegistryListenerManager.INSTANCE.registerWithListeners(
+        //     this.registry,
+        //     this.meta,
+        //     resourceKey,
+        //     builderFactory.requireBuilder(),
+        //     FROM_PLUGIN,
+        //     conversions
+        // );
     }
 
     public WritableRegistry<T, B> createApiWritableRegistry(final Conversions conversions) {

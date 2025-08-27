@@ -1,16 +1,9 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
+import kotlin.NotImplementedError;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.util.ProblemReporter;
-import net.minecraft.util.RandomSource;
-import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.entity.vehicle.MinecartSpawner;
-import net.minecraft.world.level.SpawnData;
-import net.minecraft.world.level.storage.TagValueInput;
 import org.bukkit.block.spawner.SpawnRule;
 import org.bukkit.block.spawner.SpawnerEntry;
 import org.bukkit.craftbukkit.CraftServer;
@@ -18,6 +11,9 @@ import org.bukkit.craftbukkit.block.CraftCreatureSpawner;
 import org.bukkit.entity.EntitySnapshot;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.minecart.SpawnerMinecart;
+
+import java.util.Collection;
+import java.util.List;
 
 public class CraftMinecartMobSpawner extends CraftMinecart implements SpawnerMinecart, org.bukkit.craftbukkit.spawner.PaperSharedSpawnerLogic { // Paper - more spawner API
 
@@ -32,42 +28,45 @@ public class CraftMinecartMobSpawner extends CraftMinecart implements SpawnerMin
 
     @Override
     public EntityType getSpawnedType() {
-        SpawnData spawnData = this.getHandle().getSpawner().nextSpawnData;
-        if (spawnData == null) {
-            return null;
-        }
-
-        try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
-            () -> "getSpawnedType@" + this.getUniqueId(), LOGGER
-        )) {
-            Optional<net.minecraft.world.entity.EntityType<?>> type = net.minecraft.world.entity.EntityType.by(
-                TagValueInput.create(problemReporter, getHandle().registryAccess(), spawnData.getEntityToSpawn())
-            );
-            return type.map(CraftEntityType::minecraftToBukkit).orElse(null);
-        }
+        throw new NotImplementedError();
+        // SpawnData spawnData = this.getHandle().getSpawner().nextSpawnData;
+        // if (spawnData == null) {
+        //     return null;
+        // }
+        //
+        // try (final ProblemReporter.ScopedCollector problemReporter = new ProblemReporter.ScopedCollector(
+        //     () -> "getSpawnedType@" + this.getUniqueId(), LOGGER
+        // )) {
+        //     Optional<net.minecraft.world.entity.EntityType<?>> type = net.minecraft.world.entity.EntityType.by(
+        //         TagValueInput.create(problemReporter, getHandle().registryAccess(), spawnData.getEntityToSpawn())
+        //     );
+        //     return type.map(CraftEntityType::minecraftToBukkit).orElse(null);
+        // }
     }
 
     @Override
     public void setSpawnedType(EntityType entityType) {
-        if (entityType == null) {
-            this.getHandle().getSpawner().spawnPotentials = WeightedList.of(); // need clear the spawnPotentials to avoid nextSpawnData being replaced later
-            this.getHandle().getSpawner().nextSpawnData = new SpawnData();
-            return;
-        }
-        Preconditions.checkArgument(entityType != EntityType.UNKNOWN, "Can't spawn EntityType %s from mob spawners!", entityType);
-
-        RandomSource rand = this.getHandle().level().getRandom();
-        this.getHandle().getSpawner().setEntityId(CraftEntityType.bukkitToMinecraft(entityType), this.getHandle().level(), rand, this.getHandle().blockPosition());
+        throw new NotImplementedError();
+        // if (entityType == null) {
+        //     this.getHandle().getSpawner().spawnPotentials = WeightedList.of(); // need clear the spawnPotentials to avoid nextSpawnData being replaced later
+        //     this.getHandle().getSpawner().nextSpawnData = new SpawnData();
+        //     return;
+        // }
+        // Preconditions.checkArgument(entityType != EntityType.UNKNOWN, "Can't spawn EntityType %s from mob spawners!", entityType);
+        //
+        // RandomSource rand = this.getHandle().level().getRandom();
+        // this.getHandle().getSpawner().setEntityId(CraftEntityType.bukkitToMinecraft(entityType), this.getHandle().level(), rand, this.getHandle().blockPosition());
     }
 
     @Override
     public EntitySnapshot getSpawnedEntity() {
-        SpawnData spawnData = this.getHandle().getSpawner().nextSpawnData;
-        if (spawnData == null) {
-            return null;
-        }
-
-        return CraftEntitySnapshot.create(spawnData.getEntityToSpawn());
+        throw new NotImplementedError();
+        // SpawnData spawnData = this.getHandle().getSpawner().nextSpawnData;
+        // if (spawnData == null) {
+        //     return null;
+        // }
+        //
+        // return CraftEntitySnapshot.create(spawnData.getEntityToSpawn());
     }
 
     @Override
@@ -106,75 +105,89 @@ public class CraftMinecartMobSpawner extends CraftMinecart implements SpawnerMin
 
     @Override
     public int getDelay() {
-        return this.getHandle().getSpawner().spawnDelay;
+        // return this.getHandle().getSpawner().spawnDelay;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setDelay(int delay) {
-        this.getHandle().getSpawner().spawnDelay = delay;
+        // this.getHandle().getSpawner().spawnDelay = delay;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getMinSpawnDelay() {
-        return this.getHandle().getSpawner().minSpawnDelay;
+        // return this.getHandle().getSpawner().minSpawnDelay;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setMinSpawnDelay(int spawnDelay) {
         Preconditions.checkArgument(spawnDelay <= this.getMaxSpawnDelay(), "Minimum Spawn Delay must be less than or equal to Maximum Spawn Delay");
-        this.getHandle().getSpawner().minSpawnDelay = spawnDelay;
+        // this.getHandle().getSpawner().minSpawnDelay = spawnDelay;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getMaxSpawnDelay() {
-        return this.getHandle().getSpawner().maxSpawnDelay;
+        // return this.getHandle().getSpawner().maxSpawnDelay;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setMaxSpawnDelay(int spawnDelay) {
         Preconditions.checkArgument(spawnDelay > 0, "Maximum Spawn Delay must be greater than 0.");
         Preconditions.checkArgument(spawnDelay >= this.getMinSpawnDelay(), "Maximum Spawn Delay must be greater than or equal to Minimum Spawn Delay");
-        this.getHandle().getSpawner().maxSpawnDelay = spawnDelay;
+        // this.getHandle().getSpawner().maxSpawnDelay = spawnDelay;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getMaxNearbyEntities() {
-        return this.getHandle().getSpawner().maxNearbyEntities;
+        // return this.getHandle().getSpawner().maxNearbyEntities;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setMaxNearbyEntities(int maxNearbyEntities) {
-        this.getHandle().getSpawner().maxNearbyEntities = maxNearbyEntities;
+        // this.getHandle().getSpawner().maxNearbyEntities = maxNearbyEntities;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getSpawnCount() {
-        return this.getHandle().getSpawner().spawnCount;
+        // return this.getHandle().getSpawner().spawnCount;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setSpawnCount(int count) {
-        this.getHandle().getSpawner().spawnCount = count;
+        // this.getHandle().getSpawner().spawnCount = count;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getRequiredPlayerRange() {
-        return this.getHandle().getSpawner().requiredPlayerRange;
+        // return this.getHandle().getSpawner().requiredPlayerRange;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setRequiredPlayerRange(int requiredPlayerRange) {
-        this.getHandle().getSpawner().requiredPlayerRange = requiredPlayerRange;
+        // this.getHandle().getSpawner().requiredPlayerRange = requiredPlayerRange;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getSpawnRange() {
-        return this.getHandle().getSpawner().spawnRange;
+        // return this.getHandle().getSpawner().spawnRange;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setSpawnRange(int spawnRange) {
-        this.getHandle().getSpawner().spawnRange = spawnRange;
+        // this.getHandle().getSpawner().spawnRange = spawnRange;
+        throw new NotImplementedError();
     }
 
     @Override

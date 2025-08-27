@@ -1,5 +1,6 @@
 package io.papermc.paper.antixray;
 
+import kotlin.NotImplementedError;
 import net.minecraft.network.protocol.game.ClientboundLevelChunkWithLightPacket;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -24,6 +25,7 @@ public final class ChunkPacketInfoAntiXray extends ChunkPacketInfo<BlockState> i
 
     @Override
     public void run() {
-        chunkPacketBlockControllerAntiXray.obfuscate(this);
+        throw new NotImplementedError();
+        // chunkPacketBlockControllerAntiXray.obfuscate(this);
     }
 }

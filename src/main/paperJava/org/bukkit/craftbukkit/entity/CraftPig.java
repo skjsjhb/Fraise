@@ -2,6 +2,7 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import io.papermc.paper.registry.HolderableBase;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -38,31 +39,35 @@ public class CraftPig extends CraftAnimals implements Pig {
 
     @Override
     public int getBoostTicks() {
-        return this.getHandle().steering.boosting ? this.getHandle().steering.boostTimeTotal() : 0;
+        // return this.getHandle().steering.boosting ? this.getHandle().steering.boostTimeTotal() : 0;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setBoostTicks(int ticks) {
         Preconditions.checkArgument(ticks >= 0, "ticks must be >= 0");
 
-        this.getHandle().steering.setBoostTicks(ticks);
+        throw new NotImplementedError();
+        // this.getHandle().steering.setBoostTicks(ticks);
     }
 
     @Override
     public int getCurrentBoostTicks() {
-        return this.getHandle().steering.boosting ? this.getHandle().steering.boostTime : 0;
+        // return this.getHandle().steering.boosting ? this.getHandle().steering.boostTime : 0;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setCurrentBoostTicks(int ticks) {
-        if (!this.getHandle().steering.boosting) {
-            return;
-        }
-
-        int max = this.getHandle().steering.boostTimeTotal();
-        Preconditions.checkArgument(ticks >= 0 && ticks <= max, "boost ticks must not exceed 0 or %s (inclusive)", max);
-
-        this.getHandle().steering.boostTime = ticks;
+        throw new NotImplementedError();
+        // if (!this.getHandle().steering.boosting) {
+        //     return;
+        // }
+        //
+        // int max = this.getHandle().steering.boostTimeTotal();
+        // Preconditions.checkArgument(ticks >= 0 && ticks <= max, "boost ticks must not exceed 0 or %s (inclusive)", max);
+        //
+        // this.getHandle().steering.boostTime = ticks;
     }
 
     @Override
@@ -79,7 +84,8 @@ public class CraftPig extends CraftAnimals implements Pig {
     public void setVariant(Variant variant) {
         Preconditions.checkArgument(variant != null, "variant cannot be null");
 
-        this.getHandle().setVariant(CraftVariant.bukkitToMinecraftHolder(variant));
+        throw new NotImplementedError();
+        // this.getHandle().setVariant(CraftVariant.bukkitToMinecraftHolder(variant));
     }
 
     public static class CraftVariant extends HolderableBase<PigVariant> implements Variant {

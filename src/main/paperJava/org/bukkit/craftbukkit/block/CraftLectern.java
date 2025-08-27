@@ -1,12 +1,12 @@
 package org.bukkit.craftbukkit.block;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.entity.LecternBlockEntity;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Lectern;
-import org.bukkit.craftbukkit.inventory.CraftInventoryLectern;
 import org.bukkit.inventory.Inventory;
 
 public class CraftLectern extends CraftBlockEntityState<LecternBlockEntity> implements Lectern {
@@ -26,12 +26,14 @@ public class CraftLectern extends CraftBlockEntityState<LecternBlockEntity> impl
 
     @Override
     public void setPage(int page) {
-        this.getSnapshot().setPage(page);
+        // this.getSnapshot().setPage(page);
+        throw new NotImplementedError();
     }
 
     @Override
     public Inventory getSnapshotInventory() {
-        return new CraftInventoryLectern(this.getSnapshot().bookAccess);
+        // return new CraftInventoryLectern(this.getSnapshot().bookAccess);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -40,7 +42,8 @@ public class CraftLectern extends CraftBlockEntityState<LecternBlockEntity> impl
             return this.getSnapshotInventory();
         }
 
-        return new CraftInventoryLectern(this.getBlockEntity().bookAccess);
+        // return new CraftInventoryLectern(this.getBlockEntity().bookAccess);
+        throw new NotImplementedError();
     }
 
     @Override

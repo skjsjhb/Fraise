@@ -2,6 +2,7 @@ package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
 import io.papermc.paper.util.OldEnumHolderable;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.animal.frog.Frog;
@@ -23,7 +24,8 @@ public class CraftFrog extends CraftAnimals implements org.bukkit.entity.Frog {
 
     @Override
     public Entity getTongueTarget() {
-        return this.getHandle().getTongueTarget().map(net.minecraft.world.entity.Entity::getBukkitEntity).orElse(null);
+        throw new NotImplementedError();
+        // return this.getHandle().getTongueTarget().map(net.minecraft.world.entity.Entity::getBukkitEntity).orElse(null);
     }
 
     @Override
@@ -44,7 +46,8 @@ public class CraftFrog extends CraftAnimals implements org.bukkit.entity.Frog {
     public void setVariant(Variant variant) {
         Preconditions.checkArgument(variant != null, "variant cannot be null");
 
-        this.getHandle().setVariant(CraftVariant.bukkitToMinecraftHolder(variant));
+        throw new NotImplementedError();
+        // this.getHandle().setVariant(CraftVariant.bukkitToMinecraftHolder(variant));
     }
 
     public static class CraftVariant extends OldEnumHolderable<Variant, FrogVariant> implements Variant {
@@ -65,6 +68,7 @@ public class CraftFrog extends CraftAnimals implements org.bukkit.entity.Frog {
         public static Holder<FrogVariant> bukkitToMinecraftHolder(Variant bukkit) {
             return CraftRegistry.bukkitToMinecraftHolder(bukkit);
         }
+
         public CraftVariant(final Holder<FrogVariant> holder) {
             super(holder, count++);
         }

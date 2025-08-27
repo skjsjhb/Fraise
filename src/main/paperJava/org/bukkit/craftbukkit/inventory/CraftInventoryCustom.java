@@ -1,18 +1,17 @@
 package org.bukkit.craftbukkit.inventory;
 
 import com.google.common.base.Preconditions;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import org.bukkit.Location;
-import org.bukkit.craftbukkit.entity.CraftHumanEntity;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class CraftInventoryCustom extends CraftInventory {
 
@@ -66,7 +65,7 @@ public class CraftInventoryCustom extends CraftInventory {
 
     static class MinecraftInventory implements Container {
         private final NonNullList<ItemStack> items;
-        private int maxStack = MAX_STACK;
+        private final int maxStack = 64; // MAX_STACK; // throw new NotImplementedError();
         private final List<HumanEntity> viewers;
         private final String title;
         private final net.kyori.adventure.text.Component adventure$title; // Paper
@@ -166,47 +165,48 @@ public class CraftInventoryCustom extends CraftInventory {
             return this.maxStack;
         }
 
-        @Override
-        public void setMaxStackSize(int size) {
-            this.maxStack = size;
-        }
+        // @Override
+        // public void setMaxStackSize(int size) {
+        //     this.maxStack = size;
+        // }
 
         @Override
-        public void setChanged() {}
+        public void setChanged() {
+        }
 
         @Override
         public boolean stillValid(Player player) {
             return true;
         }
 
-        @Override
-        public List<ItemStack> getContents() {
-            return this.items;
-        }
-
-        @Override
-        public void onOpen(CraftHumanEntity player) {
-            this.viewers.add(player);
-        }
-
-        @Override
-        public void onClose(CraftHumanEntity player) {
-            this.viewers.remove(player);
-        }
-
-        @Override
-        public List<HumanEntity> getViewers() {
-            return this.viewers;
-        }
+        // @Override
+        // public List<ItemStack> getContents() {
+        //     return this.items;
+        // }
+        //
+        // @Override
+        // public void onOpen(CraftHumanEntity player) {
+        //     this.viewers.add(player);
+        // }
+        //
+        // @Override
+        // public void onClose(CraftHumanEntity player) {
+        //     this.viewers.remove(player);
+        // }
+        //
+        // @Override
+        // public List<HumanEntity> getViewers() {
+        //     return this.viewers;
+        // }
 
         public InventoryType getType() {
             return this.type;
         }
 
-        @Override
-        public InventoryHolder getOwner() {
-            return this.owner;
-        }
+        // @Override
+        // public InventoryHolder getOwner() {
+        //     return this.owner;
+        // }
 
         @Override
         public boolean canPlaceItem(int slot, ItemStack stack) {
@@ -226,10 +226,10 @@ public class CraftInventoryCustom extends CraftInventory {
             this.items.clear();
         }
 
-        @Override
-        public Location getLocation() {
-            return null;
-        }
+        // @Override
+        // public Location getLocation() {
+        //     return null;
+        // }
 
         public net.kyori.adventure.text.Component title() {
             return this.adventure$title;

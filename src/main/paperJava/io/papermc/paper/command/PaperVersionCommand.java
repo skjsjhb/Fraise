@@ -11,10 +11,7 @@ import com.mojang.brigadier.tree.LiteralCommandNode;
 import io.papermc.paper.command.brigadier.CommandSourceStack;
 import io.papermc.paper.command.brigadier.Commands;
 import io.papermc.paper.plugin.configuration.PluginMeta;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.CompletableFuture;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.JoinConfiguration;
 import net.kyori.adventure.text.TextComponent;
@@ -22,12 +19,16 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
-import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.StringUtil;
 import org.jspecify.annotations.NullMarked;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.CompletableFuture;
 
 @NullMarked
 public class PaperVersionCommand {
@@ -145,7 +146,8 @@ public class PaperVersionCommand {
                 sender.sendMessage(computedVersion.message);
             } else if (throwable != null) {
                 sender.sendMessage(FAILED_TO_FETCH);
-                MinecraftServer.LOGGER.warn("Could not fetch version information!", throwable);
+                // MinecraftServer.LOGGER.warn("Could not fetch version information!", throwable);
+                throw new NotImplementedError();
             }
         });
     }
@@ -163,19 +165,19 @@ public class PaperVersionCommand {
     }
 
     private CompletableFuture<ComputedVersion> fetchVersionMessage() {
-       return CompletableFuture.supplyAsync(() -> {
-           final Component message = Component.textOfChildren(
-               Component.text(Bukkit.getVersionMessage(), NamedTextColor.WHITE),
-               Component.newline(),
-               this.versionFetcher.getVersionMessage()
-           );
+        return CompletableFuture.supplyAsync(() -> {
+            final Component message = Component.textOfChildren(
+                Component.text(Bukkit.getVersionMessage(), NamedTextColor.WHITE),
+                Component.newline(),
+                this.versionFetcher.getVersionMessage()
+            );
 
-           return new ComputedVersion(
-               message.hoverEvent(Component.translatable("chat.copy.click", NamedTextColor.WHITE))
-                   .clickEvent(ClickEvent.copyToClipboard(PlainTextComponentSerializer.plainText().serialize(message))),
-               System.currentTimeMillis()
-           );
-       });
+            return new ComputedVersion(
+                message.hoverEvent(Component.translatable("chat.copy.click", NamedTextColor.WHITE))
+                    .clickEvent(ClickEvent.copyToClipboard(PlainTextComponentSerializer.plainText().serialize(message))),
+                System.currentTimeMillis()
+            );
+        });
     }
 
     record ComputedVersion(Component message, long computedTime) {

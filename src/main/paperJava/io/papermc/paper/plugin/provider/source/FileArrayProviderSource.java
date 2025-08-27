@@ -1,18 +1,19 @@
 package io.papermc.paper.plugin.provider.source;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.plugin.entrypoint.EntrypointHandler;
+import org.slf4j.Logger;
+
 import java.io.File;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
 
 public class FileArrayProviderSource implements ProviderSource<File[], List<Path>> {
 
     public static final FileArrayProviderSource INSTANCE = new FileArrayProviderSource();
     private static final FileProviderSource FILE_PROVIDER_SOURCE = new FileProviderSource("File '%s'"::formatted);
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     @Override
     public List<Path> prepareContext(File[] context) {

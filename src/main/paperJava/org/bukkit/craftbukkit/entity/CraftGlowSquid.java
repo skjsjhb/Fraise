@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.GlowSquid;
 
@@ -23,6 +24,7 @@ public class CraftGlowSquid extends CraftSquid implements GlowSquid {
     @Override
     public void setDarkTicksRemaining(int darkTicksRemaining) {
         Preconditions.checkArgument(darkTicksRemaining >= 0, "darkTicksRemaining must be >= 0");
-        this.getHandle().setDarkTicks(darkTicksRemaining);
+        throw new NotImplementedError();
+        // this.getHandle().setDarkTicks(darkTicksRemaining);
     }
 }

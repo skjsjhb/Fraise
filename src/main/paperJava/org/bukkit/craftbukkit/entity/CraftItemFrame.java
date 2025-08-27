@@ -1,9 +1,9 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.decoration.HangingEntity;
-import net.minecraft.world.level.block.Blocks;
 import org.bukkit.Rotation;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.CraftServer;
@@ -30,25 +30,27 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
 
         Preconditions.checkArgument(newDir != null, "%s is not a valid facing direction", face);
 
-        this.getHandle().setDirection(newDir);
-        if (!force && !this.getHandle().generation && !hanging.survives()) {
-            hanging.setDirection(oldDir);
-            return false;
-        }
-
-        this.update();
-
-        return true;
+        throw new NotImplementedError();
+        // this.getHandle().setDirection(newDir);
+        // if (!force && !this.getHandle().generation && !hanging.survives()) {
+        //     hanging.setDirection(oldDir);
+        //     return false;
+        // }
+        //
+        // this.update();
+        //
+        // return true;
     }
 
     @Override
     protected void update() {
-        super.update();
-
-        // update redstone
-        if (!this.getHandle().generation) {
-            this.getHandle().level().updateNeighbourForOutputSignal(this.getHandle().getPos(), Blocks.AIR);
-        }
+        throw new NotImplementedError();
+        // super.update();
+        //
+        // // update redstone
+        // if (!this.getHandle().generation) {
+        //     this.getHandle().level().updateNeighbourForOutputSignal(this.getHandle().getPos(), Blocks.AIR);
+        // }
     }
 
     @Override
@@ -59,7 +61,8 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
     @Override
     public void setItem(org.bukkit.inventory.ItemStack item, boolean playSound) {
         // only updated redstone and play sound when it is not in generation
-        this.getHandle().setItem(CraftItemStack.asNMSCopy(item), !this.getHandle().generation, !this.getHandle().generation && playSound);
+        // this.getHandle().setItem(CraftItemStack.asNMSCopy(item), !this.getHandle().generation, !this.getHandle().generation && playSound);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -69,13 +72,15 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
 
     @Override
     public float getItemDropChance() {
-        return this.getHandle().dropChance;
+        // return this.getHandle().dropChance;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setItemDropChance(float chance) {
         Preconditions.checkArgument(0.0 <= chance && chance <= 1.0, "Chance (%s) outside range [0, 1]", chance);
-        this.getHandle().dropChance = chance;
+        // this.getHandle().dropChance = chance;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -86,24 +91,24 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
     Rotation toBukkitRotation(int value) {
         // Translate NMS rotation integer to Bukkit API
         switch (value) {
-        case 0:
-            return Rotation.NONE;
-        case 1:
-            return Rotation.CLOCKWISE_45;
-        case 2:
-            return Rotation.CLOCKWISE;
-        case 3:
-            return Rotation.CLOCKWISE_135;
-        case 4:
-            return Rotation.FLIPPED;
-        case 5:
-            return Rotation.FLIPPED_45;
-        case 6:
-            return Rotation.COUNTER_CLOCKWISE;
-        case 7:
-            return Rotation.COUNTER_CLOCKWISE_45;
-        default:
-            throw new AssertionError("Unknown rotation " + value + " for " + this.getHandle());
+            case 0:
+                return Rotation.NONE;
+            case 1:
+                return Rotation.CLOCKWISE_45;
+            case 2:
+                return Rotation.CLOCKWISE;
+            case 3:
+                return Rotation.CLOCKWISE_135;
+            case 4:
+                return Rotation.FLIPPED;
+            case 5:
+                return Rotation.FLIPPED_45;
+            case 6:
+                return Rotation.COUNTER_CLOCKWISE;
+            case 7:
+                return Rotation.COUNTER_CLOCKWISE_45;
+            default:
+                throw new AssertionError("Unknown rotation " + value + " for " + this.getHandle());
         }
     }
 
@@ -116,24 +121,24 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
     static int toInteger(Rotation rotation) {
         // Translate Bukkit API rotation to NMS integer
         switch (rotation) {
-        case NONE:
-            return 0;
-        case CLOCKWISE_45:
-            return 1;
-        case CLOCKWISE:
-            return 2;
-        case CLOCKWISE_135:
-            return 3;
-        case FLIPPED:
-            return 4;
-        case FLIPPED_45:
-            return 5;
-        case COUNTER_CLOCKWISE:
-            return 6;
-        case COUNTER_CLOCKWISE_45:
-            return 7;
-        default:
-            throw new IllegalArgumentException(rotation + " is not applicable to an ItemFrame");
+            case NONE:
+                return 0;
+            case CLOCKWISE_45:
+                return 1;
+            case CLOCKWISE:
+                return 2;
+            case CLOCKWISE_135:
+                return 3;
+            case FLIPPED:
+                return 4;
+            case FLIPPED_45:
+                return 5;
+            case COUNTER_CLOCKWISE:
+                return 6;
+            case COUNTER_CLOCKWISE_45:
+                return 7;
+            default:
+                throw new IllegalArgumentException(rotation + " is not applicable to an ItemFrame");
         }
     }
 
@@ -149,11 +154,13 @@ public class CraftItemFrame extends CraftHanging implements ItemFrame {
 
     @Override
     public boolean isFixed() {
-        return this.getHandle().fixed;
+        // return this.getHandle().fixed;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setFixed(boolean fixed) {
-        this.getHandle().fixed = fixed;
+        // this.getHandle().fixed = fixed;
+        throw new NotImplementedError();
     }
 }

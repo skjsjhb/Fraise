@@ -5,25 +5,24 @@ import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
-import com.mojang.brigadier.tree.CommandNode;
 import com.mojang.brigadier.tree.LiteralCommandNode;
-import io.papermc.paper.command.brigadier.bukkit.BukkitCommandNode;
 import io.papermc.paper.plugin.configuration.PluginMeta;
 import io.papermc.paper.plugin.lifecycle.event.LifecycleEventOwner;
 import io.papermc.paper.plugin.lifecycle.event.registrar.PaperRegistrar;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import kotlin.NotImplementedError;
 import net.minecraft.commands.CommandBuildContext;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.Unmodifiable;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static java.util.Objects.requireNonNull;
 
@@ -119,8 +118,9 @@ public class PaperCommands implements Commands, PaperRegistrar<LifecycleEventOwn
             }
         }
 
-        pluginLiteral.apiCommandMeta = meta.withAliases(registeredAliases);
-        node.apiCommandMeta = pluginLiteral.apiCommandMeta;
+        // pluginLiteral.apiCommandMeta = meta.withAliases(registeredAliases);
+        // node.apiCommandMeta = pluginLiteral.apiCommandMeta;
+        // throw new NotImplementedError();
 
         registeredLabels.addAll(registeredAliases);
         return registeredLabels.isEmpty() ? Collections.emptySet() : Collections.unmodifiableSet(registeredLabels);
@@ -128,24 +128,26 @@ public class PaperCommands implements Commands, PaperRegistrar<LifecycleEventOwn
 
     private boolean registerCopy(final String aliasLiteral, final LiteralCommandNode<CommandSourceStack> redirectTo, final APICommandMeta meta) {
         final LiteralCommandNode<CommandSourceStack> node = PaperBrigadier.copyLiteral(aliasLiteral, redirectTo);
-        node.apiCommandMeta = meta;
+        // node.apiCommandMeta = meta;
+        // throw new NotImplementedError();
         return this.registerIntoDispatcher(node, false);
     }
 
     private boolean registerIntoDispatcher(final LiteralCommandNode<CommandSourceStack> node, boolean override) {
-        final CommandNode<CommandSourceStack> existingChild = this.getDispatcher().getRoot().getChild(node.getLiteral());
-        if (existingChild != null && existingChild.apiCommandMeta == null && !(existingChild instanceof BukkitCommandNode)) {
-            override = true; // override vanilla commands
-        }
-        if (existingChild == null || override) { // Avoid merging behavior. Maybe something to look into in the future
-            if (override) {
-                this.getDispatcher().getRoot().removeCommand(node.getLiteral());
-            }
-            this.getDispatcher().getRoot().addChild(node);
-            return true;
-        }
-
-        return false;
+        throw new NotImplementedError();
+        // final CommandNode<CommandSourceStack> existingChild = this.getDispatcher().getRoot().getChild(node.getLiteral());
+        // if (existingChild != null && existingChild.apiCommandMeta == null && !(existingChild instanceof BukkitCommandNode)) {
+        //     override = true; // override vanilla commands
+        // }
+        // if (existingChild == null || override) { // Avoid merging behavior. Maybe something to look into in the future
+        //     if (override) {
+        //         this.getDispatcher().getRoot().removeCommand(node.getLiteral());
+        //     }
+        //     this.getDispatcher().getRoot().addChild(node);
+        //     return true;
+        // }
+        //
+        // return false;
     }
 
     @Override

@@ -1,13 +1,11 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
-import java.util.Optional;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.util.TriState;
-import net.minecraft.sounds.SoundEvent;
 import org.bukkit.Sound;
 import org.bukkit.craftbukkit.CraftLootTable;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.CraftSound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Mob;
 import org.bukkit.loot.LootTable;
@@ -23,18 +21,21 @@ public abstract class CraftMob extends CraftLivingEntity implements Mob, io.pape
 
     @Override
     public boolean shouldDespawnInPeaceful() {
-        return this.getHandle().shouldActuallyDespawnInPeaceful();
+        throw new NotImplementedError();
+        // return this.getHandle().shouldActuallyDespawnInPeaceful();
     }
 
     @Override
     public void setDespawnInPeacefulOverride(final TriState state) {
         Preconditions.checkArgument(state != null, "TriState cannot be null");
-        this.getHandle().despawnInPeacefulOverride = state;
+        // this.getHandle().despawnInPeacefulOverride = state;
+        throw new NotImplementedError();
     }
 
     @Override
     public TriState getDespawnInPeacefulOverride() {
-        return this.getHandle().despawnInPeacefulOverride;
+        // return this.getHandle().despawnInPeacefulOverride;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -55,42 +56,48 @@ public abstract class CraftMob extends CraftLivingEntity implements Mob, io.pape
 
     @Override
     public void setTarget(LivingEntity target) {
-        Preconditions.checkState(!this.getHandle().generation, "Cannot set target during world generation");
-
-        net.minecraft.world.entity.Mob entity = this.getHandle();
-        if (target == null) {
-            entity.setTarget(null, null);
-        } else if (target instanceof CraftLivingEntity) {
-            entity.setTarget(((CraftLivingEntity) target).getHandle(), null);
-        }
+        throw new NotImplementedError();
+        // Preconditions.checkState(!this.getHandle().generation, "Cannot set target during world generation");
+        //
+        // net.minecraft.world.entity.Mob entity = this.getHandle();
+        // if (target == null) {
+        //     entity.setTarget(null, null);
+        // } else if (target instanceof CraftLivingEntity) {
+        //     entity.setTarget(((CraftLivingEntity) target).getHandle(), null);
+        // }
     }
 
     @Override
     public CraftLivingEntity getTarget() {
-        if (this.getHandle().getTarget() == null) return null;
-
-        return (CraftLivingEntity) this.getHandle().getTarget().getBukkitEntity();
+        throw new NotImplementedError();
+        // if (this.getHandle().getTarget() == null) return null;
+        //
+        // return (CraftLivingEntity) this.getHandle().getTarget().getBukkitEntity();
     }
 
     @Override
     public void setAware(boolean aware) {
-        this.getHandle().aware = aware;
+        // this.getHandle().aware = aware;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean isAware() {
-        return this.getHandle().aware;
+        // return this.getHandle().aware;
+        throw new NotImplementedError();
     }
 
     @Override
     public Sound getAmbientSound() {
-        SoundEvent sound = this.getHandle().getAmbientSound();
-        return (sound != null) ? CraftSound.minecraftToBukkit(sound) : null;
+        throw new NotImplementedError();
+        // SoundEvent sound = this.getHandle().getAmbientSound();
+        // return (sound != null) ? CraftSound.minecraftToBukkit(sound) : null;
     }
 
     @Override
     public void setLootTable(LootTable table) {
-        this.getHandle().lootTable = Optional.ofNullable(CraftLootTable.bukkitToMinecraft(table));
+        // this.getHandle().lootTable = Optional.ofNullable(CraftLootTable.bukkitToMinecraft(table));
+        throw new NotImplementedError();
     }
 
     @Override
@@ -100,17 +107,20 @@ public abstract class CraftMob extends CraftLivingEntity implements Mob, io.pape
 
     @Override
     public void setSeed(long seed) {
-        this.getHandle().lootTableSeed = seed;
+        // this.getHandle().lootTableSeed = seed;
+        throw new NotImplementedError();
     }
 
     @Override
     public long getSeed() {
-        return this.getHandle().lootTableSeed;
+        // return this.getHandle().lootTableSeed;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean isInDaylight() {
-        return getHandle().isSunBurnTick();
+        // return getHandle().isSunBurnTick();
+        throw new NotImplementedError();
     }
 
     @Override

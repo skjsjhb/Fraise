@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.Display;
 import org.bukkit.Color;
 import org.bukkit.craftbukkit.CraftServer;
@@ -45,7 +46,8 @@ public class CraftTextDisplay extends CraftDisplay implements TextDisplay {
 
     @Override
     public void setLineWidth(int width) {
-        this.getHandle().getEntityData().set(Display.TextDisplay.DATA_LINE_WIDTH_ID, width);
+        // this.getHandle().getEntityData().set(Display.TextDisplay.DATA_LINE_WIDTH_ID, width);
+        throw new NotImplementedError();
     }
 
     @Override
@@ -57,11 +59,12 @@ public class CraftTextDisplay extends CraftDisplay implements TextDisplay {
 
     @Override
     public void setBackgroundColor(Color color) {
-        if (color == null) {
-            this.getHandle().getEntityData().set(Display.TextDisplay.DATA_BACKGROUND_COLOR_ID, Display.TextDisplay.INITIAL_BACKGROUND);
-        } else {
-            this.getHandle().getEntityData().set(Display.TextDisplay.DATA_BACKGROUND_COLOR_ID, color.asARGB());
-        }
+        throw new NotImplementedError();
+        // if (color == null) {
+        //     this.getHandle().getEntityData().set(Display.TextDisplay.DATA_BACKGROUND_COLOR_ID, Display.TextDisplay.INITIAL_BACKGROUND);
+        // } else {
+        //     this.getHandle().getEntityData().set(Display.TextDisplay.DATA_BACKGROUND_COLOR_ID, color.asARGB());
+        // }
     }
 
     @Override

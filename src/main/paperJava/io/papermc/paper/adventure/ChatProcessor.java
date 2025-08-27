@@ -2,37 +2,20 @@ package io.papermc.paper.adventure;
 
 import io.papermc.paper.chat.ChatRenderer;
 import io.papermc.paper.event.player.AbstractChatEvent;
-import io.papermc.paper.event.player.AsyncChatEvent;
-import io.papermc.paper.event.player.ChatEvent;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.ExecutionException;
-import java.util.function.Function;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.audience.ForwardingAudience;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import net.minecraft.ChatFormatting;
-import net.minecraft.Optionull;
 import net.minecraft.Util;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.ChatType;
 import net.minecraft.network.chat.OutgoingChatMessage;
 import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.command.ConsoleCommandSender;
-import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.util.LazyPlayerSet;
 import org.bukkit.craftbukkit.util.Waitable;
@@ -46,11 +29,23 @@ import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
 import org.intellij.lang.annotations.Subst;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.BitSet;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Function;
+
 import static net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer.legacySection;
 
 @DefaultQualifier(NonNull.class)
 public final class ChatProcessor {
-    static final ResourceKey<ChatType> PAPER_RAW = ResourceKey.create(Registries.CHAT_TYPE, ResourceLocation.fromNamespaceAndPath(ResourceLocation.PAPER_NAMESPACE, "raw"));
+    // throw new NotImplementedError();
+    static final ResourceKey<ChatType> PAPER_RAW = null; // ResourceKey.create(Registries.CHAT_TYPE, ResourceLocation.fromNamespaceAndPath(ResourceLocation.PAPER_NAMESPACE, "raw"));
+
     static final String DEFAULT_LEGACY_FORMAT = "<%1$s> %2$s"; // copied from PlayerChatEvent/AsyncPlayerChatEvent
     final MinecraftServer server;
     final ServerPlayer player;
@@ -80,7 +75,8 @@ public final class ChatProcessor {
         final boolean listenersOnAsyncEvent = canYouHearMe(AsyncPlayerChatEvent.getHandlerList());
         final boolean listenersOnSyncEvent = canYouHearMe(PlayerChatEvent.getHandlerList());
         if (listenersOnAsyncEvent || listenersOnSyncEvent) {
-            final CraftPlayer player = this.player.getBukkitEntity();
+            // throw new NotImplementedError();
+            final CraftPlayer player = null; // this.player.getBukkitEntity();
             final AsyncPlayerChatEvent asyncChatEvent = new AsyncPlayerChatEvent(this.async, player, this.craftbukkit$originalMessage, new LazyPlayerSet(this.server));
             this.post(asyncChatEvent);
             if (listenersOnSyncEvent) {
@@ -112,13 +108,14 @@ public final class ChatProcessor {
                 );
             }
         } else {
-            this.processModern(
-                defaultRenderer(),
-                new LazyChatAudienceSet(this.server),
-                this.paper$originalMessage,
-                this.player.getBukkitEntity(),
-                false
-            );
+            throw new NotImplementedError();
+            // this.processModern(
+            //     defaultRenderer(),
+            //     new LazyChatAudienceSet(this.server),
+            //     this.paper$originalMessage,
+            //     this.player.getBukkitEntity(),
+            //     false
+            // );
         }
     }
 
@@ -141,31 +138,33 @@ public final class ChatProcessor {
     private void readLegacyModifications(final String message, final String format, final Player playerSender) {
         this.flags.set(MESSAGE_CHANGED, !message.equals(this.craftbukkit$originalMessage));
         this.flags.set(FORMAT_CHANGED, !format.equals(DEFAULT_LEGACY_FORMAT));
-        this.flags.set(SENDER_CHANGED, playerSender != this.player.getBukkitEntity());
+        throw new NotImplementedError();
+        // this.flags.set(SENDER_CHANGED, playerSender != this.player.getBukkitEntity());
     }
 
     private void processModern(final ChatRenderer renderer, final Set<Audience> viewers, final Component message, final Player player, final boolean cancelled) {
-        final PlayerChatMessage.AdventureView signedMessage = this.message.adventureView();
-        final AsyncChatEvent ae = new AsyncChatEvent(this.async, player, viewers, renderer, message, this.paper$originalMessage, signedMessage);
-        ae.setCancelled(cancelled); // propagate cancelled state
-        this.post(ae);
-        final boolean listenersOnSyncEvent = canYouHearMe(ChatEvent.getHandlerList());
-        if (listenersOnSyncEvent) {
-            this.queueIfAsyncOrRunImmediately(new Waitable<>() {
-                @Override
-                protected Void evaluate() {
-                    final ChatEvent chatEvent = new ChatEvent(player, ae.viewers(), ae.renderer(), ae.message(), ChatProcessor.this.paper$originalMessage/*, ae.usePreviewComponent()*/, signedMessage);
-                    chatEvent.setCancelled(ae.isCancelled()); // propagate cancelled state
-                    ChatProcessor.this.post(chatEvent);
-                    ChatProcessor.this.readModernModifications(chatEvent, renderer);
-                    ChatProcessor.this.complete(chatEvent);
-                    return null;
-                }
-            });
-        } else {
-            this.readModernModifications(ae, renderer);
-            this.complete(ae);
-        }
+        throw new NotImplementedError();
+        // final PlayerChatMessage.AdventureView signedMessage = this.message.adventureView();
+        // final AsyncChatEvent ae = new AsyncChatEvent(this.async, player, viewers, renderer, message, this.paper$originalMessage, signedMessage);
+        // ae.setCancelled(cancelled); // propagate cancelled state
+        // this.post(ae);
+        // final boolean listenersOnSyncEvent = canYouHearMe(ChatEvent.getHandlerList());
+        // if (listenersOnSyncEvent) {
+        //     this.queueIfAsyncOrRunImmediately(new Waitable<>() {
+        //         @Override
+        //         protected Void evaluate() {
+        //             final ChatEvent chatEvent = new ChatEvent(player, ae.viewers(), ae.renderer(), ae.message(), ChatProcessor.this.paper$originalMessage/*, ae.usePreviewComponent()*/, signedMessage);
+        //             chatEvent.setCancelled(ae.isCancelled()); // propagate cancelled state
+        //             ChatProcessor.this.post(chatEvent);
+        //             ChatProcessor.this.readModernModifications(chatEvent, renderer);
+        //             ChatProcessor.this.complete(chatEvent);
+        //             return null;
+        //         }
+        //     });
+        // } else {
+        //     this.readModernModifications(ae, renderer);
+        //     this.complete(ae);
+        // }
     }
 
     private void readModernModifications(final AbstractChatEvent chatEvent, final ChatRenderer originalRenderer) {
@@ -222,7 +221,8 @@ public final class ChatProcessor {
     final class ServerOutgoingChat implements OutgoingChat {
         @Override
         public void sendFormatChangedViewerAware(CraftPlayer player, Component displayName, Component message, ChatRenderer renderer, Set<Audience> viewers, ChatType.Bound chatType) {
-            ChatProcessor.this.server.getPlayerList().broadcastChatMessage(ChatProcessor.this.message, ChatProcessor.this.player, chatType, viewer -> PaperAdventure.asVanilla(renderer.render(player, displayName, message, viewer)));
+            throw new NotImplementedError();
+            // ChatProcessor.this.server.getPlayerList().broadcastChatMessage(ChatProcessor.this.message, ChatProcessor.this.player, chatType, viewer -> PaperAdventure.asVanilla(renderer.render(player, displayName, message, viewer)));
         }
 
         @Override
@@ -253,15 +253,16 @@ public final class ChatProcessor {
         }
 
         private void broadcastToViewers(Collection<Audience> viewers, final ChatType.Bound chatType, final @Nullable Function<Audience, net.minecraft.network.chat.Component> msgFunction) {
-            for (Audience viewer : viewers) {
-                if (acceptsNative(viewer)) {
-                    this.sendNative(viewer, chatType, msgFunction);
-                } else {
-                    final net.minecraft.network.chat.@Nullable Component unsigned = Optionull.map(msgFunction, f -> f.apply(viewer));
-                    final PlayerChatMessage msg = unsigned == null ? ChatProcessor.this.message : ChatProcessor.this.message.withUnsignedContent(unsigned);
-                    viewer.sendMessage(msg.adventureView(), this.adventure(chatType));
-                }
-            }
+            throw new NotImplementedError();
+            // for (Audience viewer : viewers) {
+            //     if (acceptsNative(viewer)) {
+            //         this.sendNative(viewer, chatType, msgFunction);
+            //     } else {
+            //         final net.minecraft.network.chat.@Nullable Component unsigned = Optionull.map(msgFunction, f -> f.apply(viewer));
+            //         final PlayerChatMessage msg = unsigned == null ? ChatProcessor.this.message : ChatProcessor.this.message.withUnsignedContent(unsigned);
+            //         viewer.sendMessage(msg.adventureView(), this.adventure(chatType));
+            //     }
+            // }
         }
 
         private static final Map<String, net.kyori.adventure.chat.ChatType> BUILT_IN_CHAT_TYPES = Util.make(() -> {
@@ -304,44 +305,49 @@ public final class ChatProcessor {
         }
 
         private void sendNative(final Audience viewer, final ChatType.Bound chatType, final @Nullable Function<Audience, net.minecraft.network.chat.Component> msgFunction) {
-            if (viewer instanceof ConsoleCommandSender) {
-                this.sendToServer(chatType, msgFunction);
-            } else if (viewer instanceof CraftPlayer craftPlayer) {
-                craftPlayer.getHandle().sendChatMessage(ChatProcessor.this.outgoing, ChatProcessor.this.player.shouldFilterMessageTo(craftPlayer.getHandle()), chatType, Optionull.map(msgFunction, f -> f.apply(viewer)));
-            } else if (viewer instanceof ForwardingAudience.Single single) {
-                this.sendNative(single.audience(), chatType, msgFunction);
-            } else {
-                throw new IllegalStateException("Should only be a Player or Console or ForwardingAudience.Single pointing to one!");
-            }
+            throw new NotImplementedError();
+            // if (viewer instanceof ConsoleCommandSender) {
+            //     this.sendToServer(chatType, msgFunction);
+            // } else if (viewer instanceof CraftPlayer craftPlayer) {
+            //     craftPlayer.getHandle().sendChatMessage(ChatProcessor.this.outgoing, ChatProcessor.this.player.shouldFilterMessageTo(craftPlayer.getHandle()), chatType, Optionull.map(msgFunction, f -> f.apply(viewer)));
+            // } else if (viewer instanceof ForwardingAudience.Single single) {
+            //     this.sendNative(single.audience(), chatType, msgFunction);
+            // } else {
+            //     throw new IllegalStateException("Should only be a Player or Console or ForwardingAudience.Single pointing to one!");
+            // }
         }
 
         private void sendToServer(final ChatType.Bound chatType, final @Nullable Function<Audience, net.minecraft.network.chat.Component> msgFunction) {
-            final PlayerChatMessage toConsoleMessage = msgFunction == null ? ChatProcessor.this.message : ChatProcessor.this.message.withUnsignedContent(msgFunction.apply(ChatProcessor.this.server.console));
-            ChatProcessor.this.server.logChatMessage(toConsoleMessage.decoratedContent(), chatType, ChatProcessor.this.server.getPlayerList().verifyChatTrusted(toConsoleMessage) ? null : "Not Secure");
+            throw new NotImplementedError();
+            // final PlayerChatMessage toConsoleMessage = msgFunction == null ? ChatProcessor.this.message : ChatProcessor.this.message.withUnsignedContent(msgFunction.apply(ChatProcessor.this.server.console));
+            // ChatProcessor.this.server.logChatMessage(toConsoleMessage.decoratedContent(), chatType, ChatProcessor.this.server.getPlayerList().verifyChatTrusted(toConsoleMessage) ? null : "Not Secure");
         }
     }
 
     private Set<Audience> viewersFromLegacy(final Set<Player> recipients) {
-        if (recipients instanceof LazyPlayerSet lazyPlayerSet && lazyPlayerSet.isLazy()) {
-            return new LazyChatAudienceSet(this.server);
-        }
-        final HashSet<Audience> viewers = new HashSet<>(recipients);
-        viewers.add(this.server.console);
-        return viewers;
+        throw new NotImplementedError();
+        // if (recipients instanceof LazyPlayerSet lazyPlayerSet && lazyPlayerSet.isLazy()) {
+        //     return new LazyChatAudienceSet(this.server);
+        // }
+        // final HashSet<Audience> viewers = new HashSet<>(recipients);
+        // viewers.add(this.server.console);
+        // return viewers;
     }
 
     static String legacyDisplayName(final CraftPlayer player) {
-        if (((org.bukkit.craftbukkit.CraftWorld) player.getWorld()).getHandle().paperConfig().scoreboards.useVanillaWorldScoreboardNameColoring) {
-            return legacySection().serialize(player.teamDisplayName()) + ChatFormatting.RESET;
-        }
-        return player.getDisplayName();
+        throw new NotImplementedError();
+        // if (((org.bukkit.craftbukkit.CraftWorld) player.getWorld()).getHandle().paperConfig().scoreboards.useVanillaWorldScoreboardNameColoring) {
+        //     return legacySection().serialize(player.teamDisplayName()) + ChatFormatting.RESET;
+        // }
+        // return player.getDisplayName();
     }
 
     static Component displayName(final CraftPlayer player) {
-        if (((CraftWorld) player.getWorld()).getHandle().paperConfig().scoreboards.useVanillaWorldScoreboardNameColoring) {
-            return player.teamDisplayName();
-        }
-        return player.displayName();
+        throw new NotImplementedError();
+        // if (((CraftWorld) player.getWorld()).getHandle().paperConfig().scoreboards.useVanillaWorldScoreboardNameColoring) {
+        //     return player.teamDisplayName();
+        // }
+        // return player.displayName();
     }
 
     private static ChatRenderer.Default defaultRenderer() {
@@ -360,22 +366,24 @@ public final class ChatProcessor {
     }
 
     private void queueIfAsyncOrRunImmediately(final Waitable<Void> waitable) {
-        if (this.async) {
-            this.server.processQueue.add(waitable);
-        } else {
-            waitable.run();
-        }
-        try {
-            waitable.get();
-        } catch (final InterruptedException e) {
-            Thread.currentThread().interrupt(); // tag, you're it
-        } catch (final ExecutionException e) {
-            throw new RuntimeException("Exception processing chat", e.getCause());
-        }
+        throw new NotImplementedError();
+        // if (this.async) {
+        //     this.server.processQueue.add(waitable);
+        // } else {
+        //     waitable.run();
+        // }
+        // try {
+        //     waitable.get();
+        // } catch (final InterruptedException e) {
+        //     Thread.currentThread().interrupt(); // tag, you're it
+        // } catch (final ExecutionException e) {
+        //     throw new RuntimeException("Exception processing chat", e.getCause());
+        // }
     }
 
     private void post(final Event event) {
-        this.server.server.getPluginManager().callEvent(event);
+        throw new NotImplementedError();
+        // this.server.server.getPluginManager().callEvent(event);
     }
 
     static boolean canYouHearMe(final HandlerList handlers) {

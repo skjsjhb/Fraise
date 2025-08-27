@@ -1,9 +1,6 @@
 package org.bukkit.craftbukkit.packs;
 
-import java.io.IOException;
-import java.util.Set;
-import java.util.stream.Collectors;
-import net.minecraft.server.packs.PackResources;
+import kotlin.NotImplementedError;
 import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
@@ -15,6 +12,9 @@ import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftChatMessage;
 import org.bukkit.packs.DataPack;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 public class CraftDataPack implements DataPack {
 
     private final Pack handle;
@@ -22,11 +22,12 @@ public class CraftDataPack implements DataPack {
 
     public CraftDataPack(Pack handler) {
         this.handle = handler;
-        try (PackResources packResources = this.handle.resources.openPrimary(this.handle.location())) {
-            this.resourcePackInfo = packResources.getMetadataSection(PackMetadataSection.TYPE);
-        } catch (IOException e) { // This is already called in NMS then if in NMS not happen is secure this not throw here
-            throw new RuntimeException(e);
-        }
+        throw new NotImplementedError();
+        // try (PackResources packResources = this.handle.resources.openPrimary(this.handle.location())) {
+        //     this.resourcePackInfo = packResources.getMetadataSection(PackMetadataSection.TYPE);
+        // } catch (IOException e) { // This is already called in NMS then if in NMS not happen is secure this not throw here
+        //     throw new RuntimeException(e);
+        // }
     }
 
     public Pack getHandle() {

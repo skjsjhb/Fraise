@@ -1,7 +1,7 @@
 package io.papermc.paper.potion;
 
 import com.google.common.base.Preconditions;
-import java.util.Collection;
+import kotlin.NotImplementedError;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.NamespacedKey;
 import org.bukkit.potion.PotionBrewer;
@@ -9,6 +9,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionType;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
+
+import java.util.Collection;
 
 @DefaultQualifier(NonNull.class)
 public class PaperPotionBrewer implements PotionBrewer {
@@ -41,16 +43,19 @@ public class PaperPotionBrewer implements PotionBrewer {
 
     @Override
     public void addPotionMix(final PotionMix potionMix) {
-        this.minecraftServer.potionBrewing().addPotionMix(potionMix);
+        // this.minecraftServer.potionBrewing().addPotionMix(potionMix);
+        throw new NotImplementedError();
     }
 
     @Override
     public void removePotionMix(final NamespacedKey key) {
-        this.minecraftServer.potionBrewing.removePotionMix(key);
+        // this.minecraftServer.potionBrewing.removePotionMix(key);
+        throw new NotImplementedError();
     }
 
     @Override
     public void resetPotionMixes() {
-        this.minecraftServer.potionBrewing = this.minecraftServer.potionBrewing().reload(this.minecraftServer.getWorldData().enabledFeatures());
+        // this.minecraftServer.potionBrewing = this.minecraftServer.potionBrewing().reload(this.minecraftServer.getWorldData().enabledFeatures());
+        throw new NotImplementedError();
     }
 }

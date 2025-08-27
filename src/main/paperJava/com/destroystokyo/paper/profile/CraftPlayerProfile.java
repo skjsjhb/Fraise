@@ -1,15 +1,13 @@
 package com.destroystokyo.paper.profile;
 
 import com.google.common.base.Preconditions;
-import com.mojang.authlib.yggdrasil.ProfileResult;
-import io.papermc.paper.configuration.GlobalConfiguration;
 import com.google.common.collect.Iterables;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.mojang.authlib.properties.PropertyMap;
+import io.papermc.paper.configuration.GlobalConfiguration;
+import kotlin.NotImplementedError;
 import net.minecraft.Util;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.players.GameProfileCache;
 import net.minecraft.util.StringUtil;
 import net.minecraft.world.item.component.ResolvableProfile;
 import org.apache.commons.lang3.StringUtils;
@@ -23,8 +21,17 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.AbstractSet;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
 @SerializableAs("PlayerProfile")
@@ -195,11 +202,12 @@ public class CraftPlayerProfile implements PlayerProfile, SharedPlayerProfile {
 
     @Override
     public @NotNull CompletableFuture<PlayerProfile> update() {
-        return CompletableFuture.supplyAsync(() -> {
-            final CraftPlayerProfile clone = clone();
-            clone.complete(true);
-            return clone;
-        }, Util.PROFILE_EXECUTOR);
+        throw new NotImplementedError();
+        // return CompletableFuture.supplyAsync(() -> {
+        //     final CraftPlayerProfile clone = clone();
+        //     clone.complete(true);
+        //     return clone;
+        // }, Util.PROFILE_EXECUTOR);
     }
 
     @Override
@@ -212,40 +220,41 @@ public class CraftPlayerProfile implements PlayerProfile, SharedPlayerProfile {
     }
 
     public boolean completeFromCache(boolean lookupUUID, boolean onlineMode) {
-        MinecraftServer server = MinecraftServer.getServer();
-        String name = profile.getName();
-        GameProfileCache userCache = server.getProfileCache();
-        if (this.getId() == null) {
-            final GameProfile profile;
-            if (onlineMode) {
-                profile = lookupUUID ? userCache.get(name).orElse(null) : userCache.getProfileIfCached(name);
-            } else {
-                // Make an OfflinePlayer using an offline mode UUID since the name has no profile
-                profile = new GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8)), name);
-            }
-            if (profile != null) {
-                // if old has it, assume its newer, so overwrite, else use cached if it was set and ours wasn't
-                copyProfileProperties(this.profile, profile);
-                this.profile = profile;
-                this.emptyUUID = false; // UUID was just retrieved from user cache and profile isn't null (so a completed profile was found)
-            }
-        }
-
-        if ((profile.getName().isEmpty() || !hasTextures()) && this.getId() != null) {
-            Optional<GameProfile> optProfile = userCache.get(this.profile.getId());
-            if (optProfile.isPresent()) {
-                GameProfile profile = optProfile.get();
-                if (this.profile.getName().isEmpty()) {
-                    // if old has it, assume its newer, so overwrite, else use cached if it was set and ours wasn't
-                    copyProfileProperties(this.profile, profile);
-                    this.profile = profile;
-                    this.emptyName = false; // Name was just retrieved via the userCache
-                } else if (profile != this.profile) {
-                    copyProfileProperties(profile, this.profile);
-                }
-            }
-        }
-        return this.isComplete();
+        throw new NotImplementedError();
+        // MinecraftServer server = MinecraftServer.getServer();
+        // String name = profile.getName();
+        // GameProfileCache userCache = server.getProfileCache();
+        // if (this.getId() == null) {
+        //     final GameProfile profile;
+        //     if (onlineMode) {
+        //         profile = lookupUUID ? userCache.get(name).orElse(null) : userCache.getProfileIfCached(name);
+        //     } else {
+        //         // Make an OfflinePlayer using an offline mode UUID since the name has no profile
+        //         profile = new GameProfile(UUID.nameUUIDFromBytes(("OfflinePlayer:" + name).getBytes(StandardCharsets.UTF_8)), name);
+        //     }
+        //     if (profile != null) {
+        //         // if old has it, assume its newer, so overwrite, else use cached if it was set and ours wasn't
+        //         copyProfileProperties(this.profile, profile);
+        //         this.profile = profile;
+        //         this.emptyUUID = false; // UUID was just retrieved from user cache and profile isn't null (so a completed profile was found)
+        //     }
+        // }
+        //
+        // if ((profile.getName().isEmpty() || !hasTextures()) && this.getId() != null) {
+        //     Optional<GameProfile> optProfile = userCache.get(this.profile.getId());
+        //     if (optProfile.isPresent()) {
+        //         GameProfile profile = optProfile.get();
+        //         if (this.profile.getName().isEmpty()) {
+        //             // if old has it, assume its newer, so overwrite, else use cached if it was set and ours wasn't
+        //             copyProfileProperties(this.profile, profile);
+        //             this.profile = profile;
+        //             this.emptyName = false; // Name was just retrieved via the userCache
+        //         } else if (profile != this.profile) {
+        //             copyProfileProperties(profile, this.profile);
+        //         }
+        //     }
+        // }
+        // return this.isComplete();
     }
 
     public boolean complete(boolean textures) {
@@ -253,22 +262,23 @@ public class CraftPlayerProfile implements PlayerProfile, SharedPlayerProfile {
     }
 
     public boolean complete(boolean textures, boolean onlineMode) {
-        if (this.isComplete() && (!textures || hasTextures())) { // Don't do lookup if we already have everything
-            return true;
-        }
-
-        MinecraftServer server = MinecraftServer.getServer();
-        boolean isCompleteFromCache = this.completeFromCache(true, onlineMode);
-        if (onlineMode && (!isCompleteFromCache || (textures && !hasTextures()))) {
-            ProfileResult result = server.getSessionService().fetchProfile(this.profile.getId(), true);
-            if (result != null && result.profile() != null) {
-                copyProfileProperties(result.profile(), this.profile, true);
-            }
-            if (this.isComplete()) {
-                server.getProfileCache().add(this.profile);
-            }
-        }
-        return this.isComplete() && (!onlineMode || !textures || hasTextures());
+        throw new NotImplementedError();
+        // if (this.isComplete() && (!textures || hasTextures())) { // Don't do lookup if we already have everything
+        //     return true;
+        // }
+        //
+        // MinecraftServer server = MinecraftServer.getServer();
+        // boolean isCompleteFromCache = this.completeFromCache(true, onlineMode);
+        // if (onlineMode && (!isCompleteFromCache || (textures && !hasTextures()))) {
+        //     ProfileResult result = server.getSessionService().fetchProfile(this.profile.getId(), true);
+        //     if (result != null && result.profile() != null) {
+        //         copyProfileProperties(result.profile(), this.profile, true);
+        //     }
+        //     if (this.isComplete()) {
+        //         server.getProfileCache().add(this.profile);
+        //     }
+        // }
+        // return this.isComplete() && (!onlineMode || !textures || hasTextures());
     }
 
     private static void copyProfileProperties(GameProfile source, GameProfile target) {

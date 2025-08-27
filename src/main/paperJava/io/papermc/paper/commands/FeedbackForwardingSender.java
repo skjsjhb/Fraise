@@ -1,8 +1,6 @@
 package io.papermc.paper.commands;
 
 import io.papermc.paper.adventure.PaperAdventure;
-import java.util.UUID;
-import java.util.function.Consumer;
 import net.kyori.adventure.audience.MessageType;
 import net.kyori.adventure.identity.Identity;
 import net.kyori.adventure.text.Component;
@@ -12,13 +10,15 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.command.ServerCommandSender;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
+import java.util.function.Consumer;
+
+@SuppressWarnings("UnstableApiUsage")
 @DefaultQualifier(NonNull.class)
 public final class FeedbackForwardingSender extends ServerCommandSender {
     private final Consumer<? super Component> feedback;
@@ -103,9 +103,10 @@ public final class FeedbackForwardingSender extends ServerCommandSender {
             return false;
         }
 
-        @Override
-        public CommandSender getBukkitSender(final CommandSourceStack stack) {
-            return this.sender;
-        }
+        // throw new NotImplementedError();
+        // @Override
+        // public CommandSender getBukkitSender(final CommandSourceStack stack) {
+        //     return this.sender;
+        // }
     }
 }

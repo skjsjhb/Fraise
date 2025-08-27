@@ -1,7 +1,7 @@
 package org.bukkit.craftbukkit.generator;
 
 import com.google.common.base.Preconditions;
-import java.lang.ref.WeakReference;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EntityBlock;
@@ -19,6 +19,8 @@ import org.bukkit.craftbukkit.block.data.CraftBlockData;
 import org.bukkit.craftbukkit.util.CraftMagicNumbers;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.material.MaterialData;
+
+import java.lang.ref.WeakReference;
 
 /**
  * Data to be used for the block types and data in a newly generated chunk.
@@ -97,7 +99,8 @@ public final class CraftChunkData implements ChunkGenerator.ChunkData {
 
     @Override
     public Material getType(int x, int y, int z) {
-        return this.getTypeId(x, y, z).getBukkitMaterial(); // Paper - optimise getType calls
+        // return this.getTypeId(x, y, z).getBukkitMaterial(); // Paper - optimise getType calls
+        throw new NotImplementedError();
     }
 
     @Override

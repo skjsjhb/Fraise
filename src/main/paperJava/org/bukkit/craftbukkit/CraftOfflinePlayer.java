@@ -1,23 +1,14 @@
 package org.bukkit.craftbukkit;
 
 import com.mojang.authlib.GameProfile;
-import java.io.File;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.UUID;
+import kotlin.NotImplementedError;
 import net.minecraft.core.GlobalPos;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.protocol.game.ClientboundTagQueryPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.players.UserWhiteListEntry;
 import net.minecraft.stats.ServerStatsCounter;
-import net.minecraft.util.ProblemReporter;
 import net.minecraft.world.level.storage.PlayerDataStorage;
-import net.minecraft.world.level.storage.TagValueOutput;
 import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
 import org.bukkit.BanEntry;
@@ -36,6 +27,14 @@ import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.time.Duration;
+import java.time.Instant;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.UUID;
+
 @SerializableAs("Player")
 public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializable {
     private final GameProfile profile;
@@ -45,7 +44,8 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     protected CraftOfflinePlayer(CraftServer server, GameProfile profile) {
         this.server = server;
         this.profile = profile;
-        this.storage = server.console.playerDataStorage;
+        this.storage = null; // server.console.playerDataStorage;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -200,7 +200,8 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
 
     private CompoundTag getData() {
         // This method does not use the problem reporter
-        return this.storage.load(this.profile.getName(), this.profile.getId().toString(), ProblemReporter.DISCARDING).orElse(null);
+        // return this.storage.load(this.profile.getName(), this.profile.getId().toString(), ProblemReporter.DISCARDING).orElse(null);
+        throw new NotImplementedError();
     }
 
     private CompoundTag getBukkitData() {
@@ -214,7 +215,8 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
     }
 
     private File getDataFile() {
-        return new File(this.storage.getPlayerDir(), this.getUniqueId() + ".dat");
+        // return new File(this.storage.getPlayerDir(), this.getUniqueId() + ".dat");
+        throw new NotImplementedError();
     }
 
     @Override
@@ -373,17 +375,19 @@ public class CraftOfflinePlayer implements OfflinePlayer, ConfigurationSerializa
         final ServerLevel level = this.server.console.getLevel(respawnConfig.dimension());
         if (level == null) return null;
 
-        if (!loadLocationAndValidate) {
-            return CraftLocation.toBukkit(respawnConfig.pos(), level.getWorld(), respawnConfig.angle(), 0);
-        }
-
-        return ServerPlayer.findRespawnAndUseSpawnBlock(level, respawnConfig, false)
-            .map(resolvedPos -> CraftLocation.toBukkit(resolvedPos.position(), level.getWorld(), resolvedPos.yaw(), 0))
-            .orElse(null);
+        // if (!loadLocationAndValidate) {
+        //     return CraftLocation.toBukkit(respawnConfig.pos(), level.getWorld(), respawnConfig.angle(), 0);
+        // }
+        //
+        // return ServerPlayer.findRespawnAndUseSpawnBlock(level, respawnConfig, false)
+        //     .map(resolvedPos -> CraftLocation.toBukkit(resolvedPos.position(), level.getWorld(), resolvedPos.yaw(), 0))
+        //     .orElse(null);
+        throw new NotImplementedError();
     }
 
     private ServerStatsCounter getStatisticManager() {
-        return this.server.getHandle().getPlayerStats(this.getUniqueId(), this.getName());
+        // return this.server.getHandle().getPlayerStats(this.getUniqueId(), this.getName());
+        throw new NotImplementedError();
     }
 
     @Override

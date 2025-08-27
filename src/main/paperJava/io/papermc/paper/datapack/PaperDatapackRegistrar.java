@@ -2,25 +2,16 @@ package io.papermc.paper.datapack;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableMap;
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.adventure.PaperAdventure;
 import io.papermc.paper.plugin.bootstrap.BootstrapContext;
 import io.papermc.paper.plugin.configuration.PluginMeta;
 import io.papermc.paper.plugin.lifecycle.event.registrar.PaperRegistrar;
-import java.io.IOException;
-import java.net.URI;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.function.Consumer;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.Component;
 import net.minecraft.server.packs.PackLocationInfo;
 import net.minecraft.server.packs.PackSelectionConfig;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.repository.FolderRepositorySource;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackDetector;
 import net.minecraft.util.FileSystemUtil;
@@ -32,18 +23,29 @@ import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 
+import java.io.IOException;
+import java.net.URI;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.function.Consumer;
+
 @NullMarked
 public class PaperDatapackRegistrar implements PaperRegistrar<BootstrapContext>, DatapackRegistrar {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     private final PackDetector<Pack.ResourcesSupplier> detector;
     public final Map<String, Pack> discoveredPacks;
     private @Nullable BootstrapContext owner;
 
     public PaperDatapackRegistrar(final DirectoryValidator symlinkValidator, final Map<String, Pack> discoveredPacks) {
-        this.detector = new FolderRepositorySource.FolderPackDetector(symlinkValidator);
+        this.detector = null; // new FolderRepositorySource.FolderPackDetector(symlinkValidator);
         this.discoveredPacks = discoveredPacks;
+        throw new NotImplementedError();
     }
 
     @Override

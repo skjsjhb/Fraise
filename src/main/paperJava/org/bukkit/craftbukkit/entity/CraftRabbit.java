@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Rabbit;
 
@@ -21,16 +22,19 @@ public class CraftRabbit extends CraftAnimals implements Rabbit {
 
     @Override
     public void setRabbitType(Type type) {
-        this.getHandle().setVariant(net.minecraft.world.entity.animal.Rabbit.Variant.values()[type.ordinal()]);
+        // this.getHandle().setVariant(net.minecraft.world.entity.animal.Rabbit.Variant.values()[type.ordinal()]);
+        throw new NotImplementedError();
     }
 
     @Override
     public void setMoreCarrotTicks(int ticks) {
-        this.getHandle().moreCarrotTicks = ticks;
+        // this.getHandle().moreCarrotTicks = ticks;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getMoreCarrotTicks() {
-        return this.getHandle().moreCarrotTicks;
+        // return this.getHandle().moreCarrotTicks;
+        throw new NotImplementedError();
     }
 }

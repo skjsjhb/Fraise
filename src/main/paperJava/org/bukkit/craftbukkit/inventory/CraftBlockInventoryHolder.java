@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Container;
 import net.minecraft.world.level.LevelAccessor;
@@ -17,11 +18,13 @@ public class CraftBlockInventoryHolder implements BlockInventoryHolder {
         this.block = CraftBlock.at(levelAccessor, pos);
         this.inventory = new CraftInventory(container);
     }
+
     // Paper start - Add missing InventoryHolders
     public CraftBlockInventoryHolder(net.minecraft.world.inventory.ContainerLevelAccess levelAccess, Inventory inventory) {
-        com.google.common.base.Preconditions.checkArgument(levelAccess.isBlock());
-        this.block = CraftBlock.at(levelAccess.getWorld(), levelAccess.getPosition());
-        this.inventory = inventory;
+        throw new NotImplementedError();
+        // com.google.common.base.Preconditions.checkArgument(levelAccess.isBlock());
+        // this.block = CraftBlock.at(levelAccess.getWorld(), levelAccess.getPosition());
+        // this.inventory = inventory;
     }
     // Paper end - Add missing InventoryHolders
 

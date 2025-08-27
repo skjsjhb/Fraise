@@ -2,6 +2,16 @@ package io.papermc.paper.command.subcommands;
 
 import com.destroystokyo.paper.util.SneakyThrow;
 import io.papermc.paper.command.PaperSubcommand;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.event.HandlerList;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredListener;
+import org.checkerframework.checker.nullness.qual.NonNull;
+import org.checkerframework.framework.qual.DefaultQualifier;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.lang.invoke.MethodHandle;
@@ -16,17 +26,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.minecraft.server.MinecraftServer;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.RegisteredListener;
-import org.checkerframework.checker.nullness.qual.NonNull;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.checkerframework.framework.qual.DefaultQualifier;
 
 import static net.kyori.adventure.text.Component.newline;
 import static net.kyori.adventure.text.Component.space;
@@ -77,7 +76,7 @@ public final class DumpListenersCommand implements PaperSubcommand {
         try {
             Files.createDirectories(parent);
             Files.createFile(path);
-            try (final PrintWriter writer = new PrintWriter(path.toFile())){
+            try (final PrintWriter writer = new PrintWriter(path.toFile())) {
                 for (final String eventClass : eventClassNames()) {
                     final HandlerList handlers;
                     try {
@@ -95,7 +94,8 @@ public final class DumpListenersCommand implements PaperSubcommand {
             }
         } catch (final IOException ex) {
             sender.sendMessage(text("Failed to write dumped listener! See the console for more info.", RED));
-            MinecraftServer.LOGGER.warn("Error occurred while dumping listeners", ex);
+            // MinecraftServer.LOGGER.warn("Error occurred while dumping listeners", ex);
+            // throw new NotImplementedError();
             return;
         }
         sender.sendMessage(
@@ -149,7 +149,8 @@ public final class DumpListenersCommand implements PaperSubcommand {
             sender.sendMessage(text("Class '" + className + "' does not have a valid getHandlerList method.", RED));
         } catch (final ReflectiveOperationException e) {
             sender.sendMessage(text("Something went wrong, see the console for more details.", RED));
-            MinecraftServer.LOGGER.warn("Error occurred while dumping listeners for class {}", className, e);
+            // MinecraftServer.LOGGER.warn("Error occurred while dumping listeners for class {}", className, e);
+            // throw new NotImplementedError();
         }
     }
 

@@ -3,7 +3,7 @@ package org.bukkit.craftbukkit.entity;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
-import java.util.List;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockCollisions;
@@ -14,6 +14,8 @@ import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.AbstractArrow;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public abstract class CraftAbstractArrow extends AbstractProjectile implements AbstractArrow {
 
@@ -37,7 +39,8 @@ public abstract class CraftAbstractArrow extends AbstractProjectile implements A
 
     @Override
     public double getDamage() {
-        return this.getHandle().baseDamage;
+        throw new NotImplementedError();
+        // return this.getHandle().baseDamage;
     }
 
     @Override
@@ -54,8 +57,9 @@ public abstract class CraftAbstractArrow extends AbstractProjectile implements A
     @Override
     public void setPierceLevel(int pierceLevel) {
         Preconditions.checkArgument(0 <= pierceLevel && pierceLevel <= Byte.MAX_VALUE, "Pierce level (%s) out of range, expected 0 < level < 127", pierceLevel);
+        throw new NotImplementedError();
 
-        this.getHandle().setPierceLevel((byte) pierceLevel);
+        // this.getHandle().setPierceLevel((byte) pierceLevel);
     }
 
     @Override
@@ -70,7 +74,8 @@ public abstract class CraftAbstractArrow extends AbstractProjectile implements A
 
     @Override
     public boolean isInBlock() {
-        return this.getHandle().isInGround();
+        throw new NotImplementedError();
+        // return this.getHandle().isInGround();
     }
 
     @Override
@@ -103,7 +108,8 @@ public abstract class CraftAbstractArrow extends AbstractProjectile implements A
         super.setTicksLived(value);
 
         // Second field for EntityArrow
-        this.getHandle().life = value;
+        // this.getHandle().life = value;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -119,14 +125,16 @@ public abstract class CraftAbstractArrow extends AbstractProjectile implements A
 
     @Override
     public ItemStack getItem() {
-        return CraftItemStack.asBukkitCopy(this.getHandle().pickupItemStack);
+        throw new NotImplementedError();
+        // return CraftItemStack.asBukkitCopy(this.getHandle().pickupItemStack);
     }
 
     @Override
     public void setItem(ItemStack item) {
         Preconditions.checkArgument(item != null, "ItemStack cannot be null");
 
-        this.getHandle().pickupItemStack = CraftItemStack.asNMSCopy(item);
+        throw new NotImplementedError();
+        // this.getHandle().pickupItemStack = CraftItemStack.asNMSCopy(item);
     }
 
     @Override
@@ -139,34 +147,40 @@ public abstract class CraftAbstractArrow extends AbstractProjectile implements A
     public void setWeapon(ItemStack item) {
         Preconditions.checkArgument(item != null, "ItemStack cannot be null");
 
-        this.getHandle().firedFromWeapon = CraftItemStack.asNMSCopy(item);
+        throw new NotImplementedError();
+        // this.getHandle().firedFromWeapon = CraftItemStack.asNMSCopy(item);
     }
 
     // Paper start
     @Override
     public CraftItemStack getItemStack() {
-        return CraftItemStack.asCraftMirror(this.getHandle().getPickupItem());
+        throw new NotImplementedError();
+        // return CraftItemStack.asCraftMirror(this.getHandle().getPickupItem());
     }
 
     @Override
     public void setItemStack(final ItemStack stack) {
         Preconditions.checkArgument(stack != null, "ItemStack cannot be null");
-        this.getHandle().setPickupItemStack(CraftItemStack.asNMSCopy(stack));
+        throw new NotImplementedError();
+        // this.getHandle().setPickupItemStack(CraftItemStack.asNMSCopy(stack));
     }
 
     @Override
     public void setLifetimeTicks(int ticks) {
-        this.getHandle().life = ticks;
+        throw new NotImplementedError();
+        // this.getHandle().life = ticks;
     }
 
     @Override
     public int getLifetimeTicks() {
-        return this.getHandle().life;
+        throw new NotImplementedError();
+        // return this.getHandle().life;
     }
 
     @Override
     public org.bukkit.Sound getHitSound() {
-        return org.bukkit.craftbukkit.CraftSound.minecraftToBukkit(this.getHandle().getHitGroundSoundEvent());
+        throw new NotImplementedError();
+        // return org.bukkit.craftbukkit.CraftSound.minecraftToBukkit(this.getHandle().getHitGroundSoundEvent());
     }
 
     @Override
@@ -184,12 +198,13 @@ public abstract class CraftAbstractArrow extends AbstractProjectile implements A
     // Paper start - Fix PickupStatus getting reset - Copy of CraftProjectile#setShooter, calling setOwner(Entity,boolean)
     @Override
     public void setShooter(org.bukkit.projectiles.ProjectileSource shooter, boolean resetPickupStatus) {
-        if (shooter instanceof CraftEntity craftEntity) {
-            this.getHandle().setOwner(craftEntity.getHandle(), resetPickupStatus);
-        } else {
-            this.getHandle().setOwner(null, resetPickupStatus);
-        }
-        this.getHandle().projectileSource = shooter;
+        throw new NotImplementedError();
+        // if (shooter instanceof CraftEntity craftEntity) {
+        //     this.getHandle().setOwner(craftEntity.getHandle(), resetPickupStatus);
+        // } else {
+        //     this.getHandle().setOwner(null, resetPickupStatus);
+        // }
+        // this.getHandle().projectileSource = shooter;
     }
     // Paper end - Fix PickupStatus getting reset
 }

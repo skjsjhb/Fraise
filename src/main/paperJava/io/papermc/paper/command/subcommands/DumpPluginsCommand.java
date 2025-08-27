@@ -17,24 +17,23 @@ import io.papermc.paper.plugin.entrypoint.classloader.group.SimpleListPluginClas
 import io.papermc.paper.plugin.entrypoint.classloader.group.SpigotPluginClassLoaderGroup;
 import io.papermc.paper.plugin.entrypoint.classloader.group.StaticPluginClassLoaderGroup;
 import io.papermc.paper.plugin.entrypoint.dependency.SimpleMetaDependencyTree;
-import io.papermc.paper.plugin.provider.entrypoint.DependencyContext;
-import io.papermc.paper.plugin.entrypoint.strategy.modern.ModernPluginLoadingStrategy;
 import io.papermc.paper.plugin.entrypoint.strategy.ProviderConfiguration;
+import io.papermc.paper.plugin.entrypoint.strategy.modern.ModernPluginLoadingStrategy;
 import io.papermc.paper.plugin.manager.PaperPluginManagerImpl;
 import io.papermc.paper.plugin.provider.PluginProvider;
 import io.papermc.paper.plugin.provider.classloader.ConfiguredPluginClassLoader;
 import io.papermc.paper.plugin.provider.classloader.PaperClassLoaderStorage;
 import io.papermc.paper.plugin.provider.classloader.PluginClassLoaderGroup;
+import io.papermc.paper.plugin.provider.entrypoint.DependencyContext;
 import io.papermc.paper.plugin.storage.ConfiguredProviderStorage;
 import io.papermc.paper.plugin.storage.ProviderStorage;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.text.event.ClickEvent;
-import net.minecraft.server.MinecraftServer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.checkerframework.framework.qual.DefaultQualifier;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
@@ -99,7 +98,8 @@ public final class DumpPluginsCommand implements PaperSubcommand {
             );
         } catch (Throwable e) {
             sender.sendMessage(text("Failed to write plugin information! See the console for more info.", RED));
-            MinecraftServer.LOGGER.warn("Error occurred while dumping plugin info", e);
+            // MinecraftServer.LOGGER.warn("Error occurred while dumping plugin info", e);
+            throw new NotImplementedError();
         }
     }
 

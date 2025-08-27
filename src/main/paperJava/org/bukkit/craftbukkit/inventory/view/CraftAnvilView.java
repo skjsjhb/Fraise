@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory.view;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.inventory.AnvilMenu;
 import org.bukkit.craftbukkit.inventory.CraftInventoryAnvil;
 import org.bukkit.craftbukkit.inventory.CraftInventoryView;
@@ -17,12 +18,14 @@ public class CraftAnvilView extends CraftInventoryView<AnvilMenu, AnvilInventory
     @Nullable
     @Override
     public String getRenameText() {
-        return this.container.itemName;
+        // return this.container.itemName;
+        throw new NotImplementedError();
     }
 
     @Override
     public int getRepairItemCountCost() {
-        return this.container.repairItemCountCost;
+        // return this.container.repairItemCountCost;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -32,32 +35,38 @@ public class CraftAnvilView extends CraftInventoryView<AnvilMenu, AnvilInventory
 
     @Override
     public int getMaximumRepairCost() {
-        return this.container.maximumRepairCost;
+        // return this.container.maximumRepairCost;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setRepairItemCountCost(final int cost) {
-        this.container.repairItemCountCost = cost;
+        // this.container.repairItemCountCost = cost;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setRepairCost(final int cost) {
-        this.container.cost.set(cost);
+        // this.container.cost.set(cost);
+        throw new NotImplementedError();
     }
 
     @Override
     public void setMaximumRepairCost(final int cost) {
-        this.container.maximumRepairCost = cost;
+        // this.container.maximumRepairCost = cost;
+        throw new NotImplementedError();
     }
 
     @Override
     public boolean bypassesEnchantmentLevelRestriction() {
-        return this.container.bypassEnchantmentLevelRestriction;
+        // return this.container.bypassEnchantmentLevelRestriction;
+        throw new NotImplementedError();
     }
 
     @Override
     public void bypassEnchantmentLevelRestriction(final boolean bypassEnchantmentLevelRestriction) {
-        this.container.bypassEnchantmentLevelRestriction = bypassEnchantmentLevelRestriction;
+        // this.container.bypassEnchantmentLevelRestriction = bypassEnchantmentLevelRestriction;
+        throw new NotImplementedError();
     }
 
     public void updateFromLegacy(CraftInventoryAnvil legacy) {

@@ -1,6 +1,6 @@
 package com.destroystokyo.paper.loottable;
 
-import java.util.Objects;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.block.CraftBlock;
@@ -13,7 +13,8 @@ public interface PaperLootableBlockInventory extends LootableBlockInventory, Pap
     /* PaperLootableInventory */
     @Override
     default PaperLootableInventoryData lootableDataForAPI() {
-        return Objects.requireNonNull(this.getRandomizableContainer().lootableData(), "Can only manage loot tables on tile entities with lootableData");
+        throw new NotImplementedError();
+        // return Objects.requireNonNull(this.getRandomizableContainer().lootableData(), "Can only manage loot tables on tile entities with lootableData");
     }
 
     /* LootableBlockInventory */

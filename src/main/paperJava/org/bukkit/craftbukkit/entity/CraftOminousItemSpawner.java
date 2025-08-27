@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.OminousItemSpawner;
@@ -23,16 +24,19 @@ public class CraftOminousItemSpawner extends CraftEntity implements OminousItemS
 
     @Override
     public void setItem(ItemStack item) {
-        this.getHandle().setItem(CraftItemStack.asNMSCopy(item));
+        throw new NotImplementedError();
+        // this.getHandle().setItem(CraftItemStack.asNMSCopy(item));
     }
 
     @Override
     public long getSpawnItemAfterTicks() {
-        return this.getHandle().spawnItemAfterTicks;
+        throw new NotImplementedError();
+        // return this.getHandle().spawnItemAfterTicks;
     }
 
     @Override
     public void setSpawnItemAfterTicks(long ticks) {
-        this.getHandle().spawnItemAfterTicks = ticks;
+        throw new NotImplementedError();
+        // this.getHandle().spawnItemAfterTicks = ticks;
     }
 }

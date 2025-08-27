@@ -1,10 +1,7 @@
 package org.bukkit.craftbukkit.inventory;
 
-import net.minecraft.core.Holder;
-import net.minecraft.server.MinecraftServer;
+import kotlin.NotImplementedError;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.TransmuteResult;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.RecipeChoice;
@@ -29,15 +26,16 @@ public class CraftTransmuteRecipe extends TransmuteRecipe implements CraftRecipe
     @Override
     public void addToCraftingManager() {
         final ItemStack unwrappedInternalStack = CraftItemStack.unwrap(this.getResult());
-        MinecraftServer.getServer().getRecipeManager().addRecipe(
-            new RecipeHolder<>(CraftRecipe.toMinecraft(this.getKey()),
-                new net.minecraft.world.item.crafting.TransmuteRecipe(this.getGroup(),
-                    CraftRecipe.getCategory(this.getCategory()),
-                    this.toNMS(this.getInput(), true),
-                    this.toNMS(this.getMaterial(), true),
-                    new TransmuteResult(unwrappedInternalStack.getItemHolder(), unwrappedInternalStack.getCount(), unwrappedInternalStack.getComponentsPatch())
-                )
-            )
-        );
+        throw new NotImplementedError();
+        // MinecraftServer.getServer().getRecipeManager().addRecipe(
+        //     new RecipeHolder<>(CraftRecipe.toMinecraft(this.getKey()),
+        //         new net.minecraft.world.item.crafting.TransmuteRecipe(this.getGroup(),
+        //             CraftRecipe.getCategory(this.getCategory()),
+        //             this.toNMS(this.getInput(), true),
+        //             this.toNMS(this.getMaterial(), true),
+        //             new TransmuteResult(unwrappedInternalStack.getItemHolder(), unwrappedInternalStack.getCount(), unwrappedInternalStack.getComponentsPatch())
+        //         )
+        //     )
+        // );
     }
 }

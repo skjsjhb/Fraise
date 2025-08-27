@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.inventory;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.level.block.entity.ChiseledBookShelfBlockEntity;
 import org.bukkit.block.ChiseledBookshelf;
 import org.bukkit.inventory.ChiseledBookshelfInventory;
@@ -25,6 +26,7 @@ public class CraftInventoryChiseledBookshelf extends CraftInventory implements C
 
     @Override
     public ChiseledBookshelf getHolder() {
-        return (ChiseledBookshelf) this.inventory.getOwner();
+        // return (ChiseledBookshelf) this.inventory.getOwner();
+        throw new NotImplementedError();
     }
 }

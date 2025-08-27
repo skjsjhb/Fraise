@@ -4,13 +4,7 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.primitives.Primitives;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
-import java.util.function.Function;
+import kotlin.NotImplementedError;
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
 import net.minecraft.nbt.CompoundTag;
@@ -28,6 +22,14 @@ import org.bukkit.persistence.ListPersistentDataType;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.BiFunction;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 /**
  * The craft persistent data type registry, at its core, is responsible for the
@@ -369,7 +371,8 @@ public final class CraftPersistentDataTypeRegistry {
             values.add(this.wrap(listPersistentDataType.elementType(), primitiveValue));
         }
 
-        return new ListTag(values);
+        throw new NotImplementedError();
+        // return new ListTag(values);
     }
 
     /**
@@ -423,9 +426,10 @@ public final class CraftPersistentDataTypeRegistry {
             return false;
         }
 
-        final byte elementType = listTag.identifyRawElementType();
-        final TagAdapter elementAdapter = this.getOrCreateAdapter(listPersistentDataType.elementType());
-
-        return elementAdapter.nmsTypeByte() == elementType || elementType == ListTag.TAG_END;
+        throw new NotImplementedError();
+        // final byte elementType = listTag.identifyRawElementType();
+        // final TagAdapter elementAdapter = this.getOrCreateAdapter(listPersistentDataType.elementType());
+        //
+        // return elementAdapter.nmsTypeByte() == elementType || elementType == ListTag.TAG_END;
     }
 }

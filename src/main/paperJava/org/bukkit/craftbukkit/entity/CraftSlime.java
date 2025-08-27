@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.entity.Slime;
 
@@ -26,11 +27,13 @@ public class CraftSlime extends CraftMob implements Slime, CraftEnemy {
 
     @Override
     public boolean canWander() {
-        return this.getHandle().canWander();
+        // return this.getHandle().canWander();
+        throw new NotImplementedError();
     }
 
     @Override
     public void setWander(boolean canWander) {
-        this.getHandle().setWander(canWander);
+        // this.getHandle().setWander(canWander);
+        throw new NotImplementedError();
     }
 }

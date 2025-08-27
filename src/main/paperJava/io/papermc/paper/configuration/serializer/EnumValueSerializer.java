@@ -1,16 +1,17 @@
 package io.papermc.paper.configuration.serializer;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.leangen.geantyref.TypeToken;
-import java.lang.reflect.AnnotatedType;
-import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.serialize.ScalarSerializer;
 import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.util.EnumLookup;
+
+import java.lang.reflect.AnnotatedType;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Predicate;
 
 import static io.leangen.geantyref.GenericTypeReflector.erase;
 
@@ -19,10 +20,11 @@ import static io.leangen.geantyref.GenericTypeReflector.erase;
  */
 public class EnumValueSerializer extends ScalarSerializer.Annotated<Enum<?>> {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     public EnumValueSerializer() {
-        super(new TypeToken<Enum<?>>() {});
+        super(new TypeToken<Enum<?>>() {
+        });
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})

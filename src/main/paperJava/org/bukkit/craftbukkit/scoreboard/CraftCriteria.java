@@ -1,11 +1,12 @@
 package org.bukkit.craftbukkit.scoreboard;
 
 import com.google.common.collect.ImmutableMap;
-import java.util.Map;
 import net.minecraft.world.scores.Objective;
 import net.minecraft.world.scores.criteria.ObjectiveCriteria;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.RenderType;
+
+import java.util.Map;
 
 public final class CraftCriteria implements Criteria {
     private static final Map<String, CraftCriteria> DEFAULTS;
@@ -14,12 +15,13 @@ public final class CraftCriteria implements Criteria {
     static {
         ImmutableMap.Builder<String, CraftCriteria> defaults = ImmutableMap.builder();
 
-        for (Map.Entry<String, ObjectiveCriteria> entry : ObjectiveCriteria.CRITERIA_CACHE.entrySet()) {
-            String name = entry.getKey();
-            ObjectiveCriteria criteria = entry.getValue();
-
-            defaults.put(name, new CraftCriteria(criteria));
-        }
+        // throw new NotImplementedError();
+        // for (Map.Entry<String, ObjectiveCriteria> entry : ObjectiveCriteria.CRITERIA_CACHE.entrySet()) {
+        //     String name = entry.getKey();
+        //     ObjectiveCriteria criteria = entry.getValue();
+        //
+        //     defaults.put(name, new CraftCriteria(criteria));
+        // }
 
         DEFAULTS = defaults.build();
         DUMMY = DEFAULTS.get(ObjectiveCriteria.DUMMY.getName());

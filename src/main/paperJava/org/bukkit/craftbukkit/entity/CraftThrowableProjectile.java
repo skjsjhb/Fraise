@@ -1,5 +1,6 @@
 package org.bukkit.craftbukkit.entity;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
 import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
@@ -20,7 +21,8 @@ public abstract class CraftThrowableProjectile extends CraftProjectile implement
     @Override
     public ItemStack getItem() {
         if (this.getHandle().getItem().isEmpty()) {
-            return CraftItemStack.asBukkitCopy(new net.minecraft.world.item.ItemStack(this.getHandle().getDefaultItem()));
+            // return CraftItemStack.asBukkitCopy(new net.minecraft.world.item.ItemStack(this.getHandle().getDefaultItem()));
+            throw new NotImplementedError();
         } else {
             return CraftItemStack.asBukkitCopy(this.getHandle().getItem());
         }

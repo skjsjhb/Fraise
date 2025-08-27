@@ -3,12 +3,10 @@ package org.bukkit.craftbukkit.entity;
 import com.destroystokyo.paper.entity.villager.Reputation;
 import com.google.common.base.Preconditions;
 import io.papermc.paper.util.OldEnumHolderable;
-import java.util.Map;
-import java.util.UUID;
+import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.entity.npc.VillagerProfession;
 import net.minecraft.world.entity.npc.VillagerType;
 import net.minecraft.world.level.block.BedBlock;
@@ -19,8 +17,9 @@ import org.bukkit.craftbukkit.CraftServer;
 import org.bukkit.craftbukkit.util.CraftLocation;
 import org.bukkit.entity.Villager;
 import org.bukkit.entity.ZombieVillager;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityTransformEvent;
+
+import java.util.Map;
+import java.util.UUID;
 
 public class CraftVillager extends CraftAbstractVillager implements Villager {
 
@@ -35,9 +34,10 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
 
     @Override
     public void remove() {
-        this.getHandle().releaseAllPois();
-
-        super.remove();
+        throw new NotImplementedError();
+        // this.getHandle().releaseAllPois();
+        //
+        // super.remove();
     }
 
     @Override
@@ -102,27 +102,31 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
             return false;
         }
 
-        while (amount > 0) {
-            this.getHandle().increaseMerchantCareer();
-            amount--;
-        }
-        return true;
+        throw new NotImplementedError();
+        // while (amount > 0) {
+        //     this.getHandle().increaseMerchantCareer();
+        //     amount--;
+        // }
+        // return true;
     }
 
     @Override
     public boolean addTrades(int amount) {
-        Preconditions.checkArgument(amount > 0, "Number of trades unlocked must be positive");
-        return this.getHandle().updateTrades(amount);
+        throw new NotImplementedError();
+        // Preconditions.checkArgument(amount > 0, "Number of trades unlocked must be positive");
+        // return this.getHandle().updateTrades(amount);
     }
 
     @Override
     public int getRestocksToday() {
-        return getHandle().numberOfRestocksToday;
+        // return getHandle().numberOfRestocksToday;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setRestocksToday(int restocksToday) {
-        getHandle().numberOfRestocksToday = restocksToday;
+        // getHandle().numberOfRestocksToday = restocksToday;
+        throw new NotImplementedError();
     }
     // Paper end
 
@@ -131,7 +135,8 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
         Preconditions.checkArgument(location != null, "Location cannot be null");
         Preconditions.checkArgument(location.getWorld() != null, "Location needs to be in a world");
         Preconditions.checkArgument(location.getWorld().equals(this.getWorld()), "Cannot sleep across worlds");
-        Preconditions.checkState(!this.getHandle().generation, "Cannot sleep during world generation");
+        // Preconditions.checkState(!this.getHandle().generation, "Cannot sleep during world generation");
+        // throw new NotImplementedError();
 
         BlockPos position = CraftLocation.toBlockPosition(location);
         BlockState state = this.getHandle().level().getBlockState(position);
@@ -145,21 +150,24 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
 
     @Override
     public void wakeup() {
-        Preconditions.checkState(this.isSleeping(), "Cannot wakeup if not sleeping");
-        Preconditions.checkState(!this.getHandle().generation, "Cannot wakeup during world generation");
-
-        this.getHandle().stopSleeping();
+        throw new NotImplementedError();
+        // Preconditions.checkState(this.isSleeping(), "Cannot wakeup if not sleeping");
+        // Preconditions.checkState(!this.getHandle().generation, "Cannot wakeup during world generation");
+        //
+        // this.getHandle().stopSleeping();
     }
 
     @Override
     public void shakeHead() {
-        this.getHandle().setUnhappy();
+        // this.getHandle().setUnhappy();
+        throw new NotImplementedError();
     }
 
     @Override
     public ZombieVillager zombify() {
-        net.minecraft.world.entity.monster.ZombieVillager entityzombievillager = Zombie.convertVillagerToZombieVillager(this.getHandle().level().getMinecraftWorld(), this.getHandle(), this.getHandle().blockPosition(), this.isSilent(), EntityTransformEvent.TransformReason.INFECTION, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        return (entityzombievillager != null) ? (ZombieVillager) entityzombievillager.getBukkitEntity() : null;
+        throw new NotImplementedError();
+        // net.minecraft.world.entity.monster.ZombieVillager entityzombievillager = Zombie.convertVillagerToZombieVillager(this.getHandle().level().getMinecraftWorld(), this.getHandle(), this.getHandle().blockPosition(), this.isSilent(), EntityTransformEvent.TransformReason.INFECTION, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        // return (entityzombievillager != null) ? (ZombieVillager) entityzombievillager.getBukkitEntity() : null;
     }
 
     public static class CraftType extends OldEnumHolderable<Type, VillagerType> implements Type {
@@ -181,7 +189,7 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
             return CraftRegistry.bukkitToMinecraftHolder(bukkit);
         }
 
-        public CraftType(final Holder<VillagerType> holder){
+        public CraftType(final Holder<VillagerType> holder) {
             super(holder, count++);
         }
     }
@@ -212,29 +220,32 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
 
     @Override
     public Reputation getReputation(UUID uniqueId) {
-        net.minecraft.world.entity.ai.gossip.GossipContainer.EntityGossips rep = getHandle().getGossips().gossips.get(uniqueId);
-        if (rep == null) {
-            return new Reputation(new java.util.EnumMap<>(com.destroystokyo.paper.entity.villager.ReputationType.class));
-        }
-
-        return rep.getPaperReputation();
+        throw new NotImplementedError();
+        // net.minecraft.world.entity.ai.gossip.GossipContainer.EntityGossips rep = getHandle().getGossips().gossips.get(uniqueId);
+        // if (rep == null) {
+        //     return new Reputation(new java.util.EnumMap<>(com.destroystokyo.paper.entity.villager.ReputationType.class));
+        // }
+        //
+        // return rep.getPaperReputation();
     }
 
     @Override
     public Map<UUID, Reputation> getReputations() {
-        return getHandle().getGossips().gossips.entrySet()
-            .stream()
-            .collect(java.util.stream.Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getPaperReputation()));
+        throw new NotImplementedError();
+        // return getHandle().getGossips().gossips.entrySet()
+        //     .stream()
+        //     .collect(java.util.stream.Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getPaperReputation()));
     }
 
     @Override
     public void setReputation(UUID uniqueId, Reputation reputation) {
-        net.minecraft.world.entity.ai.gossip.GossipContainer.EntityGossips nmsReputation =
-            getHandle().getGossips().gossips.computeIfAbsent(
-                uniqueId,
-                key -> new net.minecraft.world.entity.ai.gossip.GossipContainer.EntityGossips()
-            );
-        nmsReputation.assignFromPaperReputation(reputation);
+        throw new NotImplementedError();
+        // net.minecraft.world.entity.ai.gossip.GossipContainer.EntityGossips nmsReputation =
+        //     getHandle().getGossips().gossips.computeIfAbsent(
+        //         uniqueId,
+        //         key -> new net.minecraft.world.entity.ai.gossip.GossipContainer.EntityGossips()
+        //     );
+        // nmsReputation.assignFromPaperReputation(reputation);
     }
 
     @Override
@@ -246,12 +257,14 @@ public class CraftVillager extends CraftAbstractVillager implements Villager {
 
     @Override
     public void clearReputations() {
-        getHandle().getGossips().gossips.clear();
+        // getHandle().getGossips().gossips.clear();
+        throw new NotImplementedError();
     }
 
     @Override
     public void updateDemand() {
-        getHandle().updateDemand();
+        // getHandle().updateDemand();
+        throw new NotImplementedError();
     }
 
     @Override

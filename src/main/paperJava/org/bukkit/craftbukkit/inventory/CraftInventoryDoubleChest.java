@@ -3,7 +3,6 @@ package org.bukkit.craftbukkit.inventory;
 import com.google.common.base.Preconditions;
 import net.minecraft.world.CompoundContainer;
 import net.minecraft.world.MenuProvider;
-import net.minecraft.world.level.block.ChestBlock;
 import org.bukkit.Location;
 import org.bukkit.block.DoubleChest;
 import org.bukkit.inventory.DoubleChestInventory;
@@ -12,28 +11,29 @@ import org.bukkit.inventory.ItemStack;
 
 public class CraftInventoryDoubleChest extends CraftInventory implements DoubleChestInventory {
     public MenuProvider provider;
-    private final CraftInventory left;
-    private final CraftInventory right;
+    private final CraftInventory left = null; // throw new NotImplementedError();
+    private final CraftInventory right = null; // throw new NotImplementedError();
 
-    public CraftInventoryDoubleChest(ChestBlock.DoubleInventory inventory) {
-        super(inventory.container);
-        this.provider = inventory;
-        this.left = new CraftInventory(inventory.container.container1);
-        this.right = new CraftInventory(inventory.container.container2);
-    }
+    // public CraftInventoryDoubleChest(ChestBlock.DoubleInventory inventory) {
+    //     super(inventory.container);
+    //     this.provider = inventory;
+    //     this.left = new CraftInventory(inventory.container.container1);
+    //     this.right = new CraftInventory(inventory.container.container2);
+    // }
+    // throw new NotImplementedError();
 
     public CraftInventoryDoubleChest(CompoundContainer largeChest) {
         super(largeChest);
-        if (largeChest.container1 instanceof CompoundContainer) {
-            this.left = new CraftInventoryDoubleChest((CompoundContainer) largeChest.container1);
-        } else {
-            this.left = new CraftInventory(largeChest.container1);
-        }
-        if (largeChest.container2 instanceof CompoundContainer) {
-            this.right = new CraftInventoryDoubleChest((CompoundContainer) largeChest.container2);
-        } else {
-            this.right = new CraftInventory(largeChest.container2);
-        }
+        // if (largeChest.container1 instanceof CompoundContainer) {
+        //     this.left = new CraftInventoryDoubleChest((CompoundContainer) largeChest.container1);
+        // } else {
+        //     this.left = new CraftInventory(largeChest.container1);
+        // }
+        // if (largeChest.container2 instanceof CompoundContainer) {
+        //     this.right = new CraftInventoryDoubleChest((CompoundContainer) largeChest.container2);
+        // } else {
+        //     this.right = new CraftInventory(largeChest.container2);
+        // }
     }
 
     @Override

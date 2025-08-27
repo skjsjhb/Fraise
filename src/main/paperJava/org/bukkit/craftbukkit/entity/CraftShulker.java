@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import org.bukkit.DyeColor;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.CraftServer;
@@ -20,23 +21,27 @@ public class CraftShulker extends CraftGolem implements Shulker, CraftEnemy {
 
     @Override
     public DyeColor getColor() {
-        return DyeColor.getByWoolData(this.getHandle().getEntityData().get(net.minecraft.world.entity.monster.Shulker.DATA_COLOR_ID));
+        // return DyeColor.getByWoolData(this.getHandle().getEntityData().get(net.minecraft.world.entity.monster.Shulker.DATA_COLOR_ID));
+        throw new NotImplementedError();
     }
 
     @Override
     public void setColor(DyeColor color) {
-        this.getHandle().getEntityData().set(net.minecraft.world.entity.monster.Shulker.DATA_COLOR_ID, (color == null) ? 16 : color.getWoolData());
+        // this.getHandle().getEntityData().set(net.minecraft.world.entity.monster.Shulker.DATA_COLOR_ID, (color == null) ? 16 : color.getWoolData());
+        throw new NotImplementedError();
     }
 
     @Override
     public float getPeek() {
-        return (float) this.getHandle().getRawPeekAmount() / 100;
+        // return (float) this.getHandle().getRawPeekAmount() / 100;
+        throw new NotImplementedError();
     }
 
     @Override
     public void setPeek(float value) {
         Preconditions.checkArgument(value >= 0 && value <= 1, "value needs to be in between or equal to 0 and 1");
-        this.getHandle().setRawPeekAmount((int) (value * 100));
+        // this.getHandle().setRawPeekAmount((int) (value * 100));
+        throw new NotImplementedError();
     }
 
     @Override
@@ -48,6 +53,7 @@ public class CraftShulker extends CraftGolem implements Shulker, CraftEnemy {
     public void setAttachedFace(BlockFace face) {
         Preconditions.checkNotNull(face, "face cannot be null");
         Preconditions.checkArgument(face.isCartesian(), "%s is not a valid block face to attach a shulker to, a cartesian block face is expected", face);
-        this.getHandle().setAttachFace(CraftBlock.blockFaceToNotch(face));
+        // this.getHandle().setAttachFace(CraftBlock.blockFaceToNotch(face));
+        throw new NotImplementedError();
     }
 }

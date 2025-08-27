@@ -1,15 +1,7 @@
 package io.papermc.paper.configuration.serializer.collection.map;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.leangen.geantyref.TypeToken;
-import java.lang.reflect.AnnotatedParameterizedType;
-import java.lang.reflect.AnnotatedType;
-import java.lang.reflect.Type;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
 import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.BasicConfigurationNode;
@@ -20,6 +12,15 @@ import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.serialize.TypeSerializer;
 import org.spongepowered.configurate.serialize.TypeSerializerCollection;
 
+import java.lang.reflect.AnnotatedParameterizedType;
+import java.lang.reflect.AnnotatedType;
+import java.lang.reflect.Type;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
 import static java.util.Objects.requireNonNull;
 
 /**
@@ -27,9 +28,10 @@ import static java.util.Objects.requireNonNull;
  */
 public class MapSerializer implements TypeSerializer.Annotated<Map<?, ?>> {
 
-    public static final TypeToken<Map<?, ?>> TYPE = new TypeToken<Map<?, ?>>() {};
+    public static final TypeToken<Map<?, ?>> TYPE = new TypeToken<Map<?, ?>>() {
+    };
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     private final boolean clearInvalids;
     private final TypeSerializer<Map<?, ?>> fallback;

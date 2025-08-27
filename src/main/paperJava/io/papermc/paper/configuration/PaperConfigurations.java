@@ -2,7 +2,7 @@ package io.papermc.paper.configuration;
 
 import com.google.common.base.Suppliers;
 import com.google.common.collect.Table;
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.leangen.geantyref.TypeToken;
 import io.papermc.paper.configuration.legacy.RequiresSpigotInitialization;
 import io.papermc.paper.configuration.mapping.Definition;
@@ -12,8 +12,8 @@ import io.papermc.paper.configuration.mapping.MergeMap;
 import io.papermc.paper.configuration.serializer.ComponentSerializer;
 import io.papermc.paper.configuration.serializer.EnumValueSerializer;
 import io.papermc.paper.configuration.serializer.NbtPathSerializer;
-import io.papermc.paper.configuration.serializer.ServerboundPacketClassSerializer;
 import io.papermc.paper.configuration.serializer.ResourceLocationSerializer;
+import io.papermc.paper.configuration.serializer.ServerboundPacketClassSerializer;
 import io.papermc.paper.configuration.serializer.StringRepresentableSerializer;
 import io.papermc.paper.configuration.serializer.collection.TableSerializer;
 import io.papermc.paper.configuration.serializer.collection.map.FastutilMapSerializer;
@@ -34,7 +34,6 @@ import io.papermc.paper.configuration.type.DespawnRange;
 import io.papermc.paper.configuration.type.Duration;
 import io.papermc.paper.configuration.type.DurationOrDisabled;
 import io.papermc.paper.configuration.type.EngineMode;
-import io.papermc.paper.configuration.type.fallback.FallbackValueSerializer;
 import io.papermc.paper.configuration.type.number.DoubleOr;
 import io.papermc.paper.configuration.type.number.IntOr;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
@@ -43,17 +42,7 @@ import it.unimi.dsi.fastutil.objects.Reference2LongMap;
 import it.unimi.dsi.fastutil.objects.Reference2LongOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Reference2ObjectOpenHashMap;
-import java.io.File;
-import java.io.IOException;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import kotlin.NotImplementedError;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -83,58 +72,69 @@ import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import org.spongepowered.configurate.transformation.TransformAction;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import static com.google.common.base.Preconditions.checkState;
 import static io.leangen.geantyref.GenericTypeReflector.erase;
 
 @SuppressWarnings("Convert2Diamond")
 public class PaperConfigurations extends Configurations<GlobalConfiguration, WorldConfiguration> {
 
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
     static final String GLOBAL_CONFIG_FILE_NAME = "paper-global.yml";
     static final String WORLD_DEFAULTS_CONFIG_FILE_NAME = "paper-world-defaults.yml";
     static final String WORLD_CONFIG_FILE_NAME = "paper-world.yml";
     public static final String CONFIG_DIR = "config";
-    private static final String BACKUP_DIR ="legacy-backup";
+    private static final String BACKUP_DIR = "legacy-backup";
 
     private static final String GLOBAL_HEADER = String.format("""
-            This is the global configuration file for Paper.
-            As you can see, there's a lot to configure. Some options may impact gameplay, so use
-            with caution, and make sure you know what each option does before configuring.
-
-            If you need help with the configuration or have any questions related to Paper,
-            join us in our Discord or check the docs page.
-
-            The world configuration options have been moved inside
-            their respective world folder. The files are named %s
-
-            File Reference: https://docs.papermc.io/paper/reference/global-configuration/
-            Docs: https://docs.papermc.io/
-            Discord: https://discord.gg/papermc
-            Website: https://papermc.io/""", WORLD_CONFIG_FILE_NAME);
+        This is the global configuration file for Paper.
+        As you can see, there's a lot to configure. Some options may impact gameplay, so use
+        with caution, and make sure you know what each option does before configuring.
+        
+        If you need help with the configuration or have any questions related to Paper,
+        join us in our Discord or check the docs page.
+        
+        The world configuration options have been moved inside
+        their respective world folder. The files are named %s
+        
+        File Reference: https://docs.papermc.io/paper/reference/global-configuration/
+        Docs: https://docs.papermc.io/
+        Discord: https://discord.gg/papermc
+        Website: https://papermc.io/""", WORLD_CONFIG_FILE_NAME);
 
     private static final String WORLD_DEFAULTS_HEADER = """
-            This is the world defaults configuration file for Paper.
-            As you can see, there's a lot to configure. Some options may impact gameplay, so use
-            with caution, and make sure you know what each option does before configuring.
-
-            If you need help with the configuration or have any questions related to Paper,
-            join us in our Discord or check the docs page.
-
-            Configuration options here apply to all worlds, unless you specify overrides inside
-            the world-specific config file inside each world folder.
-
-            File Reference: https://docs.papermc.io/paper/reference/world-configuration/
-            Docs: https://docs.papermc.io/
-            Discord: https://discord.gg/papermc
-            Website: https://papermc.io/""";
+        This is the world defaults configuration file for Paper.
+        As you can see, there's a lot to configure. Some options may impact gameplay, so use
+        with caution, and make sure you know what each option does before configuring.
+        
+        If you need help with the configuration or have any questions related to Paper,
+        join us in our Discord or check the docs page.
+        
+        Configuration options here apply to all worlds, unless you specify overrides inside
+        the world-specific config file inside each world folder.
+        
+        File Reference: https://docs.papermc.io/paper/reference/world-configuration/
+        Docs: https://docs.papermc.io/
+        Discord: https://discord.gg/papermc
+        Website: https://papermc.io/""";
 
     private static final Function<ContextMap, String> WORLD_HEADER = map -> String.format("""
-        This is a world configuration file for Paper.
-        This file may start empty but can be filled with settings to override ones in the %s/%s
-        
-        For more information, see https://docs.papermc.io/paper/reference/configuration/#per-world-configuration
-        
-        World: %s (%s)""",
+            This is a world configuration file for Paper.
+            This file may start empty but can be filled with settings to override ones in the %s/%s
+            
+            For more information, see https://docs.papermc.io/paper/reference/configuration/#per-world-configuration
+            
+            World: %s (%s)""",
         PaperConfigurations.CONFIG_DIR,
         PaperConfigurations.WORLD_DEFAULTS_CONFIG_FILE_NAME,
         map.require(WORLD_NAME),
@@ -156,7 +156,8 @@ public class PaperConfigurations extends Configurations<GlobalConfiguration, Wor
             SpigotConfig.readConfig(SpigotWorldConfig.class, this);
         }
     });
-    public static final ContextKey<Supplier<SpigotWorldConfig>> SPIGOT_WORLD_CONFIG_CONTEXT_KEY = new ContextKey<>(new TypeToken<Supplier<SpigotWorldConfig>>() {}, "spigot world config");
+    public static final ContextKey<Supplier<SpigotWorldConfig>> SPIGOT_WORLD_CONFIG_CONTEXT_KEY = new ContextKey<>(new TypeToken<Supplier<SpigotWorldConfig>>() {
+    }, "spigot world config");
 
 
     public PaperConfigurations(final Path globalFolder) {
@@ -216,7 +217,8 @@ public class PaperConfigurations extends Configurations<GlobalConfiguration, Wor
             .header(GLOBAL_HEADER)
             .serializers(builder -> builder
                 .register(new ServerboundPacketClassSerializer())
-                .register(new RegistryValueSerializer<>(new TypeToken<DataComponentType<?>>() {}, registryAccess, Registries.DATA_COMPONENT_TYPE, false))
+                .register(new RegistryValueSerializer<>(new TypeToken<DataComponentType<?>>() {
+                }, registryAccess, Registries.DATA_COMPONENT_TYPE, false))
             );
     }
 
@@ -255,18 +257,25 @@ public class PaperConfigurations extends Configurations<GlobalConfiguration, Wor
             .defaultOptions(options -> options
                 .header(contextMap.require(WORLD_NAME).equals(WORLD_DEFAULTS) ? WORLD_DEFAULTS_HEADER : WORLD_HEADER.apply(contextMap))
                 .serializers(serializers -> serializers
-                    .register(new TypeToken<Reference2IntMap<?>>() {}, new FastutilMapSerializer.SomethingToPrimitive<Reference2IntMap<?>>(Reference2IntOpenHashMap::new, Integer.TYPE))
-                    .register(new TypeToken<Reference2LongMap<?>>() {}, new FastutilMapSerializer.SomethingToPrimitive<Reference2LongMap<?>>(Reference2LongOpenHashMap::new, Long.TYPE))
-                    .register(new TypeToken<Reference2ObjectMap<?, ?>>() {}, new FastutilMapSerializer.SomethingToSomething<Reference2ObjectMap<?, ?>>(Reference2ObjectOpenHashMap::new))
-                    .register(new TypeToken<Table<?, ?, ?>>() {}, new TableSerializer())
+                    .register(new TypeToken<Reference2IntMap<?>>() {
+                    }, new FastutilMapSerializer.SomethingToPrimitive<Reference2IntMap<?>>(Reference2IntOpenHashMap::new, Integer.TYPE))
+                    .register(new TypeToken<Reference2LongMap<?>>() {
+                    }, new FastutilMapSerializer.SomethingToPrimitive<Reference2LongMap<?>>(Reference2LongOpenHashMap::new, Long.TYPE))
+                    .register(new TypeToken<Reference2ObjectMap<?, ?>>() {
+                    }, new FastutilMapSerializer.SomethingToSomething<Reference2ObjectMap<?, ?>>(Reference2ObjectOpenHashMap::new))
+                    .register(new TypeToken<Table<?, ?, ?>>() {
+                    }, new TableSerializer())
                     .register(DespawnRange.class, DespawnRange.SERIALIZER)
                     .register(StringRepresentableSerializer::isValidFor, new StringRepresentableSerializer())
                     .register(EngineMode.SERIALIZER)
-                    .register(FallbackValueSerializer.create(contextMap.require(SPIGOT_WORLD_CONFIG_CONTEXT_KEY).get(), MinecraftServer::getServer))
-                    .register(new RegistryValueSerializer<>(new TypeToken<EntityType<?>>() {}, access, Registries.ENTITY_TYPE, true))
+                    // throw new NotImplementedError();
+                    // .register(FallbackValueSerializer.create(contextMap.require(SPIGOT_WORLD_CONFIG_CONTEXT_KEY).get(), MinecraftServer::getServer))
+                    .register(new RegistryValueSerializer<>(new TypeToken<EntityType<?>>() {
+                    }, access, Registries.ENTITY_TYPE, true))
                     .register(new RegistryValueSerializer<>(Item.class, access, Registries.ITEM, true))
                     .register(new RegistryValueSerializer<>(Block.class, access, Registries.BLOCK, true))
-                    .register(new RegistryHolderSerializer<>(new TypeToken<ConfiguredFeature<?, ?>>() {}, access, Registries.CONFIGURED_FEATURE, false))
+                    .register(new RegistryHolderSerializer<>(new TypeToken<ConfiguredFeature<?, ?>>() {
+                    }, access, Registries.CONFIGURED_FEATURE, false))
                 )
             );
     }
@@ -334,7 +343,8 @@ public class PaperConfigurations extends Configurations<GlobalConfiguration, Wor
             this.initializeGlobalConfiguration(server.registryAccess(), reloader(this.globalConfigClass, GlobalConfiguration.get()));
             this.initializeWorldDefaultsConfiguration(server.registryAccess());
             for (ServerLevel level : server.getAllLevels()) {
-                this.createWorldConfig(createWorldContextMap(level), reloader(this.worldConfigClass, level.paperConfig()));
+                throw new NotImplementedError();
+                // this.createWorldConfig(createWorldContextMap(level), reloader(this.worldConfigClass, level.paperConfig()));
             }
         } catch (Exception ex) {
             throw new RuntimeException("Could not reload paper configuration files", ex);
@@ -348,7 +358,8 @@ public class PaperConfigurations extends Configurations<GlobalConfiguration, Wor
     }
 
     private static ContextMap createWorldContextMap(ServerLevel level) {
-        return createWorldContextMap(level.levelStorageAccess.levelDirectory.path(), level.serverLevelData.getLevelName(), level.dimension().location(), level.spigotConfig, level.registryAccess(), level.getGameRules());
+        throw new NotImplementedError();
+        // return createWorldContextMap(level.levelStorageAccess.levelDirectory.path(), level.serverLevelData.getLevelName(), level.dimension().location(), level.spigotConfig, level.registryAccess(), level.getGameRules());
     }
 
     public static ContextMap createWorldContextMap(final Path dir, final String levelName, final ResourceLocation worldKey, final SpigotWorldConfig spigotConfig, final RegistryAccess registryAccess, final GameRules gameRules) {
@@ -456,7 +467,8 @@ public class PaperConfigurations extends Configurations<GlobalConfiguration, Wor
         ConfigurationSection worlds = global.createSection("__________WORLDS__________");
         worlds.set("__defaults__", YamlConfiguration.loadConfiguration(this.globalFolder.resolve(this.defaultWorldConfigFileName).toFile()));
         for (ServerLevel level : server.getAllLevels()) {
-            worlds.set(level.getWorld().getName(), YamlConfiguration.loadConfiguration(getWorldConfigFile(level).toFile()));
+            throw new NotImplementedError();
+            // worlds.set(level.getWorld().getName(), YamlConfiguration.loadConfiguration(getWorldConfigFile(level).toFile()));
         }
         return global;
     }

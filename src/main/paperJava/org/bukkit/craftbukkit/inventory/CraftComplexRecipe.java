@@ -1,8 +1,7 @@
 package org.bukkit.craftbukkit.inventory;
 
-import net.minecraft.server.MinecraftServer;
+import kotlin.NotImplementedError;
 import net.minecraft.world.item.crafting.CustomRecipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ComplexRecipe;
 import org.bukkit.inventory.CraftingRecipe;
@@ -19,6 +18,7 @@ public class CraftComplexRecipe extends CraftingRecipe implements CraftRecipe, C
 
     @Override
     public void addToCraftingManager() {
-        MinecraftServer.getServer().getRecipeManager().addRecipe(new RecipeHolder<>(CraftRecipe.toMinecraft(this.getKey()), this.recipe));
+        // MinecraftServer.getServer().getRecipeManager().addRecipe(new RecipeHolder<>(CraftRecipe.toMinecraft(this.getKey()), this.recipe));
+        throw new NotImplementedError();
     }
 }

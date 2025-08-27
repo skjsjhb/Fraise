@@ -1,5 +1,6 @@
 package io.papermc.paper.attribute;
 
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
@@ -22,7 +23,8 @@ public class UnmodifiableAttributeMap implements Attributable {
         if (!this.handle.hasAttribute(nmsAttribute)) {
             return null;
         }
-        return new UnmodifiableAttributeInstance(this.handle.getAttributeInstance(nmsAttribute), attribute);
+        throw new NotImplementedError();
+        // return new UnmodifiableAttributeInstance(this.handle.getAttributeInstance(nmsAttribute), attribute);
     }
 
     @Override

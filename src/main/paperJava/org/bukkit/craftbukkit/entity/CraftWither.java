@@ -1,24 +1,25 @@
 package org.bukkit.craftbukkit.entity;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.wither.WitherBoss;
 import org.bukkit.boss.BossBar;
 import org.bukkit.craftbukkit.CraftServer;
-import org.bukkit.craftbukkit.boss.CraftBossBar;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Wither;
 
 public class CraftWither extends CraftMonster implements Wither, com.destroystokyo.paper.entity.CraftRangedEntity<WitherBoss> { // Paper
 
-    private BossBar bossBar;
+    private final BossBar bossBar;
 
     public CraftWither(CraftServer server, WitherBoss entity) {
         super(server, entity);
 
-        if (entity.bossEvent != null) {
-            this.bossBar = new CraftBossBar(entity.bossEvent);
-        }
+        throw new NotImplementedError();
+        // if (entity.bossEvent != null) {
+        //     this.bossBar = new CraftBossBar(entity.bossEvent);
+        // }
     }
 
     @Override
@@ -48,7 +49,8 @@ public class CraftWither extends CraftMonster implements Wither, com.destroystok
             return null;
         }
         Entity target = this.getHandle().level().getEntity(entityId);
-        return (target != null) ? (LivingEntity) target.getBukkitEntity() : null;
+        // return (target != null) ? (LivingEntity) target.getBukkitEntity() : null;
+        throw new NotImplementedError();
     }
 
     @Override
@@ -85,7 +87,8 @@ public class CraftWither extends CraftMonster implements Wither, com.destroystok
 
     @Override
     public void setCanTravelThroughPortals(boolean value) {
-        getHandle().setCanTravelThroughPortals(value);
+        // getHandle().setCanTravelThroughPortals(value);
+        throw new NotImplementedError();
     }
 
     @Override

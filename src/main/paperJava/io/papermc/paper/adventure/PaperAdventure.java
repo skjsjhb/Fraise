@@ -3,19 +3,7 @@ package io.papermc.paper.adventure;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.serialization.JavaOps;
 import io.netty.util.AttributeKey;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiConsumer;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.StreamSupport;
+import kotlin.NotImplementedError;
 import net.kyori.adventure.bossbar.BossBar;
 import net.kyori.adventure.inventory.Book;
 import net.kyori.adventure.key.Key;
@@ -37,7 +25,6 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.util.Codec;
 import net.minecraft.ChatFormatting;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentPatch;
 import net.minecraft.core.component.DataComponentType;
@@ -48,7 +35,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.nbt.Tag;
 import net.minecraft.nbt.TagParser;
-import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundSoundEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
@@ -64,15 +50,28 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.WrittenBookContent;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.CraftRegistry;
-import org.bukkit.craftbukkit.command.VanillaCommandWrapper;
-import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.BiConsumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.StreamSupport;
+
 import static java.util.Objects.requireNonNull;
 
+@SuppressWarnings("UnstableApiUsage")
 public final class PaperAdventure {
     private static final Pattern LOCALIZATION_PATTERN = Pattern.compile("%(?:(\\d+)\\$)?s");
     public static final ComponentFlattener FLATTENER = ComponentFlattener.basic().toBuilder()
@@ -271,21 +270,22 @@ public final class PaperAdventure {
     }
 
     public static Component resolveWithContext(final @NotNull Component component, final @Nullable CommandSender context, final @Nullable org.bukkit.entity.Entity scoreboardSubject, final boolean bypassPermissions) throws IOException {
-        final CommandSourceStack css = context != null ? VanillaCommandWrapper.getListener(context) : null;
-        Boolean previous = null;
-        if (css != null && bypassPermissions) {
-            previous = css.bypassSelectorPermissions;
-            css.bypassSelectorPermissions = true;
-        }
-        try {
-            return asAdventure(ComponentUtils.updateForEntity(css, asVanilla(component), scoreboardSubject == null ? null : ((CraftEntity) scoreboardSubject).getHandle(), 0));
-        } catch (final CommandSyntaxException e) {
-            throw new IOException(e);
-        } finally {
-            if (css != null && previous != null) {
-                css.bypassSelectorPermissions = previous;
-            }
-        }
+        throw new NotImplementedError();
+        // final CommandSourceStack css = context != null ? VanillaCommandWrapper.getListener(context) : null;
+        // Boolean previous = null;
+        // if (css != null && bypassPermissions) {
+        //     previous = css.bypassSelectorPermissions;
+        //     css.bypassSelectorPermissions = true;
+        // }
+        // try {
+        //     return asAdventure(ComponentUtils.updateForEntity(css, asVanilla(component), scoreboardSubject == null ? null : ((CraftEntity) scoreboardSubject).getHandle(), 0));
+        // } catch (final CommandSyntaxException e) {
+        //     throw new IOException(e);
+        // } finally {
+        //     if (css != null && previous != null) {
+        //         css.bypassSelectorPermissions = previous;
+        //     }
+        // }
     }
 
     // BossBar
@@ -429,7 +429,7 @@ public final class PaperAdventure {
             if (entry.getKey().isTransient()) continue;
             @Subst("key:value") final String typeKey = requireNonNull(BuiltInRegistries.DATA_COMPONENT_TYPE.getKey(entry.getKey())).toString();
             if (entry.getValue().isEmpty()) {
-                   map.put(Key.key(typeKey), DataComponentValue.removed());
+                map.put(Key.key(typeKey), DataComponentValue.removed());
             } else {
                 map.put(Key.key(typeKey), new DataComponentValueImpl(entry.getKey().codec(), entry.getValue().get()));
             }
@@ -455,7 +455,8 @@ public final class PaperAdventure {
         return builder.build();
     }
 
-    public record DataComponentValueImpl<T>(com.mojang.serialization.Codec<T> codec, T value) implements DataComponentValue.TagSerializable {
+    public record DataComponentValueImpl<T>(com.mojang.serialization.Codec<T> codec,
+                                            T value) implements DataComponentValue.TagSerializable {
 
         @Override
         public @NotNull BinaryTagHolder asBinaryTag() {
@@ -481,7 +482,8 @@ public final class PaperAdventure {
     }
 
     public static @Nullable ChatFormatting asVanilla(final TextColor color) {
-        return ChatFormatting.getByHexValue(color.value());
+        throw new NotImplementedError();
+        // return ChatFormatting.getByHexValue(color.value());
     }
 
     // Style

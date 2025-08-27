@@ -1,6 +1,7 @@
 package org.bukkit.craftbukkit;
 
 import com.google.common.base.Preconditions;
+import kotlin.NotImplementedError;
 import net.minecraft.server.ServerTickRateManager;
 import org.bukkit.ServerTickManager;
 import org.bukkit.craftbukkit.entity.CraftEntity;
@@ -72,7 +73,8 @@ final class CraftServerTickManager implements ServerTickManager {
 
     @Override
     public boolean requestGameToSprint(final int ticks) {
-        return this.manager.requestGameToSprint(ticks, true);
+        throw new NotImplementedError();
+        // return this.manager.requestGameToSprint(ticks, true);
     }
 
     @Override

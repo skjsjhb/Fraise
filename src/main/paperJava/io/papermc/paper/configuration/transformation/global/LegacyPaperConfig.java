@@ -1,8 +1,7 @@
 package io.papermc.paper.configuration.transformation.global;
 
-import com.mojang.logging.LogUtils;
+import com.mojang.logging.LogUtilsExt;
 import io.papermc.paper.configuration.Configuration;
-import java.util.function.Predicate;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -15,10 +14,12 @@ import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.transformation.ConfigurationTransformation;
 import org.spongepowered.configurate.transformation.TransformAction;
 
+import java.util.function.Predicate;
+
 import static org.spongepowered.configurate.NodePath.path;
 
 public final class LegacyPaperConfig {
-    private static final Logger LOGGER = LogUtils.getClassLogger();
+    private static final Logger LOGGER = LogUtilsExt.getClassLogger();
 
     private LegacyPaperConfig() {
     }
@@ -172,6 +173,7 @@ public final class LegacyPaperConfig {
     private static void miniMessageWithTranslatable(final ConfigurationTransformation.Builder builder, final Predicate<String> englishCheck, final String i18nKey, final String... strPath) {
         miniMessageWithTranslatable(builder, englishCheck, Component.translatable(i18nKey), strPath);
     }
+
     private static void miniMessageWithTranslatable(final ConfigurationTransformation.Builder builder, final Predicate<String> englishCheck, final Component component, final String... strPath) {
         builder.addAction(path((Object[]) strPath), (path, value) -> {
             final Object val = value.raw();
