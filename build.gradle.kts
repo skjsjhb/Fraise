@@ -3,6 +3,7 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import moe.skjsjhb.fraise.BuildInfoTask
 import moe.skjsjhb.fraise.ImplReportTask
+import moe.skjsjhb.fraise.PatchCountingTask
 import net.fabricmc.loom.task.RunGameTask
 
 plugins {
@@ -175,6 +176,16 @@ val emitBuildInfo by tasks.registering(BuildInfoTask::class) {
     description = "Emits build information."
 
     outFile = layout.buildDirectory.file("build-info/build.properties")
+}
+
+val countPatches by tasks.registering(PatchCountingTask::class) {
+    group = "documentation"
+    description = "Generates a report with patch porting progress."
+
+    activeDir = file("src/porting/patches")
+    completedDir = file("src/porting/patched")
+    ignoredDir = file("src/porting/wont-patch")
+    outFile = layout.buildDirectory.file("patch-report/report.md")
 }
 
 tasks.processResources {
