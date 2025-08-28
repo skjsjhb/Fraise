@@ -42,10 +42,20 @@ sourceSets {
         resources.srcDir("src/porting/resources")
     }
 
-    // Separate Paper sources for standalone formatting
+
     main {
+        // Separate Paper sources for standalone formatting
         java.srcDir("src/main/paperJava")
         resources.srcDir("src/main/paperResources")
+
+        // Separate mixins
+        java.srcDir("src/main/mixinJava")
+
+        // Separate mixin duck interfaces
+        java.srcDir("src/main/extJava")
+
+        // Separate Kotlin extensions (e.g. ported static methods)
+        kotlin.srcDir("src/main/extKotlin")
     }
 }
 

@@ -2,7 +2,6 @@ package moe.skjsjhb.fraise.mixin.com.mojang.brigadier.suggestion;
 
 import com.mojang.brigadier.suggestion.IntegerSuggestion;
 import com.mojang.brigadier.suggestion.Suggestion;
-import moe.skjsjhb.fraise.anno.MixinType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Comparator;
 
-@MixinType.Fix
 @Mixin(value = Suggestion.class, remap = false)
 public class SuggestionMixin {
     @Unique

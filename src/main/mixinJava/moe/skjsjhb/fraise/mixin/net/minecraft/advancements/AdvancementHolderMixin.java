@@ -1,6 +1,7 @@
 package moe.skjsjhb.fraise.mixin.net.minecraft.advancements;
 
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementHolderExt;
 import org.bukkit.advancement.Advancement;
 import org.bukkit.craftbukkit.advancement.CraftAdvancement;
 import org.spongepowered.asm.mixin.Mixin;

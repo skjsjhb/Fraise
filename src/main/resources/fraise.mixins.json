@@ -9,8 +9,12 @@
         "com.mojang.brigadier.suggestion.SuggestionMixin",
         "com.mojang.logging.LogUtilsMixin",
         "net.minecraft.advancements.AdvancementHolderMixin",
-        "net.minecraft.advancements.DisplayInfoMixin"
+        "net.minecraft.advancements.DisplayInfoMixin",
+        "net.minecraft.advancements.critereon.LocationPredicateMixin"
     ],
+    "mixinextras": {
+        "minVersion": "0.5.0"
+    },
     "injectors": {
         "defaultRequire": 1
     },

@@ -1,4 +1,4 @@
-package moe.skjsjhb.fraise.mixin.net.minecraft.advancements;
+package net.minecraft.advancements;
 
 import org.bukkit.advancement.Advancement;
 

@@ -3,6 +3,7 @@ package moe.skjsjhb.fraise.mixin.net.minecraft.advancements;
 import io.papermc.paper.advancement.AdvancementDisplay;
 import io.papermc.paper.advancement.PaperAdvancementDisplay;
 import net.minecraft.advancements.DisplayInfo;
+import net.minecraft.advancements.DisplayInfoExt;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 

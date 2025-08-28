@@ -2,7 +2,6 @@ package moe.skjsjhb.fraise.mixin.com.mojang.brigadier.builder;
 
 import com.mojang.brigadier.builder.ArgumentBuilder;
 import com.mojang.brigadier.builder.ArgumentBuilderExt;
-import moe.skjsjhb.fraise.anno.MixinType;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -11,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Predicate;
 
-@MixinType.Required // Seems to be a fix, yet the permission system depends on it
 @Mixin(value = ArgumentBuilder.class, remap = false)
 public class ArgumentBuilderMixin {
     @Shadow
