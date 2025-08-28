@@ -1,6 +1,7 @@
 package io.papermc.paper.command.subcommands;
 
 import com.google.common.collect.Maps;
+import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.command.CommandUtil;
 import io.papermc.paper.command.PaperSubcommand;
 import kotlin.NotImplementedError;
@@ -97,18 +98,18 @@ public final class EntityCommand implements PaperSubcommand {
             ServerLevel world = ((CraftWorld) bukkitWorld).getHandle();
             Map<ResourceLocation, Integer> nonEntityTicking = Maps.newHashMap();
             ServerChunkCache chunkProviderServer = world.getChunkSource();
-            // throw new NotImplementedError();
-            // FeatureHooks.getAllEntities(world).forEach(e -> {
-            //     ResourceLocation key = EntityType.getKey(e.getType());
-            //
-            //     MutablePair<Integer, Map<ChunkPos, Integer>> info = list.computeIfAbsent(key, k -> MutablePair.of(0, Maps.newHashMap()));
-            //     ChunkPos chunk = e.chunkPosition();
-            //     info.left++;
-            //     info.right.put(chunk, info.right.getOrDefault(chunk, 0) + 1);
-            //     if (!world.isPositionEntityTicking(e.blockPosition()) || (e instanceof net.minecraft.world.entity.Marker && !world.paperConfig().entities.markers.tick)) { // Paper - Configurable marker ticking
-            //         nonEntityTicking.merge(key, 1, Integer::sum);
-            //     }
-            // });
+            FeatureHooks.getAllEntities(world).forEach(e -> {
+                throw new NotImplementedError();
+                // ResourceLocation key = EntityType.getKey(e.getType());
+                //
+                // MutablePair<Integer, Map<ChunkPos, Integer>> info = list.computeIfAbsent(key, k -> MutablePair.of(0, Maps.newHashMap()));
+                // ChunkPos chunk = e.chunkPosition();
+                // info.left++;
+                // info.right.put(chunk, info.right.getOrDefault(chunk, 0) + 1);
+                // if (!world.isPositionEntityTicking(e.blockPosition()) || (e instanceof net.minecraft.world.entity.Marker && !world.paperConfig().entities.markers.tick)) { // Paper - Configurable marker ticking
+                //     nonEntityTicking.merge(key, 1, Integer::sum);
+                // }
+            });
             if (names.size() == 1) {
                 ResourceLocation name = names.iterator().next();
                 Pair<Integer, Map<ChunkPos, Integer>> info = list.get(name);

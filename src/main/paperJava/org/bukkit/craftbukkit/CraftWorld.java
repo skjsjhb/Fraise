@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.mojang.datafixers.util.Pair;
+import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.raytracing.PositionedRayTraceConfigurationBuilder;
 import io.papermc.paper.raytracing.PositionedRayTraceConfigurationBuilderImpl;
 import io.papermc.paper.raytracing.RayTraceTarget;
@@ -607,14 +608,12 @@ public class CraftWorld extends CraftRegionAccessor implements World {
 
     @Override
     public Collection<Plugin> getPluginChunkTickets(int x, int z) {
-        throw new NotImplementedError();
-        // return FeatureHooks.getPluginChunkTickets(this.world, x, z); // Paper - chunk system
+        return FeatureHooks.getPluginChunkTickets(this.world, x, z); // Paper - chunk system
     }
 
     @Override
     public Map<Plugin, Collection<Chunk>> getPluginChunkTickets() {
-        throw new NotImplementedError();
-        // return FeatureHooks.getPluginChunkTickets(this.world); // Paper - chunk system
+        return FeatureHooks.getPluginChunkTickets(this.world); // Paper - chunk system
     }
 
     @NotNull
@@ -1346,14 +1345,12 @@ public class CraftWorld extends CraftRegionAccessor implements World {
 
     @Override
     public int getViewDistance() {
-        throw new NotImplementedError();
-        // return FeatureHooks.getViewDistance(this.world); // Paper - chunk system
+        return FeatureHooks.getViewDistance(this.world); // Paper - chunk system
     }
 
     @Override
     public int getSimulationDistance() {
-        throw new NotImplementedError();
-        // return FeatureHooks.getSimulationDistance(this.world); // Paper - chunk system
+        return FeatureHooks.getSimulationDistance(this.world); // Paper - chunk system
     }
 
     public BlockMetadataStore getBlockMetadata() {
@@ -2531,26 +2528,22 @@ public class CraftWorld extends CraftRegionAccessor implements World {
 
     @Override
     public void setViewDistance(final int viewDistance) {
-        throw new NotImplementedError();
-        // FeatureHooks.setViewDistance(this.world, viewDistance); // Paper - chunk system
+        FeatureHooks.setViewDistance(this.world, viewDistance); // Paper - chunk system
     }
 
     @Override
     public void setSimulationDistance(final int simulationDistance) {
-        throw new NotImplementedError();
-        // FeatureHooks.setSimulationDistance(this.world, simulationDistance); // Paper - chunk system
+        FeatureHooks.setSimulationDistance(this.world, simulationDistance); // Paper - chunk system
     }
 
     @Override
     public int getSendViewDistance() {
-        throw new NotImplementedError();
-        // return FeatureHooks.getSendViewDistance(this.world); // Paper - chunk system
+        return FeatureHooks.getSendViewDistance(this.world); // Paper - chunk system
     }
 
     @Override
     public void setSendViewDistance(final int viewDistance) {
-        throw new NotImplementedError();
-        // FeatureHooks.setSendViewDistance(this.world, viewDistance); // Paper - chunk system
+        FeatureHooks.setSendViewDistance(this.world, viewDistance); // Paper - chunk system
     }
 
     // Paper start - implement pointers

@@ -1,6 +1,7 @@
 package io.papermc.paper.configuration;
 
 import com.mojang.logging.LogUtils;
+import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.configuration.constraint.Constraints;
 import io.papermc.paper.configuration.serializer.collection.map.WriteKeyBack;
 import io.papermc.paper.configuration.type.number.DoubleOr;
@@ -248,8 +249,7 @@ public class GlobalConfiguration extends ConfigurationPart {
             } else {
                 throw new IllegalStateException("Invalid option for gen-parallelism: must be one of [on, off, enabled, disabled, true, false, default]");
             }
-            throw new NotImplementedError();
-            // FeatureHooks.initChunkTaskScheduler(useParallelGen);
+            FeatureHooks.initChunkTaskScheduler(useParallelGen);
         }
     }
 

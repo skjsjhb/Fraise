@@ -1,5 +1,6 @@
 package io.papermc.paper.command;
 
+import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.command.subcommands.DumpItemCommand;
 import io.papermc.paper.command.subcommands.DumpListenersCommand;
 import io.papermc.paper.command.subcommands.DumpPluginsCommand;
@@ -51,8 +52,7 @@ public final class PaperCommand extends Command {
         commands.put(Set.of("dumpitem"), new DumpItemCommand());
         commands.put(Set.of("mobcaps", "playermobcaps"), new MobcapsCommand());
         commands.put(Set.of("dumplisteners"), new DumpListenersCommand());
-        // throw new NotImplementedError();
-        // FeatureHooks.registerPaperCommands(commands);
+        FeatureHooks.registerPaperCommands(commands);
 
         return commands.entrySet().stream()
             .flatMap(entry -> entry.getKey().stream().map(s -> Map.entry(s, entry.getValue())))

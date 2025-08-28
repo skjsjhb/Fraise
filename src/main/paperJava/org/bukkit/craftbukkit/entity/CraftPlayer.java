@@ -6,6 +6,7 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.io.BaseEncoding;
 import com.mojang.authlib.GameProfile;
 import com.mojang.datafixers.util.Pair;
+import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.connection.PlayerGameConnection;
 import io.papermc.paper.connection.PluginMessageBridgeImpl;
 import io.papermc.paper.dialog.Dialog;
@@ -3504,22 +3505,19 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
     @Override
     public Set<java.lang.Long> getSentChunkKeys() {
         org.spigotmc.AsyncCatcher.catchOp("accessing sent chunks");
-        // return FeatureHooks.getSentChunkKeys(this.getHandle());
-        throw new NotImplementedError();
+        return FeatureHooks.getSentChunkKeys(this.getHandle());
     }
 
     @Override
     public Set<org.bukkit.Chunk> getSentChunks() {
         org.spigotmc.AsyncCatcher.catchOp("accessing sent chunks");
-        // return FeatureHooks.getSentChunks(this.getHandle());
-        throw new NotImplementedError();
+        return FeatureHooks.getSentChunks(this.getHandle());
     }
 
     @Override
     public boolean isChunkSent(final long chunkKey) {
         org.spigotmc.AsyncCatcher.catchOp("accessing sent chunks");
-        // return FeatureHooks.isChunkSent(this.getHandle(), chunkKey);
-        throw new NotImplementedError();
+        return FeatureHooks.isChunkSent(this.getHandle(), chunkKey);
     }
     // Paper end
 
@@ -3535,8 +3533,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
 
     @Override
     public void setViewDistance(final int viewDistance) {
-        // FeatureHooks.setViewDistance(this.getHandle(), viewDistance); // Paper - chunk system
-        throw new NotImplementedError();
+        FeatureHooks.setViewDistance(this.getHandle(), viewDistance); // Paper - chunk system
     }
 
     @Override
@@ -3546,8 +3543,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
 
     @Override
     public void setSimulationDistance(final int simulationDistance) {
-        // FeatureHooks.setSimulationDistance(this.getHandle(), simulationDistance); // Paper - chunk system
-        throw new NotImplementedError();
+        FeatureHooks.setSimulationDistance(this.getHandle(), simulationDistance); // Paper - chunk system
     }
 
     @Override
@@ -3557,8 +3553,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player, PluginMessa
 
     @Override
     public void setSendViewDistance(final int viewDistance) {
-        // FeatureHooks.setSendViewDistance(this.getHandle(), viewDistance); // Paper - chunk system
-        throw new NotImplementedError();
+        FeatureHooks.setSendViewDistance(this.getHandle(), viewDistance); // Paper - chunk system
     }
 
     // Paper start - entity effect API

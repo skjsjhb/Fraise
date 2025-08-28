@@ -3,6 +3,7 @@ package io.papermc.paper.configuration;
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
 import com.mojang.logging.LogUtilsExt;
+import io.papermc.paper.FeatureHooks;
 import io.papermc.paper.configuration.legacy.MaxEntityCollisionsInitializer;
 import io.papermc.paper.configuration.legacy.RequiresSpigotInitialization;
 import io.papermc.paper.configuration.mapping.MergeMap;
@@ -521,8 +522,7 @@ public class WorldConfiguration extends ConfigurationPart {
 
         @PostProcess
         private void postProcess() {
-            throw new NotImplementedError();
-            // FeatureHooks.setPlayerChunkUnloadDelay(this.delayChunkUnloadsBy.ticks());
+            FeatureHooks.setPlayerChunkUnloadDelay(this.delayChunkUnloadsBy.ticks());
         }
     }
 

@@ -3,6 +3,7 @@ package org.bukkit.craftbukkit;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Predicates;
 import com.mojang.serialization.Codec;
+import io.papermc.paper.FeatureHooks;
 import kotlin.NotImplementedError;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -50,8 +51,7 @@ public class CraftChunk implements Chunk {
     private final ServerLevel level;
     private final int x;
     private final int z;
-    // throw new NotImplementedError();
-    private static final PalettedContainer<net.minecraft.world.level.block.state.BlockState> emptyBlockIDs = null; // FeatureHooks.emptyPalettedBlockContainer();
+    private static final PalettedContainer<net.minecraft.world.level.block.state.BlockState> emptyBlockIDs = FeatureHooks.emptyPalettedBlockContainer();
     private static final byte[] FULL_LIGHT = new byte[2048];
     private static final byte[] EMPTY_LIGHT = new byte[2048];
 
@@ -125,8 +125,7 @@ public class CraftChunk implements Chunk {
 
     @Override
     public Entity[] getEntities() {
-        throw new NotImplementedError();
-        // return FeatureHooks.getChunkEntities(this.level, this.x, this.z); // Paper - chunk system
+        return FeatureHooks.getChunkEntities(this.level, this.x, this.z); // Paper - chunk system
     }
 
     @Override
