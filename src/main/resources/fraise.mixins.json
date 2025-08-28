@@ -6,7 +6,8 @@
         "com.mojang.authlib.yggdrasil.YggdrasilGameProfileRepositoryMixin",
         "com.mojang.brigadier.builder.ArgumentBuilderMixin",
         "com.mojang.brigadier.exceptions.CommandSyntaxExceptionMixin",
-        "com.mojang.brigadier.suggestion.IntegerSuggestionMixin", "com.mojang.brigadier.suggestion.SuggestionMixin",
+        "com.mojang.brigadier.suggestion.IntegerSuggestionMixin",
+        "com.mojang.brigadier.suggestion.SuggestionMixin",
         "com.mojang.logging.LogUtilsMixin"
     ],
     "injectors": {

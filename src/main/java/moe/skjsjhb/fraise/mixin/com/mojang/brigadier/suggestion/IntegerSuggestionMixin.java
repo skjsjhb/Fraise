@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @MixinType.Fix
-@Mixin(IntegerSuggestion.class)
+@Mixin(value = IntegerSuggestion.class, remap = false)
 public abstract class IntegerSuggestionMixin extends Suggestion {
     public IntegerSuggestionMixin(StringRange range, String text) {
         super(range, text);

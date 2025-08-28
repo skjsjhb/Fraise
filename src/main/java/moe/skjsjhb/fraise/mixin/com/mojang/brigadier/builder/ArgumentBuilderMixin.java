@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.function.Predicate;
 
 @MixinType.Required // Seems to be a fix, yet the permission system depends on it
-@Mixin(ArgumentBuilder.class)
+@Mixin(value = ArgumentBuilder.class, remap = false)
 public class ArgumentBuilderMixin {
     @Shadow
     private Predicate<?> requirement;

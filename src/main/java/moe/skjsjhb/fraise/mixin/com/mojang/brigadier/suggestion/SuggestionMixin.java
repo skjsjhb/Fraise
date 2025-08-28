@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Comparator;
 
 @MixinType.Fix
-@Mixin(Suggestion.class)
+@Mixin(value = Suggestion.class, remap = false)
 public class SuggestionMixin {
     @Unique
     private static int compare0(final Suggestion lhs, final Suggestion rhs, final java.util.Comparator<String> textComparator) {

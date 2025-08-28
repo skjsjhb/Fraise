@@ -12,7 +12,8 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
 @MixinType.Required
-@Mixin(CommandSyntaxException.class)
+@Deprecated // Seems already implemented by Adventure
+@Mixin(value = CommandSyntaxException.class, remap = false)
 public class CommandSyntaxExceptionMixin implements ComponentMessageThrowable {
     @Shadow
     @Final
