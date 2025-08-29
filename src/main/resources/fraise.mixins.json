@@ -10,7 +10,8 @@
         "com.mojang.logging.LogUtilsMixin",
         "net.minecraft.advancements.AdvancementHolderMixin",
         "net.minecraft.advancements.DisplayInfoMixin",
-        "net.minecraft.advancements.critereon.LocationPredicateMixin"
+        "net.minecraft.advancements.critereon.LocationPredicateMixin",
+        "net.minecraft.commands.CommandSource$1Mixin"
     ],
     "mixinextras": {
         "minVersion": "0.5.0"

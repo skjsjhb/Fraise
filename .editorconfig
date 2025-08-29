@@ -11,6 +11,9 @@ max_line_length = 120
 [*.{md,yml,yaml}]
 indent_size = 2
 
+[*.java]
+ij_continuation_indent_size = 4
+
 [*.{kt,kts}]
 ij_continuation_indent_size = 0
 
