@@ -268,9 +268,22 @@ tasks.withType<ShadowJar>().configureEach {
         "org.slf4j:slf4j-api"
     )
 
+    // Fabric provided dependencies
+    val fabricProvided = listOf(
+        "net.fabricmc:*",
+        "org.ow2.asm:asm-analysis",
+        "org.ow2.asm:asm-commons",
+        "org.ow2.asm:asm-tree",
+        "org.ow2.asm:asm-util",
+    )
+
     dependencies {
         // Provided by the game or Fabric
         mojangProvided.forEach {
+            exclude(dependency("$it:.*"))
+        }
+
+        fabricProvided.forEach {
             exclude(dependency("$it:.*"))
         }
 
@@ -313,4 +326,7 @@ tasks.withType<ShadowJar>().configureEach {
 
     // Seems bundled from log4j, yet we don't use modules
     exclude("module-info.class")
+
+    exclude("META-INF/*.SF")
+    exclude("META-INF/*.RSA")
 }
