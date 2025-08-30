@@ -14,7 +14,8 @@
         "net.minecraft.commands.CommandSource$1Mixin",
         "net.minecraft.core.component.DataComponentPatch$3Mixin",
         "net.minecraft.core.component.DataComponentPatch$BuilderMixin",
-        "net.minecraft.core.component.DataComponentsMixin"
+        "net.minecraft.core.component.DataComponentsMixin",
+        "net.minecraft.core.registries.BuiltInRegistriesMixin"
     ],
     "mixinextras": {
         "minVersion": "0.5.0"
