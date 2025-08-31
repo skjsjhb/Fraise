@@ -19,6 +19,7 @@
         "net.minecraft.core.component.DataComponentsMixin",
         "net.minecraft.core.registries.BuiltInRegistriesMixin",
         "net.minecraft.nbt.NbtIoMixin",
+        "net.minecraft.network.FriendlyByteBufMixin",
         "net.minecraft.network.PacketEncoderMixin"
     ],
     "mixinextras": {
