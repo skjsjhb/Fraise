@@ -12,6 +12,7 @@
         "net.minecraft.advancements.DisplayInfoMixin",
         "net.minecraft.advancements.critereon.LocationPredicateMixin",
         "net.minecraft.commands.CommandSource$1Mixin",
+        "net.minecraft.commands.arguments.MessageArgumentMixin",
         "net.minecraft.core.HolderLookup$RegistryLookup$1Mixin",
         "net.minecraft.core.MappedRegistryMixin",
         "net.minecraft.core.component.DataComponentPatch$3Mixin",
