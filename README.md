@@ -106,11 +106,15 @@ disprove our points about (Neo)Forge, please do let us know!
 
 Fraise is licensed separately as it uses sources from upstream projects:
 
-- Code and resources under `paper-api`, `src/main/paperJava`, `src/main/paperResources`, `src/porting` inherit the
-  license from Paper, which is (currently) the
-  [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html), but may subject to change in the future.
-  Note that the Paper team did not explicitly claim the allowance of using a later GPL version, so this license is
-  listed as `GPL-3.0-only` in the mod metadata.
+- Code and resources in `src` and `paper-api`, but excluding those in package `moe.skjsjhb.fraise`, and including those
+  in package `moe.skjsjhb.fraise.mixin`, inherit the license from Paper, which is (currently)
+  the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html), but may subject to change in the
+  future. Note that the Paper team did not explicitly claim the allowance of using a later GPL version, so this license
+  is listed as `GPL-3.0-only` in the mod metadata.
 - All other parts in this repository are licensed under the
   [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html). You may also pick any later
   version of this license at your option. This license is listed as `AGPL-3.0-or-later` in the mod metadata.
+
+The reason of such licensing is that we want to use AGPLv3 as much as possible since it's our desired license for server
+software. However, as Fraise uses code from Paper heavily, while the latter is licensed under GPLv3, it's impossible to
+release everything under AGPLv3 as a whole.
