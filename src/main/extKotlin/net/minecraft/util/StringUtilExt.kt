@@ -1,6 +1,7 @@
 package net.minecraft.util
 
 object StringUtilExt {
+    @JvmStatic
     fun isReasonablePlayerName(name: String): Boolean {
         if (name.length !in 1..16) return false
 
