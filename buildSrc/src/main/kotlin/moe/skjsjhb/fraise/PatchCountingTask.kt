@@ -23,6 +23,9 @@ abstract class PatchCountingTask : DefaultTask() {
     @get:OutputFile
     abstract val outFile: RegularFileProperty
 
+    @get:OutputFile
+    abstract val jsonOutFile: RegularFileProperty
+
     @TaskAction
     fun run() {
         val active = fileCount(activeDir.asFile.get())
@@ -42,8 +45,9 @@ abstract class PatchCountingTask : DefaultTask() {
             else -> "Not even close..."
         }
 
+        val progress = "%.2f".format(pct * 100) + "%"
         val msg =
-            "Total $total, ported $completed (partial $partial), ignored $ignored, ${"%.2f".format(pct * 100)}% done."
+            "Total $total, ported $completed (partial $partial), ignored $ignored, $progress done."
 
         outFile.asFile.get().writeText(
             """
@@ -52,6 +56,14 @@ abstract class PatchCountingTask : DefaultTask() {
             **$status**
             
             $msg
+        """.trimIndent()
+        )
+
+        jsonOutFile.asFile.get().writeText(
+            """
+            {
+                "progress": "$progress"
+            }
         """.trimIndent()
         )
 

@@ -197,6 +197,7 @@ val countPatches by tasks.registering(PatchCountingTask::class) {
     ignoredDir = file("src/porting/wont-patch")
     partialDir = file("src/porting/partially-patched")
     outFile = layout.buildDirectory.file("patch-report/report.md")
+    jsonOutFile = layout.buildDirectory.file("patch-report/progress.json")
 }
 
 tasks.processResources {
