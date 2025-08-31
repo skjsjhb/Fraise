@@ -1,6 +1,7 @@
 package net.minecraft.core.registries
 
 import io.papermc.paper.registry.data.util.Conversions
+import moe.skjsjhb.fraise.util.ArgumentExtender
 import net.minecraft.resources.RegistryOps
 import net.minecraft.server.RegistryLayer
 
@@ -10,14 +11,14 @@ interface BuiltInRegistriesExt {
         val STATIC_ACCESS_CONVERSIONS: Conversions =
             Conversions(RegistryOps.HolderLookupAdapter(RegistryLayer.STATIC_ACCESS))
 
+        @JvmField
+        val `bootStrap$$cb` = ArgumentExtender<Runnable>()
+
         @JvmStatic
-        fun bootStrapWithCallback(cb: Runnable) {
-            // XXX: Must we freeze it here? Consider other mods...
-            BuiltInRegistries.REGISTRY.freeze()
-            BuiltInRegistries.createContents()
-            cb.run()
-            BuiltInRegistries.freeze()
-            BuiltInRegistries.validate(BuiltInRegistries.REGISTRY)
+        fun bootStrap(cb: Runnable) {
+            `bootStrap$$cb`.withValue(cb) {
+                BuiltInRegistries.bootStrap()
+            }
         }
     }
 }

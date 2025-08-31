@@ -36,10 +36,6 @@ public class MessageArgumentMixin {
         @Share("message") LocalRef<MessageArgument.Message> message,
         @Share("hasMessage") LocalBooleanRef hasMessage
     ) {
-        if (hasMessage.get()) {
-            return message.get();
-        }
-
-        return original;
+        return hasMessage.get() ? message.get() : original;
     }
 }

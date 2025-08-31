@@ -1,6 +1,9 @@
 package moe.skjsjhb.fraise.mixin.net.minecraft.core.registries;
 
 import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import io.papermc.paper.registry.PaperRegistryAccess;
 import io.papermc.paper.registry.PaperRegistryListenerManager;
 import net.minecraft.core.Registry;
@@ -40,8 +43,32 @@ public class BuiltInRegistriesMixin {
     }
 
     @Inject(method = "bootStrap", at = @At("HEAD"))
-    private static void freezeOnBoot(CallbackInfo ci) {
-        REGISTRY.freeze(); // XXX: Figure out whether this is necessary
+    private static void useBootStrapArgument(
+        CallbackInfo ci,
+        @Share("cb") LocalRef<Runnable> cb,
+        @Share("hasCb") LocalBooleanRef hasCb
+    ) {
+        hasCb.set(BuiltInRegistriesExt.bootStrap$$cb.maybeDump(cb));
+
+        // XXX: Must we freeze it here? Consider other mods...
+        // XXX: Figure out whether this is necessary
+        REGISTRY.freeze();
+    }
+
+    @Inject(
+        method = "bootStrap",
+        at = @At(
+            value = "INVOKE",
+            target = "Lnet/minecraft/core/registries/BuiltInRegistries;createContents()V",
+            shift = At.Shift.AFTER
+        )
+    )
+    private static void runBootStrapCallback(
+        CallbackInfo ci,
+        @Share("cb") LocalRef<Runnable> cb,
+        @Share("hasCb") LocalBooleanRef hasCb
+    ) {
+        if (hasCb.get()) cb.get().run();
     }
 
     @Inject(method = "createContents", at = @At("HEAD"))
