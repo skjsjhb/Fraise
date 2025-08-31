@@ -6,7 +6,8 @@ An experiment with plugins and Fabric.
 
 > [!NOTE]
 > This project is working in progress. To not raise expectations that we might not eventually be able to fulfill, we've
-> omitted most parts related to the features. This section will be updated once we've reached the first release.
+> omitted most parts related to the features. This section will be updated once we've reached the first release. For the
+> latest progress, check out [Are we Paper yet?](docs/ARE_WE_PAPER_YET.md).
 
 ## What about (Neo)Forge?
 
