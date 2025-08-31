@@ -18,7 +18,8 @@
         "net.minecraft.core.component.DataComponentPatch$BuilderMixin",
         "net.minecraft.core.component.DataComponentsMixin",
         "net.minecraft.core.registries.BuiltInRegistriesMixin",
-        "net.minecraft.nbt.NbtIoMixin"
+        "net.minecraft.nbt.NbtIoMixin",
+        "net.minecraft.network.PacketEncoderMixin"
     ],
     "mixinextras": {
         "minVersion": "0.5.0"
