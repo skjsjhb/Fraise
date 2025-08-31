@@ -20,7 +20,8 @@
         "net.minecraft.core.registries.BuiltInRegistriesMixin",
         "net.minecraft.nbt.NbtIoMixin",
         "net.minecraft.network.FriendlyByteBufMixin",
-        "net.minecraft.network.PacketEncoderMixin"
+        "net.minecraft.network.PacketEncoderMixin",
+        "net.minecraft.network.chat.ComponentUtilsMixin"
     ],
     "mixinextras": {
         "minVersion": "0.5.0"
