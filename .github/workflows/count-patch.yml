@@ -1,0 +1,30 @@
+# TODO: Update this to pages once we have other files
+name: Count Patches
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: gradle/actions/wrapper-validation@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: gradle
+      - run: chmod +x ./gradlew
+      - run: ./gradlew countPatches
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/patch-report
+      - id: deployment
+        uses: actions/deploy-pages@v4
