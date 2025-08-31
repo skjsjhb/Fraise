@@ -2,7 +2,6 @@
 
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import moe.skjsjhb.fraise.BuildInfoTask
-import moe.skjsjhb.fraise.ImplReportTask
 import net.fabricmc.loom.task.RunGameTask
 
 plugins {
@@ -167,17 +166,6 @@ val deployTestPlugin by tasks.registering(Copy::class) {
 
 tasks.withType<RunGameTask>().configureEach {
     dependsOn(deployTestPlugin)
-}
-
-val genImplReport by tasks.registering(ImplReportTask::class) {
-    group = "documentation"
-    description = "Generates a report with detailed implementation progress information."
-
-    annotationName = "moe.skjsjhb.fraise.anno.Incubating"
-    apiJar = project(":paper-api").tasks.jar.get().archiveFile
-    implJar = tasks.jar.get().archiveFile
-    outDir = layout.buildDirectory.file("impl-report")
-    ignore = setOf()
 }
 
 val emitBuildInfo by tasks.registering(BuildInfoTask::class) {
