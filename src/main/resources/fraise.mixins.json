@@ -24,7 +24,8 @@
         "net.minecraft.nbt.NbtIoMixin",
         "net.minecraft.network.FriendlyByteBufMixin",
         "net.minecraft.network.PacketEncoderMixin",
-        "net.minecraft.network.chat.ComponentUtilsMixin"
+        "net.minecraft.network.chat.ComponentUtilsMixin",
+        "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin"
     ],
     "mixinextras": {
         "minVersion": "0.5.0"
