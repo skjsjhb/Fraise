@@ -25,7 +25,8 @@
         "net.minecraft.network.FriendlyByteBufMixin",
         "net.minecraft.network.PacketEncoderMixin",
         "net.minecraft.network.chat.ComponentUtilsMixin",
-        "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin"
+        "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin",
+        "net.minecraft.util.TickThrottlerMixin"
     ],
     "mixinextras": {
         "minVersion": "0.5.0"
