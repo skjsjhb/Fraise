@@ -15,6 +15,9 @@ abstract class PatchCountingTask : DefaultTask() {
     abstract val completedDir: RegularFileProperty
 
     @get:InputDirectory
+    abstract val partialDir: RegularFileProperty
+
+    @get:InputDirectory
     abstract val ignoredDir: RegularFileProperty
 
     @get:OutputFile
@@ -25,9 +28,10 @@ abstract class PatchCountingTask : DefaultTask() {
         val active = fileCount(activeDir.asFile.get())
         val completed = fileCount(completedDir.asFile.get())
         val ignored = fileCount(ignoredDir.asFile.get())
+        val partial = fileCount(partialDir.asFile.get())
 
         val total = active + completed + ignored
-        val pct = (completed + ignored) / total.toDouble()
+        val pct = (completed + ignored + partial) / total.toDouble()
 
         val status = when {
             pct > 0.9 -> "Mostly..."
@@ -38,7 +42,8 @@ abstract class PatchCountingTask : DefaultTask() {
             else -> "Not even close..."
         }
 
-        val msg = "Total $total, ported $completed, ignored $ignored, ${"%.2f".format(pct * 100)}% done."
+        val msg =
+            "Total $total, ported $completed (partial $partial), ignored $ignored, ${"%.2f".format(pct * 100)}% done."
 
         outFile.asFile.get().writeText(
             """
