@@ -15,6 +15,8 @@
         "net.minecraft.commands.arguments.MessageArgumentMixin",
         "net.minecraft.core.HolderLookup$RegistryLookup$1Mixin",
         "net.minecraft.core.MappedRegistryMixin",
+        "net.minecraft.core.RegistrySetBuilder$2Mixin",
+        "net.minecraft.core.RegistrySetBuilder$3$1Mixin",
         "net.minecraft.core.component.DataComponentPatch$3Mixin",
         "net.minecraft.core.component.DataComponentPatch$BuilderMixin",
         "net.minecraft.core.component.DataComponentsMixin",
