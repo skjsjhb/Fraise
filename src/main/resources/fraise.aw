@@ -12,3 +12,5 @@ accessible class net/minecraft/core/registries/BuiltInRegistries$RegistryBootstr
 accessible method net/minecraft/core/registries/BuiltInRegistries createContents ()V
 accessible method net/minecraft/core/registries/BuiltInRegistries freeze ()V
 accessible method net/minecraft/core/registries/BuiltInRegistries validate (Lnet/minecraft/core/Registry;)V
+
+accessible method net/minecraft/network/chat/TextColor <init> (ILjava/lang/String;)V

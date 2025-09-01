@@ -26,6 +26,7 @@
         "net.minecraft.network.FriendlyByteBufMixin",
         "net.minecraft.network.PacketEncoderMixin",
         "net.minecraft.network.chat.ComponentUtilsMixin",
+        "net.minecraft.network.chat.TextColorMixin",
         "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin",
         "net.minecraft.util.TickThrottlerMixin"
     ],
