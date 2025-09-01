@@ -18,6 +18,4 @@ public abstract class RegistrySetBuilder$2Mixin<T> implements HolderLookup$Regis
     public @NotNull Optional<T> getValueForCopying(@NotNull ResourceKey<T> key) {
         return get(key).map(Holder.Reference::value);
     }
-
-    //
 }
