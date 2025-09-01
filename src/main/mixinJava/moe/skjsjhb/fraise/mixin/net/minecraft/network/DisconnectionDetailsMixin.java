@@ -19,10 +19,10 @@ import java.util.Optional;
 @Mixin(DisconnectionDetails.class)
 public class DisconnectionDetailsMixin implements DisconnectionDetailsExt {
     @Unique
-    public Optional<Component> quitMessage = Optional.empty();
+    public Optional<Component> quitMessage;
 
     @Unique
-    public Optional<DisconnectionReason> disconnectionReason = Optional.empty();
+    public Optional<DisconnectionReason> disconnectionReason;
 
     @Override
     public @NotNull Optional<Component> quitMessage() {
@@ -41,10 +41,15 @@ public class DisconnectionDetailsMixin implements DisconnectionDetailsExt {
     private void extraInit(Component component, Optional<?> optional, Optional<?> optional2, CallbackInfo ci) {
         if (DisconnectionDetailsExt.init$$quitMessage.hasValue()) {
             quitMessage = DisconnectionDetailsExt.init$$quitMessage.get();
+        } else {
+            // The default initializer of the first field seems missing in the final output (bug?)
+            quitMessage = Optional.empty();
         }
 
         if (DisconnectionDetailsExt.init$$disconnectionReason.hasValue()) {
             disconnectionReason = DisconnectionDetailsExt.init$$disconnectionReason.get();
+        } else {
+            disconnectionReason = Optional.empty();
         }
     }
 
