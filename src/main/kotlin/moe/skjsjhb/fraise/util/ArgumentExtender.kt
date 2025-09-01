@@ -50,13 +50,13 @@ class ArgumentExtender<T> {
 
 
     /**
-     * Sets the inner value to the given value, then executes the given [Runnable]. Clears the inner value upon
-     * returning or throwing.
+     * Sets the inner value to the given value, then executes the given function and return whatever it returns. Clears
+     * the argument value upon returning or throwing.
      */
-    fun withValue(v: T, r: Runnable) {
+    fun <R> withValue(v: T, r: () -> R): R {
         try {
             set(v)
-            r.run()
+            return r()
         } finally {
             clear()
         }
