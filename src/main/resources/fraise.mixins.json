@@ -29,6 +29,7 @@
         "net.minecraft.network.chat.MutableComponentMixin",
         "net.minecraft.network.chat.OutgoingChatMessage$DisguisedMixin",
         "net.minecraft.network.chat.OutgoingChatMessage$PlayerMixin",
+        "net.minecraft.network.chat.PlayerChatMessageMixin",
         "net.minecraft.network.chat.SignedMessageChain$DecodeExceptionMixin",
         "net.minecraft.network.chat.TextColorMixin",
         "net.minecraft.network.chat.contents.NbtContentsMixin",
