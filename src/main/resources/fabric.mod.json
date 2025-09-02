@@ -4,10 +4,12 @@
     "version": "0.1.0",
     "name": "Fraise",
     "description": "An experiment with plugins and Fabric.",
-    "authors": ["skjsjhb"],
+    "authors": [
+        "skjsjhb"
+    ],
     "contact": {
-        "homepage": "",
-        "sources": ""
+        "homepage": "https://github.com/skjsjhb/Fraise",
+        "sources": "https://github.com/skjsjhb/Fraise"
     },
     "license": [
         "AGPL-3.0-or-later",
@@ -37,7 +39,7 @@
         }
     ],
     "depends": {
-        "fabricloader": ">=0.17.2",
+        "fabricloader": ">=0.17.0",
         "minecraft": "~1.21.8",
         "java": ">=21",
         "fabric-api": "*",
