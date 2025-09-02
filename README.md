@@ -107,8 +107,8 @@ disprove our points about (Neo)Forge, please do let us know!
 
 Fraise is licensed separately as it uses sources from upstream projects:
 
-- Code and resources in `src` and `paper-api`, but excluding those in package `moe.skjsjhb.fraise`, and including those
-  in package `moe.skjsjhb.fraise.mixin`, inherit the license from Paper, which is (currently)
+- Code and resources in `src` and `paper-api`, but excluding those in `src/client`, `src/main/kotlin` and
+  `src/main/resources`, inherit the license from Paper, which is (currently)
   the [GNU General Public License v3.0](https://www.gnu.org/licenses/gpl-3.0.html), but may subject to change in the
   future. Note that the Paper team did not explicitly claim the allowance of using a later GPL version, so this license
   is listed as `GPL-3.0-only` in the mod metadata.
