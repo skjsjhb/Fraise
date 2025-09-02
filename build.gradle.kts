@@ -6,8 +6,8 @@ import net.fabricmc.loom.task.RunGameTask
 
 plugins {
     kotlin("jvm") version "2.2.10"
-    id("fabric-loom") version "1.11-SNAPSHOT"
-    id("com.gradleup.shadow") version "9.0.2"
+    id("fabric-loom") version "1.11.7"
+    id("com.gradleup.shadow") version "9.1.0"
     idea
 }
 
@@ -91,7 +91,7 @@ dependencies {
 
     modImplementation("net.fabricmc:fabric-loader:0.17.2")
 
-    modImplementation("net.fabricmc.fabric-api:fabric-api:0.132.0+1.21.8")
+    modImplementation("net.fabricmc.fabric-api:fabric-api:0.133.0+1.21.8")
     modImplementation("net.fabricmc:fabric-language-kotlin:1.13.5+kotlin.2.2.10")
     modImplementation(include("net.kyori:adventure-platform-fabric:6.6.0")!!)
 
