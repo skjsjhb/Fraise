@@ -14,3 +14,5 @@ accessible method net/minecraft/core/registries/BuiltInRegistries freeze ()V
 accessible method net/minecraft/core/registries/BuiltInRegistries validate (Lnet/minecraft/core/Registry;)V
 
 accessible method net/minecraft/network/chat/TextColor <init> (ILjava/lang/String;)V
+
+accessible field net/minecraft/network/protocol/game/VecDeltaCodec base Lnet/minecraft/world/phys/Vec3;
