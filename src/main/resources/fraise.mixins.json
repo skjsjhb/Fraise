@@ -34,6 +34,8 @@
         "net.minecraft.network.chat.TextColorMixin",
         "net.minecraft.network.chat.contents.NbtContentsMixin",
         "net.minecraft.network.chat.contents.SelectorContentsMixin",
+        "net.minecraft.network.protocol.common.ServerboundCustomPayloadPacketMixin",
+        "net.minecraft.network.protocol.common.custom.DiscardedPayloadMixin",
         "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin",
         "net.minecraft.util.TickThrottlerMixin"
     ],
