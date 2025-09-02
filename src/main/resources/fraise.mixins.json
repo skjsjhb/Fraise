@@ -37,6 +37,7 @@
         "net.minecraft.network.protocol.common.ServerboundCustomPayloadPacketMixin",
         "net.minecraft.network.protocol.common.custom.DiscardedPayloadMixin",
         "net.minecraft.network.protocol.game.ClientboundContainerSetContentPacketMixin",
+        "net.minecraft.network.protocol.game.ClientboundSectionBlocksUpdatePacketMixin",
         "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin",
         "net.minecraft.util.TickThrottlerMixin"
     ],

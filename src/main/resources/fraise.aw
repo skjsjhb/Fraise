@@ -15,4 +15,11 @@ accessible method net/minecraft/core/registries/BuiltInRegistries validate (Lnet
 
 accessible method net/minecraft/network/chat/TextColor <init> (ILjava/lang/String;)V
 
+accessible field net/minecraft/network/protocol/game/ClientboundSectionBlocksUpdatePacket sectionPos Lnet/minecraft/core/SectionPos;
+mutable field net/minecraft/network/protocol/game/ClientboundSectionBlocksUpdatePacket sectionPos Lnet/minecraft/core/SectionPos;
+accessible field net/minecraft/network/protocol/game/ClientboundSectionBlocksUpdatePacket positions [S
+mutable field net/minecraft/network/protocol/game/ClientboundSectionBlocksUpdatePacket positions [S
+accessible field net/minecraft/network/protocol/game/ClientboundSectionBlocksUpdatePacket states [Lnet/minecraft/world/level/block/state/BlockState;
+mutable field net/minecraft/network/protocol/game/ClientboundSectionBlocksUpdatePacket states [Lnet/minecraft/world/level/block/state/BlockState;
+
 accessible field net/minecraft/network/protocol/game/VecDeltaCodec base Lnet/minecraft/world/phys/Vec3;
