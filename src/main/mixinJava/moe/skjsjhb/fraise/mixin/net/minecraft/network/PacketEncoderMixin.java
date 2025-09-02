@@ -8,7 +8,7 @@ import net.minecraft.network.PacketEncoder$PacketTooLargeException;
 import net.minecraft.network.PacketEncoderExt;
 import net.minecraft.network.PacketListener;
 import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientboundContainerSetContentPacket;
+import net.minecraft.network.protocol.PacketExt;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -33,8 +33,7 @@ public class PacketEncoderMixin<T extends PacketListener> {
         // This doesn't have to be placed in the finally block as the previous error will interrupt the encoding anyway
         int packetLength = byteBuf.readableBytes();
         if (packetLength > PacketEncoder$PacketTooLargeException.MAX_PACKET_SIZE ||
-            // FIXME: Update this condition when `hasLargePacketFallback` is implemented
-            (packetLength > PacketEncoder$PacketTooLargeException.MAX_FINAL_PACKET_SIZE && packet instanceof ClientboundContainerSetContentPacket)) {
+            (packetLength > PacketEncoder$PacketTooLargeException.MAX_FINAL_PACKET_SIZE && PacketExt.invokeHasLargePacketFallback(packet))) {
             throw new PacketEncoder$PacketTooLargeException(packet, packetLength);
         }
     }
