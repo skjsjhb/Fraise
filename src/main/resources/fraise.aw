@@ -25,4 +25,6 @@ mutable field net/minecraft/network/protocol/game/ClientboundSectionBlocksUpdate
 accessible class net/minecraft/network/protocol/game/ServerboundInteractPacket$Action
 accessible class net/minecraft/network/protocol/game/ServerboundInteractPacket$ActionType
 
+accessible method net/minecraft/network/protocol/game/ClientboundSetPlayerTeamPacket <init> (Ljava/lang/String;ILjava/util/Optional;Ljava/util/Collection;)V
+
 accessible field net/minecraft/network/protocol/game/VecDeltaCodec base Lnet/minecraft/world/phys/Vec3;
