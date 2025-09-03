@@ -41,6 +41,7 @@
         "net.minecraft.network.protocol.game.ClientboundSetPlayerTeamPacket$ParametersMixin",
         "net.minecraft.network.protocol.game.ServerboundInteractPacketMixin",
         "net.minecraft.network.protocol.handshake.ClientIntentionPacketMixin",
+        "net.minecraft.network.protocol.login.ServerboundCustomQueryAnswerPacketMixin",
         "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin",
         "net.minecraft.util.TickThrottlerMixin"
     ],
