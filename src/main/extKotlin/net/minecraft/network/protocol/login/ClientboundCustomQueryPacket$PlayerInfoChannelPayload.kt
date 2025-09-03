@@ -6,7 +6,7 @@ import net.minecraft.resources.ResourceLocation
 
 @JvmRecord
 data class `ClientboundCustomQueryPacket$PlayerInfoChannelPayload`(
-    val id: ResourceLocation,
+    @JvmField val id: ResourceLocation,
     val buffer: FriendlyByteBuf
 ) : CustomQueryPayload {
     override fun id(): ResourceLocation = id
