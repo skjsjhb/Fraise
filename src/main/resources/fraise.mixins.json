@@ -48,6 +48,7 @@
         "net.minecraft.resources.RegistryDataLoaderMixin",
         "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin",
         "net.minecraft.server.bossevents.CustomBossEventMixin",
+        "net.minecraft.server.commands.DebugCommand$TracerMixin",
         "net.minecraft.util.TickThrottlerMixin"
     ],
     "mixinextras": {
