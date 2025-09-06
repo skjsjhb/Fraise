@@ -50,6 +50,7 @@
         "net.minecraft.server.bossevents.CustomBossEventMixin",
         "net.minecraft.server.commands.DebugCommand$TracerMixin",
         "net.minecraft.server.commands.RideCommandMixin",
+        "net.minecraft.server.commands.SetWorldSpawnCommandMixin",
         "net.minecraft.util.TickThrottlerMixin"
     ],
     "mixinextras": {
