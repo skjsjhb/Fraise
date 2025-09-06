@@ -43,6 +43,9 @@
         "net.minecraft.network.protocol.handshake.ClientIntentionPacketMixin",
         "net.minecraft.network.protocol.login.ServerboundCustomQueryAnswerPacketMixin",
         "net.minecraft.network.syncher.SynchedEntityDataMixin",
+        "net.minecraft.resources.RegistryDataLoader$1Mixin",
+        "net.minecraft.resources.RegistryDataLoader$RegistryDataMixin",
+        "net.minecraft.resources.RegistryDataLoaderMixin",
         "net.minecraft.resources.RegistryOps$HolderLookupAdapterMixin",
         "net.minecraft.util.TickThrottlerMixin"
     ],
