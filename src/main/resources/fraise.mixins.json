@@ -51,6 +51,7 @@
         "net.minecraft.server.commands.DebugCommand$TracerMixin",
         "net.minecraft.server.commands.RideCommandMixin",
         "net.minecraft.server.commands.SetWorldSpawnCommandMixin",
+        "net.minecraft.tags.TagLoaderMixin",
         "net.minecraft.util.TickThrottlerMixin"
     ],
     "mixinextras": {
